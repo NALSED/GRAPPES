@@ -1,0 +1,16 @@
+{
+  "license": "CC-BY-NC-SA",
+  "query": "club",
+  "results": [
+    {
+      "url": "https://les-amis-du-patrimoine.example.org",
+      "title": "Les Amis du Patrimoine",
+      "description": "Association dédiée à la préservation et à la valorisation du patrimoine architectural local. Organise des visites guidées mensuelles, des conférences sur l'histoire régionale et des chantiers de bénévoles pour la restauration de monuments anciens."
+    },
+    {
+      "url": "https://jardin-partage.example.net",
+      "title": "Le Jardin Partagé de la Vallée",
+      "description": "Collectif citoyen gérant un jardin potager collaboratif de 2 hectares. Propose des ateliers de permaculture, des échanges de semences et des moments conviviaux autour de la cuisine du jardin. Ouvert à tous les habitants du quartier."
+    }
+  ]
+}

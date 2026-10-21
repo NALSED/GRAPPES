@@ -1,0 +1,324 @@
+{
+ "classes": [
+  "Q131186"
+ ],
+ "entities": [
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Lou Ceü de Pau",
+   "qid": "Q101104128",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lesmetaboles.fr"
+   ],
+   "label": "Les Métaboles",
+   "qid": "Q102174250",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Chorale du C.N.R.S.-Ile-de-France",
+    "Chorale du Centre national de la recherche scientifique",
+    "Chorale du CNRS",
+    "Chorale du CNRS / Ile-de-France",
+    "Chorale du CNRS Île-de-France"
+   ],
+   "domains": [
+    "chorale-cnrs.in2p3.fr"
+   ],
+   "label": "Chorale du CNRS d'Île-de-France",
+   "qid": "Q105297092",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Chœur des Moines et des Moniales de l'Abbaye du Bec-Hellouin",
+   "qid": "Q109296736",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "chœur de la paroisse Saint-Séraphin-de-Sarov",
+   "qid": "Q111140648",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Vocissimo",
+   "qid": "Q115656046",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Maîtrise boréale",
+   "qid": "Q116455211",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Chœur de l'Orchestre de Paris",
+   "qid": "Q118590840",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Maîtrise de Paris"
+   ],
+   "domains": [],
+   "label": "La Maîtrise de Paris",
+   "qid": "Q120107888",
+   "siren": [
+    "323471912"
+   ]
+  },
+  {
+   "aliases": [
+    "Chorale Gabriel Fauré"
+   ],
+   "domains": [],
+   "label": "Maîtrise Gabriel Fauré",
+   "qid": "Q124359280",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Groupe vocal de France",
+   "qid": "Q124369128",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Chorale Stéphane Caillat"
+   ],
+   "domains": [],
+   "label": "Ensemble vocal Stéphane Caillat",
+   "qid": "Q124416444",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "evsfx.fr"
+   ],
+   "label": "ensemble vocal de Saint-François-Xavier",
+   "qid": "Q131853103",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ensemble-vocal-diversio.eu"
+   ],
+   "label": "Diversio",
+   "qid": "Q138035536",
+   "siren": [
+    "912826187"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ensemble-vocal-deci-dela.eu"
+   ],
+   "label": "Ensemble vocal De-ci De-là",
+   "qid": "Q138035648",
+   "siren": [
+    "819693417"
+   ]
+  },
+  {
+   "aliases": [
+    "Cantiamo"
+   ],
+   "domains": [
+    "choeurcantiamo.com"
+   ],
+   "label": "Choeur Cantiamo",
+   "qid": "Q140195195",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Petits Chanteurs de la Vierge noire"
+   ],
+   "domains": [],
+   "label": "Manécanterie des Petits Chanteurs de la Vierge noire",
+   "qid": "Q16662786",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "musique-sacree-notredamedeparis.fr"
+   ],
+   "label": "Maîtrise de Notre-Dame de Paris",
+   "qid": "Q17353191",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "notredamereims.com"
+   ],
+   "label": "Maîtrise de la Cathédrale Notre-Dame de Reims",
+   "qid": "Q17355373",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "allahskanan.free.fr"
+   ],
+   "label": "Allah's Kanañ",
+   "qid": "Q20557663",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Chœurs Élisabeth Brasseur"
+   ],
+   "domains": [],
+   "label": "Chorale Élisabeth Brasseur",
+   "qid": "Q23021805",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "orchestrechoeur.garderepublicaine.fr"
+   ],
+   "label": "Chœur de l'Armée française",
+   "qid": "Q23793890",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "choeur-montjoie.com"
+   ],
+   "label": "Chœur Montjoie Saint-Denis",
+   "qid": "Q2972155",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Choeur de Radio France",
+    "Le Chœur de Radio France"
+   ],
+   "domains": [
+    "sites.radiofrance.fr"
+   ],
+   "label": "Chœur de Radio France",
+   "qid": "Q2972161",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "maitrise-colmar.asso.fr"
+   ],
+   "label": "Maîtrise de garçons de Colmar",
+   "qid": "Q3303354",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Maitrise de Radio France",
+    "Maîtrise de Radio-France"
+   ],
+   "domains": [
+    "maisondelaradio.fr"
+   ],
+   "label": "Maîtrise de Radio France",
+   "qid": "Q3303359",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Maîtrise des hauts de seine",
+    "MAITRISE HAUTS DE SEINE"
+   ],
+   "domains": [
+    "hauts-de-seine.fr"
+   ],
+   "label": "Maîtrise des Hauts-de-Seine",
+   "qid": "Q3303364",
+   "siren": [
+    "338174196"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "schola-sainte-cecile.com"
+   ],
+   "label": "Schola Sainte-Cécile",
+   "qid": "Q3475478",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "EVN",
+    "Ensemble Vocal de Neuilly",
+    "EVDN"
+   ],
+   "domains": [
+    "evdn.net"
+   ],
+   "label": "Ensemble vocal de Neuilly",
+   "qid": "Q47091978",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "choeurdegrenelle.com"
+   ],
+   "label": "chœur de Grenelle",
+   "qid": "Q59159600",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "mairie-injouxgenissiat.fr"
+   ],
+   "label": "la balladine",
+   "qid": "Q60525022",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Chœur mixte arménien de Paris Sipan-Komitas"
+   ],
+   "domains": [
+    "sipan-komitas.com"
+   ],
+   "label": "Chorale Sipan-Komitas",
+   "qid": "Q89694968",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "koghtan.blog4ever.com"
+   ],
+   "label": "Chorale Koghtan",
+   "qid": "Q89696167",
+   "siren": []
+  }
+ ],
+ "phrase": "Chorale en France",
+ "sujet_id": "g-q131186",
+ "where": "?item wdt:P31 wd:Q131186 ; wdt:P17 wd:Q142 ."
+}

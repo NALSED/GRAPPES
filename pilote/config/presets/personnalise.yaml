@@ -1,0 +1,6 @@
+# Le preset que l'utilisateur construit lui-même : il part vide, ou d'une copie d'un autre preset.
+id: personnalise
+nom: Personnalisé
+ordre: 8
+phrase: 'Personnalisé : tes propres sources, ou un preset existant que tu modifies.'
+usage: null

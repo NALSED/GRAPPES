@@ -1,0 +1,217 @@
+{
+ "classes": [
+  "Q56199177"
+ ],
+ "entities": [
+  {
+   "aliases": [],
+   "domains": [
+    "oecalsace.net"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables d'Alsace",
+   "qid": "Q56199208",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "oec-aquitaine.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables d'Aquitaine",
+   "qid": "Q56199210",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "auvergne.experts-comptables.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables d'Auvergne",
+   "qid": "Q56199211",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bfc.experts-comptables.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Bourgogne - Franche-Comté",
+   "qid": "Q56199212",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bretagne.experts-comptables.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Bretagne",
+   "qid": "Q56199214",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "champagne-experts-comptables.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Champagne",
+   "qid": "Q56199216",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "corse-experts-comptables.com"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Corse",
+   "qid": "Q56199217",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "experts-comptables-guadeloupe.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Guadeloupe",
+   "qid": "Q56199218",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "experts-comptables-martinique.com"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de la Martinique",
+   "qid": "Q56199219",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "reunion-experts-comptables.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de La Réunion",
+   "qid": "Q56199220",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "oec-npc.com"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Nord - Pas-de-Calais",
+   "qid": "Q56199221",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "experts-comptables-limoges.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Limoges",
+   "qid": "Q56199222",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lorraine.experts-comptables.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Lorraine",
+   "qid": "Q56199223",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "experts-comptables-paca.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Provence, Alpes, Côtes d'Azur",
+   "qid": "Q56199224",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "oec-montpellier.org"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Montpellier",
+   "qid": "Q56199225",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "experts-comptables-normandie.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Normandie",
+   "qid": "Q56199226",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "oec-paris.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Paris - Île-de-France",
+   "qid": "Q56199227",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "pic-ard-experts.org"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Picardie-Ardennes",
+   "qid": "Q56199229",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "experts-comptables-poitou-charentes-vendee.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Poitou-Charentes - Vendée",
+   "qid": "Q56199230",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "rhonealpes.experts-comptables.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Rhône-Alpes",
+   "qid": "Q56199231",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "paysdeloire.experts-comptables.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables des Pays de la Loire",
+   "qid": "Q56199232",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ectoulouse.com"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables de Toulouse - Midi-Pyrénées",
+   "qid": "Q56199233",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "experts-comptables-orleans.fr"
+   ],
+   "label": "Conseil régional de l'ordre des experts-comptables d'Orléans",
+   "qid": "Q56199234",
+   "siren": []
+  }
+ ],
+ "phrase": "Conseil régional de l'ordre des experts-comptable en France",
+ "sujet_id": "g-q56199177",
+ "where": "?item wdt:P31 wd:Q56199177 ; wdt:P17 wd:Q142 ."
+}

@@ -1,0 +1,1192 @@
+{
+ "classes": [
+  "Q43009164"
+ ],
+ "entities": [
+  {
+   "aliases": [
+    "MLSGP 78"
+   ],
+   "domains": [
+    "mlsgp78-rugby.fr"
+   ],
+   "label": "MLSGP Rugby",
+   "qid": "Q100805632",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CA Brive",
+    "CA Brive Corrèze Limousin",
+    "CABCL",
+    "Club athlétique Brive Corrèze",
+    "Club athlétique briviste"
+   ],
+   "domains": [
+    "cabrive-rugby.com"
+   ],
+   "label": "Club athlétique Brive Corrèze Limousin",
+   "qid": "Q1022912",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Club sportif Bourgoin-Jallieu",
+    "CS Bourgoin-Jallieu",
+    "CSBJ"
+   ],
+   "domains": [
+    "csbj-rugby.fr"
+   ],
+   "label": "Club sportif Bourgoin-Jallieu rugby",
+   "qid": "Q1024459",
+   "siren": [
+    "882957202"
+   ]
+  },
+  {
+   "aliases": [
+    "JAB",
+    "JAB de Pau"
+   ],
+   "domains": [],
+   "label": "Jeanne d'Arc Le Béarn",
+   "qid": "Q109037538",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "S.N.U.C.",
+    "SNUC"
+   ],
+   "domains": [],
+   "label": "Stade nantais université club",
+   "qid": "Q109045019",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Club sportif Annonay rugby",
+    "Club sportif d'Annonay",
+    "Club sportif d'Annonay rugby",
+    "CS Annonay",
+    "CSA, CS Annonay"
+   ],
+   "domains": [
+    "csarugby.fr"
+   ],
+   "label": "Club sportif annonéen",
+   "qid": "Q109665836",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Stade de Pézénas",
+    "Stade piscénois"
+   ],
+   "domains": [
+    "rugby-pezenas.com"
+   ],
+   "label": "Stade piscénois rugby",
+   "qid": "Q109665838",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "RCN",
+    "Racing Club de Narbonne Méditerranée",
+    "RC narbonnais",
+    "RCNM"
+   ],
+   "domains": [
+    "rcnarbonnais.fr"
+   ],
+   "label": "Racing Club Narbonnais",
+   "qid": "Q1115439",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "EMD Plaine de l'Ain",
+    "EMD Rugby",
+    "Entente Meximieux Dagneux"
+   ],
+   "domains": [
+    "emdrugby.fr"
+   ],
+   "label": "Entente Meximieux Dagneux Plaine de l'Ain",
+   "qid": "Q113374283",
+   "siren": [
+    "779344662"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Lei Raouba Vesso Rugby",
+   "qid": "Q116451572",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "AS Urruñarrak"
+   ],
+   "domains": [],
+   "label": "Association sportive Urruñarrak",
+   "qid": "Q116910160",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "US Bardos"
+   ],
+   "domains": [
+    "usbardos.ffr.fr"
+   ],
+   "label": "Union sportive Bardos",
+   "qid": "Q116910198",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Métro Racing 92",
+    "Racing CF",
+    "Racing Club de France",
+    "Racing Métro 92"
+   ],
+   "domains": [
+    "racing92.fr"
+   ],
+   "label": "Racing 92",
+   "qid": "Q118498",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SAC",
+    "Sanguinet AC"
+   ],
+   "domains": [
+    "sanguinet-rugby.ffr.fr"
+   ],
+   "label": "Sanguinet Athletic Club",
+   "qid": "Q118695714",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "usmgp.info"
+   ],
+   "label": "Union sportive Montréjeau Gourdan-Polignan XV",
+   "qid": "Q118951102",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "AAS Sarcelles"
+   ],
+   "domains": [],
+   "label": "Association amicale et sportive de Sarcelles",
+   "qid": "Q119407109",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Beauvais RC"
+   ],
+   "domains": [],
+   "label": "Beauvais Rugby Club",
+   "qid": "Q119407111",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Bourges XV",
+   "qid": "Q119407112",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Club sportif de Nuits-Saint-Georges",
+    "CS nuiton",
+    "CS Nuits",
+    "CS Nuits-Saint-Georges"
+   ],
+   "domains": [],
+   "label": "Club sportif nuiton",
+   "qid": "Q119407113",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "RC Sérignan"
+   ],
+   "domains": [],
+   "label": "Rugby Club de Sérignan",
+   "qid": "Q119407115",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "RO Castelnaudary"
+   ],
+   "domains": [
+    "rugbycastelnaudary.com"
+   ],
+   "label": "Rugby olympique Castelnaudary",
+   "qid": "Q119407116",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Union sportive de Meyzieu",
+    "US Meyzieu",
+    "US Meyzieu rugby"
+   ],
+   "domains": [
+    "usmeyzieurugby.ffr.fr"
+   ],
+   "label": "Union sportive de Meyzieu rugby",
+   "qid": "Q119407121",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "UBJ"
+   ],
+   "domains": [
+    "ubj-rugby.fr"
+   ],
+   "label": "Union Barbezieux Jonzac",
+   "qid": "Q119407242",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Aviron gruissanais",
+    "Avenir gruissanais rugby"
+   ],
+   "domains": [
+    "avirongruissanaisrugby.fr"
+   ],
+   "label": "Aviron gruissanais rugby",
+   "qid": "Q119407871",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Barbezieux SCR"
+   ],
+   "domains": [],
+   "label": "Barbezieux Sud-Charente Rugby",
+   "qid": "Q119410865",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Avenir jonzacais",
+    "RC Jonzac Haute Saintonge",
+    "RC Jonzac HS"
+   ],
+   "domains": [],
+   "label": "Rugby Club jonzacais Haute Saintonge",
+   "qid": "Q119410867",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "TOAC",
+    "Toulouse OAC"
+   ],
+   "domains": [],
+   "label": "Toulouse Olympique Aérospatiale Club",
+   "qid": "Q119413542",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FC Toulouse",
+    "FCT",
+    "Football Club toulousain"
+   ],
+   "domains": [],
+   "label": "Football Club de Toulouse",
+   "qid": "Q119414127",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SO Ugine Albertville",
+    "SO Ugine Albertville rugby",
+    "SOU Albertville rugby",
+    "SOUA",
+    "SOUAR"
+   ],
+   "domains": [
+    "soua-rugby.fr"
+   ],
+   "label": "Stade olympique Ugine Albertville rugby",
+   "qid": "Q119415425",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CA Pontarlier rugby",
+    "CAP Rugby",
+    "RC Pontarlier",
+    "Rugby club pontissalien rugby"
+   ],
+   "domains": [
+    "rugby-pontarlier.com"
+   ],
+   "label": "Club athlétique pontissalien rugby",
+   "qid": "Q119418542",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Entente sportive de Viry-Châtillon - Rugby",
+    "ES Viry-Châtillon",
+    "ES Viry-Châtillon - Rugby",
+    "Viry RC",
+    "Viry Rugby Club",
+    "Viry-Châtillon RC"
+   ],
+   "domains": [],
+   "label": "Viry-Châtillon Rugby Club",
+   "qid": "Q119418730",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "US Perpignan"
+   ],
+   "domains": [],
+   "label": "Union sportive perpignanaise",
+   "qid": "Q119423249",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "AS Perpignan"
+   ],
+   "domains": [],
+   "label": "Association sportive perpignanaise",
+   "qid": "Q119423381",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SOP",
+    "SO Perpignan",
+    "Stade olympien perpignanais",
+    "Stade olympique perpignanais"
+   ],
+   "domains": [],
+   "label": "Stade olympique Perpignan",
+   "qid": "Q119423480",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "AC Perpignan",
+    "Arlequin club perpignanais"
+   ],
+   "domains": [],
+   "label": "Arlequins Club perpignanais",
+   "qid": "Q119423683",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "RC Haute Bresse"
+   ],
+   "domains": [
+    "rchb.fr"
+   ],
+   "label": "Rugby Club Haute Bresse",
+   "qid": "Q119849076",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "ESC"
+   ],
+   "domains": [],
+   "label": "Espira Sporting Club",
+   "qid": "Q126687791",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BAC",
+    "BAIXAS ATHLETIC CLUB"
+   ],
+   "domains": [],
+   "label": "Baixas Athletic Club",
+   "qid": "Q126687798",
+   "siren": [
+    "450232608"
+   ]
+  },
+  {
+   "aliases": [
+    "ASP"
+   ],
+   "domains": [],
+   "label": "AS Peyrestortes",
+   "qid": "Q126688090",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "ESP",
+    "ES-Prats",
+    "Etoile Sportive Pratéenne",
+    "POC XV"
+   ],
+   "domains": [
+    "pratsdemollo.rugby.free.fr"
+   ],
+   "label": "Émulation sportive pratéene",
+   "qid": "Q130617828",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "calaisrugby.ffr.fr"
+   ],
+   "label": "Amicale Rugby Calaisien",
+   "qid": "Q131470561",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Olympique miélanais rugby",
+   "qid": "Q131669341",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SC Royan"
+   ],
+   "domains": [],
+   "label": "Sporting Club royannais",
+   "qid": "Q131820462",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Union Drancy Saint-Denis"
+   ],
+   "domains": [],
+   "label": "Union Drancy Saint-Denis rugby 93",
+   "qid": "Q131826517",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "USD",
+    "Union sportive dacquoise rugby Landes",
+    "Union sportive Dax rugby Landes",
+    "US Dax",
+    "US Dax rugby Landes"
+   ],
+   "domains": [
+    "usdrugby-landes.fr"
+   ],
+   "label": "Union sportive dacquoise",
+   "qid": "Q1319827",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Union sportive bressane",
+    "US bressane",
+    "US bressane PA",
+    "US bressane Pays de l'Ain",
+    "USBPA"
+   ],
+   "domains": [
+    "usbparugby.com"
+   ],
+   "label": "Union sportive bressane Pays de l'Ain",
+   "qid": "Q1333931",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Union Sportive Luzechoise Rugby",
+    "US Luzech"
+   ],
+   "domains": [
+    "luzech.ffr.fr"
+   ],
+   "label": "Union Sportive Luzechoise",
+   "qid": "Q134301169",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Stade français",
+    "SF",
+    "Stade français CASG",
+    "Stade français CASG Paris",
+    "Stade français CASG-Paris",
+    "Stade français Paris",
+    "Stade français Paris CASG"
+   ],
+   "domains": [
+    "stade.fr"
+   ],
+   "label": "Stade français Paris rugby",
+   "qid": "Q1361000",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "RC Amiens",
+   "qid": "Q137397080",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FC Grenoble Rugby",
+    "Football Club de Grenoble Alpes rugby"
+   ],
+   "domains": [
+    "fcgrugby.com"
+   ],
+   "label": "Football Club de Grenoble rugby",
+   "qid": "Q1387142",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Saint-Denis union sport rugby",
+    "Saint-Denis USR",
+    "Saint-Denis RC",
+    "Saint-Denis Rugby Club"
+   ],
+   "domains": [],
+   "label": "Saint-Denis Rugby 93",
+   "qid": "Q139595509",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "XV Corsaire Saint-Malo Rugby"
+   ],
+   "domains": [],
+   "label": "XV Corsaire Saint-Malo",
+   "qid": "Q139736111",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Rugby Grenade"
+   ],
+   "domains": [
+    "grenadesports-rugby.fr"
+   ],
+   "label": "Rugby Grenade Sports",
+   "qid": "Q139736134",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "4 Cantons Bastides Haut Agenais Périgord"
+   ],
+   "domains": [],
+   "label": "4 Cantons BHAP",
+   "qid": "Q139736140",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Association sportive layracaise"
+   ],
+   "domains": [],
+   "label": "AS Layrac",
+   "qid": "Q139736149",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "US Nantua",
+    "US Nantua Haut Bugey Rugby"
+   ],
+   "domains": [
+    "nantua-rugby.com"
+   ],
+   "label": "US Nantua HBR",
+   "qid": "Q139737238",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Union sportive Colomiers rugby"
+   ],
+   "domains": [
+    "colomiers-rugby.com"
+   ],
+   "label": "Colomiers Rugby",
+   "qid": "Q1407380",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Sporting",
+    "Sporting Union agenais",
+    "SU Agen",
+    "SU Agen Lot-et-Garonne",
+    "SUA"
+   ],
+   "domains": [
+    "agen-rugby.com"
+   ],
+   "label": "Sporting Union Agen Lot-et-Garonne",
+   "qid": "Q1422627",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Union sportive Arlequins perpignanais",
+    "Union sportive athlétique Perpignan-Roussillon",
+    "USAP"
+   ],
+   "domains": [
+    "usap.fr"
+   ],
+   "label": "USA Perpignan",
+   "qid": "Q1471265",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SCA",
+    "SC Albi"
+   ],
+   "domains": [
+    "sca-albi.fr"
+   ],
+   "label": "Sporting Club albigeois",
+   "qid": "Q1473503",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "section-paloise.com"
+   ],
+   "label": "Section paloise",
+   "qid": "Q15055309",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "RO Agde"
+   ],
+   "domains": [
+    "roagde.fr"
+   ],
+   "label": "Rugby olympique agathois",
+   "qid": "Q16382410",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "sucxv.fr"
+   ],
+   "label": "Stade union cavaillonnais",
+   "qid": "Q16677846",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "AS Béziers",
+    "AS Béziers Hérault",
+    "ASBH",
+    "Association sportive Béziers Hérault",
+    "Association sportive biterroise",
+    "ASB"
+   ],
+   "domains": [
+    "asbh.net"
+   ],
+   "label": "Association sportive de Béziers Hérault",
+   "qid": "Q1781643",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Stade montois",
+    "SMR",
+    "SM"
+   ],
+   "domains": [
+    "stademontoisrugby.fr"
+   ],
+   "label": "Stade montois rugby",
+   "qid": "Q1782908",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "RCT",
+    "RC Toulon"
+   ],
+   "domains": [
+    "rctoulon.com"
+   ],
+   "label": "Rugby club toulonnais",
+   "qid": "Q1857064",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "UBB",
+    "Union Stade bordelais Club athlétique Bordeaux Bègles Gironde",
+    "USB-CABBG"
+   ],
+   "domains": [
+    "ubbrugby.com"
+   ],
+   "label": "Union Bordeaux Bègles",
+   "qid": "Q1865460",
+   "siren": [
+    "491358362"
+   ]
+  },
+  {
+   "aliases": [
+    "USM",
+    "MTG XV",
+    "US Montauban"
+   ],
+   "domains": [
+    "usmsapiac.fr"
+   ],
+   "label": "Union sportive montalbanaise",
+   "qid": "Q2002695",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Hasparren AC"
+   ],
+   "domains": [
+    "hasparren-rugby.eus"
+   ],
+   "label": "Hasparren Athletic Club",
+   "qid": "Q25477072",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Inthalatz Larressore",
+   "qid": "Q25477073",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "US Saint-Palais"
+   ],
+   "domains": [
+    "rugbysaintpalais.com"
+   ],
+   "label": "Union sportive saint-palaisienne",
+   "qid": "Q25477076",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "ASVEL Rugby"
+   ],
+   "domains": [
+    "asvel-rugby.fr"
+   ],
+   "label": "Association sportive de Villeurbanne et de l’Éveil lyonnais rugby",
+   "qid": "Q2868101",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "AS Fleurance",
+    "ASF Fleurance Rugby",
+    "Association sportive fleurantine rugby"
+   ],
+   "domains": [
+    "asf-rugby.fr"
+   ],
+   "label": "Association sportive fleurantine",
+   "qid": "Q2868124",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Association sportive montferrandaise",
+    "AS Montferrand",
+    "ASM Clermont",
+    "ASMCA"
+   ],
+   "domains": [
+    "asm-rugby.com"
+   ],
+   "label": "ASM Clermont Auvergne",
+   "qid": "Q297901",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Entente rugby Miélan Mirande Rabastens"
+   ],
+   "domains": [],
+   "label": "Entente Astarac Bigorre XV",
+   "qid": "Q3054979",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "esnanterre.com"
+   ],
+   "label": "Entente sportive Nanterre",
+   "qid": "Q3055031",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Brive Olympique",
+    "EV Malemort BO",
+    "La Vigilante de Malemort"
+   ],
+   "domains": [
+    "evmbo.com"
+   ],
+   "label": "Entente vigilante Malemort Brive olympique",
+   "qid": "Q3055043",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FC Moulins",
+    "FC Moulins rugby"
+   ],
+   "domains": [
+    "rugby-moulins.com"
+   ],
+   "label": "Football club moulinois rugby",
+   "qid": "Q3076669",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "HAC Rugby"
+   ],
+   "domains": [
+    "hacrugby.com"
+   ],
+   "label": "Le Havre Athletic Club rugby",
+   "qid": "Q3223482",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "pmr.ffr.fr"
+   ],
+   "label": "Pays Médoc Rugby",
+   "qid": "Q3373335",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "rugby-auxerre.fr"
+   ],
+   "label": "Rugby Club auxerrois",
+   "qid": "Q3452856",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "RCV",
+    "RC Vannes"
+   ],
+   "domains": [
+    "rugbyclubvannes.bzh"
+   ],
+   "label": "Rugby club vannetais",
+   "qid": "Q3452866",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "RO Lunel",
+    "ROL"
+   ],
+   "domains": [
+    "lunel-rugby.ffr.fr"
+   ],
+   "label": "Rugby olympique lunellois",
+   "qid": "Q3452872",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Stade domontois",
+    "Stade domontois Val-d'Oise"
+   ],
+   "domains": [
+    "stadedomontois.net"
+   ],
+   "label": "Stade domontois rugby club",
+   "qid": "Q3496061",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SO Millau rugby",
+    "Stade olympique millavois"
+   ],
+   "domains": [
+    "somrugby.ffr.fr"
+   ],
+   "label": "Stade olympique millavois rugby Aveyron",
+   "qid": "Q3496217",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Union sportive montmélian",
+    "US Montmélian",
+    "US Montmélian rugby"
+   ],
+   "domains": [
+    "us-montmelian.com"
+   ],
+   "label": "Union sportive Montmélian rugby",
+   "qid": "Q3550494",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Union sportive Morlaàs",
+    "US Morlaàs"
+   ],
+   "domains": [
+    "usmorlaasrugby.net"
+   ],
+   "label": "Union sportive Morlaàs rugby",
+   "qid": "Q3550496",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "USC",
+    "Union sportive carcassonnaise",
+    "US Carcassonne"
+   ],
+   "domains": [
+    "uscarcassonne.com"
+   ],
+   "label": "Union sportive carcassonnaise XV",
+   "qid": "Q3550526",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "USS",
+    "US La Seyne",
+    "US seynoise"
+   ],
+   "domains": [
+    "usseynoise-rugby.com"
+   ],
+   "label": "Union sportive seynoise",
+   "qid": "Q3550596",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "ES Monteux"
+   ],
+   "domains": [
+    "es-monteux.com"
+   ],
+   "label": "Étoile sportive montilienne",
+   "qid": "Q3592524",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le Stade",
+    "Les Rouge et Noir"
+   ],
+   "domains": [
+    "stadetoulousain.fr"
+   ],
+   "label": "Stade toulousain",
+   "qid": "Q431412",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "RC Massy",
+    "RC Massy Essonne",
+    "RCME"
+   ],
+   "domains": [
+    "rcmessonne.com"
+   ],
+   "label": "Rugby Club Massy Essonne",
+   "qid": "Q46387",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "International Athletic Club",
+   "qid": "Q48746886",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Union sportive Le Pontet XIII",
+   "qid": "Q55600107",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "MHR",
+    "Montpellier HR"
+   ],
+   "domains": [
+    "montpellier-rugby.com"
+   ],
+   "label": "Montpellier Hérault Rugby",
+   "qid": "Q596985",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SO villelonguet"
+   ],
+   "domains": [],
+   "label": "Stade olympique villelonguet",
+   "qid": "Q60846943",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Aviron bayonnais",
+    "Bayonne Rugby - Aviron bayonnais rugby pro"
+   ],
+   "domains": [
+    "abrugby.fr"
+   ],
+   "label": "Aviron bayonnais rugby pro",
+   "qid": "Q630112",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "TPR",
+    "Stadoceste tarbais",
+    "Tarbes PR",
+    "Tarbes Pyrénées rugby"
+   ],
+   "domains": [
+    "tpr65.com"
+   ],
+   "label": "Stado Tarbes Pyrénées rugby",
+   "qid": "Q634843",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "USO",
+    "US Oyonnax",
+    "Union sportive Oyonnax rugby",
+    "US Oyonnax rugby"
+   ],
+   "domains": [
+    "oyonnaxrugby.com"
+   ],
+   "label": "Oyonnax Rugby",
+   "qid": "Q636019",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Stade Aurillacois"
+   ],
+   "domains": [
+    "stade-aurillacois.fr"
+   ],
+   "label": "Stade Aurillacois Cantal Auvergne",
+   "qid": "Q753618",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FCA",
+    "FC Auch",
+    "Football Club auscitain",
+    "Football Vélo Club auscitain",
+    "Union vélocipédique du Gers"
+   ],
+   "domains": [],
+   "label": "Football Club Auch Gers",
+   "qid": "Q779116",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Biarritz olympique",
+    "BOPB"
+   ],
+   "domains": [
+    "bo-pb.com"
+   ],
+   "label": "Biarritz olympique Pays basque",
+   "qid": "Q855496",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CO"
+   ],
+   "domains": [
+    "castres-olympique.com"
+   ],
+   "label": "Castres olympique",
+   "qid": "Q964957",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Entente Baixas Espira de l'Agly Peyrestortes",
+    "Entente des Avens",
+    "ESC-BAC",
+    "SCAR-ESC-BAC"
+   ],
+   "domains": [],
+   "label": "ESC BAC ASP",
+   "qid": "Q97196490",
+   "siren": []
+  }
+ ],
+ "phrase": "Club de rugby à XV en France",
+ "sujet_id": "g-q43009164",
+ "where": "?item wdt:P31 wd:Q43009164 ; wdt:P17 wd:Q142 ."
+}

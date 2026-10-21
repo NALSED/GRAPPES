@@ -1,0 +1,351 @@
+{
+ "classes": [
+  "Q2088357"
+ ],
+ "entities": [
+  {
+   "aliases": [
+    "Le Concert de la Loge olympique"
+   ],
+   "domains": [
+    "concertdelaloge.com"
+   ],
+   "label": "Le Concert de la Loge",
+   "qid": "Q106813223",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "L'Yriade",
+   "qid": "Q113551562",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Quintette de cuivres Ars Nova",
+   "qid": "Q115694111",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "arsantiqua.free.fr"
+   ],
+   "label": "Ars Antiqua Paris",
+   "qid": "Q117458740",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "quintettemoragues.com"
+   ],
+   "label": "Quintette Moraguès",
+   "qid": "Q122184695",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Chin Na Na Poun",
+   "qid": "Q12948512",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "diabolusinmusica.fr"
+   ],
+   "label": "Diabolus in Musica",
+   "qid": "Q1641107",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Concert des Amateurs",
+   "qid": "Q16543185",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre national de création musicale",
+    "classe de musique électroacoustique du Conservatoire national de Marseille",
+    "Gmem-CNCM-Marseille"
+   ],
+   "domains": [
+    "gmem.org"
+   ],
+   "label": "Groupe de musique expérimentale de Marseille",
+   "qid": "Q16639316",
+   "siren": [
+    "308758226"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Les Ménestriers",
+   "qid": "Q16655150",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Akosh Szelevenyi Ensemble",
+   "qid": "Q17354555",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "arts-florissants.com"
+   ],
+   "label": "Les Arts Florissants",
+   "qid": "Q1752532",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Ensemble vocal Allegro",
+   "qid": "Q19972881",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ensemblelareveuse.com"
+   ],
+   "label": "La Rêveuse",
+   "qid": "Q20278644",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Association des Fanfares d'Eglises (Volksberg). Ensemble de cuivres",
+   "qid": "Q20828259",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le Concert de la Loge Olympique"
+   ],
+   "domains": [
+    "concertdelaloge.com"
+   ],
+   "label": "Concert de la Loge Olympique",
+   "qid": "Q22683783",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lestalenslyriques.com"
+   ],
+   "label": "Les Talens Lyriques",
+   "qid": "Q2598931",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Académie de musique des grandes écoles et universités",
+   "qid": "Q2822354",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Awek",
+   "qid": "Q2874677",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Belly Button",
+   "qid": "Q2894997",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ensemblesyntagma.net"
+   ],
+   "label": "Ensemble Syntagma",
+   "qid": "Q3054857",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Unama",
+   "qid": "Q31723098",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "simphonie-du-marais.org"
+   ],
+   "label": "La Simphonie du Marais",
+   "qid": "Q3212832",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "leconcertdastree.fr"
+   ],
+   "label": "Le Concert d'Astrée",
+   "qid": "Q3221689",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "le-palaisroyal.com"
+   ],
+   "label": "Le Palais royal",
+   "qid": "Q3225163",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lesombres.fr"
+   ],
+   "label": "Les Ombres",
+   "qid": "Q3234344",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Percussions de Strasbourg"
+   ],
+   "domains": [
+    "percussionsdestrasbourg.com"
+   ],
+   "label": "Les Percussions de Strasbourg",
+   "qid": "Q3234524",
+   "siren": [
+    "303587372"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Les Pires",
+   "qid": "Q3234743",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Maluzerne",
+   "qid": "Q3284654",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Orchestre des équipages de la flotte de Toulon"
+   ],
+   "domains": [
+    "defense.gouv.fr"
+   ],
+   "label": "Musique des équipages de la flotte",
+   "qid": "Q3328664",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Ensemble Instrumental à Vent de Paris"
+   ],
+   "domains": [],
+   "label": "Quintette à vent de Paris",
+   "qid": "Q3414633",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "myownprivatealaska.com"
+   ],
+   "label": "My Own Private Alaska",
+   "qid": "Q4044708",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "jacquesmoderne.com"
+   ],
+   "label": "Ensemble Jacques Moderne",
+   "qid": "Q4066905",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ensemble-alternance.com"
+   ],
+   "label": "alternance",
+   "qid": "Q5379944",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Five Centuries Ensemble",
+   "qid": "Q5455850",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Stradivaria"
+   ],
+   "domains": [
+    "stradivaria.org"
+   ],
+   "label": "Ensemble Stradivaria",
+   "qid": "Q54862390",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "tmplus.org"
+   ],
+   "label": "TM+",
+   "qid": "Q56319974",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Les Nièces de Rameau (ensemble musical)"
+   ],
+   "domains": [],
+   "label": "Les Nièces de Rameau",
+   "qid": "Q73739094",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Pygmalion"
+   ],
+   "domains": [
+    "ensemblepygmalion.com"
+   ],
+   "label": "Ensemble Pygmalion",
+   "qid": "Q92198830",
+   "siren": []
+  }
+ ],
+ "phrase": "Ensemble musical en France",
+ "sujet_id": "g-q2088357",
+ "where": "?item wdt:P31 wd:Q2088357 ; wdt:P17 wd:Q142 ."
+}

@@ -1,0 +1,16 @@
+{
+ "id": "g-q43009164",
+ "phrase": "Club de rugby à XV en France",
+ "jeu": "validation",
+ "difficulte": "difficile",
+ "origine": "genere",
+ "classe": "Q43009164",
+ "r": 105,
+ "part_site": 0.657,
+ "part_siren": 0.038,
+ "notes": "club de rugby à XV",
+ "where": "?item wdt:P31 wd:Q43009164 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q43009164"
+ ]
+}

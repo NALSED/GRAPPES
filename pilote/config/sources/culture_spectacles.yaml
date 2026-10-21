@@ -1,0 +1,42 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: culture_spectacles
+nom: Entrepreneurs de spectacles (ministère de la Culture)
+description: Licences d'entrepreneurs de spectacles vivants.
+trouve: compagnies, troupes, lieux de spectacle
+genres:
+- association
+- entreprise
+pays:
+- FR
+consomme:
+- sujet
+produit:
+- nom
+- ville
+usages:
+- culture
+main: premiere
+origine: registre
+famille: fichier
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.7
+defaut:
+  chercher: false
+  verifier: false
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+moteur:
+  prise: culture_spectacles
+verifie_le: '2026-10-13'
+note: 'Mesurée en D68 : peu de gain hors des sujets pour lesquels elle avait été choisie.
+  Éteinte par défaut.'
+exemple_reponse: exemples/culture_spectacles.csv

@@ -1,0 +1,18 @@
+[
+  {
+    "organisation_number": 12345678,
+    "reg_charity_number": 1189012,
+    "group_subsid_suffix": 0,
+    "charity_name": "LONDON RIVERSIDE ROWING CLUB",
+    "reg_status": "R",
+    "date_of_registration": "2019-03-15T00:00:00"
+  },
+  {
+    "organisation_number": 87654321,
+    "reg_charity_number": 1194567,
+    "group_subsid_suffix": 0,
+    "charity_name": "HIGHLAND MOUNTAIN RESCUE ASSOCIATION",
+    "reg_status": "R",
+    "date_of_registration": "2021-07-22T00:00:00"
+  }
+]

@@ -1,0 +1,70 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: gnews
+nom: GNews
+description: 'Articles de presse du monde entier par mot-clé. Clé gratuite : 100 requêtes par jour, 12
+  heures de retard, texte tronqué.'
+trouve: acteurs cités dans la presse mondiale (texte tronqué)
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- presse
+main: seconde
+origine: presse
+famille: api
+roles:
+- chercher
+- verifier
+cle: GNEWS_API_KEY
+cout:
+  unite: requête
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 3000
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/gnews.json
+verifie_le: '2026-10-13'
+note: 'Offre gratuite : 100 requêtes par jour (environ 3 000 par mois), 12 heures de retard, texte tronqué.
+  À vérifier chez le fournisseur.'
+moteur:
+  definition:
+    id: gnews
+    type: http
+    public: true
+    url: https://gnews.io/api/v4/search
+    method: GET
+    auth:
+      type: query
+      name: apikey
+      env: GNEWS_API_KEY
+    params:
+      q: '{mots_cles}'
+      max: '{limite}'
+    response:
+      format: json
+      items: articles
+    fields:
+      title: title
+      url: url
+      description: description
+      date: publishedAt
+      id: url
+    observation:
+      ecosysteme: presse
+      source: source.url
+      nom: source.name
+    quota: 10
+    raison: article GNews pour « {mot_cle} »

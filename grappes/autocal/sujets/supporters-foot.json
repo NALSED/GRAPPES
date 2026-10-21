@@ -1,0 +1,17 @@
+{
+ "id": "supporters-foot",
+ "phrase": "Les groupes de supporters de clubs de football français",
+ "jeu": "validation",
+ "difficulte": "difficile",
+ "origine": "amorcage",
+ "classe": "",
+ "r": 4,
+ "part_site": 0.25,
+ "part_siren": 0.25,
+ "notes": "référence très petite : R-précision bruitée",
+ "where": "?item wdt:P31/wdt:P279* wd:Q1070414 . ?item wdt:P17 wd:Q142 . ",
+ "classes_ok": [
+  "Q1070414",
+  "Q386636"
+ ]
+}

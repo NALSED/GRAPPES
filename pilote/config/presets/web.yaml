@@ -1,0 +1,7 @@
+# Carte d'un preset. Ses SOURCES ne sont pas écrites ici : elles sont calculées depuis les usages que chaque source déclare.
+id: web
+nom: Web
+ordre: 1
+phrase: 'Web : trouve des pages et des sites qui parlent du sujet. Résultats larges,
+  fiabilité faible.'
+usage: web

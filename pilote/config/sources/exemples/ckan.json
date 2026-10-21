@@ -1,0 +1,13 @@
+{
+ "help": "https://portail.example/api/3/action/help_show?name=organization_list",
+ "success": true,
+ "result": [
+  {
+   "id": "o1",
+   "name": "ministere-exemple",
+   "display_name": "Ministère Exemple",
+   "title": "Ministère Exemple",
+   "is_organization": true
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "id": "cac40",
+ "phrase": "Les entreprises du CAC 40",
+ "jeu": "validation",
+ "difficulte": "facile",
+ "origine": "amorcage",
+ "classe": "",
+ "r": 40,
+ "part_site": 1.0,
+ "part_siren": 0.925,
+ "notes": "composition actuelle de l'indice (P361 sans date de fin)",
+ "where": "?item p:P361 ?s . ?s ps:P361 wd:Q648828 . FILTER NOT EXISTS { ?s pq:P582 ?e } ",
+ "classes_ok": [
+  "Q4830453",
+  "Q6881511",
+  "Q783794"
+ ]
+}

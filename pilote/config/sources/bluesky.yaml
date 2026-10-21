@@ -1,0 +1,42 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: bluesky
+nom: Bluesky (comptes)
+description: Les comptes Bluesky trouvés par mot-clé, par la recherche publique. Aucune clé.
+trouve: comptes Bluesky
+genres:
+- compte
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- lieu
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.2
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/bluesky.json
+verifie_le: '2026-10-13'
+note: 'Option : le réseau est petit et peu local, utile pour certains sujets seulement.'
+moteur:
+  adaptateur: bluesky

@@ -1,0 +1,39 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: rss_letudiant
+nom: Flux L'Étudiant
+description: Flux d'articles public de letudiant.fr.
+trouve: articles de presse
+genres:
+- page
+pays:
+- FR
+consomme:
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- presse
+main: seconde
+origine: presse
+famille: rss
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: true
+  verifier: false
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+moteur:
+  prise: rss_letudiant
+verifie_le: '2026-10-13'
+exemple_reponse: exemples/rss_letudiant.xml

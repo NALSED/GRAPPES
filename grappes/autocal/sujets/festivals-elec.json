@@ -1,0 +1,18 @@
+{
+ "id": "festivals-elec",
+ "phrase": "Les festivals de musique électronique en France",
+ "jeu": "dev",
+ "difficulte": "facile",
+ "origine": "amorcage",
+ "classe": "",
+ "r": 7,
+ "part_site": 1.0,
+ "part_siren": 0.0,
+ "notes": "référence très petite : R-précision bruitée",
+ "where": "?item wdt:P31/wdt:P279* wd:Q868557 ; wdt:P17 wd:Q142 ; wdt:P136 ?g . ?g wdt:P279* wd:Q9778 . ",
+ "classes_ok": [
+  "Q868557",
+  "Q131321883",
+  "Q15275719"
+ ]
+}

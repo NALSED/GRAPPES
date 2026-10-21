@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Journal Exemple</title>
+<link>https://journal.example/</link>
+<description>L'actualité locale de Ville-Exemple et du Club Imaginaire</description>
+<language>fr</language>
+<lastBuildDate>Mon, 12 Oct 2026 10:15:00 GMT</lastBuildDate>
+<item>
+<title>Club Imaginaire : victoire 3-1 au derby de Ville-Exemple</title>
+<link>https://journal.example/sport/2026/10/12/victoire-derby</link>
+<description>Le Club Imaginaire s'impose face à son rival historique dans une ambiance électrique au stade municipal de Ville-Exemple. Trois buts marqués en seconde période scellent le sort du match.</description>
+<pubDate>Mon, 12 Oct 2026 10:15:00 GMT</pubDate>
+<guid isPermaLink="true">https://journal.example/sport/2026/10/12/victoire-derby</guid>
+</item>
+<item>
+<title>Ville-Exemple : le maire reçoit les champions du Club Imaginaire</title>
+<link>https://journal.example/actualites/2026/10/12/reception-mairie</link>
+<description>Une réception officielle est organisée à l'hôtel de ville de Ville-Exemple pour féliciter l'équipe du Club Imaginaire après son titre de champion régional.</description>
+<pubDate>Mon, 12 Oct 2026 14:30:00 GMT</pubDate>
+<guid isPermaLink="true">https://journal.example/actualites/2026/10/12/reception-mairie</guid>
+</item>
+<item>
+<title>Club Imaginaire : la nouvelle académie ouvre ses portes à Ville-Exemple</title>
+<link>https://journal.example/sport/2026/10/12/inauguration-academie</link>
+<description>Le centre de formation flambant neuf du Club Imaginaire accueille ses premiers pensionnaires. Un investissement de 5 millions d'euros financé par la ville et le club pour former la relève locale.</description>
+<pubDate>Mon, 12 Oct 2026 16:45:00 GMT</pubDate>
+<guid isPermaLink="true">https://journal.example/sport/2026/10/12/inauguration-academie</guid>
+</item>
+</channel>
+</rss>

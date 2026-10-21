@@ -1,0 +1,30 @@
+# Catalogue des bases officielles : Nouvelle-Zélande. Une DONNÉE : corriger une entrée = modifier ce fichier. Taille : demandée au serveur, jamais écrite ici.
+pays: "NZ"
+nom: "Nouvelle-Zélande"
+bases:
+  - id: companies-office
+    nom: "Companies Office"
+    contenu: "Sociétés néo-zélandaises."
+    usage: "entreprises"
+    acces: "site"
+    licence: "à vérifier"
+    url: "https://companies-register.companiesoffice.govt.nz/"
+    verifie_le: 2026-10-18
+  - id: charities-register
+    nom: "Charities Register"
+    contenu: "Organisations caritatives enregistrées."
+    usage: "associations"
+    acces: "site"
+    licence: "à vérifier"
+    url: "https://register.charities.govt.nz/"
+    verifie_le: 2026-10-18
+  - id: osm-geofabrik
+    nom: "OpenStreetMap (extrait Geofabrik)"
+    contenu: "Lieux cartographiés (stades, salles, centres, locaux) du pays, mis à jour chaque jour."
+    usage: "lieux"
+    acces: "fichier"
+    licence: "ODbL"
+    url: "https://download.geofabrik.de/australia-oceania/new-zealand.html"
+    telechargement: "https://download.geofabrik.de/australia-oceania/new-zealand-latest.osm.pbf"
+    source: "osm-overpass"
+    verifie_le: 2026-10-18

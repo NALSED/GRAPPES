@@ -1,0 +1,31 @@
+{
+  "items": [
+    {
+      "title": "Sterling Horizon Limited",
+      "company_number": "12345678",
+      "company_status": "active",
+      "company_type": "ltd",
+      "date_of_creation": "2019-03-15",
+      "address": {
+        "locality": "London",
+        "postal_code": "EC2A 4NE",
+        "address_line_1": "27 Old Street"
+      }
+    },
+    {
+      "title": "Meridian Trade Solutions Ltd",
+      "company_number": "87654321",
+      "company_status": "active",
+      "company_type": "ltd",
+      "date_of_creation": "2021-07-22",
+      "address": {
+        "locality": "Manchester",
+        "postal_code": "M1 4BT",
+        "address_line_1": "14 Spring Gardens"
+      }
+    }
+  ],
+  "total_results": 2,
+  "items_per_page": 20,
+  "start_index": 0
+}

@@ -1,0 +1,31 @@
+{
+  "data": [
+    {
+      "display_name": "r/TechInnovations",
+      "title": "Tech Innovations",
+      "public_description": "A community for discussing the latest breakthroughs in technology, AI, and computing.",
+      "subscribers": 127500,
+      "over18": false,
+      "url": "/r/TechInnovations/",
+      "created_utc": 1609459200
+    },
+    {
+      "display_name": "r/CulinaryArts",
+      "title": "Culinary Arts",
+      "public_description": "Share recipes, techniques, and food photography. From home cooks to professional chefs.",
+      "subscribers": 89200,
+      "over18": false,
+      "url": "/r/CulinaryArts/",
+      "created_utc": 1577836800
+    },
+    {
+      "display_name": "r/AdultFiction",
+      "title": "Adult Fiction Writers",
+      "public_description": "NSFW creative writing community for mature fiction, erotica, and adult storytelling.",
+      "subscribers": 45600,
+      "over18": true,
+      "url": "/r/AdultFiction/",
+      "created_utc": 1640995200
+    }
+  ]
+}

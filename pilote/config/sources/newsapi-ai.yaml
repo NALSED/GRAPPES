@@ -1,0 +1,75 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: newsapi-ai
+nom: NewsAPI.ai (Event Registry)
+description: Articles de presse du monde entier regroupés par événement. 2 000 recherches gratuites, puis
+  abonnement payant à partir de 90 $ par mois.
+trouve: acteurs cités dans la presse mondiale (par événement)
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- presse
+main: seconde
+origine: presse
+famille: api
+roles:
+- chercher
+- verifier
+cle: NEWSAPI_AI_KEY
+cout:
+  unite: recherche
+  vers_dollar: 0.045
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+avertissement: 'Service payant : après les 2 000 recherches gratuites, l''abonnement démarre à 90 $ par
+  mois. Le coût estimé est compté dans votre plafond mensuel (tarif indicatif, à vérifier chez le fournisseur).'
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/newsapi-ai.json
+verifie_le: '2026-10-13'
+note: Tarif indicatif (90 $ pour environ 2 000 recherches). Non vérifiée contre le service réel (clé requise).
+  La clé est envoyée en paramètre d'adresse comme le service le permet.
+moteur:
+  definition:
+    id: newsapi-ai
+    type: http
+    public: true
+    url: https://eventregistry.org/api/v1/article/getArticles
+    method: GET
+    auth:
+      type: query
+      name: apiKey
+      env: NEWSAPI_AI_KEY
+    params:
+      keyword: '{mots_cles}'
+      resultType: articles
+      articlesCount: '{limite}'
+      articlesSortBy: date
+      articlesArticleBodyLen: '300'
+    response:
+      format: json
+      items: articles.results
+    fields:
+      title: title
+      url: url
+      description: body
+      date: dateTime
+      id: uri
+    observation:
+      ecosysteme: presse
+      source: source.uri
+      nom: source.title
+    quota: 10
+    raison: article NewsAPI.ai pour « {mot_cle} »

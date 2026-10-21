@@ -1,0 +1,65 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: searxng
+nom: SearXNG (auto-hébergé)
+description: 'Méta-moteur libre installé sur cette machine : il interroge plusieurs
+  moteurs à la fois. Aucune clé.'
+trouve: pages web
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- web
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: true
+  verifier: false
+note: 'Les moteurs interrogés peuvent le limiter ou le bloquer : pas de garantie de
+  service.'
+exemple_reponse: exemples/searxng.json
+test_connexion:
+  methode: GET
+  url: http://127.0.0.1:8888/healthz
+moteur:
+  definition:
+    id: searxng
+    type: http
+    public: true
+    url: http://127.0.0.1:8888/search
+    method: GET
+    params:
+      q: '{mots_cles}'
+      format: json
+    limite_resultats: 20
+    response:
+      format: json
+      items: results
+    fields:
+      title: title
+      url: url
+      description: content
+      id: url
+    quota: 30
+    raison: résultat SearXNG pour « {mot_cle} »

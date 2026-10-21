@@ -1,0 +1,22 @@
+{
+ "results": {
+  "bindings": [
+   {
+    "o": {
+     "value": "http://data.bnf.fr/ark:/12148/cbexemple1"
+    },
+    "nom": {
+     "value": "Club Exemple de Handball"
+    }
+   },
+   {
+    "o": {
+     "value": "http://data.bnf.fr/ark:/12148/cbexemple2"
+    },
+    "nom": {
+     "value": "Fédération Imaginaire de Handball"
+    }
+   }
+  ]
+ }
+}

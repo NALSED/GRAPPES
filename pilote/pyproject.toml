@@ -1,0 +1,29 @@
+[project]
+name = "pilote"
+version = "0.1.0"
+description = "Pilote : lancer, trier et décider les recherches de grappes"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = ["fastapi", "uvicorn", "sqlalchemy>=2", "pyyaml>=6", "apscheduler>=3.10,<4", "openpyxl>=3.1", "cleanco>=2"]
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx", "ruff", "playwright"]
+
+[project.scripts]
+pilote = "pilote.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+# Avertissement de la bibliothèque de test (httpx sous starlette), sans rapport avec pilote : répété à chaque lancement, il ne dit rien d'utile.
+filterwarnings = ["ignore::DeprecationWarning:fastapi.testclient", "ignore:Using `httpx` with `starlette.testclient`"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query"]

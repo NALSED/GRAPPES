@@ -1,0 +1,7 @@
+# Motifs de rejet de la page Tri : au lieu de « rejeté » tout court, on dit POURQUOI, à une touche. Ensuite Tri montre quelle source produit
+# le plus de rejets de chaque motif, donc quelle source corriger. Les touches se changent dans Tri (ou ici) ; elles ne peuvent pas être
+# celles des gestes déjà pris (flèches, G garder, R rejeter, P plus tard, Z annuler).
+motifs:
+  - {id: mauvais_type, libelle: Mauvais type, touche: "1"}
+  - {id: hors_zone, libelle: Hors zone, touche: "2"}
+  - {id: doublon, libelle: Doublon, touche: "3"}

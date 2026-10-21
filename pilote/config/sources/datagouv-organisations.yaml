@@ -1,0 +1,46 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: datagouv-organisations
+nom: data.gouv.fr (organisations publiques)
+description: 'Les organisations qui publient sur data.gouv.fr : ministères, collectivités,
+  établissements publics, universités. Par le serveur MCP officiel.'
+trouve: administrations, collectivités, institutions publiques, universités
+genres:
+- administration
+pays:
+- FR
+usages:
+- organisations
+famille: mcp
+confiance: 0.9
+consomme:
+- sujet
+- pays
+produit:
+- nom
+- origine
+- ville
+- site
+- numero
+main: premiere
+origine: registre
+roles:
+- chercher
+- verifier
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+defaut:
+  chercher: true
+  verifier: true
+exemple_reponse: exemples/datagouv-organisations.txt
+moteur:
+  adaptateur: datagouv_organisations
+  parametres:
+    mcp: https://mcp.data.gouv.fr/mcp

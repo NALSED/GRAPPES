@@ -1,0 +1,14 @@
+{
+ "id": "temoin-sorciers",
+ "phrase": "Les écoles de sorcellerie de Haute-Savoie",
+ "jeu": "test",
+ "difficulte": "temoin",
+ "origine": "controle_negatif",
+ "classe": "",
+ "r": 0,
+ "part_site": 0.0,
+ "part_siren": 0.0,
+ "notes": "",
+ "where": "",
+ "classes_ok": []
+}

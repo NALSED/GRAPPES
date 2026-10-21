@@ -1,0 +1,636 @@
+{
+ "classes": [
+  "Q4830453",
+  "Q6881511",
+  "Q783794"
+ ],
+ "entities": [
+  {
+   "aliases": [
+    "Cap Gem",
+    "Cap Gemini",
+    "Cap Gemini S.A.",
+    "Cap Sogeti"
+   ],
+   "domains": [
+    "capgemini.com"
+   ],
+   "label": "Capgemini",
+   "qid": "Q1034621",
+   "siren": [
+    "652025792"
+   ]
+  },
+  {
+   "aliases": [
+    "Groupe Universal",
+    "VIVENDI SE",
+    "Vivendi Universal"
+   ],
+   "domains": [
+    "vivendi.com"
+   ],
+   "label": "Vivendi",
+   "qid": "Q1127887",
+   "siren": [
+    "343134763"
+   ]
+  },
+  {
+   "aliases": [
+    "Thalès",
+    "Groupe Thales",
+    "THALES",
+    "Thales Security Systems"
+   ],
+   "domains": [
+    "thalesgroup.com"
+   ],
+   "label": "Thales",
+   "qid": "Q1161666",
+   "siren": [
+    "552059024"
+   ]
+  },
+  {
+   "aliases": [
+    "Dassault Systemes",
+    "Dassault Systèmes S.A.",
+    "Dassault Systems",
+    "Groupe Dassault Systèmes"
+   ],
+   "domains": [
+    "3ds.com"
+   ],
+   "label": "Dassault Systèmes",
+   "qid": "Q1172038",
+   "siren": [
+    "322306440"
+   ]
+  },
+  {
+   "aliases": [
+    "Engie SA",
+    "GDF Suez",
+    "GDF Suez SA"
+   ],
+   "domains": [
+    "agence.engie-homeservices.fr",
+    "engie.com"
+   ],
+   "label": "Engie",
+   "qid": "Q13416787",
+   "siren": [
+    "542107651"
+   ]
+  },
+  {
+   "aliases": [
+    "Groupe Orange",
+    "Orange Group",
+    "Orange SA",
+    "Orange Télécom"
+   ],
+   "domains": [
+    "orange.com"
+   ],
+   "label": "Orange",
+   "qid": "Q1431486",
+   "siren": [
+    "380129866"
+   ]
+  },
+  {
+   "aliases": [
+    "Groupe VINCI",
+    "Société générale d'entreprise",
+    "Vinci S.A."
+   ],
+   "domains": [
+    "vinci.com"
+   ],
+   "label": "Vinci",
+   "qid": "Q1475312",
+   "siren": [
+    "552037806"
+   ]
+  },
+  {
+   "aliases": [
+    "Compagnie Générale des Établissements Michelin",
+    "Kléber pneumatique",
+    "Manufacture française des pneumatiques Michelin",
+    "MFPM",
+    "Michelin et Cie",
+    "Taurus pneus"
+   ],
+   "domains": [
+    "michelin.com"
+   ],
+   "label": "Michelin",
+   "qid": "Q151107",
+   "siren": [
+    "855200507"
+   ]
+  },
+  {
+   "aliases": [
+    "Groupe Publicis",
+    "Publicis",
+    "Publicis Groupe S.A.",
+    "Vivaki"
+   ],
+   "domains": [
+    "publicisgroupe.com"
+   ],
+   "label": "Publicis Groupe",
+   "qid": "Q1537378",
+   "siren": [
+    "542080601"
+   ]
+  },
+  {
+   "aliases": [
+    "CFP",
+    "Compagnie Française des Pétroles",
+    "Total − CFP",
+    "Total − Compagnie Française des Pétroles",
+    "TotalFina"
+   ],
+   "domains": [
+    "totalenergies.com"
+   ],
+   "label": "TotalEnergies",
+   "qid": "Q154037",
+   "siren": [
+    "542051180"
+   ]
+  },
+  {
+   "aliases": [
+    "Groupe l'Oréal",
+    "L'OREAL",
+    "L'Oréal Group",
+    "L’Oréal"
+   ],
+   "domains": [
+    "loreal.com"
+   ],
+   "label": "L'Oréal",
+   "qid": "Q156077",
+   "siren": [
+    "632012100"
+   ]
+  },
+  {
+   "aliases": [
+    "Sanofi-Aventis",
+    "Sanofi Aventis"
+   ],
+   "domains": [
+    "sanofi.com"
+   ],
+   "label": "Sanofi",
+   "qid": "Q158205",
+   "siren": [
+    "395030844"
+   ]
+  },
+  {
+   "aliases": [
+    "AXA Asia Pacific Holdings",
+    "AXA Assurances",
+    "AXA Passion",
+    "AXA Private Equity",
+    "AXA S.A.",
+    "Finaxa",
+    "Groupe AXA"
+   ],
+   "domains": [
+    "axa.com"
+   ],
+   "label": "AXA",
+   "qid": "Q160054",
+   "siren": [
+    "572093920"
+   ]
+  },
+  {
+   "aliases": [
+    "Veolia Environnement",
+    "VEOLIA ENVIRONNEMENT",
+    "Vivendi Environnement"
+   ],
+   "domains": [
+    "veolia.com"
+   ],
+   "label": "Veolia",
+   "qid": "Q1632461",
+   "siren": [
+    "403210032"
+   ]
+  },
+  {
+   "aliases": [
+    "SAFRAN",
+    "Groupe Safran",
+    "Safran S.A."
+   ],
+   "domains": [
+    "safran-group.com"
+   ],
+   "label": "Safran",
+   "qid": "Q1886126",
+   "siren": [
+    "562082909"
+   ]
+  },
+  {
+   "aliases": [
+    "Airbus SE",
+    "EADS",
+    "European Aeronautic Defence and Space Company"
+   ],
+   "domains": [
+    "airbus.com"
+   ],
+   "label": "Airbus Group",
+   "qid": "Q2311",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Teleperformance S.A."
+   ],
+   "domains": [
+    "teleperformance.com"
+   ],
+   "label": "Teleperformance",
+   "qid": "Q2392255",
+   "siren": [
+    "301292702"
+   ]
+  },
+  {
+   "aliases": [
+    "SG",
+    "SocGen",
+    "Societe generale",
+    "Société générale pour favoriser le développement du commerce et de l'industrie en France",
+    "Société Générale S.A."
+   ],
+   "domains": [
+    "societegenerale.com"
+   ],
+   "label": "Société générale",
+   "qid": "Q270363",
+   "siren": [
+    "552120222"
+   ]
+  },
+  {
+   "aliases": [
+    "Arcelor Mittal",
+    "Arcelor-Mittal",
+    "ArcelorMittal, S.A."
+   ],
+   "domains": [
+    "corporate.arcelormittal.com"
+   ],
+   "label": "ArcelorMittal",
+   "qid": "Q27893",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Ticket restaurant",
+    "Ticket Restaurant"
+   ],
+   "domains": [
+    "edenred.com"
+   ],
+   "label": "Edenred",
+   "qid": "Q3047407",
+   "siren": [
+    "393365135"
+   ]
+  },
+  {
+   "aliases": [
+    "Alstom Power",
+    "Alsthom",
+    "Als-Thom",
+    "Alsthom Atlantique",
+    "CGEE-Alsthom",
+    "GEC-Alsthom",
+    "Thomson-Houston électric company"
+   ],
+   "domains": [
+    "alstom.com"
+   ],
+   "label": "Alstom",
+   "qid": "Q309084",
+   "siren": [
+    "389058447"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "carrefour.com"
+   ],
+   "label": "Groupe Carrefour",
+   "qid": "Q3117359",
+   "siren": [
+    "652014051"
+   ]
+  },
+  {
+   "aliases": [
+    "Eurofins Scientific SE"
+   ],
+   "domains": [
+    "eurofins.com"
+   ],
+   "label": "Eurofins Scientific",
+   "qid": "Q324846",
+   "siren": [
+    "350807947"
+   ]
+  },
+  {
+   "aliases": [
+    "BSN-Gervais Danone",
+    "Danone S.A.",
+    "Groupe Danone",
+    "DANONE",
+    "BSN"
+   ],
+   "domains": [
+    "danone.com"
+   ],
+   "label": "Danone",
+   "qid": "Q329426",
+   "siren": [
+    "552032534"
+   ]
+  },
+  {
+   "aliases": [
+    "Air Liquide",
+    "Air Liquide S.A.",
+    "L'Air liquide",
+    "L'Air Liquide",
+    "L’Air Liquide"
+   ],
+   "domains": [
+    "airliquide.ca",
+    "airliquide.com"
+   ],
+   "label": "Air liquide",
+   "qid": "Q407448",
+   "siren": [
+    "552096281"
+   ]
+  },
+  {
+   "aliases": [
+    "SE"
+   ],
+   "domains": [
+    "se.com"
+   ],
+   "label": "Schneider Electric",
+   "qid": "Q49053",
+   "siren": [
+    "542048574"
+   ]
+  },
+  {
+   "aliases": [
+    "Banque Nationale de Paris",
+    "BNP PARIBAS",
+    "BNP Paribas S.A.",
+    "BNP Paribas Securities Services",
+    "BNP-Paribas",
+    "BNP-Paribas United Kingdom",
+    "BNPP"
+   ],
+   "domains": [
+    "group.bnpparibas"
+   ],
+   "label": "BNP Paribas",
+   "qid": "Q499707",
+   "siren": [
+    "662042449"
+   ]
+  },
+  {
+   "aliases": [
+    "Louis Vuitton Moët Hennessy",
+    "LVMH - Louis Vuitton Moët Hennessy",
+    "LVMH - Moët Hennessy Louis Vuitton SA",
+    "Moët Hennessy Louis Vuitton",
+    "LVMH Moët Hennessy - Louis Vuitton SE"
+   ],
+   "domains": [
+    "lvmh.com"
+   ],
+   "label": "LVMH",
+   "qid": "Q504998",
+   "siren": [
+    "775670417"
+   ]
+  },
+  {
+   "aliases": [
+    "Essilorluxottica",
+    "EssiLux"
+   ],
+   "domains": [
+    "essilorluxottica.com"
+   ],
+   "label": "EssilorLuxottica",
+   "qid": "Q56853086",
+   "siren": [
+    "712049618"
+   ]
+  },
+  {
+   "aliases": [
+    "Crédit agricole S.A.",
+    "Crédit agricole SA"
+   ],
+   "domains": [
+    "credit-agricole.com"
+   ],
+   "label": "Crédit agricole",
+   "qid": "Q590952",
+   "siren": [
+    "784608416"
+   ]
+  },
+  {
+   "aliases": [
+    "Westfield",
+    "Unibail-Rodamco SE",
+    "Unibail-Rodamco-Westfield",
+    "UNIBAIL-RODAMCO-WESTFIELD SE",
+    "Westfield SE",
+    "Wfd Unibail Rodamco"
+   ],
+   "domains": [
+    "urw.com"
+   ],
+   "label": "Unibail Rodamco Westfield",
+   "qid": "Q608518",
+   "siren": [
+    "682024096"
+   ]
+  },
+  {
+   "aliases": [
+    "Legrand France",
+    "LEGRAND FRANCE",
+    "Legrand S.A."
+   ],
+   "domains": [
+    "legrandgroup.com"
+   ],
+   "label": "Legrand",
+   "qid": "Q636755",
+   "siren": [
+    "758501001"
+   ]
+  },
+  {
+   "aliases": [
+    "ST",
+    "STM",
+    "SGS Thomson",
+    "SGS-Thomson",
+    "ST Micro",
+    "ST Microelectronics",
+    "ST-Microelectronics",
+    "STMicro"
+   ],
+   "domains": [
+    "st.com"
+   ],
+   "label": "STMicroelectronics",
+   "qid": "Q661845",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Groupe Renault",
+    "Renault SA"
+   ],
+   "domains": [
+    "renaultgroup.com"
+   ],
+   "label": "Renault",
+   "qid": "Q6686",
+   "siren": [
+    "441639465"
+   ]
+  },
+  {
+   "aliases": [
+    "Compagnie de Saint-Gobain",
+    "Compagnie de Saint-Gobain SA",
+    "Compagnie Saint-Gobain",
+    "Groupe Saint-Gobain",
+    "Manufacture royale des glaces",
+    "Saint-Gobain S.A.",
+    "Saint-Gobain-Pont-à-Mousson"
+   ],
+   "domains": [
+    "saint-gobain.com"
+   ],
+   "label": "Saint-Gobain",
+   "qid": "Q678565",
+   "siren": [
+    "542039532"
+   ]
+  },
+  {
+   "aliases": [
+    "Groupe Pernod Ricard",
+    "Groupe Pernod-Ricard",
+    "Pernod-Ricard"
+   ],
+   "domains": [
+    "pernod-ricard.com"
+   ],
+   "label": "Pernod Ricard",
+   "qid": "Q837049",
+   "siren": [
+    "582041943"
+   ]
+  },
+  {
+   "aliases": [
+    "Hermes",
+    "Hermes International",
+    "Groupe Hermès",
+    "Hermès International",
+    "Hermès Sellier",
+    "Société Hermès"
+   ],
+   "domains": [
+    "hermes.com"
+   ],
+   "label": "Hermès",
+   "qid": "Q843887",
+   "siren": [
+    "572076396"
+   ]
+  },
+  {
+   "aliases": [
+    "BOUYGUES",
+    "Groupe Bouygues"
+   ],
+   "domains": [
+    "bouygues.com"
+   ],
+   "label": "Bouygues",
+   "qid": "Q895325",
+   "siren": [
+    "572015246"
+   ]
+  },
+  {
+   "aliases": [
+    "KERING",
+    "Pinault Printemps Redoute",
+    "Pinault-Printemps-La Redoute",
+    "Pinault-Printemps-Redoute",
+    "PPR Group"
+   ],
+   "domains": [
+    "kering.com"
+   ],
+   "label": "Kering",
+   "qid": "Q931207",
+   "siren": [
+    "552075020"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "stellantis.com"
+   ],
+   "label": "Stellantis",
+   "qid": "Q97439162",
+   "siren": [
+    "879786085"
+   ]
+  }
+ ],
+ "phrase": "Les entreprises du CAC 40",
+ "sujet_id": "cac40",
+ "where": "?item p:P361 ?s . ?s ps:P361 wd:Q648828 . FILTER NOT EXISTS { ?s pq:P582 ?e } "
+}

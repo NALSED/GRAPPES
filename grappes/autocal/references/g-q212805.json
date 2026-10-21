@@ -1,0 +1,440 @@
+{
+ "classes": [
+  "Q212805"
+ ],
+ "entities": [
+  {
+   "aliases": [],
+   "domains": [
+    "occitanica.eu"
+   ],
+   "label": "Occitanica",
+   "qid": "Q108913948",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "nicea-bmvr.nice.fr"
+   ],
+   "label": "Nicea",
+   "qid": "Q114848845",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "galeries.limedia.fr"
+   ],
+   "label": "Limédia",
+   "qid": "Q121266112",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lectura.plus"
+   ],
+   "label": "Lectura",
+   "qid": "Q123596775",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "patrimoine-numerique.ville-valenciennes.fr"
+   ],
+   "label": "bibliothèque numérique de Valenciennes",
+   "qid": "Q123596779",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "selene.bordeaux.fr"
+   ],
+   "label": "Séléné",
+   "qid": "Q123596830",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "La Catalane"
+   ],
+   "domains": [
+    "perpinianum.fr"
+   ],
+   "label": "PerpiniaNum",
+   "qid": "Q123596836",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "mediatheques.orleans-metropole.fr"
+   ],
+   "label": "Aurelia",
+   "qid": "Q123596853",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "memonum-mediatheques.montpellier3m.fr"
+   ],
+   "label": "Mémonum",
+   "qid": "Q123596886",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "nutrisco-patrimoine.lehavre.fr"
+   ],
+   "label": "Nutrisco",
+   "qid": "Q123596894",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibnumcrbc.huma-num.fr"
+   ],
+   "label": "bibliothèque numérique du Centre de recherche bretonne et celtique",
+   "qid": "Q123596902",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "communpatrimoine.fr"
+   ],
+   "label": "Commun patrimoine",
+   "qid": "Q123596922",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lillonum.univ-lille.fr"
+   ],
+   "label": "Lillonum",
+   "qid": "Q123596966",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "armarium-hautsdefrance.fr"
+   ],
+   "label": "Armarium",
+   "qid": "Q123597014",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "patrimoine.mediatheques-grandpoitiers.fr"
+   ],
+   "label": "bibliothèque numérique de la médiathèque François-Mitterand (Poitiers)",
+   "qid": "Q123597185",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bastaire.msh.uca.fr"
+   ],
+   "label": "Itinéraires de la collection Bastaire",
+   "qid": "Q126902027",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "1886.u-bordeaux-montaigne.fr"
+   ],
+   "label": "1886",
+   "qid": "Q126902069",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bnl-bfm.limoges.fr"
+   ],
+   "label": "Bibliothèque numérique du Limousin",
+   "qid": "Q126902149",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibnum.chartes.psl.eu"
+   ],
+   "label": "Thenc@",
+   "qid": "Q126902164",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Nubis"
+   ],
+   "domains": [
+    "nubis.bis-sorbonne.fr"
+   ],
+   "label": "NuBIS",
+   "qid": "Q126902505",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bina.bulac.fr"
+   ],
+   "label": "BiNA",
+   "qid": "Q126904453",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "numotheque.grenoblealpesmetropole.fr"
+   ],
+   "label": "La numothèque Grenoble-Alpes",
+   "qid": "Q130757167",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "pagella.bm-grenoble.fr"
+   ],
+   "label": "PaGella",
+   "qid": "Q130758225",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "numeriquepremium.com"
+   ],
+   "label": "Numérique Premium",
+   "qid": "Q131417003",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Patrimoine universitaire en Ligne"
+   ],
+   "domains": [
+    "pulsar.univ-lorraine.fr"
+   ],
+   "label": "Pulsar",
+   "qid": "Q132797172",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "patrimoine.sorbonne-universite.fr"
+   ],
+   "label": "SorbonNum",
+   "qid": "Q133854242",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "ArchiNum Panthéon Sorbonne"
+   ],
+   "domains": [
+    "archinum.pantheonsorbonne.fr"
+   ],
+   "label": "ArchiNum",
+   "qid": "Q134861857",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibliotheques.mnhn.fr"
+   ],
+   "label": "bibliotheque.mnhn.fr",
+   "qid": "Q138209146",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "web.archive.org"
+   ],
+   "label": "Jubilothèque",
+   "qid": "Q138567924",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "femenrev.persee.fr"
+   ],
+   "label": "FemEnRev",
+   "qid": "Q140306817",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Galica"
+   ],
+   "domains": [
+    "gallica.bnf.fr"
+   ],
+   "label": "Gallica",
+   "qid": "Q1492436",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bretania.bzh"
+   ],
+   "label": "Bretania",
+   "qid": "Q18384984",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Normannia",
+   "qid": "Q19721490",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "rosalis.bibliotheque.toulouse.fr"
+   ],
+   "label": "Rosalis",
+   "qid": "Q23817462",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Persee",
+    "Persée (Revue numérique)",
+    "Persee.fr",
+    "persée.fr",
+    "Persée.fr"
+   ],
+   "domains": [
+    "persee.fr"
+   ],
+   "label": "Persée",
+   "qid": "Q252430",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "numelyo.bm-lyon.fr"
+   ],
+   "label": "Numelyo",
+   "qid": "Q26710454",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bn-r.fr"
+   ],
+   "label": "bibliothèque numérique de Roubaix",
+   "qid": "Q2901493",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FSHAA"
+   ],
+   "domains": [
+    "alsace-histoire.org"
+   ],
+   "label": "Fédération des sociétés d'histoire et d'archéologie d'Alsace",
+   "qid": "Q29033102",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bnk.institutkurde.org"
+   ],
+   "label": "Bibliothèque numérique kurde",
+   "qid": "Q3130399",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SIV",
+    "SLV",
+    "Salle de lecture virtuelle (Archives nationales)",
+    "Salle des inventaires virtuelle"
+   ],
+   "domains": [
+    "siv.archives-nationales.culture.gouv.fr"
+   ],
+   "label": "Salle de lecture virtuelle (Archives nationales de France)",
+   "qid": "Q58442972",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "alca-nouvelle-aquitaine.fr"
+   ],
+   "label": "ALCA Nouvelle-Aquitaine",
+   "qid": "Q58743989",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lacito.vjf.cnrs.fr",
+    "pangloss.cnrs.fr"
+   ],
+   "label": "Collection Pangloss",
+   "qid": "Q6468667",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "babelscores.com"
+   ],
+   "label": "BabelScores",
+   "qid": "Q85744718",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "argonnaute.parisnanterre.fr"
+   ],
+   "label": "Argonnaute",
+   "qid": "Q91785428",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque numérique patrimoniale",
+    "www.numistral.fr"
+   ],
+   "domains": [
+    "numistral.fr"
+   ],
+   "label": "Numistral",
+   "qid": "Q96754733",
+   "siren": []
+  }
+ ],
+ "phrase": "Bibliothèque numérique en France",
+ "sujet_id": "g-q212805",
+ "where": "?item wdt:P31 wd:Q212805 ; wdt:P17 wd:Q142 ."
+}

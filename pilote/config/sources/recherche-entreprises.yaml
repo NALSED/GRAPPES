@@ -1,0 +1,49 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: recherche-entreprises
+nom: Annuaire des entreprises (France)
+description: Sociétés déclarées au registre français (SIRENE) avec leur siège et leurs
+  établissements. Gratuit, sans clé. Sert aussi à vérifier qu'un nom existe.
+trouve: sociétés, avec siège et établissements
+genres:
+- entreprise
+- administration
+pays:
+- FR
+produit:
+- nom
+- origine
+- ville
+- numero
+- fonction
+- relations
+usages:
+- entreprises
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: true
+  verifier: true
+exemple_reponse: exemples/recherche-entreprises.json
+moteur:
+  adaptateur: recherche_entreprises
+  parametres:
+    filtre: entreprise
+    etablissements: 3
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+consomme:
+- sujet
+- pays

@@ -1,0 +1,18 @@
+{
+ "id": "handball-pro",
+ "phrase": "Les clubs de handball professionnels en France",
+ "jeu": "dev",
+ "difficulte": "facile",
+ "origine": "amorcage",
+ "classe": "",
+ "r": 17,
+ "part_site": 1.0,
+ "part_siren": 0.059,
+ "notes": "clubs de première et deuxième division masculine, tels que listés dans Wikidata (P118)",
+ "where": "?item wdt:P118 ?l . VALUES ?l { wd:Q203172 wd:Q2951241 wd:Q522560 wd:Q2951213 } FILTER NOT EXISTS { ?item wdt:P31 wd:Q5 } ",
+ "classes_ok": [
+  "Q108320110",
+  "Q10517054",
+  "Q847017"
+ ]
+}

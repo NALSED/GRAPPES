@@ -1,0 +1,7 @@
+# Carte d'un preset. Ses SOURCES ne sont pas écrites ici : elles sont calculées depuis les usages que chaque source déclare.
+id: lieux
+nom: Lieux
+ordre: 6
+phrase: 'Lieux : cherche par endroit et par type de lieu (stade, salle, local associatif).
+  Utile quand on ne connaît pas les noms.'
+usage: lieux

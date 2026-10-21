@@ -1,0 +1,7 @@
+# Carte d'un preset. Ses SOURCES ne sont pas écrites ici : elles sont calculées depuis les usages que chaque source déclare.
+id: presse
+nom: Presse
+ordre: 7
+phrase: 'Presse : trouve des acteurs cités dans les journaux et confirme des noms
+  trouvés ailleurs. Extraction bruyante.'
+usage: presse

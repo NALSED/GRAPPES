@@ -1,0 +1,41 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: courtlistener
+nom: CourtListener (justice américaine)
+description: Dossiers et décisions des tribunaux américains. Sert uniquement à vérifier le NOM d'une organisation déjà trouvée
+  (correspondance exacte d'une partie, jamais de recherche de personnes) ; un résultat est une information à lire, pas une alerte.
+trouve: affaires judiciaires américaines mentionnant une organisation
+genres:
+- entreprise
+- association
+pays:
+- US
+produit:
+- nom
+- origine
+usages:
+- entreprises
+main: premiere
+origine: registre
+famille: api
+roles:
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-19'
+cle: COURTLISTENER_API_KEY
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.5
+defaut:
+  chercher: false
+  verifier: false
+note: Valeur limitée aux États-Unis (aucun appel ailleurs). Exige une clé, envoyée en en-tête Authorization (Token). Forme de
+  réponse d'après la documentation publiée, pas encore contrôlée contre le service réel.
+exemple_reponse: exemples/courtlistener.json
+moteur:
+  adaptateur: courtlistener
+verifie_sur: nom

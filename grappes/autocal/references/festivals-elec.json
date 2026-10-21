@@ -1,0 +1,84 @@
+{
+ "classes": [
+  "Q868557",
+  "Q131321883",
+  "Q15275719"
+ ],
+ "entities": [
+  {
+   "aliases": [],
+   "domains": [
+    "chorus.hauts-de-seine.fr"
+   ],
+   "label": "Festival Chorus",
+   "qid": "Q112032237",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Mayday festival,Mayday smf,Mayday"
+   ],
+   "domains": [
+    "maydayfestival.fr"
+   ],
+   "label": "Mayday Festival",
+   "qid": "Q125753460",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Electrolapse",
+    "Electrolapse Festival",
+    "Festival Électrolapse"
+   ],
+   "domains": [
+    "electrolapse.fr"
+   ],
+   "label": "Électrolapse",
+   "qid": "Q138426832",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ilovetechno.be"
+   ],
+   "label": "I Love Techno",
+   "qid": "Q1655230",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "electropicales.com"
+   ],
+   "label": "Électropicales",
+   "qid": "Q19544482",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "printemps-bourges.com"
+   ],
+   "label": "Printemps de Bourges",
+   "qid": "Q941538",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "EPK",
+    "Inox Park Festival"
+   ],
+   "domains": [
+    "elektricpark.com"
+   ],
+   "label": "Elektric Park Festival",
+   "qid": "Q97569375",
+   "siren": []
+  }
+ ],
+ "phrase": "Les festivals de musique électronique en France",
+ "sujet_id": "festivals-elec",
+ "where": "?item wdt:P31/wdt:P279* wd:Q868557 ; wdt:P17 wd:Q142 ; wdt:P136 ?g . ?g wdt:P279* wd:Q9778 . "
+}

@@ -1,0 +1,50 @@
+{
+ "classes": [
+  "Q1070414",
+  "Q386636"
+ ],
+ "entities": [
+  {
+   "aliases": [
+    "Dodger's Marseille",
+    "Les Dodger's"
+   ],
+   "domains": [],
+   "label": "Dodger's",
+   "qid": "Q110044628",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "GOLDEN HORNETS"
+   ],
+   "domains": [
+    "goldenhornets.fr"
+   ],
+   "label": "Golden Hornets",
+   "qid": "Q131677507",
+   "siren": [
+    "910407071"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Mezza Lyon",
+   "qid": "Q131693853",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Boulogne Boys"
+   ],
+   "domains": [],
+   "label": "Kop of Boulogne",
+   "qid": "Q140308624",
+   "siren": []
+  }
+ ],
+ "phrase": "Les groupes de supporters de clubs de football français",
+ "sujet_id": "supporters-foot",
+ "where": "?item wdt:P31/wdt:P279* wd:Q1070414 . ?item wdt:P17 wd:Q142 . "
+}

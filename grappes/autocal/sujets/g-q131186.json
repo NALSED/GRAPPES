@@ -1,0 +1,16 @@
+{
+ "id": "g-q131186",
+ "phrase": "Chorale en France",
+ "jeu": "dev",
+ "difficulte": "moyen",
+ "origine": "genere",
+ "classe": "Q131186",
+ "r": 34,
+ "part_site": 0.647,
+ "part_siren": 0.118,
+ "notes": "chorale",
+ "where": "?item wdt:P31 wd:Q131186 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q131186"
+ ]
+}

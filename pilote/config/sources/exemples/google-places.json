@@ -1,0 +1,31 @@
+{
+ "places": [
+  {
+   "displayName": {
+    "text": "Club Imaginaire"
+   },
+   "formattedAddress": "123 Rue de l'Exemple, Ville-Exemple, France",
+   "websiteUri": "https://club-imaginaire.example",
+   "location": {
+    "latitude": 48.856614,
+    "longitude": 2.3522219
+   },
+   "addressComponents": [
+    {
+     "longText": "Ville-Exemple",
+     "shortText": "Ville-Exemple",
+     "types": [
+      "locality"
+     ]
+    },
+    {
+     "longText": "France",
+     "shortText": "FR",
+     "types": [
+      "country"
+     ]
+    }
+   ]
+  }
+ ]
+}

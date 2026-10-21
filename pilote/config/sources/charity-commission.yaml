@@ -1,0 +1,44 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: charity-commission
+nom: Charity Commission (Angleterre et pays de Galles)
+description: Registre officiel des organisations caritatives d'Angleterre et du pays
+  de Galles. Clé gratuite du portail des développeurs.
+trouve: organisations caritatives enregistrées
+genres:
+- association
+pays:
+- GB
+consomme:
+- sujet
+produit:
+- nom
+- origine
+- numero
+usages:
+- associations
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+- verifier
+cle: CHARITY_COMMISSION_API_KEY
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/charity-commission.json
+verifie_le: '2026-10-13'
+note: STATUT À RECONFIRMER (19/10), ne pas activer tant que ce n'est pas validé. Proposée quand le pays choisi est le Royaume-Uni. Clé à demander sur api-portal.charitycommission.gov.uk
+  ; éteinte tant qu'elle est absente. Contrôlée sur le schéma publié, pas encore contre
+  le service réel (clé requise).
+moteur:
+  adaptateur: charity_commission

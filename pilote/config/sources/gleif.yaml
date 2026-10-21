@@ -1,0 +1,48 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: gleif
+nom: GLEIF (entités à identifiant financier)
+description: Base mondiale des entités juridiques qui ont un identifiant financier,
+  avec leur maison mère directe et leur maison mère ultime. Gratuit, sans clé.
+trouve: entreprises (avec leur maison mère)
+genres:
+- entreprise
+pays:
+- monde
+produit:
+- nom
+- origine
+- ville
+- numero
+- fonction
+- relations
+usages:
+- entreprises
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: true
+  verifier: true
+exemple_reponse: exemples/gleif.json
+moteur:
+  adaptateur: gleif
+  parametres:
+    relations_max: 10
+note: Licence des données de relations à confirmer.
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+consomme:
+- sujet
+- pays

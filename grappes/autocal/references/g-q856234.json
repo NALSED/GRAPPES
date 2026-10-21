@@ -1,0 +1,1296 @@
+{
+ "classes": [
+  "Q856234"
+ ],
+ "entities": [
+  {
+   "aliases": [
+    "bibliothèque de l'université de Nîmes",
+    "BU de Nîmes"
+   ],
+   "domains": [
+    "vauban.unimes.fr"
+   ],
+   "label": "bibliothèque universitaire de Nîmes",
+   "qid": "Q100041154",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "biu-montpellier.fr"
+   ],
+   "label": "Bibliothèque interuniversitaire de Montpellier",
+   "qid": "Q104185308",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bu.uca.fr"
+   ],
+   "label": "bibliothèque universitaire Lafayette Lettres, langues et sciences humaines",
+   "qid": "Q108393092",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque universitaire Gergovia",
+    "BU Gergovia",
+    "BU Lafon"
+   ],
+   "domains": [
+    "bu.uca.fr"
+   ],
+   "label": "bibliothèque universitaire Marie-Hélène Lafon",
+   "qid": "Q109544798",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bu.uca.fr"
+   ],
+   "label": "bibliothèque universitaire Droit, Économie, Management",
+   "qid": "Q110453406",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU de l'IUT d'Allier"
+   ],
+   "domains": [
+    "bu.uca.fr"
+   ],
+   "label": "bibliothèque universitaire de l'IUT de Montluçon",
+   "qid": "Q110813987",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU UCA"
+   ],
+   "domains": [
+    "bu.uca.fr"
+   ],
+   "label": "bibliothèque universitaire de l'université Clermont Auvergne",
+   "qid": "Q110867567",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bu.univ-lorraine.fr"
+   ],
+   "label": "Bibliothèque américaine de Nancy",
+   "qid": "Q111207546",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bib.minesparis.psl.eu"
+   ],
+   "label": "Bibliothèque Mines Paristech",
+   "qid": "Q111395871",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque de L'Alinéa",
+    "Bibliothèque Huet-Weiller",
+    "Bibliothèque L'Alinéa",
+    "Bibliothèque U2-U3",
+    "Bibliothèque U2/U3",
+    "U2-U3",
+    "U2/U3"
+   ],
+   "domains": [
+    "bu.unistra.fr"
+   ],
+   "label": "L'Alinéa",
+   "qid": "Q111802808",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BRM"
+   ],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Bibliothèque Rigoberta Menchú",
+   "qid": "Q112116528",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU de l'Université Gustave-Eiffel",
+    "SCD de l'Université Gustave Eiffel"
+   ],
+   "domains": [
+    "bu.univ-gustave-eiffel.fr"
+   ],
+   "label": "Bibliothèque de l'Université Gustave-Eiffel",
+   "qid": "Q114427349",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BUC",
+    "bibliothèque universitaire centrale",
+    "BUC Mirail"
+   ],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "Bibliothèque Universitaire Centrale",
+   "qid": "Q117866350",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CROG"
+   ],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "Centre de ressources Olympe de Gouges",
+   "qid": "Q118137873",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CRL"
+   ],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "Centre de ressources des Langues",
+   "qid": "Q118137874",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CRPLM"
+   ],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "Centre de ressources de psychologie Louise Michel",
+   "qid": "Q118137875",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CLAP"
+   ],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "Centre de ressources Lettres Arts Philosophie",
+   "qid": "Q118137876",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BEM"
+   ],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "bibliothèque d'Études Méridionales",
+   "qid": "Q118137877",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "bibliothèque de l'IUT de Blagnac",
+   "qid": "Q118137878",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "bibliothèque de l'IUT de Figeac",
+   "qid": "Q118137879",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "médiathèque Montauriol",
+   "qid": "Q118137880",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "Centre de ressources de Foix",
+   "qid": "Q118137881",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibliotheques.univ-tlse2.fr"
+   ],
+   "label": "médiathèque de l’École Nationale Supérieure d'Audiovisuel",
+   "qid": "Q118137882",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "universite-paris-saclay.fr"
+   ],
+   "label": "Lumen Learning Center",
+   "qid": "Q120495010",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "sorbonne-universite.fr"
+   ],
+   "label": "bibliothèque Malesherbes",
+   "qid": "Q123138519",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BDL",
+    "bibliothèque des licences"
+   ],
+   "domains": [
+    "sciences.sorbonne-universite.fr"
+   ],
+   "label": "bibliothèque des licences de Sorbonne université",
+   "qid": "Q123860900",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lettres.sorbonne-universite.fr"
+   ],
+   "label": "bibliothèque Serpente",
+   "qid": "Q123937338",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Bibliothèque universitaire Sciences et Techniques",
+   "qid": "Q124423292",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Orsay"
+   ],
+   "domains": [
+    "bibliotheques.universite-paris-saclay.fr"
+   ],
+   "label": "Bibliothèque universitaire d'Orsay",
+   "qid": "Q125700810",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bu.parisnanterre.fr"
+   ],
+   "label": "bibliothèque de l'université Paris-Nanterre",
+   "qid": "Q126422028",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "anhima.fr"
+   ],
+   "label": "Bibliothèque Gernet-Glotz",
+   "qid": "Q126683772",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque de l'université Sorbonne Nouvelle",
+    "BSN - Bibliothèque Sorbonne Nouvelle"
+   ],
+   "domains": [
+    "dbu.univ-paris3.fr"
+   ],
+   "label": "Bibliothèque Sorbonne Nouvelle",
+   "qid": "Q127805430",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque centrale de médecine (Paris)",
+    "Bibliothèque centrale de médecine de Paris",
+    "Bibliothèque interuniversitaire de médecine",
+    "Bibliothèque interuniversitaire de médecine et d'odontologie",
+    "Bibliothèque interuniversitaire de médecine Paris",
+    "Faculté de médecine de Paris. Bibliothèque"
+   ],
+   "domains": [],
+   "label": "bibliothèque de la faculté de médecine de Paris",
+   "qid": "Q130356768",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Edgar Morin"
+   ],
+   "domains": [
+    "univ-spn.fr"
+   ],
+   "label": "Bibliothèque universitaire Edgar Morin",
+   "qid": "Q132201939",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BMF",
+    "Bibliothèque de la Section des sciences historiques et philologiques de l’EPHE"
+   ],
+   "domains": [],
+   "label": "Bibliothèque Michel-Fleury",
+   "qid": "Q134588814",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque de l'Académie nationale de médecine",
+    "BANM"
+   ],
+   "domains": [
+    "bibliotheque.academie-medecine.fr"
+   ],
+   "label": "bibliothèque de l'Académie nationale de médecine",
+   "qid": "Q135993377",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "sorbonne-universite.fr"
+   ],
+   "label": "bibliothèque Charcot",
+   "qid": "Q136308876",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque Jean-Claude Colliard",
+    "BU Colliard",
+    "BU Jean-Claude Colliard"
+   ],
+   "domains": [
+    "bibliotheques.pantheonsorbonne.fr"
+   ],
+   "label": "Bibliothèque universitaire Jean-Claude Colliard",
+   "qid": "Q138266358",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque universitaire médecine-odontologie"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "BU médecine-odontologie",
+   "qid": "Q139917209",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU pharmacie"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire pharmacie",
+   "qid": "Q139917254",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU médecine-maïeutique",
+    "BU médecine-maïeutique nord",
+    "BU médecine-maïeutique Nord"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire médecine-maïeutique",
+   "qid": "Q139917276",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque Hygiène, Sécurité, Environnement - La Ciotat",
+    "BU Hygiène Sécurité Environnement"
+   ],
+   "domains": [
+    "iut.univ-amu.fr"
+   ],
+   "label": "Bibliothèque Hygiène, Sécurité, Environnement",
+   "qid": "Q139917299",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "iut.univ-amu.fr"
+   ],
+   "label": "Bibliothèque Jules Isaac",
+   "qid": "Q139917359",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Luminy"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire de Sciences de Luminy",
+   "qid": "Q139917446",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "centrale-mediterranee.fr"
+   ],
+   "label": "Centre de documentation de Centrale Méditerranée",
+   "qid": "Q139917513",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU de Gap",
+    "BU Gap"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire de Gap",
+   "qid": "Q139917572",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Schuman",
+    "BU Schuman droit"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire Schuman droit",
+   "qid": "Q139917620",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque Saporta",
+    "bibliothèque sciences po Aix"
+   ],
+   "domains": [
+    "sciencespo-aix.fr"
+   ],
+   "label": "Bibliothèque universitaire Saporta",
+   "qid": "Q139917713",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Canebière"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire Canebière",
+   "qid": "Q139917751",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Montperrin"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire Montperrin",
+   "qid": "Q139917775",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Saint-Jérôme",
+    "BU Saint-Jérôme/Inspé de Marseille"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire Saint-Jérôme",
+   "qid": "Q139917793",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Fenouillères",
+    "BU des Fenouillères",
+    "biblitohèque des Fenouillères"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire Fenouillères",
+   "qid": "Q139917813",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque Saint-Charles",
+    "BU Saint-Charles"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire Saint-Charles",
+   "qid": "Q139917830",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque Parole et Langage",
+    "bibliothèque Parole & Langage"
+   ],
+   "domains": [
+    "lpl-aix.fr"
+   ],
+   "label": "Bibliothèque du laboratoire Parole et Langage",
+   "qid": "Q139917868",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Inspé Aix"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire Inspé Aix-en-Provence",
+   "qid": "Q139917986",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Inspé Avignon"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire Inspé Avignon",
+   "qid": "Q139918061",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Inspé/IUT de Digne"
+   ],
+   "domains": [
+    "bu.univ-amu.fr"
+   ],
+   "label": "Bibliothèque universitaire Inspé et IUT Digne",
+   "qid": "Q139918811",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Education Bourg-en-Bresse"
+   ],
+   "domains": [
+    "portaildoc.univ-lyon1.fr"
+   ],
+   "label": "BU Éducation Bourg-en-Bresse",
+   "qid": "Q139944479",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "univ-lyon1.fr"
+   ],
+   "label": "Bibliothèque IUT - Bourg en Bresse",
+   "qid": "Q139944480",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bu.u-picardie.fr"
+   ],
+   "label": "Bibliothèque universitaire IUT Laon",
+   "qid": "Q139954191",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Sant-Quentin",
+    "bibliothèque universitaire Saint-Quentin"
+   ],
+   "domains": [
+    "bu.u-picardie.fr"
+   ],
+   "label": "Bibliothèque universitaire Saint-Quentin",
+   "qid": "Q139954192",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Cuffies-Soissons",
+    "BU Soissons",
+    "Bibliothèque Soissons",
+    "bibliothèque universitaire Cuffies-Soissons"
+   ],
+   "domains": [
+    "bu.u-picardie.fr"
+   ],
+   "label": "Bibliothèque universitaire Cuffies-Soissons",
+   "qid": "Q139954193",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque universitaire de l'Inspé Laon",
+    "BU INSPE Laon",
+    "Bibliothèque de l'INSPE de Laon"
+   ],
+   "domains": [
+    "bu.u-picardie.fr"
+   ],
+   "label": "Bibliothèque universitaire de l'Inspé Laon",
+   "qid": "Q139954194",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque universitaire de Moulins",
+    "BU de Moulins"
+   ],
+   "domains": [
+    "bu.uca.fr"
+   ],
+   "label": "bibliothèque universitaire INSPE-IUT Moulins",
+   "qid": "Q139954508",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque universitaire de l'Orangerie"
+   ],
+   "domains": [
+    "vichy-campus.fr"
+   ],
+   "label": "médiathèque de l'Orangerie",
+   "qid": "Q139954511",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "sciencespo.fr"
+   ],
+   "label": "Bibliothèque du Campus de Menton",
+   "qid": "Q139958507",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Trotabas"
+   ],
+   "domains": [
+    "bu.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque universitaire Trotabas",
+   "qid": "Q139958508",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU STAPS"
+   ],
+   "domains": [
+    "bu.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque universitaire STAPS",
+   "qid": "Q139958509",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Pasteur"
+   ],
+   "domains": [
+    "bu.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque universitaire Pasteur",
+   "qid": "Q139958510",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Valrose"
+   ],
+   "domains": [
+    "bu.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque universitaire Valrose",
+   "qid": "Q139958511",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Saint Jean d'Angély",
+    "BU Saint-Jean d'Angély"
+   ],
+   "domains": [
+    "bu.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque universitaire Saint Jean d'Angély",
+   "qid": "Q139958512",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Carlone"
+   ],
+   "domains": [
+    "bu.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque universitaire Carlone",
+   "qid": "Q139958513",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Learning Centre SophiaTech"
+   ],
+   "domains": [
+    "bu.univ-cotedazur.fr"
+   ],
+   "label": "Learning Centre Sophia Tech",
+   "qid": "Q139958514",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "iut.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque de l'IUT Nice- site de Fabron",
+   "qid": "Q139958515",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "iut.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque de l'IUT de Nice - site de Cannes",
+   "qid": "Q139958516",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "iut.univ-cotedazur.fr"
+   ],
+   "label": "Bibliothèque de l'IUT de Nice - site de Menton",
+   "qid": "Q139958517",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU INSPE George V"
+   ],
+   "domains": [
+    "bu.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque universitaire de l'INSPE George V",
+   "qid": "Q139958518",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU INSPE Liégeard"
+   ],
+   "domains": [
+    "bu.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque universitaire de l'INSPE Liégeard",
+   "qid": "Q139958519",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque LMJAD"
+   ],
+   "domains": [
+    "math.univ-cotedazur.fr"
+   ],
+   "label": "bibliothèque du Laboratoire de Mathématiques J.-A. Dieudonné",
+   "qid": "Q139958520",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre de Ressources Olivier de Serres"
+   ],
+   "domains": [
+    "bibliotheques.univ-grenoble-alpes.fr"
+   ],
+   "label": "centre de ressources Olivier de Serres",
+   "qid": "Q139959568",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Charleville-Mézières",
+    "bibliothèque universitaire de Charleville-Mézières"
+   ],
+   "domains": [
+    "univ-reims.fr"
+   ],
+   "label": "Bibliothèque Universitaire de Charleville-Mézières",
+   "qid": "Q139959589",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "univ-reims.fr"
+   ],
+   "label": "bibliothèque universitaire des Comtes de Champagne",
+   "qid": "Q139959664",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "univ-reims.fr"
+   ],
+   "label": "bibliothèque universitaire de l'IUT de Troyes",
+   "qid": "Q139959665",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU Troyes Education"
+   ],
+   "domains": [
+    "univ-reims.fr"
+   ],
+   "label": "bibliothèque universitaire Troyes Education",
+   "qid": "Q139959666",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BU de l'Université de technologie de Troyes",
+    "BU de l'Université de Technologie de Troyes"
+   ],
+   "domains": [
+    "bibliotheque.utt.fr"
+   ],
+   "label": "bibliothèque de l'Université de Technologie de Troyes",
+   "qid": "Q139959667",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque Gaston Baty",
+    "Bibliothèque Gaston-Baty",
+    "Théâtrothèque Gaston Baty"
+   ],
+   "domains": [
+    "dbu.univ-paris3.fr"
+   ],
+   "label": "Théâtrothèque Gaston-Baty",
+   "qid": "Q20669866",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibliotheque.ensad.fr"
+   ],
+   "label": "Bibliothèque de l'École nationale supérieure des Arts décoratifs",
+   "qid": "Q22343062",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliotheque Angellier",
+    "Bibliothèque des Études anglophones - Angellier"
+   ],
+   "domains": [
+    "lcs.univ-lille.fr"
+   ],
+   "label": "bibliothèque Angellier",
+   "qid": "Q2901262",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliotheque Cujas"
+   ],
+   "domains": [
+    "biu-cujas.univ-paris1.fr"
+   ],
+   "label": "bibliothèque Cujas",
+   "qid": "Q2901279",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibliotheques.pantheonsorbonne.fr"
+   ],
+   "label": "bibliothèque Lavisse",
+   "qid": "Q2901286",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliotheque Sainte-Barbe"
+   ],
+   "domains": [
+    "bsb.univ-paris3.fr"
+   ],
+   "label": "bibliothèque Sainte-Barbe",
+   "qid": "Q2901315",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliotheque de la Sorbonne",
+    "Bibliothèque de la sorbonne",
+    "Bibliothèque De La Sorbonne",
+    "Bibliothèque interuniversitaire de la Sorbonne"
+   ],
+   "domains": [
+    "bis-sorbonne.fr"
+   ],
+   "label": "Bibliothèque de la Sorbonne",
+   "qid": "Q2901379",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliotheque universitaire des langues et civilisations",
+    "Bibliothèque Universitaire Des Langues Et Civilisations",
+    "BULAC"
+   ],
+   "domains": [
+    "bulac.fr"
+   ],
+   "label": "bibliothèque universitaire des langues et civilisations",
+   "qid": "Q2901548",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre de ressources de langues"
+   ],
+   "domains": [],
+   "label": "centre de ressources en langues",
+   "qid": "Q2945479",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre technique du livre de l'enseignement superieur",
+    "Centre Technique du Livre de l'Enseignement Supérieur",
+    "CTLes",
+    "CTLES"
+   ],
+   "domains": [
+    "ctles.fr"
+   ],
+   "label": "centre technique du livre de l'enseignement supérieur",
+   "qid": "Q2946087",
+   "siren": [
+    "180044232"
+   ]
+  },
+  {
+   "aliases": [
+    "Bibliothèque universitaire. Sciences (Lyon 1)",
+    "BU sciences la Doua",
+    "Université Claude Bernard (Lyon). Service commun de la documentation. BU Sciences (Villeurbanne, Rhône)"
+   ],
+   "domains": [
+    "portaildoc.univ-lyon1.fr"
+   ],
+   "label": "bibliothèque universitaire de la Doua",
+   "qid": "Q42302403",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque de l'École des chartes"
+   ],
+   "domains": [
+    "chartes.psl.eu"
+   ],
+   "label": "bibliothèque de l'École nationale des chartes",
+   "qid": "Q42346825",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque interuniversitaire Sainte-Geneviève"
+   ],
+   "domains": [
+    "bsg.univ-paris3.fr"
+   ],
+   "label": "bibliothèque Sainte-Geneviève",
+   "qid": "Q517249",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bibliotheque.imo.universite-paris-saclay.fr"
+   ],
+   "label": "Bibliothèque Mathématique Jacques Hadamard",
+   "qid": "Q51780589",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque universitaire de Lettres et Sciences humaines",
+    "Grande BU",
+    "Université Bordeaux Montaigne. Service Commun de la Documentation. Bibliothèque Universitaire Lettres et Sciences humaines"
+   ],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Bibliothèque universitaire de Lettres et Sciences humaines de l'Université Bordeaux Montaigne",
+   "qid": "Q55017061",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université Bordeaux Montaigne. Service Commun de la Documentation. Bibliothèque Henri Guillemin"
+   ],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Bibliothèque Henri Guillemin : Etudes anglophones, germaniques et Sciences du langage",
+   "qid": "Q55017444",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université Bordeaux Montaigne. Service Commun de la Documentation. Bibliothèque LE-LEA"
+   ],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Bibliothèque LE-LEA",
+   "qid": "Q55017508",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Bibliothèque des études ibériques et ibéro-américaines",
+   "qid": "Q55017512",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université Bordeaux Montaigne. Service Commun de la Documentation. Bibliothèque Elie Vinet - Histoire. Histoire de l'art"
+   ],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Bibliothèque Elie Vinet : Histoire, Histoire de l'art, Archéologie",
+   "qid": "Q55017515",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université Bordeaux Montaigne. Service Commun de la Documentation. Bibliothèque de Géographie - Cartothèque"
+   ],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Bibliothèque de Géographie / Cartothèque",
+   "qid": "Q55017519",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université Bordeaux Montaigne. Service Commun de Documentation. Bibliothèque IATU"
+   ],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Centre de documentation de l'Institut d'aménagement, du tourisme et d'urbanisme",
+   "qid": "Q55017525",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Centre de ressources Montaigne IUT/IJBA",
+   "qid": "Q55017529",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université Bordeaux Montaigne. Service Commun de la Documentation. Bibliothèque Robert Etienne"
+   ],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Bibliothèque Robert Étienne - Ausonius - Maison de l'archéologie",
+   "qid": "Q55017535",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université Bordeaux Montaigne. Service Commun de la Documentation. Bibliothèque franco-allemande"
+   ],
+   "domains": [
+    "u-bordeaux-montaigne.fr",
+    "goethe.de"
+   ],
+   "label": "Bibliothèque franco-allemande BIFA - Goethe Institut",
+   "qid": "Q55017538",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université de Bordeaux. Direction de la documentation. Bibliothèque Droit Langues (Agen, Lot et Garonne)"
+   ],
+   "domains": [
+    "u-bordeaux-montaigne.fr"
+   ],
+   "label": "Bibliothèque universitaire d'Agen",
+   "qid": "Q55017542",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Bibliothèque hospitalière Tenon-Meyniel",
+   "qid": "Q60692213",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque nationale et universitaire",
+    "BNU",
+    "bibliothèque universitaire de Strasbourg",
+    "Bibliothèque universitaire et régionale de Strasbourg",
+    "BNU de Strasbourg",
+    "BNUS",
+    "Kaiserliche Universitäts- und Landesbibliothek"
+   ],
+   "domains": [
+    "bnu.fr"
+   ],
+   "label": "Bibliothèque nationale et universitaire de Strasbourg",
+   "qid": "Q630461",
+   "siren": [
+    "180044067"
+   ]
+  },
+  {
+   "aliases": [
+    "BU Angers"
+   ],
+   "domains": [],
+   "label": "bibliothèque universitaire d'Angers",
+   "qid": "Q71310902",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque universitaire de Perpignan",
+    "BU de l'UPVD",
+    "BU Droit Lettres de l'UPVD"
+   ],
+   "domains": [
+    "bu.univ-perp.fr"
+   ],
+   "label": "bibliothèque de droit et lettres de l'Université de Perpignan",
+   "qid": "Q86371235",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Bibliothèque universitaire de droit et sciences économiques de Nancy",
+   "qid": "Q86674269",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "bibliothèque interuniversitaire de médecine",
+    "bibliothèque interuniversitaire de pharmacie",
+    "bibliothèque interuniversitaire santé",
+    "Biu santé",
+    "BIU Santé",
+    "BIUM",
+    "Biup",
+    "Biusante",
+    "Biusante.parisdescartes.fr"
+   ],
+   "domains": [
+    "biusante.parisdescartes.fr"
+   ],
+   "label": "bibliothèque interuniversitaire de santé",
+   "qid": "Q867925",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bibliothèque de droit de Bordeaux",
+    "Bibliothèque universitaire Droit, Science Politique, Économie",
+    "BU Droit de Bordeaux",
+    "BU DSPE"
+   ],
+   "domains": [],
+   "label": "Bibliothèque universitaire de droit de Bordeaux",
+   "qid": "Q97667454",
+   "siren": []
+  }
+ ],
+ "phrase": "Bibliothèque universitaire en France",
+ "sujet_id": "g-q856234",
+ "where": "?item wdt:P31 wd:Q856234 ; wdt:P17 wd:Q142 ."
+}

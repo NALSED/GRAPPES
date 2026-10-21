@@ -1,0 +1,18 @@
+{
+ "fige_le": "2026-10-12, avant ouverture du jeu test",
+ "regle": "Liste fermée par définition : l'ensemble désigné par la phrase est arrêté par une autorité publique (labellisation, classement officiel), donc fini et énumérable ; jugé sur la seule phrase, jamais sur un résultat. Un calcul R/T contre le total SIRENE a été essayé et écarté : il confond « le registre ne connaît pas le sujet » et « la liste est complète » (dev : bibliothèques numériques R=45, T=1).",
+ "limite": "La complétude de R (quasi complète) n'est pas garantie par la règle ; elle est constatée et rapportée au verdict (R contre l'effectif officiel quand il est connu).",
+ "jeux": {
+  "test": [
+   "g-q3412193",
+   "g-q17487523"
+  ],
+  "validation": [
+   "cac40",
+   "g-q56199177"
+  ],
+  "dev": [
+   "handball-pro"
+  ]
+ }
+}

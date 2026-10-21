@@ -1,0 +1,5 @@
+# Classement livré avec pilote. Un classement ne travaille que sur des FAITS (voir pilote/classements.py).
+nom: Les plus solides d'abord
+grouper_par: [origine, endroits]
+ordre_paquets: solidite        # solidite | fragilite | nombre | alphabetique
+ordre_noms: alphabetique       # alphabetique | endroits | sans

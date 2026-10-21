@@ -1,0 +1,7 @@
+# Carte d'un preset. Ses SOURCES ne sont pas écrites ici : elles sont calculées depuis les usages que chaque source déclare.
+id: reseaux_sociaux
+nom: Réseaux sociaux
+ordre: 5
+phrase: 'Réseaux sociaux : comptes, pages et groupes trouvés par mot-clé et par lieu.
+  Exploratoire et bruyant : tri manuel nécessaire.'
+usage: reseaux_sociaux

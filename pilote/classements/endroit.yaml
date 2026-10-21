@@ -1,0 +1,4 @@
+nom: Par endroit
+grouper_par: [ville]
+ordre_paquets: nombre
+ordre_noms: alphabetique

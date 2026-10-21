@@ -1,0 +1,16 @@
+{
+ "id": "g-q17487523",
+ "phrase": "Conservatoire à rayonnement régional en France",
+ "jeu": "test",
+ "difficulte": "facile",
+ "origine": "genere",
+ "classe": "Q17487523",
+ "r": 46,
+ "part_site": 1.0,
+ "part_siren": 0.0,
+ "notes": "conservatoire à rayonnement régional",
+ "where": "?item wdt:P31 wd:Q17487523 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q17487523"
+ ]
+}

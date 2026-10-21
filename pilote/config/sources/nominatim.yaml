@@ -1,0 +1,49 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: nominatim
+nom: Nominatim (recherche d'un lieu nommé)
+description: Cherche des lieux nommés par mot-clé dans un endroit, dans les données d'OpenStreetMap. Une
+  requête par seconde au maximum. Sert aussi à trouver la zone d'une ville pour l'autre source de lieux.
+trouve: lieux nommés dans un endroit
+genres:
+- lieu
+- club
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- lieu
+- pays
+produit:
+- nom
+- origine
+- ville
+- site
+- coordonnees
+usages:
+- lieux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: true
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/nominatim.json
+verifie_le: '2026-10-13'
+note: 'Politique d''usage de la fondation OpenStreetMap : une requête par seconde, identification de l''outil.
+  Même base qu''Overpass : classée seconde main pour ne pas compter deux fois le même lieu.'
+moteur:
+  adaptateur: nominatim
+  parametres: {}

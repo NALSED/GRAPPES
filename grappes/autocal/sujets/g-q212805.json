@@ -1,0 +1,16 @@
+{
+ "id": "g-q212805",
+ "phrase": "Bibliothèque numérique en France",
+ "jeu": "dev",
+ "difficulte": "moyen",
+ "origine": "genere",
+ "classe": "Q212805",
+ "r": 45,
+ "part_site": 1.0,
+ "part_siren": 0.0,
+ "notes": "bibliothèque numérique",
+ "where": "?item wdt:P31 wd:Q212805 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q212805"
+ ]
+}

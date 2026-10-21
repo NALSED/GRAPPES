@@ -1,0 +1,92 @@
+# Configuration de pilote. Aucun chemin n'est écrit dans le code : tout vient d'ici (ou de PILOTE_CONFIG).
+# Les chemins relatifs sont relatifs à la racine de pilote (le dossier qui contient `config/`).
+service:
+  hote: 127.0.0.1          # service local : n'écoute que cette machine. 0.0.0.0 pour l'atteindre depuis un autre appareil
+                           # (la maquette montre momo.local) — il n'y a PAS de compte : à ne faire que sur un réseau de confiance.
+                           # DANGER : sans compte, qui atteint ce port peut faire exécuter un programme local (page Ajout),
+                           # écrire des fichiers là où le service a le droit d'écrire, et dépenser le budget. Ne pas ouvrir
+                           # sur un réseau partagé sans mettre une authentification devant (mandataire, tunnel).
+  port: 8443               # le port affiché par la maquette ; configurable
+  https: true              # certificat auto-signé créé au premier lancement (dossier `tls`), sauf si fourni ; false = HTTP simple
+  certificat: ""           # vide = auto-signé ; sinon chemin d'un certificat (PEM)
+  cle: ""                  # idem pour la clé privée (PEM)
+  hotes_autorises: []      # noms d'hôte acceptés en plus de 127.0.0.1 et localhost quand le service est local : sans cela, un
+                           # nom de domaine extérieur pointant sur 127.0.0.1 permettrait à une page web d'atteindre cette API
+grappes:
+  racine: ../grappes     # la racine de grappes (dossier voisin dans ce dépôt) ; sa bibliothèque et sa config/ en sont tirées
+  config: config           # dossier de configuration de grappes, relatif à sa racine
+  python: .venv/bin/python # interpréteur de grappes (ses dépendances, dont les modèles de lecture de noms), relatif à sa racine
+  secrets: config/secrets.env   # clés déjà présentes côté grappes : LUES seulement (jamais copiées ni affichées) ; vide = ne pas les lire
+donnees:
+  dossier: donnees         # base SQLite, travail des recherches (un dossier par identifiant), certificat
+  copies:                  # copies locales de bases (gros fichiers) ; vide = <dossier>/copies
+  base: "sqlite:///{dossier}/pilote.db"   # SQLAlchemy : passer à PostgreSQL = changer cette seule ligne
+travail:
+  fils: 2                  # recherches menées en même temps au plus
+qui_par_defaut: sednal     # valeur du champ « qui » tant qu'il n'y a ni compte ni rôle
+
+# Familles de prises (D70). Les NOMS sont ceux que demande Sednal ; le contenu de chaque famille vient de ce qui existe
+# dans la config de grappes : la première règle qui convient range la prise. `type` et `format` sont ceux du fichier de la
+# prise ; `plugin: true` = type fourni par un fichier Python de plugins/. Une famille sans prise reste visible, en gris.
+familles:
+  - {id: rss,     regle: {type: [http], format: [xml]}}
+  - {id: mcp,     regle: {type: [mcp]}}
+  - {id: base,    regle: {type: [base, sql]}}
+  - {id: outil,   regle: {type: [outil]}}
+  - {id: fichier, regle: {type: [registre], format: [csv]}}
+  - {id: python,  regle: {plugin: true}}
+  - {id: api,     regle: {type: [http, registre]}}
+# Ordre d'affichage des boutons de famille (les mêmes sept noms que ci-dessus).
+ordre_familles: [api, mcp, rss, base, fichier, python, outil]
+# Quota d'un compte quand le fournisseur sait le dire (point gratuit, sans consommer de crédit). Vide = pas de quota affiché.
+quotas:
+  tavily:
+    url: https://api.tavily.com/usage
+    cle_env: TAVILY_API_KEY
+    utilise: account.plan_usage
+    limite: account.plan_limit
+    secrets: config/secrets.env      # relatif à la config de grappes (chargé sans afficher ni journaliser la clé)
+
+# Les quatre crans de profondeur (page Lancement). Les NOMS et les « appels » viennent de la maquette ; les autres limites sont
+# des choix de l'agent, à valider (QUESTIONS.md P8). Chaque cran fixe les limites d'UN cycle de grappes (config/autonomie.yaml
+# de la copie de travail de la recherche, jamais de la vraie config).
+profondeurs:
+  - {id: strict,  nom: Strict,  description: "requête exacte, aucune reformulation",                   appels: 5,   pages: 10,  nouvelles_sources: 5,  observations: 50,   liens: 0}
+  - {id: normal,  nom: Normal,  description: "quelques reformulations, 2 pages par source",           appels: 18,  pages: 40,  nouvelles_sources: 10, observations: 150,  liens: 1}
+  - {id: large,   nom: Large,   description: "+ élargissement si une source ne rend rien",            appels: 45,  pages: 100, nouvelles_sources: 20, observations: 400,  liens: 1}
+  - {id: maximum, nom: Maximum, description: "+ second tour autour des noms déjà trouvés",            appels: 120, pages: 300, nouvelles_sources: 40, observations: 1000, liens: 2}
+profondeur_par_defaut: normal
+limites_par_defaut: {temps_minutes: 30, appels: null}   # null = celui du cran de profondeur
+
+# D'où vient un nom (la couleur dans Tri). Un registre de cette liste est une encyclopédie, pas un registre officiel : il rend
+# l'origine « dans une encyclopédie ». Tous les autres registres de grappes (SIRENE, BnF, ministères...) donnent « registre ».
+origines:
+  encyclo: [wikidata]
+
+# Classements (page Tri). Ceux qui sont livrés sont des fichiers ordinaires (un par classement) ; ceux qu'on crée vont dans le
+# second dossier, qu'on peut copier, modifier ou exporter comme les autres. Un classement ne travaille que sur des FAITS.
+classements:
+  livres: classements
+  perso: "{donnees}/classements"
+
+# Catalogue de l'État (page Ajout, façon ①) : le serveur MCP public de data.gouv.fr, appelé avec l'interpréteur de grappes.
+catalogue:
+  mcp: https://mcp.data.gouv.fr/mcp
+  delai_s: 60
+
+# Où se trouvent les autres fichiers de configuration. Chemins relatifs au dossier qui contient CE fichier : on peut déplacer tout le
+# dossier de configuration et le retrouver avec la variable PILOTE_CONFIG (chemin de ce fichier).
+chemins:
+  sources: sources              # une déclaration par source (ce qu'elle trouve, pays, usages, coût, mode...)
+  reglages: reglages.yaml       # choix de l'utilisateur : cases chercher/vérifier, plafond, vérification, presets cochés
+  presets: presets              # cartes des presets (nom, phrase) ; leurs sources sont CALCULÉES depuis les usages déclarés
+  presets_perso: presets_perso  # presets personnalisés de l'utilisateur
+  secrets: [secrets.env]        # clés d'API (jamais envoyées au navigateur)
+  formats_perso: formats_perso  # formats de sortie ajoutés par l'utilisateur : un fichier .py chacun
+  portails_ckan: portails_ckan.yaml  # portails de données ouvertes contrôlés, par pays
+# Genres génériques : chaque source fait correspondre SON vocabulaire (codes d'activité, catégories...) à ces genres.
+# Aucun code national n'est connu du cœur du programme.
+genres: [club, entreprise, association, administration, lieu, evenement, personne, page, compte]
+
+# Pays proposés à l'assistant (données, pas du code). Un autre pays se saisit par son code à deux lettres.
+pays_proposes: {FR: France, GB: Royaume-Uni, NZ: Nouvelle-Zélande, NO: Norvège, EE: Estonie, CZ: Tchéquie, PL: Pologne, US: États-Unis, CA: Canada, DE: Allemagne, BE: Belgique, CH: Suisse, ES: Espagne, IT: Italie}

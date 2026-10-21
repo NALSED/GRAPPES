@@ -1,0 +1,735 @@
+{
+ "classes": [
+  "Q131734"
+ ],
+ "entities": [
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Brasserie Leduc",
+   "qid": "Q105616802",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Brasserie de Lambézellec",
+   "qid": "Q105944878",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "brasserie centrale",
+    "brasserie rubens",
+    "grande brasserie de nice"
+   ],
+   "domains": [],
+   "label": "rubens - brasserie de nice",
+   "qid": "Q107097200",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "brasserie Spenlé",
+   "qid": "Q108903106",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "brasseriegeorges.com"
+   ],
+   "label": "brasserie Georges",
+   "qid": "Q10939",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Popihn"
+   ],
+   "domains": [],
+   "label": "brasserie Popihn",
+   "qid": "Q110803737",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Brasseurs Savoyards",
+   "qid": "Q111663758",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Le Nazir",
+   "qid": "Q113192446",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "brasserie-malterie Campion d'Arleux",
+   "qid": "Q122880128",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "MOERSLEUTEL CRAFT BREWERY B V"
+   ],
+   "domains": [
+    "moersleutel.com"
+   ],
+   "label": "Moersleutel Craft Brewery B V",
+   "qid": "Q124632565",
+   "siren": [
+    "923731087"
+   ]
+  },
+  {
+   "aliases": [
+    "BGG",
+    "BRASSERIE ET GLACIERE DE LA GUYANE"
+   ],
+   "domains": [],
+   "label": "brasserie et Glacière de Guyane",
+   "qid": "Q125612888",
+   "siren": [
+    "303195226"
+   ]
+  },
+  {
+   "aliases": [
+    "AMBLISE"
+   ],
+   "domains": [],
+   "label": "Amblise",
+   "qid": "Q131219692",
+   "siren": [
+    "904336518"
+   ]
+  },
+  {
+   "aliases": [
+    "BASQUELAND BREWING COMPANY SL"
+   ],
+   "domains": [],
+   "label": "Basqueland Brewing Company Sl",
+   "qid": "Q131219878",
+   "siren": [
+    "914157839"
+   ]
+  },
+  {
+   "aliases": [
+    "BRASSERIE DE CHANAZ"
+   ],
+   "domains": [
+    "brasserie-de-chanaz.fr"
+   ],
+   "label": "Brasserie de Chanaz",
+   "qid": "Q131220296",
+   "siren": [
+    "828933713"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Grandes Brasseries de Maxéville",
+   "qid": "Q138607354",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BD Guyenne, Brasserie Guyenne, Distillerie Guyenne, De guyenne"
+   ],
+   "domains": [],
+   "label": "Brasserie Distillerie Guyenne",
+   "qid": "Q138650766",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lachamoise.com"
+   ],
+   "label": "La Chamoise",
+   "qid": "Q139669924",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "PBC",
+    "Paname Inc"
+   ],
+   "domains": [
+    "panamebrewingcompany.com"
+   ],
+   "label": "Paname Brewing Company",
+   "qid": "Q140699142",
+   "siren": [
+    "807500863"
+   ]
+  },
+  {
+   "aliases": [
+    "Koenigsbier",
+    "Brasserie-malterie Jooris",
+    "G. B. L.",
+    "grande brasserie Excelsior",
+    "G.B.L. Koënigsbier"
+   ],
+   "domains": [],
+   "label": "Grande Brasserie coopérative de Lille",
+   "qid": "Q141134415",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "brasserie de Mutzig",
+   "qid": "Q14627942",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "grande brasserie de la Patrie Schutzenberger",
+   "qid": "Q14627972",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "brasserie de la Frise",
+   "qid": "Q16011074",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "brasserie La Rouget de Lisle",
+   "qid": "Q16533948",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "heinekenfrance.fr"
+   ],
+   "label": "brasserie de l'Espérance",
+   "qid": "Q18020771",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "brasserie-champigneulles.fr"
+   ],
+   "label": "brasserie de Champigneulles",
+   "qid": "Q18610886",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "biereperle.com"
+   ],
+   "label": "Brasserie de la Perle",
+   "qid": "Q19543999",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "ancienne brasserie Gruber"
+   ],
+   "domains": [],
+   "label": "brasserie Gruber",
+   "qid": "Q19606847",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ninkasi.fr"
+   ],
+   "label": "Ninkasi",
+   "qid": "Q19660049",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "brasserie du Bois Vert"
+   ],
+   "domains": [],
+   "label": "Brasserie Prieur",
+   "qid": "Q19945453",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Bière de Lorraine",
+   "qid": "Q19951867",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Brasserie de Charmes",
+   "qid": "Q19951907",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lasaintpierre.com"
+   ],
+   "label": "brasserie La Saint-Pierre",
+   "qid": "Q20475999",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Brasserie Pelforth"
+   ],
+   "domains": [],
+   "label": "Brasserie du Pélican",
+   "qid": "Q20971818",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Malterie Claeyssens",
+   "qid": "Q22979778",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "brasseries Motte-Cordonnier",
+    "malterie Motte-Cordonnier"
+   ],
+   "domains": [
+    "bieresmottecordonnier.fr"
+   ],
+   "label": "brasserie-malterie Motte-Cordonnier",
+   "qid": "Q22979786",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "brasserie-malterie Lefebvre-Scalabrino",
+   "qid": "Q22979795",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "ancienne brasserie-malterie de la Lys",
+   "qid": "Q22997382",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "brasserie-lamadelon.fr"
+   ],
+   "label": "La Madelon",
+   "qid": "Q24034269",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "L'Authentique",
+    "Brasserie de Saint-Louis",
+    "Brasserie Saint-Louis"
+   ],
+   "domains": [
+    "saint-louis.biz"
+   ],
+   "label": "Bière de Saint-Louis",
+   "qid": "Q2905040",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Cuvée des Jonquilles",
+    "Saison Saint Médard"
+   ],
+   "domains": [],
+   "label": "Brasserie Au Baron",
+   "qid": "Q2923989",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Brasserie des Deux Rivières"
+   ],
+   "domains": [],
+   "label": "brasserie Coreff",
+   "qid": "Q2923994",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "brasserie l'excelsior",
+    "Excelsior (brasserie)"
+   ],
+   "domains": [],
+   "label": "brasserie Excelsior",
+   "qid": "Q2923998",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Brasserie Forest de Monceau-Saint-Waast"
+   ],
+   "domains": [],
+   "label": "brasserie Forest",
+   "qid": "Q2924002",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Ambre des Flandres",
+    "Belzébuth (bière)",
+    "Brasserie grain d'orge",
+    "Brasserie Grain d'orge",
+    "Gold Triumph",
+    "Grain d'orge (bière)",
+    "Grain d'Orge (bière)",
+    "Grain d'Orge Blanche",
+    "Grain d'Orge Cuvée 1898",
+    "Orpal",
+    "Secret des Moines"
+   ],
+   "domains": [],
+   "label": "brasserie Grain d'Orge",
+   "qid": "Q2924004",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Brasserie du Pélican"
+   ],
+   "domains": [
+    "heinekenfrance.fr"
+   ],
+   "label": "brasserie Heineken",
+   "qid": "Q2924005",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Gallia (brasserie)",
+    "Gallia Paris"
+   ],
+   "domains": [],
+   "label": "brasserie La Nouvelle Gallia",
+   "qid": "Q2924010",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Bière des Sans Culottes",
+    "Blanche de Cambrai",
+    "La Choulette"
+   ],
+   "domains": [
+    "lachoulette.com"
+   ],
+   "label": "brasserie La Choulette",
+   "qid": "Q2924012",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "brasserie Laden-Wallez",
+   "qid": "Q2924013",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Page 24"
+   ],
+   "domains": [
+    "page24.fr"
+   ],
+   "label": "brasserie Saint-Germain",
+   "qid": "Q2924023",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Brasserie Licorne",
+    "BRASSERIE LICORNE",
+    "Brasserie saverne",
+    "Burg Bier",
+    "Burgbräu",
+    "La Licorne (bière)"
+   ],
+   "domains": [
+    "brasserielicorne.com"
+   ],
+   "label": "brasserie Saverne",
+   "qid": "Q2924028",
+   "siren": [
+    "381077783"
+   ]
+  },
+  {
+   "aliases": [
+    "Tri Matolod"
+   ],
+   "domains": [
+    "trimartolod.fr"
+   ],
+   "label": "brasserie Tri Martolod",
+   "qid": "Q2924032",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "La Dauphine",
+    "Brasserie artisanale du Val d'Ainan"
+   ],
+   "domains": [
+    "la-dauphine.fr"
+   ],
+   "label": "brasserie artisanale du Val d'Ainan",
+   "qid": "Q2924040",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Celta",
+    "Brasserie Goudale",
+    "BRASSERIE GOUDALE",
+    "Saaz",
+    "Amadeus (bière)",
+    "Bière du Désert",
+    "Brasserie de gayant",
+    "Brasserie De Gayant",
+    "Brune artisanale",
+    "Goldenberg (bière)",
+    "La Bière du Démon",
+    "La Démon",
+    "Les Brasseurs de Gayant",
+    "Saint Landelin (bière)",
+    "Tequieros"
+   ],
+   "domains": [
+    "brasserie-goudale.com"
+   ],
+   "label": "brasserie de Gayant",
+   "qid": "Q2924043",
+   "siren": [
+    "487767816"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "brasserie-saint-omer.com"
+   ],
+   "label": "brasserie de Saint-Omer",
+   "qid": "Q2924044",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "brasserie de Sochaux",
+   "qid": "Q2924046",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "brasserie de Saint-Sylvestre",
+   "qid": "Q2924047",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "brasserie de Tahiti"
+   ],
+   "domains": [
+    "brasseriedetahiti.pf"
+   ],
+   "label": "Brasserie de Tahiti",
+   "qid": "Q2924049",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Thorella",
+    "La Paludière",
+    "Aérouant Du",
+    "Brasserie de la Briere",
+    "Brasserie de la brière",
+    "Brasserie De La Brière",
+    "Dàna",
+    "Morta (bière)",
+    "Typha (bière)"
+   ],
+   "domains": [],
+   "label": "brasserie de la Brière",
+   "qid": "Q2924051",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "brasserie-montblanc.com"
+   ],
+   "label": "Brasserie du Mont-Blanc",
+   "qid": "Q2924064",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Brasserie Gruber",
+   "qid": "Q30765966",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Muse",
+    "Wendelinus",
+    "Météor",
+    "Grand Malt"
+   ],
+   "domains": [
+    "brasserie-meteor.fr"
+   ],
+   "label": "Meteor",
+   "qid": "Q328194",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "BRASSERIE ARTISANALE DU DAUPHINE"
+   ],
+   "domains": [
+    "mandrin.eu"
+   ],
+   "label": "Mandrin",
+   "qid": "Q3285572",
+   "siren": [
+    "442056016"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bralirwa.com"
+   ],
+   "label": "Mützig",
+   "qid": "Q3334023",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Tutz",
+    "Copper (Schutzenberger)",
+    "Criolos",
+    "Jubilator",
+    "Patriator",
+    "Schutzenberger (bière)",
+    "Tütz"
+   ],
+   "domains": [
+    "schutzenberger.fr"
+   ],
+   "label": "Schutzenberger",
+   "qid": "Q3475564",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lefroid.nc"
+   ],
+   "label": "Société Le Froid",
+   "qid": "Q3487581",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "brasserie de Ville-sur-Illon"
+   ],
+   "domains": [
+    "museevosgiendelabrasserie.com"
+   ],
+   "label": "écomusée vosgien de la brasserie",
+   "qid": "Q3578620",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Fischer",
+    "Adelscott"
+   ],
+   "domains": [
+    "heinekenfrance.fr"
+   ],
+   "label": "brasserie Fischer",
+   "qid": "Q494166",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "brasserie artisanale du Lizon",
+    "BRASSERIE DU LIZON"
+   ],
+   "domains": [],
+   "label": "brasserie du Lizon",
+   "qid": "Q55840593",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Brasserie Artisanale du Sud"
+   ],
+   "domains": [],
+   "label": "Grihète",
+   "qid": "Q61636990",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "brasserie Bouchoule",
+   "qid": "Q82001226",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "brasserie-ventoux.com"
+   ],
+   "label": "Brasserie Artisanale du Mont Ventoux",
+   "qid": "Q96943417",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "brasserie-ladebauche.com"
+   ],
+   "label": "La Débauche",
+   "qid": "Q98664051",
+   "siren": []
+  }
+ ],
+ "phrase": "Brasserie en France",
+ "sujet_id": "g-q131734",
+ "where": "?item wdt:P31 wd:Q131734 ; wdt:P17 wd:Q142 ."
+}

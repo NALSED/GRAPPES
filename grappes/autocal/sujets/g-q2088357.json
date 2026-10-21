@@ -1,0 +1,16 @@
+{
+ "id": "g-q2088357",
+ "phrase": "Ensemble musical en France",
+ "jeu": "test",
+ "difficulte": "difficile",
+ "origine": "genere",
+ "classe": "Q2088357",
+ "r": 39,
+ "part_site": 0.564,
+ "part_siren": 0.051,
+ "notes": "ensemble musical",
+ "where": "?item wdt:P31 wd:Q2088357 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q2088357"
+ ]
+}

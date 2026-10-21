@@ -1,0 +1,19 @@
+{
+  "count": 2,
+  "results": [
+    {
+      "caseName": "Apex Dynamics LLC v. Meridian Systems Corp.",
+      "court": "usca9",
+      "docketNumber": "24-15678",
+      "dateFiled": "2024-03-14",
+      "absolute_url": "/opinion/892341/apex-dynamics-llc-v-meridian-systems-corp/"
+    },
+    {
+      "caseName": "Quantum Bridge Technologies Inc. v. NovaCore Analytics Ltd.",
+      "court": "usca2",
+      "docketNumber": "23-9842",
+      "dateFiled": "2023-11-02",
+      "absolute_url": "/opinion/756102/quantum-bridge-technologies-inc-v-novacore-analytics-ltd/"
+    }
+  ]
+}

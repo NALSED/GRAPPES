@@ -1,0 +1,11 @@
+{
+  "url": "club-exemple.example",
+  "archived_snapshots": {
+    "closest": {
+      "status": "200",
+      "available": true,
+      "url": "http://web.archive.org/web/20190412093015/http://club-exemple.example/",
+      "timestamp": "20190412093015"
+    }
+  }
+}

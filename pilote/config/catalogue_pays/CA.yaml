@@ -1,0 +1,22 @@
+# Catalogue des bases officielles : Canada. Une DONNÉE : corriger une entrée = modifier ce fichier. Taille : demandée au serveur, jamais écrite ici.
+pays: "CA"
+nom: "Canada"
+bases:
+  - id: open-canada
+    nom: "Portail de données ouvertes du Canada"
+    contenu: "Portail fédéral (CKAN)."
+    usage: "organisations_officielles"
+    acces: "site"
+    licence: "à vérifier"
+    url: "https://open.canada.ca/data"
+    verifie_le: 2026-10-18
+  - id: osm-geofabrik
+    nom: "OpenStreetMap (extrait Geofabrik)"
+    contenu: "Lieux cartographiés (stades, salles, centres, locaux) du pays, mis à jour chaque jour."
+    usage: "lieux"
+    acces: "fichier"
+    licence: "ODbL"
+    url: "https://download.geofabrik.de/north-america/canada.html"
+    telechargement: "https://download.geofabrik.de/north-america/canada-latest.osm.pbf"
+    source: "osm-overpass"
+    verifie_le: 2026-10-18

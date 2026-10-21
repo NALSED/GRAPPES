@@ -1,0 +1,51 @@
+{
+ "number_of_results": 1,
+ "items": [
+  {
+   "id": "https://ror.org/00exemple1",
+   "names": [
+    {
+     "lang": "en",
+     "types": [
+      "label"
+     ],
+     "value": "Example University"
+    },
+    {
+     "lang": "fr",
+     "types": [
+      "label",
+      "ror_display"
+     ],
+     "value": "Université Exemple"
+    }
+   ],
+   "types": [
+    "education"
+   ],
+   "links": [
+    {
+     "type": "website",
+     "value": "https://univ-exemple.example"
+    }
+   ],
+   "locations": [
+    {
+     "geonames_details": {
+      "name": "Villeexemple",
+      "country_code": "FR",
+      "lat": 45.0,
+      "lng": 5.0
+     }
+    }
+   ],
+   "relationships": [
+    {
+     "type": "child",
+     "label": "Laboratoire Imaginaire",
+     "id": "https://ror.org/00exemple2"
+    }
+   ]
+  }
+ ]
+}

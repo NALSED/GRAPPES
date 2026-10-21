@@ -1,0 +1,235 @@
+{
+ "classes": [
+  "Q108320110",
+  "Q10517054",
+  "Q847017"
+ ],
+ "entities": [
+  {
+   "aliases": [
+    "ASEAT",
+    "Spacer's de Toulouse Handball",
+    "Sporting Toulouse 31",
+    "Stade Toulousain Handball",
+    "Toulouse Handball",
+    "Toulouse Union Handball"
+   ],
+   "domains": [
+    "fenix-toulouse.fr"
+   ],
+   "label": "Fenix Toulouse Handball",
+   "qid": "Q1263839",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Dunkerque HBGL",
+    "Union sportive de Dunkerque",
+    "Usdk",
+    "USDK Dunkerque"
+   ],
+   "domains": [
+    "usdk.fr"
+   ],
+   "label": "Dunkerque Handball Grand Littoral",
+   "qid": "Q1266000",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Handball Club Cournon-d’Auvergne",
+    "HBC Cournon d'Auvergne",
+    "HBC Cournon-d'Auvergne"
+   ],
+   "domains": [
+    "handball-cournon.com"
+   ],
+   "label": "Handball Club Cournon d’Auvergne",
+   "qid": "Q131441501",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Tremblay en France Handball",
+    "Tremblay-en-France",
+    "Tremblay-en-France Handball"
+   ],
+   "domains": [
+    "tremblayhandball.com"
+   ],
+   "label": "Tremblay Handball",
+   "qid": "Q2002406",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "US Ivry Handball"
+   ],
+   "domains": [
+    "hand-ivry.org"
+   ],
+   "label": "Union sportive d'Ivry Handball",
+   "qid": "Q2298568",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "US Créteil"
+   ],
+   "domains": [
+    "uschb.fr"
+   ],
+   "label": "Union sportive de Créteil handball",
+   "qid": "Q2838551",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Billère Handball"
+   ],
+   "domains": [
+    "pbh64.fr"
+   ],
+   "label": "Pau Billère Handball",
+   "qid": "Q2903763",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "OC Cesson",
+    "OC Cesson Handball"
+   ],
+   "domains": [
+    "cesson-handball.com"
+   ],
+   "label": "Cesson Rennes Métropole Handball",
+   "qid": "Q2947067",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Istres OPH",
+    "Istres Ouest Provence Handball",
+    "Istres PH"
+   ],
+   "domains": [
+    "istreshandball.com"
+   ],
+   "label": "Istres Provence Handball",
+   "qid": "Q3155752",
+   "siren": [
+    "381817477"
+   ]
+  },
+  {
+   "aliases": [
+    "Aix Université Club",
+    "Aix Université Club Handball",
+    "PAUC",
+    "Pays d'Aix UC"
+   ],
+   "domains": [
+    "pauc-handball.com"
+   ],
+   "label": "Pays d'Aix Université Club handball",
+   "qid": "Q3373371",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "USAM Nîmes"
+   ],
+   "domains": [
+    "usam-nimesgard.fr"
+   ],
+   "label": "USAM Nîmes Gard",
+   "qid": "Q595394",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SC Selestat handball",
+    "Sc sélestat handball",
+    "Sélestat AHB"
+   ],
+   "domains": [
+    "sa-hb.com"
+   ],
+   "label": "Sélestat Alsace Handball",
+   "qid": "Q747011",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "MAHB",
+    "MHB",
+    "Montpellier Agglomération Handball",
+    "Montpellier AHB",
+    "Montpellier HB"
+   ],
+   "domains": [
+    "montpellierhandball.com"
+   ],
+   "label": "Montpellier Handball",
+   "qid": "Q901613",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Asnières Sports",
+    "Paris Handball",
+    "Paris-Asnières",
+    "PSG Handball",
+    "PSG-Asnières"
+   ],
+   "domains": [
+    "psg.fr"
+   ],
+   "label": "Paris Saint-Germain Handball",
+   "qid": "Q926354",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "HBC Nantes",
+    "le H"
+   ],
+   "domains": [
+    "hbcnantes.com"
+   ],
+   "label": "Handball Club de Nantes",
+   "qid": "Q939580",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "RS Saint-Cyr Touraine HB",
+    "Réveil Sportif Saint-Cyr Touraine Handball",
+    "Saint-Cyr Touraine Agglomération Handball",
+    "Saint-Cyr TAH",
+    "Saint-Cyr TA Handball"
+   ],
+   "domains": [
+    "saintcyrtourainehandball.fr"
+   ],
+   "label": "Saint-Cyr Handball",
+   "qid": "Q949239",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Stade olympique de Chambéry",
+    "Chambéry Savoie Handball"
+   ],
+   "domains": [
+    "teamchambe.com"
+   ],
+   "label": "Chambéry Savoie Mont Blanc Handball",
+   "qid": "Q986956",
+   "siren": []
+  }
+ ],
+ "phrase": "Les clubs de handball professionnels en France",
+ "sujet_id": "handball-pro",
+ "where": "?item wdt:P118 ?l . VALUES ?l { wd:Q203172 wd:Q2951241 wd:Q522560 wd:Q2951213 } FILTER NOT EXISTS { ?item wdt:P31 wd:Q5 } "
+}

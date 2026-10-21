@@ -1,0 +1,16 @@
+{
+ "web": {
+  "results": [
+   {
+    "title": "Club Exemple de Handball",
+    "url": "https://club-exemple.example/",
+    "description": "Le club..."
+   },
+   {
+    "title": "Entente Sportive Imaginaire",
+    "url": "https://es-imaginaire.example/",
+    "description": "..."
+   }
+  ]
+ }
+}

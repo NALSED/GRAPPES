@@ -1,0 +1,22 @@
+{
+ "query": {
+  "pages": [
+   {
+    "pageid": 1,
+    "title": "Club Exemple de Handball",
+    "fullurl": "https://fr.wikipedia.org/wiki/Club_Exemple",
+    "extract": "Le Club Exemple est un club...",
+    "categories": [
+     {
+      "title": "Catégorie:Club sportif"
+     }
+    ],
+    "extlinks": [
+     {
+      "url": "https://club-exemple.example/"
+     }
+    ]
+   }
+  ]
+ }
+}

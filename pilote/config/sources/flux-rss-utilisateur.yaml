@@ -1,0 +1,44 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: flux-rss-utilisateur
+nom: Mes flux RSS
+description: 'Les journaux et sites que vous suivez : leurs flux sont lus à chaque recherche, les noms
+  d''organisations cités dans les articles sont extraits. La liste est la vôtre (ajout à la main ou import
+  d''un fichier OPML).'
+trouve: acteurs cités dans les articles de vos flux
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- presse
+main: seconde
+origine: presse
+famille: rss
+roles:
+- chercher
+- verifier
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: true
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/flux-rss-utilisateur.xml
+verifie_le: '2026-10-13'
+note: 'Liste vide au départ : ajoutez des flux dans Réglages. Un flux est lu une fois par recherche (robots.txt
+  respecté). Extraction des noms bruyante.'
+moteur:
+  flux_rss: true

@@ -1,0 +1,14 @@
+{
+ "results": [
+  {
+   "id": "1",
+   "title": "Club Exemple de Handball",
+   "url": "https://club-exemple.example/"
+  },
+  {
+   "id": "2",
+   "title": "Entente Sportive Imaginaire",
+   "url": "https://es-imaginaire.example/"
+  }
+ ]
+}

@@ -1,0 +1,258 @@
+{
+ "classes": [
+  "Q3412193"
+ ],
+ "entities": [
+  {
+   "aliases": [
+    "i-Trans",
+    "Pole de compétitivité i-Trans"
+   ],
+   "domains": [
+    "i-trans.org"
+   ],
+   "label": "pôle de compétitivité i-Trans",
+   "qid": "Q13461555",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "picom",
+    "Picom",
+    "PICOM"
+   ],
+   "domains": [
+    "picom.fr"
+   ],
+   "label": "pôle de compétitivité PICOM",
+   "qid": "Q13577039",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "TEAM2"
+   ],
+   "domains": [
+    "team2.fr"
+   ],
+   "label": "Pôle de compétitivité TEAM2",
+   "qid": "Q13578409",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Pôle Aqua-Valley"
+   ],
+   "domains": [
+    "aqua-valley.com"
+   ],
+   "label": "Aqua-Valley",
+   "qid": "Q135901699",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Cluster France Water Team",
+    "Pôle de compétitivité France Water Team"
+   ],
+   "domains": [
+    "france-water-team.com"
+   ],
+   "label": "France Water Team",
+   "qid": "Q135905838",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "poleaquanova.fr"
+   ],
+   "label": "Aquanova",
+   "qid": "Q135964974",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "polemaud.com"
+   ],
+   "label": "Pôle de compétitivité MAUD",
+   "qid": "Q13635652",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Lyonbiopole"
+   ],
+   "domains": [
+    "lyonbiopole.com"
+   ],
+   "label": "Lyonbiopôle",
+   "qid": "Q2380414",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "AEROSPACE VALLEY",
+    "Vallée de l'Aérospatiale"
+   ],
+   "domains": [
+    "aerospace-valley.com"
+   ],
+   "label": "Aerospace Valley",
+   "qid": "Q2500572",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Systematic",
+    "System@tic",
+    "System@tic Paris-Région"
+   ],
+   "domains": [
+    "systematic-paris-region.org"
+   ],
+   "label": "Systematic Paris-Region",
+   "qid": "Q2817251",
+   "siren": [
+    "485364525"
+   ]
+  },
+  {
+   "aliases": [
+    "Association des industries Parfums cosmétiques",
+    "Pôle cosmétique, science de la beauté et du bien-être (Chartres)",
+    "Association Cosmetic valley (Chartres)",
+    "Association Parfums cosmétiques (Chartres)",
+    "Association des industries Parfums cosmétiques (Chartres)",
+    "Association Parfums et cosmétiques (Chartres)",
+    "Parfums cosmétiques (Chartres)"
+   ],
+   "domains": [
+    "cosmetic-valley.com"
+   ],
+   "label": "Cosmetic Valley",
+   "qid": "Q2817322",
+   "siren": [
+    "413570375"
+   ]
+  },
+  {
+   "aliases": [
+    "ASTech"
+   ],
+   "domains": [
+    "pole-astech.org"
+   ],
+   "label": "pôle de compétitivité ASTech",
+   "qid": "Q2819482",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "AGRI SUD-OUEST INNOVATION"
+   ],
+   "domains": [],
+   "label": "Agrimip Innovation",
+   "qid": "Q2827206",
+   "siren": [
+    "499196087"
+   ]
+  },
+  {
+   "aliases": [
+    "Alsace BioValley"
+   ],
+   "domains": [
+    "alsace-biovalley.com"
+   ],
+   "label": "Alsace Biovalley",
+   "qid": "Q2840163",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "association Atlanpole Biotherapies",
+   "qid": "Q2869368",
+   "siren": [
+    "838261758"
+   ]
+  },
+  {
+   "aliases": [
+    "FI"
+   ],
+   "domains": [
+    "finance-innovation.org"
+   ],
+   "label": "Finance Innovation",
+   "qid": "Q3072484",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "minalogic.com"
+   ],
+   "label": "Minalogic",
+   "qid": "Q3314704",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "pole-nsl.org"
+   ],
+   "label": "Pôle Nutrition Santé Longévité",
+   "qid": "Q3412176",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Up-tex",
+    "Up-Tex"
+   ],
+   "domains": [
+    "up-tex.fr"
+   ],
+   "label": "Pôle de compétitivité UP-TEX",
+   "qid": "Q3412194",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Pôle de compétitivité images et réseaux"
+   ],
+   "domains": [],
+   "label": "Pôle de compétitivité Images et Réseaux",
+   "qid": "Q3412195",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Pole vegetal angevin",
+    "Pôle végétal angevin",
+    "Pôle Végétal Angevin"
+   ],
+   "domains": [
+    "vegepolys.eu"
+   ],
+   "label": "Végépolys",
+   "qid": "Q3563974",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "capdigital.com"
+   ],
+   "label": "Cap Digital",
+   "qid": "Q432563",
+   "siren": []
+  }
+ ],
+ "phrase": "Pôle de compétitivité en France",
+ "sujet_id": "g-q3412193",
+ "where": "?item wdt:P31 wd:Q3412193 ; wdt:P17 wd:Q142 ."
+}

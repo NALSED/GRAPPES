@@ -1,0 +1,69 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: newsdata-io
+nom: NewsData.io
+description: 'Articles de presse du monde entier par mot-clé. Clé gratuite : 200 crédits par jour, 12
+  heures de retard, extraits seulement.'
+trouve: acteurs cités dans la presse mondiale (extraits)
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- presse
+main: seconde
+origine: presse
+famille: api
+roles:
+- chercher
+- verifier
+cle: NEWSDATA_API_KEY
+cout:
+  unite: crédit
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 6000
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/newsdata.json
+verifie_le: '2026-10-13'
+note: 'Offre gratuite : 200 crédits par jour (environ 6 000 par mois), articles retardés de 12 heures,
+  extraits seulement. À vérifier chez le fournisseur.'
+moteur:
+  definition:
+    id: newsdata-io
+    type: http
+    public: true
+    url: https://newsdata.io/api/1/latest
+    method: GET
+    auth:
+      type: query
+      name: apikey
+      env: NEWSDATA_API_KEY
+    params:
+      q: '{mots_cles}'
+    response:
+      format: json
+      items: results
+    fields:
+      title: title
+      url: link
+      description: description
+      date: pubDate
+      id: article_id
+    observation:
+      ecosysteme: presse
+      source: source_id
+      nom: source_name
+    quota: 10
+    raison: article NewsData.io pour « {mot_cle} »

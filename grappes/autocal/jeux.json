@@ -1,0 +1,32 @@
+{
+ "graine": 20261012,
+ "jeux": {
+  "dev": [
+   "handball-pro",
+   "festivals-elec",
+   "g-q212805",
+   "g-q131186",
+   "g-q742421",
+   "g-q180958",
+   "temoin-licornes"
+  ],
+  "validation": [
+   "cac40",
+   "g-q654502",
+   "g-q2190251",
+   "g-q56199177",
+   "supporters-foot",
+   "g-q43009164",
+   "temoin-dragons"
+  ],
+  "test": [
+   "g-q3412193",
+   "g-q17487523",
+   "g-q856234",
+   "g-q1666019",
+   "g-q131734",
+   "g-q2088357",
+   "temoin-sorciers"
+  ]
+ }
+}

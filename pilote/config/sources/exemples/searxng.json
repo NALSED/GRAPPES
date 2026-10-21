@@ -1,0 +1,18 @@
+{
+ "query": "handball",
+ "results": [
+  {
+   "title": "Club Exemple de Handball",
+   "url": "https://club-exemple.example/",
+   "content": "Le club...",
+   "engines": [
+    "exemple"
+   ]
+  },
+  {
+   "title": "Entente Sportive Imaginaire",
+   "url": "https://es-imaginaire.example/",
+   "content": "Résultats..."
+  }
+ ]
+}

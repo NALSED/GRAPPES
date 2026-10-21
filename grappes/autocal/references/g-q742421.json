@@ -1,0 +1,1250 @@
+{
+ "classes": [
+  "Q742421"
+ ],
+ "entities": [
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Troupe de la Comédie-Française en 1772",
+   "qid": "Q104552326",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "THEATRE DU PELICAN"
+   ],
+   "domains": [
+    "theatredupelican.eu"
+   ],
+   "label": "Théâtre du Pélican",
+   "qid": "Q109045816",
+   "siren": [
+    "311381602"
+   ]
+  },
+  {
+   "aliases": [
+    "Lynceus"
+   ],
+   "domains": [
+    "lynceus.fr"
+   ],
+   "label": "Lyncéus",
+   "qid": "Q110242156",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Opéra de Rouen",
+    "Opera de Rouen Normandie"
+   ],
+   "domains": [
+    "operaderouen.fr"
+   ],
+   "label": "Opéra de Rouen - Normandie",
+   "qid": "Q111297694",
+   "siren": [
+    "450761937"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "larampe-tio.org"
+   ],
+   "label": "La Rampe",
+   "qid": "Q119260211",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Et theatre gascou de Balagué",
+   "qid": "Q119349293",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Nissa la Bella",
+   "qid": "Q120122484",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Lou Poulin de Mountblanc",
+   "qid": "Q120500190",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Lou Rodou Nissart",
+   "qid": "Q120672974",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Li Cendrous",
+   "qid": "Q120750872",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Lous Biarnés Gaujós",
+   "qid": "Q120805927",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "La Pastorèla",
+   "qid": "Q120913665",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Etat d'urgence",
+    "Compagnie État d'Urgence",
+    "Cie État d'Urgence"
+   ],
+   "domains": [
+    "cieetatdurgence.com"
+   ],
+   "label": "État d'urgence",
+   "qid": "Q136298089",
+   "siren": [
+    "811710250"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Les Griots",
+   "qid": "Q136411432",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "en-musique.jimdofree.com"
+   ],
+   "label": "Compagnie En Musique",
+   "qid": "Q138303055",
+   "siren": [
+    "532134343"
+   ]
+  },
+  {
+   "aliases": [
+    "Baladins en Agenais",
+    "Festival en Agenais",
+    "Nouveaux Baladins"
+   ],
+   "domains": [],
+   "label": "Les Baladins en Agenais",
+   "qid": "Q15407953",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie la Lune rousse",
+   "qid": "Q15965504",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Les Robins des Bois",
+   "qid": "Q16655327",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Praxinoscope Théâtre",
+   "qid": "Q16670921",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Théâtre de l’Incendie",
+   "qid": "Q16680082",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Art et Action",
+   "qid": "Q16928442",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Troupe du roi de Danemark",
+   "qid": "Q18243543",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Troupe du roi de Suède",
+   "qid": "Q18243545",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "TLK"
+   ],
+   "domains": [],
+   "label": "Téat la Kour",
+   "qid": "Q18744980",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Cie Les Aphoristes"
+   ],
+   "domains": [],
+   "label": "Les Aphoristes",
+   "qid": "Q18880992",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "compagnie-ivan-morane.com"
+   ],
+   "label": "Compagnie Ivan Morane",
+   "qid": "Q19312860",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Comédiens routiers",
+   "qid": "Q19952168",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "compagnie-faisan.org"
+   ],
+   "label": "Compagnie faisan",
+   "qid": "Q21155037",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Groupe Octobre",
+   "qid": "Q2372604",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "arvrobagan.bzh"
+   ],
+   "label": "Ar Vro Bagan",
+   "qid": "Q2378681",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Les Tréteaux d'Armor",
+   "qid": "Q24929407",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "scenesdujura.com"
+   ],
+   "label": "Scènes du Jura",
+   "qid": "Q25391738",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Le Petit Théâtre de Pain",
+   "qid": "Q27855803",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Les 26000 Couverts"
+   ],
+   "domains": [
+    "26000couverts.org"
+   ],
+   "label": "26000 Couverts",
+   "qid": "Q2815417",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Acte6",
+   "qid": "Q2823538",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "theatredelunite.com"
+   ],
+   "label": "Théâtre de l'Unité",
+   "qid": "Q28495943",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le Grenier Maurice Sarrazin"
+   ],
+   "domains": [],
+   "label": "Le Grenier de Toulouse",
+   "qid": "Q29167428",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "La Compagnie Fracasse"
+   ],
+   "domains": [],
+   "label": "Compagnie Fracasse",
+   "qid": "Q2989785",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Jo Bithume",
+   "qid": "Q2989793",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie du Regain",
+   "qid": "Q2989795",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "association Compagnie Lumière d'août",
+    "Compagnie Lumière d'août"
+   ],
+   "domains": [
+    "lumieredaout.net"
+   ],
+   "label": "Lumière d'août",
+   "qid": "Q2989797",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "oposito.fr"
+   ],
+   "label": "Compagnie Oposito",
+   "qid": "Q2989810",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "guignol-lyon.com"
+   ],
+   "label": "Compagnie des Zonzons",
+   "qid": "Q2989921",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie du Rideau Gris",
+   "qid": "Q2990075",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie du SI",
+   "qid": "Q2990076",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "COMPAGNIE RENDEZ MOI MES SENTIMENTS",
+    "Rendez-moi mes sentiments"
+   ],
+   "domains": [
+    "rendez-moi-mes-sentiments.fr"
+   ],
+   "label": "Compagnie rendez-moi mes sentiments",
+   "qid": "Q2990240",
+   "siren": [
+    "482557220"
+   ]
+  },
+  {
+   "aliases": [
+    "Centre dramatique national de Béthune",
+    "Centre dramatique national du Nord-Pas de Calais",
+    "Théâtre des Pays du Nord"
+   ],
+   "domains": [
+    "comediedebethune.org"
+   ],
+   "label": "Comédie de Béthune",
+   "qid": "Q2991540",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Comédie de Bourges",
+   "qid": "Q2991541",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre dramatique national de Normandie",
+    "Centre Dramatique Nationale De Normandie Comedie De Caen"
+   ],
+   "domains": [
+    "comediedecaen.com"
+   ],
+   "label": "Comédie de Caen",
+   "qid": "Q2991542",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Déclic Théâtre",
+   "qid": "Q3042758",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Groupe Démons et Merveilles"
+   ],
+   "domains": [],
+   "label": "Démons et Merveilles",
+   "qid": "Q3044448",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Fédération nationale des compagnies de théâtre amateur et d'animation",
+    "Federation nationale des compagnies de theatre et d’animation",
+    "Fédération nationale des compagnies de théâtre et d’animation",
+    "Fédération Nationale Des Compagnies De Théâtre Et D’animation",
+    "FNCTA"
+   ],
+   "domains": [
+    "fncta.fr"
+   ],
+   "label": "Fédération nationale des compagnies de théâtre amateur et d’animation",
+   "qid": "Q3092022",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Grands Danseurs du Roi",
+    "Grands-danseurs du roi",
+    "Grands-Danseurs Du Roi"
+   ],
+   "domains": [],
+   "label": "Grands-Danseurs du Roi",
+   "qid": "Q3115228",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "GENERIK VAPEUR"
+   ],
+   "domains": [
+    "generikvapeur.com"
+   ],
+   "label": "Générik Vapeur",
+   "qid": "Q3123205",
+   "siren": [
+    "334202280"
+   ]
+  },
+  {
+   "aliases": [
+    "Salle Municipale de Cognac",
+    "Théâtre Municipal de Cognac"
+   ],
+   "domains": [
+    "avantscene.com"
+   ],
+   "label": "L'Avant-Scène Cognac",
+   "qid": "Q3202668",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "La Manufacture de théâtre"
+   ],
+   "domains": [],
+   "label": "La Manufacture de Théâtre",
+   "qid": "Q3210515",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "La Replique"
+   ],
+   "domains": [
+    "lareplique.org"
+   ],
+   "label": "La Réplique",
+   "qid": "Q3212582",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Lafleur et les Theatres Amienois de Cabotins",
+    "Lafleur et les théâtres amiénois de cabotins",
+    "Lafleur Et Les Théâtres Amiénois De Cabotins"
+   ],
+   "domains": [],
+   "label": "Lafleur et les Théâtres Amiénois de Cabotins",
+   "qid": "Q3216108",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Le Cubitus",
+   "qid": "Q3222006",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le Petit Theatre de Bouvard",
+    "Le petit théâtre de bouvard",
+    "Le petit théâtre de Bouvard",
+    "Le Petit Théâtre De Bouvard",
+    "Le Théâtre de Bouvard",
+    "Petit théâtre de Bouvard",
+    "Petit Théâtre de Bouvard"
+   ],
+   "domains": [],
+   "label": "Le Petit Théâtre de Bouvard",
+   "qid": "Q3225532",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le Trident (Cherbourg)"
+   ],
+   "domains": [
+    "trident-sn.com"
+   ],
+   "label": "Le Trident",
+   "qid": "Q3227818",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le vrai chic parisien",
+    "Le Vrai Chic Parisien"
+   ],
+   "domains": [],
+   "label": "Le Vrai Chic parisien",
+   "qid": "Q3228322",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Le Zut",
+   "qid": "Q3228360",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Les 3 chardons",
+    "LES 3 CHARDONS"
+   ],
+   "domains": [
+    "3chardons.com"
+   ],
+   "label": "Les 3 Chardons",
+   "qid": "Q3230328",
+   "siren": [
+    "378587372"
+   ]
+  },
+  {
+   "aliases": [
+    "Branquignols"
+   ],
+   "domains": [],
+   "label": "Les Branquignols",
+   "qid": "Q3231152",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Les caramels fous",
+    "Les Caramels Fous"
+   ],
+   "domains": [
+    "lescaramelsfous.com"
+   ],
+   "label": "Les Caramels fous",
+   "qid": "Q3231275",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Les petits bouffons de paris",
+    "Les Petits Bouffons De Paris",
+    "Les Petits Bouffons de Paris Guignol du Parc des Chanteraines"
+   ],
+   "domains": [],
+   "label": "Les Petits Bouffons de Paris",
+   "qid": "Q3234582",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Compagnie Les remouleurs",
+    "Compagnie les rémouleurs",
+    "Compagnie Les rémouleurs",
+    "Compagnie Les Rémouleurs"
+   ],
+   "domains": [
+    "remouleurs.com"
+   ],
+   "label": "Les Rémouleurs",
+   "qid": "Q3235230",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Machine Theatre",
+    "Machine théâtre"
+   ],
+   "domains": [],
+   "label": "Machine Théâtre",
+   "qid": "Q3274380",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "La Maison de la Marionette",
+    "La Maison de la Marionnette",
+    "Maison de la marionnette",
+    "Maison De La Marionnette"
+   ],
+   "domains": [],
+   "label": "maison de la Marionnette",
+   "qid": "Q3279712",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Materia Prima Art Factory",
+   "qid": "Q3298442",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Béatrice Templé",
+    "Jean-Marie Lorvellec",
+    "Ronan Cheviller"
+   ],
+   "domains": [
+    "theatreamok.blogspot.com"
+   ],
+   "label": "théâtre Amok",
+   "qid": "Q3527422",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le Théâtre Circus"
+   ],
+   "domains": [],
+   "label": "théâtre Circus",
+   "qid": "Q3527439",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "théâtre Picolo",
+   "qid": "Q3527533",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "théâtre Talipot",
+   "qid": "Q3527565",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Théâtre alsacien strasbourg"
+   ],
+   "domains": [
+    "theatre-alsacien-strasbourg.fr"
+   ],
+   "label": "théâtre alsacien de Strasbourg",
+   "qid": "Q3527584",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "théâtre de l'Utopie",
+   "qid": "Q3527672",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "theatreducentaure.com"
+   ],
+   "label": "théâtre du Centaure",
+   "qid": "Q3527776",
+   "siren": [
+    "392384996"
+   ]
+  },
+  {
+   "aliases": [
+    "Théâtre du caramel fou"
+   ],
+   "domains": [],
+   "label": "théâtre du Caramel Fou",
+   "qid": "Q3527777",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "chenenoir.fr"
+   ],
+   "label": "théâtre du Chêne noir",
+   "qid": "Q3527784",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "théâtre du Cristal",
+   "qid": "Q3527785",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Théâtre du lamparo"
+   ],
+   "domains": [],
+   "label": "théâtre du Lamparo",
+   "qid": "Q3527796",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Théâtre du voyageur"
+   ],
+   "domains": [],
+   "label": "théâtre du Voyageur",
+   "qid": "Q3527827",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Théâtre guignol anatole",
+    "Théâtre Guignol Anatole"
+   ],
+   "domains": [],
+   "label": "théâtre guignol Anatole",
+   "qid": "Q3527842",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Theâtre populaire de Bretagne",
+    "Theâtre Populaire de Bretagne"
+   ],
+   "domains": [],
+   "label": "théâtre populaire de Bretagne",
+   "qid": "Q3527896",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre dramatique de Thionville-Lorraine",
+    "Théâtre Populaire de Lorraine",
+    "NEST - CDN transfrontalier de Thionville-Grand Est",
+    "Nord-Est Théâtre"
+   ],
+   "domains": [],
+   "label": "NEST",
+   "qid": "Q3527899",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "théâtre pour deux mains",
+   "qid": "Q3527906",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Théâtre Sans Toit"
+   ],
+   "domains": [],
+   "label": "théâtre sans toit",
+   "qid": "Q3527930",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Théâtre à la coque"
+   ],
+   "domains": [],
+   "label": "théâtre à la Coque",
+   "qid": "Q3527941",
+   "siren": [
+    "880742671"
+   ]
+  },
+  {
+   "aliases": [
+    "La troupe du phénix",
+    "La Troupe Du Phénix",
+    "Troupe du Phenix",
+    "Troupe du phénix"
+   ],
+   "domains": [],
+   "label": "Troupe du Phénix",
+   "qid": "Q3540980",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "La Troupe du Roy",
+    "La Troupe du ROY",
+    "Troupe du roy"
+   ],
+   "domains": [],
+   "label": "Troupe du Roy",
+   "qid": "Q3540981",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CIRT"
+   ],
+   "domains": [],
+   "label": "centre international de recherche théâtrale",
+   "qid": "Q3664660",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lesplendid.com"
+   ],
+   "label": "Le Splendid",
+   "qid": "Q367569",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lamanufacture.org"
+   ],
+   "label": "La Manufacture",
+   "qid": "Q43053470",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Icosaedre Compagnie Marilen Breuker",
+   "qid": "Q54862016",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Susan Buirge",
+   "qid": "Q54862018",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Decor",
+   "qid": "Q54862019",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Labyrinthes",
+   "qid": "Q54862020",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie 14-18",
+   "qid": "Q54862021",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Interference",
+   "qid": "Q54862022",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Dominique Bagouet",
+   "qid": "Q54862023",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Les Fédérés",
+   "qid": "Q54862024",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Jerome Deschamps",
+   "qid": "Q54862025",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "compagnie-maguy-marin.fr"
+   ],
+   "label": "Compagnie Maguy Marin",
+   "qid": "Q54862027",
+   "siren": [
+    "523647576"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Preljocaj",
+   "qid": "Q54862032",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Regine Chopinot",
+   "qid": "Q54862033",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Patrice Bigel",
+   "qid": "Q54862034",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Claude Brumachon",
+   "qid": "Q54862035",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Luca Nicolaj",
+   "qid": "Q54862036",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Doussaint-dubouloz",
+   "qid": "Q54862037",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Roc In Lichen",
+   "qid": "Q54862038",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Anne Dreyfus",
+   "qid": "Q54862039",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Jean Louis Hourdin",
+   "qid": "Q54862042",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Karine Saporta",
+   "qid": "Q54862043",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Temps Present",
+   "qid": "Q54862044",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie L'olifant",
+   "qid": "Q54862045",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Coatimundi",
+   "qid": "Q54862046",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie De Hexe",
+   "qid": "Q54862047",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Du Hasard",
+   "qid": "Q54862048",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "La P'tite Compagnie",
+   "qid": "Q54862049",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie De La Place Blanche",
+   "qid": "Q54862050",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Pandora",
+   "qid": "Q54862052",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Jean-pierre Bouvier",
+   "qid": "Q54862057",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "La Compagnie De L'oiseau-mouche",
+   "qid": "Q54862058",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie De La Citadelle",
+   "qid": "Q54862059",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Ea Sola",
+   "qid": "Q54862060",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Compagnie Renaud-Barrault",
+    "Renaud-Barrault"
+   ],
+   "domains": [],
+   "label": "Compagnie Jean Barrault Et Madeleine Renaud",
+   "qid": "Q54862061",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Festina Lente",
+   "qid": "Q54862062",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie François Verret",
+   "qid": "Q54862063",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "La Compagnie Du Tire - Laine",
+   "qid": "Q54862064",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Balabik",
+   "qid": "Q54862067",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Vélo Théâtre",
+   "qid": "Q54862069",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Nacera Belaza",
+   "qid": "Q54862070",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Vlovajob Pru",
+   "qid": "Q54862072",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Compagnie Contour Progressif",
+   "qid": "Q54862073",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "vivariumstudio.net"
+   ],
+   "label": "Vivarium Studio",
+   "qid": "Q5664708",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "BAAL novo",
+   "qid": "Q568864",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le Français",
+    "Théâtre-Français",
+    "Comédiens Français"
+   ],
+   "domains": [
+    "comedie-francaise.fr"
+   ],
+   "label": "Comédie-Française",
+   "qid": "Q61460498",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Théâtre des Variétés-Amusantes",
+   "qid": "Q61465343",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Théâtre de Monsieur"
+   ],
+   "domains": [],
+   "label": "Théâtre Feydeau",
+   "qid": "Q825805",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "babasifon.com"
+   ],
+   "label": "Compagnie Baba Sifon",
+   "qid": "Q87878772",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le Soleil"
+   ],
+   "domains": [
+    "theatre-du-soleil.fr"
+   ],
+   "label": "Théâtre du Soleil",
+   "qid": "Q910727",
+   "siren": []
+  }
+ ],
+ "phrase": "Troupe théâtrale en France",
+ "sujet_id": "g-q742421",
+ "where": "?item wdt:P31 wd:Q742421 ; wdt:P17 wd:Q142 ."
+}

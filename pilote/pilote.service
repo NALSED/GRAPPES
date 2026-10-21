@@ -1,0 +1,13 @@
+[Unit]
+Description=pilote : lancer, trier et décider les recherches de grappes
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%PILOTE_RACINE%
+ExecStart=%PILOTE_RACINE%/.venv/bin/python -m pilote
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

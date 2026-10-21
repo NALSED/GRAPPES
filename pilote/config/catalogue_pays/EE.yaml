@@ -1,0 +1,22 @@
+# Catalogue des bases officielles : Estonie. Une DONNÉE : corriger une entrée = modifier ce fichier. Taille : demandée au serveur, jamais écrite ici.
+pays: "EE"
+nom: "Estonie"
+bases:
+  - id: ariregister
+    nom: "Registre du commerce (e-Business Register)"
+    contenu: "Entreprises et associations estoniennes, données ouvertes."
+    usage: "entreprises"
+    acces: "api"
+    licence: "à vérifier"
+    url: "https://avaandmed.ariregister.rik.ee/en"
+    verifie_le: 2026-10-18
+  - id: osm-geofabrik
+    nom: "OpenStreetMap (extrait Geofabrik)"
+    contenu: "Lieux cartographiés (stades, salles, centres, locaux) du pays, mis à jour chaque jour."
+    usage: "lieux"
+    acces: "fichier"
+    licence: "ODbL"
+    url: "https://download.geofabrik.de/europe/estonia.html"
+    telechargement: "https://download.geofabrik.de/europe/estonia-latest.osm.pbf"
+    source: "osm-overpass"
+    verifie_le: 2026-10-18

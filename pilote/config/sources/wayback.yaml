@@ -1,0 +1,43 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: wayback
+nom: Wayback Machine
+description: Archive du web. Prouve qu'une adresse a existé, même si la page est morte (les groupes informels
+  disparaissent). Ne cherche pas de noms, elle vérifie l'adresse d'un site. Gratuit, sans clé.
+trouve: capture d'un site
+genres:
+- page
+pays:
+- monde
+produit:
+- nom
+- origine
+- numero
+- site
+usages:
+- web
+main: seconde
+origine: web
+famille: api
+roles:
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-19'
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.6
+defaut:
+  chercher: false
+  verifier: false
+note: Preuve d'existence d'une adresse, pas de qualité. Les droits des contenus archivés restent à leurs auteurs.
+exemple_reponse: exemples/wayback.json
+moteur:
+  adaptateur: wayback
+verifie_sur: site
+consomme:
+- site

@@ -1,0 +1,30 @@
+# Catalogue des bases officielles : Pologne. Une DONNÉE : corriger une entrée = modifier ce fichier. Taille : demandée au serveur, jamais écrite ici.
+pays: "PL"
+nom: "Pologne"
+bases:
+  - id: krs
+    nom: "KRS (registre national des tribunaux)"
+    contenu: "Sociétés, fondations et associations polonaises."
+    usage: "entreprises"
+    acces: "api"
+    licence: "à vérifier"
+    url: "https://api-krs.ms.gov.pl/"
+    verifie_le: 2026-10-18
+  - id: dane-gov-pl
+    nom: "Portail dane.gov.pl"
+    contenu: "Portail national de données ouvertes."
+    usage: "organisations_officielles"
+    acces: "site"
+    licence: "à vérifier"
+    url: "https://dane.gov.pl/en"
+    verifie_le: 2026-10-18
+  - id: osm-geofabrik
+    nom: "OpenStreetMap (extrait Geofabrik)"
+    contenu: "Lieux cartographiés (stades, salles, centres, locaux) du pays, mis à jour chaque jour."
+    usage: "lieux"
+    acces: "fichier"
+    licence: "ODbL"
+    url: "https://download.geofabrik.de/europe/poland.html"
+    telechargement: "https://download.geofabrik.de/europe/poland-latest.osm.pbf"
+    source: "osm-overpass"
+    verifie_le: 2026-10-18

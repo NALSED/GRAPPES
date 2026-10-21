@@ -1,0 +1,14 @@
+[
+ {
+  "title": "Club Imaginaire",
+  "website": "https://club-imaginaire.example",
+  "city": "Ville-Exemple",
+  "countryCode": "FR",
+  "location": {
+   "lat": 48.856614,
+   "lng": 2.3522219
+  },
+  "phone": "+33 1 23 45 67 89",
+  "categoryName": "Sports Club"
+ }
+]

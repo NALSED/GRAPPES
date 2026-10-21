@@ -1,0 +1,75 @@
+{
+ "meta": {
+  "pagination": {
+   "currentPage": 1,
+   "perPage": 2,
+   "total": 2
+  }
+ },
+ "data": [
+  {
+   "type": "lei-records",
+   "id": "549300ABCDEFGHIJKLMN",
+   "attributes": {
+    "lei": "549300ABCDEFGHIJKLMN",
+    "entity": {
+     "legalName": {
+      "name": "ATELIERS EXEMPLE"
+     },
+     "legalAddress": {
+      "city": "PARIS",
+      "country": "FR"
+     },
+     "registeredAs": "123456789",
+     "jurisdiction": "FR",
+     "status": "ACTIVE"
+    }
+   },
+   "relationships": {
+    "direct-parent": {
+     "links": {
+      "relationship-record": "https://api.gleif.org/api/v1/lei-records/549300ABCDEFGHIJKLMN/direct-parent-relationship",
+      "lei-record": "https://api.gleif.org/api/v1/lei-records/549300ABCDEFGHIJKLMN/direct-parent"
+     }
+    },
+    "ultimate-parent": {
+     "links": {
+      "relationship-record": "https://api.gleif.org/api/v1/lei-records/549300ABCDEFGHIJKLMN/ultimate-parent-relationship",
+      "lei-record": "https://api.gleif.org/api/v1/lei-records/549300ABCDEFGHIJKLMN/ultimate-parent"
+     }
+    }
+   }
+  },
+  {
+   "type": "lei-records",
+   "id": "9876543210ZYXWVUTSRQ",
+   "attributes": {
+    "lei": "9876543210ZYXWVUTSRQ",
+    "entity": {
+     "legalName": {
+      "name": "FILIALE IMAGINAIRE"
+     },
+     "legalAddress": {
+      "city": "LYON",
+      "country": "FR"
+     },
+     "registeredAs": "987654321",
+     "jurisdiction": "FR",
+     "status": "ACTIVE"
+    }
+   },
+   "relationships": {
+    "direct-parent": {
+     "links": {
+      "reporting-exception": "https://api.gleif.org/api/v1/lei-records/9876543210ZYXWVUTSRQ/direct-parent-reporting-exception"
+     }
+    },
+    "ultimate-parent": {
+     "links": {
+      "reporting-exception": "https://api.gleif.org/api/v1/lei-records/9876543210ZYXWVUTSRQ/ultimate-parent-reporting-exception"
+     }
+    }
+   }
+  }
+ ]
+}

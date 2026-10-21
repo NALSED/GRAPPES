@@ -1,0 +1,42 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: opensanctions
+nom: OpenSanctions
+description: Listes de sanctions. Sert uniquement à vérifier le NOM d'une organisation déjà trouvée (correspondance exacte,
+  jamais de recherche de personnes) ; un résultat est une alerte à contrôler, pas une confirmation.
+trouve: organisations sous sanctions
+genres:
+- entreprise
+- association
+pays:
+- monde
+produit:
+- nom
+- origine
+- pays
+usages:
+- entreprises
+main: seconde
+origine: registre
+famille: api
+roles:
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-19'
+cle: OPENSANCTIONS_API_KEY
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.8
+defaut:
+  chercher: false
+  verifier: false
+note: Consultation gratuite pour un usage non commercial, clé requise. Type Organization seulement ; correspondance exacte du nom
+  seulement. Forme de réponse d'après la documentation publiée, pas encore contrôlée contre le service réel.
+exemple_reponse: exemples/opensanctions.json
+moteur:
+  adaptateur: opensanctions
+verifie_sur: nom

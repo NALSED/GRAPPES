@@ -1,0 +1,34 @@
+{
+  "results": [
+    {
+      "id": "NK-abc123",
+      "caption": "Société Française d'Import-Export",
+      "schema": "Organization",
+      "properties": {
+        "country": ["fr"],
+        "name": ["Société Française d'Import-Export", "SFIE SA"],
+        "address": ["12 Rue de la Paix, 75002 Paris, France"],
+        "registrationNumber": ["FR123456789"],
+        "incorporationDate": ["2010-03-15"]
+      },
+      "datasets": ["eu_fsf", "fr_sanctions"]
+    },
+    {
+      "id": "NK-def456",
+      "caption": "EuroTech Solutions GmbH",
+      "schema": "Organization",
+      "properties": {
+        "country": ["de"],
+        "name": ["EuroTech Solutions GmbH", "EuroTech"],
+        "address": ["Hauptstraße 42, 10115 Berlin, Germany"],
+        "registrationNumber": ["HRB 987654"],
+        "incorporationDate": ["2015-07-22"]
+      },
+      "datasets": ["eu_fsf", "de_sanctions"]
+    }
+  ],
+  "total": {
+    "value": 2,
+    "relation": "eq"
+  }
+}

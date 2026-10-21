@@ -1,0 +1,44 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: ror
+nom: ROR (organisations de recherche)
+description: Registre mondial des universités, instituts de recherche et hôpitaux
+  universitaires. Données libres (CC0), interrogeables par nom et par pays.
+trouve: universités, instituts de recherche, hôpitaux universitaires
+genres:
+- administration
+pays:
+- monde
+usages:
+- organisations
+famille: api
+confiance: 0.9
+consomme:
+- sujet
+- pays
+produit:
+- nom
+- origine
+- ville
+- site
+- numero
+main: premiere
+origine: registre
+roles:
+- chercher
+- verifier
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+defaut:
+  chercher: true
+  verifier: true
+exemple_reponse: exemples/ror.json
+moteur:
+  adaptateur: ror

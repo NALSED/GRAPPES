@@ -1,0 +1,950 @@
+{
+ "classes": [
+  "Q2190251"
+ ],
+ "entities": [
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Espace Croisé",
+   "qid": "Q100149502",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Théâtre de Chelles"
+   ],
+   "domains": [
+    "theatredechelles.fr"
+   ],
+   "label": "Centre Culturel de Chelles",
+   "qid": "Q101064318",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "bm-meyzieu.fr"
+   ],
+   "label": "espace culturel François-Mitterrand",
+   "qid": "Q101069502",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "L'arc - Scène Nationale",
+    "L'arc - Scène Nationale Européenne",
+    "Maison de culture et des loisirs",
+    "Théâtre Municipal du Creusot"
+   ],
+   "domains": [
+    "larcscenenationale.fr"
+   ],
+   "label": "L'ARC - Scène Nationale",
+   "qid": "Q102047133",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre International de Rencontres Les Atlantes"
+   ],
+   "domains": [
+    "centredecongres-lesatlantes.com"
+   ],
+   "label": "Centre de Congrès Les Atlantes",
+   "qid": "Q102176651",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre Culturel Polyvalent"
+   ],
+   "domains": [
+    "ascbm.fr"
+   ],
+   "label": "centre culturel polyvalent de Mandeure",
+   "qid": "Q102327023",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Foyer Culturel de Mauvezin",
+    "Maison des Associations"
+   ],
+   "domains": [
+    "foyerruraldemauvezin.sitew.fr"
+   ],
+   "label": "Foyer Rural",
+   "qid": "Q102328073",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CCL",
+    "Centre culturel et de loisirs de Riedisheim"
+   ],
+   "domains": [
+    "laronde-riedisheim.fr"
+   ],
+   "label": "Centre culturel L'Aronde",
+   "qid": "Q103843155",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "mairie-soustons.fr"
+   ],
+   "label": "espace culturel Roger-Hanin",
+   "qid": "Q104217204",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Salle des Fêtes de Péronne"
+   ],
+   "domains": [],
+   "label": "espace Mac-Orlan",
+   "qid": "Q104309526",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "lesangenoises.fr"
+   ],
+   "label": "Les Angenoises",
+   "qid": "Q104700860",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre Socioculturel de Chalindrey"
+   ],
+   "domains": [],
+   "label": "Centre Socio-Culturel de Chalindrey",
+   "qid": "Q104733460",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre culturel Léonard de Vinci",
+    "L’Épicerie Moderne"
+   ],
+   "domains": [
+    "epiceriemoderne.com"
+   ],
+   "label": "centre Léonard-de-Vinci",
+   "qid": "Q104806264",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ville-pierrelatte.fr"
+   ],
+   "label": "Salle des Fêtes de Pierrelatte",
+   "qid": "Q104886622",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Salle des Fêtes de Saulnes",
+    "Salle Gustave Raty"
+   ],
+   "domains": [
+    "saulnes.fr"
+   ],
+   "label": "Centre culturel de Saulnes",
+   "qid": "Q105085087",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "villavassilieff.net"
+   ],
+   "label": "Villa Vassilieff",
+   "qid": "Q105599156",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ville-boe.fr"
+   ],
+   "label": "Espace culturel François Mitterrand",
+   "qid": "Q107984977",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Site montmartrois de la Cité internationale des arts"
+   ],
+   "domains": [
+    "citedesartsparis.net"
+   ],
+   "label": "Villa Radet",
+   "qid": "Q108414593",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Espace culturel l'amphY"
+   ],
+   "domains": [
+    "lamphy.com"
+   ],
+   "label": "l'amphY",
+   "qid": "Q108475665",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Salle des Fetes de Breteuil"
+   ],
+   "domains": [
+    "ville-breteuil.fr"
+   ],
+   "label": "Centre culturel Jules-Verne",
+   "qid": "Q110253097",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Espace Culturel de la Pointe de Caux",
+   "qid": "Q110446208",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Salle des Fêtes de Saint-Ouen-l'Aumône"
+   ],
+   "domains": [
+    "ville-soa.fr"
+   ],
+   "label": "Centre culturel L’imprévu",
+   "qid": "Q110665639",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "grand jardin du théâtre des Minuits"
+   ],
+   "domains": [
+    "theatredesminuits.com"
+   ],
+   "label": "théâtre des Minuits",
+   "qid": "Q112184240",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Casino-Théâtre de Bourbon-Lancy",
+    "Salle Saint-Léger"
+   ],
+   "domains": [
+    "bourbon-lancy.fr"
+   ],
+   "label": "Espace culturel Saint-Léger",
+   "qid": "Q115118359",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Espace 36",
+   "qid": "Q115755982",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "fluctuart.fr"
+   ],
+   "label": "Fluctuart",
+   "qid": "Q116464164",
+   "siren": [
+    "837874700"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "cannes.com"
+   ],
+   "label": "La Malmaison",
+   "qid": "Q118113779",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Palais des Fêtes de Romainville",
+    "Salle des Fêtes de Romainville"
+   ],
+   "domains": [
+    "ville-romainville.fr"
+   ],
+   "label": "Le Pavillon",
+   "qid": "Q120646106",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Bétonsalon",
+   "qid": "Q122957944",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "brassens.ville-avrille.fr"
+   ],
+   "label": "Centre culturel Georges Brassens",
+   "qid": "Q123956466",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Saint-Ex",
+    "Théatre Molière"
+   ],
+   "domains": [
+    "theatremolieremarignane.fr"
+   ],
+   "label": "Espace culturel Saint-Exupéry",
+   "qid": "Q124627948",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Carré Sainte-Anne",
+   "qid": "Q124718980",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre international de recherche sur le verre et les arts plastiques"
+   ],
+   "domains": [
+    "cirva.fr"
+   ],
+   "label": "Cirva",
+   "qid": "Q125520730",
+   "siren": [
+    "330356858"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "centre d'initiatives artistiques du Mirail",
+   "qid": "Q125684917",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "nox.center"
+   ],
+   "label": "nox.center",
+   "qid": "Q131606078",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Plateforme Paris"
+   ],
+   "domains": [
+    "plateforme-paris.com"
+   ],
+   "label": "Plateforme (Paris)",
+   "qid": "Q136723991",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "galerie Georges Pompidou",
+    "villa Béatrix Enea"
+   ],
+   "domains": [
+    "centredart.anglet.fr"
+   ],
+   "label": "Centre d'art contemporain d'Anglet",
+   "qid": "Q137185895",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "ABC",
+    "L'Odyssée",
+    "Cinéma Le Cosmos",
+    "cinéma U.T.",
+    "Union Theater"
+   ],
+   "domains": [
+    "cinema-cosmos.eu"
+   ],
+   "label": "Le Cosmos",
+   "qid": "Q15945088",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "pôle culturel du Plessis-Robinson"
+   ],
+   "domains": [
+    "maisondesarts.plessis-robinson.com"
+   ],
+   "label": "maison des Arts du Plessis-Robinson",
+   "qid": "Q19945219",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Salle des Fêtes",
+    "Théâtre Municipal d'Issy-les-Moulineaux"
+   ],
+   "domains": [],
+   "label": "palais des Arts et des Congrès d'Issy-les-Moulineaux",
+   "qid": "Q22980814",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le Boeuf sur le toit"
+   ],
+   "domains": [
+    "leboeufsurletoit.fr"
+   ],
+   "label": "Le Bœuf sur le toit",
+   "qid": "Q23013040",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "centre culturel Louis Escande",
+    "Centre d'action culturel",
+    "Saônora",
+    "théâtre Louis Escande"
+   ],
+   "domains": [
+    "theatre-macon.com"
+   ],
+   "label": "Le Théâtre",
+   "qid": "Q28834877",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le 104",
+    "104 CENT QUATRE",
+    "Service municipal des Pompes Funèbres"
+   ],
+   "domains": [
+    "104.fr"
+   ],
+   "label": "Centquatre-Paris",
+   "qid": "Q2944288",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Galerie Poirel",
+    "Galeries Poirel",
+    "Les galeries Poirel",
+    "Salle Poirel",
+    "Salle Victor Poirel"
+   ],
+   "domains": [
+    "poirel.nancy.fr"
+   ],
+   "label": "Ensemble Poirel",
+   "qid": "Q3054846",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "mep-fr.org"
+   ],
+   "label": "maison européenne de la photographie",
+   "qid": "Q3100297",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Espace Carpeaux",
+   "qid": "Q31062942",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Hôtel départemental des arts du Var",
+    "hôtel des Arts TPM"
+   ],
+   "domains": [
+    "hda-tpm.fr"
+   ],
+   "label": "hôtel des Arts",
+   "qid": "Q3146224",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre des congrès de Nantes",
+    "Cité des Congrès de Nantes",
+    "Cité Internationale des Congrès (Nantes)",
+    "Cite internationale des congres de Nantes",
+    "Cité internationale des congrès de Nantes",
+    "Cité Internationale des Congrès de Nantes",
+    "La Cité Nantes Events Center"
+   ],
+   "domains": [
+    "lacite-nantes.fr"
+   ],
+   "label": "Cité des congrès de Nantes",
+   "qid": "Q3207449",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre d'Art et de Culture de la Ferme du Buisson",
+    "cinéma la ferme du buisson salle",
+    "ferme du Buisson",
+    "ferme industrielle du Buisson Saint-Antoine",
+    "Grand Théâtre de la Ferme du Buisson"
+   ],
+   "domains": [
+    "lafermedubuisson.com"
+   ],
+   "label": "La Ferme du Buisson",
+   "qid": "Q3208793",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "theatredesilets.fr"
+   ],
+   "label": "théâtre des Îlets",
+   "qid": "Q3222719",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le plateau (centre d'art contemporain)",
+    "Le Plateau centre d'art contemporain"
+   ],
+   "domains": [
+    "fraciledefrance.com"
+   ],
+   "label": "Le Plateau",
+   "qid": "Q3225673",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Les Ateliers Frappaz",
+   "qid": "Q3230722",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "neuillysurseine.fr"
+   ],
+   "label": "Le Village Théâtre Cinéma",
+   "qid": "Q42295136",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "L'Avant Seine / Théâtre de Colombes"
+   ],
+   "domains": [
+    "lavant-seine.com"
+   ],
+   "label": "L'Avant-Seine, théâtre de Colombes",
+   "qid": "Q42798795",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ateliersdeparis.com"
+   ],
+   "label": "Atelier de Paris",
+   "qid": "Q43058449",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre Culturel Jean Arp",
+    "Cinéma Jeanne Moreau",
+    "Théâtre Jean Arp et Cinéma Jeanne Moreau",
+    "Théâtre Jean-Arp"
+   ],
+   "domains": [
+    "cinemajeannemoreau.com",
+    "theatrejeanarp.com"
+   ],
+   "label": "théâtre Jean Arp",
+   "qid": "Q54862490",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CRAC Alsace Altkirch",
+    "Centre rhénan d'art contemporain d'Alsace"
+   ],
+   "domains": [],
+   "label": "Centre rhénan d'art contemporain",
+   "qid": "Q55376122",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "L'Altigone"
+   ],
+   "domains": [
+    "altigone.fr"
+   ],
+   "label": "Altigone",
+   "qid": "Q55595475",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "memento-gers.com"
+   ],
+   "label": "Memento",
+   "qid": "Q55598596",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Le Maillon Hautepierre"
+   ],
+   "domains": [
+    "strasbourg.eu"
+   ],
+   "label": "théâtre de Hautepierre",
+   "qid": "Q57082353",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "londe.fr"
+   ],
+   "label": "L'Onde Théâtre Centre d'art",
+   "qid": "Q57201146",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Cinéma le Basselin"
+   ],
+   "domains": [
+    "cinema-lebasselin.fr",
+    "lepreaucdn.fr"
+   ],
+   "label": "Le Préau",
+   "qid": "Q61854681",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Centre culturel Voltaire",
+   "qid": "Q61854695",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Espace culturel du Pin-Galant"
+   ],
+   "domains": [
+    "lepingalant.com"
+   ],
+   "label": "Le Pin Galant",
+   "qid": "Q61854714",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Centre culturel Léo Lagrange",
+   "qid": "Q61855212",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Cinéma Yves-Montand"
+   ],
+   "domains": [],
+   "label": "Centre culturel Cinéma Yves-Montand",
+   "qid": "Q61858549",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Cinéma Apollo"
+   ],
+   "domains": [
+    "cinemazamet.fr",
+    "espace-apollo.fr"
+   ],
+   "label": "Espace Apollo",
+   "qid": "Q61858695",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Cinéma Le Palace"
+   ],
+   "domains": [
+    "lepalace-surgeres.fr"
+   ],
+   "label": "Espace culturel Le Palace",
+   "qid": "Q61859877",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "hautbugey-tourisme.com"
+   ],
+   "label": "centre culturel Aragon",
+   "qid": "Q63384925",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Domaine d'O"
+   ],
+   "domains": [
+    "domainedo.fr"
+   ],
+   "label": "Domaine d'Ô",
+   "qid": "Q63756881",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "théâtre Cyrano de Bergerac"
+   ],
+   "domains": [
+    "ville-sannois.fr"
+   ],
+   "label": "Centre Cyrano de Bergerac",
+   "qid": "Q63801354",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Centre Culturel Jacques Prévert",
+   "qid": "Q63807177",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Cinéma E. M.",
+    "NECC"
+   ],
+   "domains": [
+    "theatredemaisons-alfort.org"
+   ],
+   "label": "Nouvel Espace Culturel Charentonneau",
+   "qid": "Q63870156",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Chapelle du Couvent des Carmes",
+    "Théâtre Municipal de Melun"
+   ],
+   "domains": [],
+   "label": "Centre Culturel de Melun",
+   "qid": "Q63870922",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Complexe culturel de la Manoque"
+   ],
+   "domains": [
+    "mairie-tonneins.fr"
+   ],
+   "label": "La Manoque",
+   "qid": "Q63966847",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Casino-Théâtre de Vals-les-Bains"
+   ],
+   "domains": [
+    "lesquinconces.com"
+   ],
+   "label": "Centre culturel Les Quinconces",
+   "qid": "Q63966977",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Palais des congrès et de la culture",
+    "Palais des congrès et de la jeunesse",
+    "Palais des Congrès Georges-Pompidou"
+   ],
+   "domains": [
+    "congres-perpignan.com"
+   ],
+   "label": "Palais de Congrès de Perpignan",
+   "qid": "Q63968344",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "romorantin.com"
+   ],
+   "label": "Pyramide - centre culturel",
+   "qid": "Q63975145",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre Culturel Le Vingt-Sept",
+    "La Palène",
+    "Le 27"
+   ],
+   "domains": [
+    "lapalene.fr",
+    "le27.fr"
+   ],
+   "label": "Le Vingt-Sept",
+   "qid": "Q63975307",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "O. H. É.",
+    "OHÉ",
+    "Ohé - La Hune",
+    "Organisation Hune Événements"
+   ],
+   "domains": [
+    "ohelahune.com"
+   ],
+   "label": "La Hune",
+   "qid": "Q63981473",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "La Canopée - Scènes des écritures et du spectacle vivant",
+    "Maison de la Culture de Ruffec"
+   ],
+   "domains": [
+    "la-canopee.fr"
+   ],
+   "label": "La Canopée",
+   "qid": "Q63981514",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Salle des Fêtes de Saint-Dié"
+   ],
+   "domains": [
+    "saint-die.eu"
+   ],
+   "label": "espace culturel François-Mitterrand",
+   "qid": "Q63981554",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Maison de la culture",
+    "Maison de la Culture de Thonon-les-Bains",
+    "Maison des arts et loisirs",
+    "Maison des Arts Thonon-Evian",
+    "Théâtre Maurice Novarina"
+   ],
+   "domains": [
+    "mal-thonon.org"
+   ],
+   "label": "Maison des Arts du Léman",
+   "qid": "Q63981695",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Foyer Culturel",
+    "Foyer Culturel d'Aniche"
+   ],
+   "domains": [],
+   "label": "Salle Claudine Normand",
+   "qid": "Q64175430",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "la-cab.fr"
+   ],
+   "label": "Centre Culturel Michel Manet",
+   "qid": "Q64409712",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Aubette",
+   "qid": "Q758467",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centrel culturel de Wissous",
+    "Espace culturel Antoine de Saint-Exupéry"
+   ],
+   "domains": [
+    "wissous.fr"
+   ],
+   "label": "espace culturel Saint-Exupéry",
+   "qid": "Q86816323",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ville-liffre.fr"
+   ],
+   "label": "Centre culturel de Liffré",
+   "qid": "Q97668304",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ccrlcm.fr"
+   ],
+   "label": "Espace Culturel des Corbières",
+   "qid": "Q97668393",
+   "siren": []
+  }
+ ],
+ "phrase": "Centre des arts en France",
+ "sujet_id": "g-q2190251",
+ "where": "?item wdt:P31 wd:Q2190251 ; wdt:P17 wd:Q142 ."
+}

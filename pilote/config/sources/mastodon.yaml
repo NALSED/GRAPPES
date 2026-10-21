@@ -1,0 +1,45 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: mastodon
+nom: Mastodon (comptes)
+description: Les comptes Mastodon trouvés par mot-clé sur une instance (mastodon.social par défaut). Aucune
+  clé.
+trouve: comptes Mastodon
+genres:
+- compte
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- lieu
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.2
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/mastodon.json
+verifie_le: '2026-10-13'
+note: 'Option : l''instance interrogée ne voit que ce qu''elle connaît (réseau fédéré).'
+moteur:
+  adaptateur: mastodon
+  parametres:
+    instance: https://mastodon.social

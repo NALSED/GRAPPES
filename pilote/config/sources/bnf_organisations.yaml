@@ -1,0 +1,44 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: bnf_organisations
+nom: data.bnf.fr (organisations)
+description: Notices d'autorité des collectivités de la Bibliothèque nationale de
+  France.
+trouve: associations, sociétés, institutions cataloguées
+genres:
+- association
+- administration
+- club
+pays:
+- FR
+consomme:
+- sujet
+produit:
+- nom
+usages:
+- associations
+- organisations
+main: premiere
+origine: registre
+famille: api
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.6
+defaut:
+  chercher: false
+  verifier: false
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+moteur:
+  prise: bnf_organisations
+verifie_le: '2026-10-13'
+note: 'Mesuré en D68 : +1 acteur sur 281 en validation, beaucoup de bruit. Éteinte
+  par défaut.'
+exemple_reponse: exemples/bnf_organisations.json

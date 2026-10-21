@@ -1,0 +1,603 @@
+{
+ "classes": [
+  "Q1666019"
+ ],
+ "entities": [
+  {
+   "aliases": [],
+   "domains": [
+    "lesstylosrouges.info"
+   ],
+   "label": "Mouvement des stylos rouges",
+   "qid": "Q109045542",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "RogueESR",
+   "qid": "Q109314092",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Centre polytechnicien d'études économiques",
+    "CPEE"
+   ],
+   "domains": [],
+   "label": "X-Crise",
+   "qid": "Q1093381",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Club de l'Entresol",
+   "qid": "Q1103202",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Fairvalue corporate",
+   "qid": "Q111646019",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Dialogue Franco-Russe"
+   ],
+   "domains": [
+    "dialoguefrancorusse.com"
+   ],
+   "label": "Dialogue franco-russe",
+   "qid": "Q114856386",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "AIPCR",
+    "AIPRC",
+    "Association internationale permanente du congrès de la route"
+   ],
+   "domains": [
+    "piarc.org"
+   ],
+   "label": "Association mondiale de la route",
+   "qid": "Q1163697",
+   "siren": [
+    "784670259"
+   ]
+  },
+  {
+   "aliases": [
+    "Coprec",
+    "FILIANCE"
+   ],
+   "domains": [
+    "filiance.com"
+   ],
+   "label": "Filiance",
+   "qid": "Q131899206",
+   "siren": [
+    "509331989"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "afer.fr"
+   ],
+   "label": "Association française d'épargne et de retraite",
+   "qid": "Q16039286",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Comité des organismes de prévention et de contrôle technique",
+    "CONFEDERATION DES ORGANISATIONS PROFESSIONNELLES DE PREVENTION ET DE CONTROLE",
+    "Confédération des organisations professionnelles de prévention et de contrôle",
+    "Confédération des organismes indépendants tierce partie de prévention, de contrôle et d'inspection",
+    "Fédération des organismes tierce partie de contrôle et de certification"
+   ],
+   "domains": [
+    "coprec.com"
+   ],
+   "label": "COPREC",
+   "qid": "Q18331715",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "interiale.fr"
+   ],
+   "label": "Intériale",
+   "qid": "Q24935175",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CSFL"
+   ],
+   "domains": [
+    "chambresyndicalelevure.com"
+   ],
+   "label": "Chambre syndicale française de la levure",
+   "qid": "Q26883452",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Alliance 7"
+   ],
+   "domains": [
+    "alliance7.com"
+   ],
+   "label": "Fédération des produits de l’épicerie et de la diététique",
+   "qid": "Q26883487",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "synpa.org"
+   ],
+   "label": "Synpa - ingrédients de spécialité de la chaîne ALIMENTAIRE",
+   "qid": "Q26883500",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "abea.bzh"
+   ],
+   "label": "Association bretonne des entreprises agroalimentaires",
+   "qid": "Q26883684",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Association pour l'union monétaire de l'Europe",
+   "qid": "Q2867956",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Association nationale des conseils financiers",
+    "ASSOCIATION NATIONALE DES CONSEILS FINANCIERS"
+   ],
+   "domains": [
+    "anacofi.asso.fr"
+   ],
+   "label": "ANACOFI",
+   "qid": "Q28758059",
+   "siren": [
+    "490476835"
+   ]
+  },
+  {
+   "aliases": [
+    "CSOEC"
+   ],
+   "domains": [
+    "experts-comptables.fr"
+   ],
+   "label": "Conseil supérieur de l'ordre des experts-comptables",
+   "qid": "Q28787899",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FEDEPL"
+   ],
+   "domains": [
+    "lesepl.fr"
+   ],
+   "label": "Fédération nationale des entreprises publiques locales",
+   "qid": "Q28791336",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "A.C.S.G.P"
+   ],
+   "domains": [
+    "solidarite-des-grands-parents.fr"
+   ],
+   "label": "Association Charentaise Solidarité des Grands Parents",
+   "qid": "Q28791363",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Thomas Legrain Conseil",
+   "qid": "Q28799694",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Fédération nationale des cadres dirigeants et supérieurs",
+   "qid": "Q28799697",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "tilder.com"
+   ],
+   "label": "Tilder",
+   "qid": "Q28799786",
+   "siren": [
+    "380780262"
+   ]
+  },
+  {
+   "aliases": [
+    "ANOCR"
+   ],
+   "domains": [],
+   "label": "Association nationale des officiers de carrière en retraite",
+   "qid": "Q28799810",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "UNGE"
+   ],
+   "domains": [
+    "unge.net"
+   ],
+   "label": "Union nationale des géomètres-experts",
+   "qid": "Q28799888",
+   "siren": [
+    "428437511"
+   ]
+  },
+  {
+   "aliases": [
+    "Fédépsad"
+   ],
+   "domains": [
+    "fedepsad.fr"
+   ],
+   "label": "Fédération des prestataires de santé à domicile",
+   "qid": "Q28799890",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FNADE"
+   ],
+   "domains": [],
+   "label": "Fédération Nationale des Activités de la Dépollution et de l'Environnement",
+   "qid": "Q28799907",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "EGF BTP"
+   ],
+   "domains": [
+    "egfbtp.com"
+   ],
+   "label": "Entreprises générales de France BTP",
+   "qid": "Q28799908",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "E Consulting"
+   ],
+   "domains": [],
+   "label": "ESCAL Consulting",
+   "qid": "Q28799919",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Institut de Liaison et d'Etudes des Industries de Consommation",
+   "qid": "Q28799932",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FGM"
+   ],
+   "domains": [],
+   "label": "Fonds Gouvernance Mondiale",
+   "qid": "Q28799935",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SIPEV"
+   ],
+   "domains": [
+    "sipev.fipec.org",
+    "www2.assemblee-nationale.fr"
+   ],
+   "label": "Syndicat national des industries des peintures, enduits, vernis",
+   "qid": "Q28800299",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "DF2CE"
+   ],
+   "domains": [],
+   "label": "DF Consultant",
+   "qid": "Q28800318",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "APCI",
+    "ASSOCIATION DES CONSEILS EN PROPRIETE INDUSTRIELLE"
+   ],
+   "domains": [],
+   "label": "Association des conseils en propriété industrielle",
+   "qid": "Q28800403",
+   "siren": [
+    "489786301"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "thisisredflag.com"
+   ],
+   "label": "Red Flag",
+   "qid": "Q28800575",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FEDER NAT SOC INTERET COLLEC AGRIC ELECT",
+    "FNSICAE"
+   ],
+   "domains": [
+    "fnsicae.asso.fr"
+   ],
+   "label": "Fédération nationale des sociétés d'intérêt collectif agricole d'électricité",
+   "qid": "Q28803841",
+   "siren": [
+    "402929582"
+   ]
+  },
+  {
+   "aliases": [
+    "EAF"
+   ],
+   "domains": [],
+   "label": "Fédération Electricité Autonome Française",
+   "qid": "Q28823679",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FIGEC"
+   ],
+   "domains": [],
+   "label": "Fédération Nationale de l’Information d’Entreprise, de la Gestion de Créances et de l’Enquête Civile",
+   "qid": "Q28823707",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Euromediations",
+   "qid": "Q28868867",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Représentant d'intérêts",
+   "qid": "Q28868868",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ucv.com"
+   ],
+   "label": "Union du grand commerce de centre ville",
+   "qid": "Q28868869",
+   "siren": [
+    "784357592"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Fédération pour la promotion de l'enseignement agricole public",
+   "qid": "Q28868871",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Premier Tech",
+   "qid": "Q28868872",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Représentant d'intérêts",
+   "qid": "Q28869287",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Représentant d'intérêts",
+   "qid": "Q28869295",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Federation francaise comubustibles carburants chauffage",
+   "qid": "Q28869297",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Représentant d'intérêts",
+   "qid": "Q28869299",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Représentant d'intérêts",
+   "qid": "Q28869314",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "AFIC"
+   ],
+   "domains": [
+    "afic.asso.fr"
+   ],
+   "label": "Association française des investisseurs pour la croissance",
+   "qid": "Q28869316",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "seance-publique.com"
+   ],
+   "label": "SÉANCE PUBLIQUE",
+   "qid": "Q28869320",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Droits des Non Fumeurs",
+    "Droits Des Non-Fumeurs"
+   ],
+   "domains": [
+    "dnf.asso.fr"
+   ],
+   "label": "Droits des non-fumeurs",
+   "qid": "Q3039940",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FHP"
+   ],
+   "domains": [],
+   "label": "Fédération de l'hospitalisation privée",
+   "qid": "Q3091548",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Fédération Nationale Indépendante des Mutuelles",
+    "FNIM"
+   ],
+   "domains": [
+    "fnim.fr"
+   ],
+   "label": "Fédération nationale indépendante des mutuelles",
+   "qid": "Q3092087",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Institut de Locarn"
+   ],
+   "domains": [
+    "institut-locarn.fr"
+   ],
+   "label": "Le Keréden",
+   "qid": "Q3151969",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "MGEL",
+    "SMEBA",
+    "SMECO",
+    "SMENO",
+    "SMERAG",
+    "SMERÉ",
+    "SMEREB",
+    "SMEREP",
+    "SMEREP Mutuelle Etudiante",
+    "SMERRA",
+    "SMESO",
+    "Societe mutualiste etudiante regionale",
+    "Union nationale des mutuelles régionales étudiantes",
+    "USEM"
+   ],
+   "domains": [
+    "emevia.com"
+   ],
+   "label": "Société mutualiste étudiante régionale",
+   "qid": "Q3488492",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Union des industries chimiques"
+   ],
+   "domains": [
+    "francechimie.fr"
+   ],
+   "label": "France Chimie",
+   "qid": "Q3550154",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Union des artistes modernes",
+   "qid": "Q362335",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "cicae.org"
+   ],
+   "label": "Confédération internationale des cinémas d'art et d'essai",
+   "qid": "Q519839",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "vinetsociete.fr"
+   ],
+   "label": "Vin et société",
+   "qid": "Q57934776",
+   "siren": [
+    "500328570"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "genreenaction.net"
+   ],
+   "label": "Genre en Action",
+   "qid": "Q77051582",
+   "siren": []
+  }
+ ],
+ "phrase": "Groupe de pression en France",
+ "sujet_id": "g-q1666019",
+ "where": "?item wdt:P31 wd:Q1666019 ; wdt:P17 wd:Q142 ."
+}

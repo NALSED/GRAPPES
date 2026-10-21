@@ -1,0 +1,13 @@
+{
+ "results": [
+  {
+   "uo_lib": "Université Exemple",
+   "etablissement_id_paysage": "U1",
+   "com_nom": "Villeexemple",
+   "url": "https://univ-exemple.example/",
+   "siren": [
+    "000000000"
+   ]
+  }
+ ]
+}

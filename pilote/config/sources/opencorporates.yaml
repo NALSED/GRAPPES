@@ -1,0 +1,45 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: opencorporates
+nom: OpenCorporates
+description: 'Registre mondial des sociétés. Très cher : gratuit pour la recherche
+  sur demande (journalistes, ONG, universités, chercheurs).'
+trouve: sociétés du monde entier
+genres:
+- entreprise
+pays:
+- monde
+produit:
+- nom
+- origine
+- numero
+usages:
+- entreprises
+cle: OPENCORPORATES_API_TOKEN
+cout:
+  unite: appel
+  vers_dollar: 0.58
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+exemple_reponse: exemples/opencorporates.json
+avertissement: 'Très cher : 225 £ par mois pour 500 appels, pas d''offre gratuite
+  en libre-service. Gratuit pour la recherche sur demande.'
+note: Très cher, gratuit pour la recherche sur demande.
+moteur:
+  adaptateur: opencorporates
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+consomme:
+- sujet
+- pays

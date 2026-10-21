@@ -1,0 +1,52 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: ckan
+nom: Portail de données ouvertes (CKAN)
+description: 'Une seule source pour beaucoup de pays : donne l''adresse du portail
+  de données ouvertes de ton pays et elle lit les organisations qui y publient.'
+trouve: administrations et organismes publics qui publient des données
+genres:
+- administration
+pays:
+- monde
+usages:
+- organisations
+famille: api
+confiance: 0.8
+consomme:
+- sujet
+- pays
+produit:
+- nom
+- origine
+- ville
+- site
+- numero
+main: premiere
+origine: registre
+roles:
+- chercher
+- verifier
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+defaut:
+  chercher: false
+  verifier: false
+exemple_reponse: exemples/ckan.json
+parametres:
+  portail:
+    libelle: Adresse du portail de données ouvertes de ton pays
+    type: url
+    requis: true
+    exemple: https://open.canada.ca/data
+note: 'Éteinte tant que l''adresse du portail n''est pas donnée. Portails contrôlés
+  : Canada, Australie, Irlande, Allemagne, Suisse.'
+moteur:
+  adaptateur: ckan

@@ -1,0 +1,66 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: marginalia
+nom: Marginalia Search
+description: Moteur indépendant qui privilégie les petits sites non commerciaux, ce qui repère les structures informelles
+  ou associatives que les moteurs classiques enterrent. Clé gratuite.
+trouve: pages web de petits sites
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- web
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-19'
+cle: MARGINALIA_API_KEY
+cout:
+  unite: requete
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+note: Éteinte tant que la clé est absente. Adresse et forme de réponse d'après la documentation publiée (api2.marginalia-search.com),
+  pas encore contrôlées contre le service réel (clé requise).
+exemple_reponse: exemples/marginalia.json
+moteur:
+  definition:
+    id: marginalia
+    type: http
+    public: true
+    url: https://api2.marginalia-search.com/search
+    method: GET
+    auth:
+      type: header
+      name: API-Key
+      env: MARGINALIA_API_KEY
+    headers:
+      Accept: application/json
+    params:
+      query: '{mots_cles}'
+      count: '{limite}'
+    response:
+      format: json
+      items: results
+    fields:
+      title: title
+      url: url
+      description: description
+      id: url
+    quota: 20
+    raison: résultat Marginalia pour « {mot_cle} »

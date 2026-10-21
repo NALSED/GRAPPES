@@ -1,0 +1,4 @@
+nom: Les plus fragiles d'abord
+grouper_par: [origine]
+ordre_paquets: fragilite
+ordre_noms: alphabetique

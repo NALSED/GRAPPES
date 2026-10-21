@@ -1,0 +1,22 @@
+# Catalogue des bases officielles : États-Unis. Une DONNÉE : corriger une entrée = modifier ce fichier. Taille : demandée au serveur, jamais écrite ici.
+pays: "US"
+nom: "États-Unis"
+bases:
+  - id: irs-eo
+    nom: "IRS — organisations exonérées"
+    contenu: "Organisations à but non lucratif reconnues par l'IRS (fichiers en téléchargement)."
+    usage: "associations"
+    acces: "fichier"
+    licence: "à vérifier"
+    url: "https://www.irs.gov/charities-non-profits/tax-exempt-organization-search-bulk-data-downloads"
+    verifie_le: 2026-10-18
+  - id: osm-geofabrik
+    nom: "OpenStreetMap (extrait Geofabrik)"
+    contenu: "Lieux cartographiés (stades, salles, centres, locaux) du pays, mis à jour chaque jour."
+    usage: "lieux"
+    acces: "fichier"
+    licence: "ODbL"
+    url: "https://download.geofabrik.de/north-america/us.html"
+    telechargement: "https://download.geofabrik.de/north-america/us-latest.osm.pbf"
+    source: "osm-overpass"
+    verifie_le: 2026-10-18

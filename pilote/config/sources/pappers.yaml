@@ -1,0 +1,44 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: pappers
+nom: Pappers (France)
+description: Registre français des sociétés avec plus de détails que l'annuaire public.
+  Payant, clé de l'utilisateur.
+trouve: sociétés françaises
+genres:
+- entreprise
+pays:
+- FR
+produit:
+- nom
+- origine
+- ville
+- numero
+usages:
+- entreprises
+cle: PAPPERS_API_TOKEN
+cout:
+  unite: appel
+  vers_dollar: 0.01
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+exemple_reponse: exemples/pappers.json
+note: Tarif indicatif, à vérifier chez le fournisseur.
+moteur:
+  adaptateur: pappers
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+consomme:
+- sujet
+- pays

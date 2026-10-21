@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poste de pilotage Grappes</title>
+<link rel="stylesheet" href="/static/vendor/fonts/polices.css">
+<link rel="stylesheet" href="/static/vendor/tabulator/tabulator.min.css">
+<link rel="stylesheet" href="/static/pilote.css">
+</head>
+<body>
+
+<div class="top">
+  <span class="brand">GRAPPES</span>
+  <button class="tab" data-p="reglages" aria-selected="true">Réglages</button>
+  <button class="tab" data-p="ajout" aria-selected="false">Ajout</button>
+  <button class="tab" data-p="lancement" aria-selected="false">Recherches</button>
+  <button class="tab" data-p="tri" aria-selected="false">Tri</button>
+  <span class="right" id="adresse"></span>
+</div>
+
+<main>
+
+<!-- ============ RÉGLAGES ============ -->
+<section class="page on" id="pg-reglages"><div class="wrap">
+  <h2>Réglages</h2>
+  <p class="sub">Configurer les sources, la vérification et la sortie. La page montre le <b>dernier état connu</b> de chaque source avec sa date : elle n'appelle rien toute seule. Aucune fiabilité ici — ça, c'est la page Tri. Chaque bloc s'ouvre et se ferme ; replié, il garde son état et un rappel de ce qui est réglé.</p>
+  <div id="reglages-problemes"></div>
+
+  <details class="bloc" data-bloc="assistant">
+    <summary><span class="t">Assistant de configuration</span><span class="etat" id="e-assistant"></span><span class="c" id="r-assistant"></span><span class="chev"></span></summary>
+    <div class="corps">
+      <p style="font-size:12px;color:var(--dim);margin:0 0 9px">Rouvre l'assistant à l'étape voulue, sans refaire toute l'installation. Seule l'étape rejouée est modifiée.</p>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <button class="btn" data-rouvrir="1" style="border-color:var(--f1);color:var(--f1)">① Sources</button>
+        <button class="btn" data-rouvrir="2" style="border-color:var(--f2);color:var(--f2)">② Vérification</button>
+        <button class="btn" data-rouvrir="3" style="border-color:var(--f3);color:var(--f3)">③ Sortie</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="bloc" data-bloc="budget">
+    <summary><span class="t">Budget</span><span class="etat" id="e-budget"></span><span class="c" id="r-budget"></span><span class="chev"></span></summary>
+    <div class="corps">
+      <div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap">
+        <div><label class="fl" for="budget-plafond">Plafond de dépense par mois (en dollars)</label><input class="inp" id="budget-plafond" type="number" min="0" step="0.5" style="width:140px"></div>
+        <button class="btn" id="budget-ok">Enregistrer le plafond</button>
+        <span id="budget-etat" style="font-size:12.5px;color:var(--dim)"></span>
+      </div>
+      <p style="font-size:11.5px;color:var(--faint);margin:8px 0 0">Toutes les unités (crédits, jetons, requêtes) sont converties en dollars. Au plafond, le programme s'arrête proprement.</p>
+    </div>
+  </details>
+
+  <details class="bloc" data-bloc="presets">
+    <summary><span class="t">Presets</span><span class="etat" id="e-presets"></span><span class="c" id="r-presets"></span><span class="chev"></span></summary>
+    <div class="corps">
+      <p style="font-size:12px;color:var(--dim);margin:0 0 9px">Des lots de sources prêtes à l'emploi, calculés à partir de ce que chaque source déclare. Combinables : coche ceux que tu veux par défaut.</p>
+      <div id="presets"></div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button class="btn" id="preset-vide" style="font-size:11.5px;padding:3px 8px">Nouveau preset vide</button>
+        <button class="btn" id="preset-importer" style="font-size:11.5px;padding:3px 8px">Importer un preset (fichier)</button>
+        <input type="file" id="preset-fichier" accept=".yaml,.yml,.txt" style="display:none">
+        <span id="preset-info" style="font-size:12px;color:var(--dim)"></span>
+      </div>
+    </div>
+  </details>
+
+  <details class="bloc" data-bloc="bases">
+    <summary><span class="t">Bases officielles de mon pays</span><span class="etat" id="e-bases"></span><span class="c" id="r-bases"></span><span class="chev"></span></summary>
+    <div class="corps">
+      <p style="font-size:12px;color:var(--dim);margin:0 0 9px"><b>Le catalogue de ce qui existe</b> : les bases publiques connues pour un pays, avec leur licence et la date de dernière vérification. Cochées d'après tes presets. Rien n'est téléchargé d'ici sans ton accord.</p>
+      <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap"><div><label class="fl" for="cat-pays">Pays (deux lettres, ex. FR)</label><input class="inp" id="cat-pays" maxlength="2" style="width:80px;text-transform:uppercase"></div><button class="btn" id="cat-voir">Voir les bases connues</button></div>
+      <div id="cat-liste" style="margin-top:9px"></div>
+    </div>
+  </details>
+
+  <details class="bloc" data-bloc="copies">
+    <summary><span class="t">Copies locales</span><span class="etat" id="e-copies"></span><span class="c" id="r-copies"></span><span class="chev"></span></summary>
+    <div class="corps">
+      <p style="font-size:12px;color:var(--dim);margin:0 0 9px"><b>Ce qui est réellement sur le disque.</b> Une copie téléchargée sert hors ligne et donne les mêmes résultats d'un jour à l'autre. Rien n'est téléchargé sans ton accord, après avoir vu le poids et la place libre. Pas de filtre par mot-clé.</p>
+      <div id="cop-liste"></div>
+    </div>
+  </details>
+
+  <details class="part p1 bloc" data-bloc="sources">
+    <summary class="part-h"><span class="t">① SOURCES</span><span class="etat" id="e1"></span><span class="c" id="c1"></span><span class="chev"></span></summary>
+    <div class="fam" id="fam1"></div>
+    <div id="list1"></div>
+    <div class="ajouts" id="ajouts1"></div>
+  </details>
+
+  <details class="part p2 bloc" data-bloc="verification">
+    <summary class="part-h"><span class="t">② VÉRIFICATION</span><span class="etat" id="e2"></span><span class="c" id="c2"></span><span class="chev"></span></summary>
+    <div class="verif-off">
+      <label class="sw"><input type="checkbox" id="verif-sw" checked><i></i><b></b></label>
+      <span id="verif-txt">Vérification active — les noms sont recoupés entre plusieurs sources.</span>
+    </div>
+    <div class="verif-off" id="verif-mode-zone" style="display:none">
+      <label class="sw"><input type="checkbox" id="verif-mode"><i></i><b></b></label>
+      <span id="verif-mode-txt"></span>
+    </div>
+    <div class="fam" id="fam2"></div>
+    <div id="list2"></div>
+    <div class="ajouts" id="ajouts2"></div>
+  </details>
+
+  <details class="part p3 bloc" data-bloc="sortie">
+    <summary class="part-h"><span class="t">③ SORTIE</span><span class="etat" id="e3"></span><span class="c" id="c3"></span><span class="chev"></span></summary>
+    <div class="fam" id="fam3"></div>
+    <div id="list3"></div>
+    <div class="form" style="margin:10px 12px 12px" id="sortie-reglages">
+      <div class="full"><label class="fl" for="sortie-dossier">Dossier où écrire les sorties</label><input class="inp" id="sortie-dossier" placeholder="vide = le dossier de chaque recherche"></div>
+      <div class="full"><label class="fl" for="sortie-webhook">Adresse du webhook (si le format Webhook est coché)</label><input class="inp" id="sortie-webhook" placeholder="https://…"></div>
+      <div><button class="btn" id="sortie-ok">Enregistrer</button> <span id="sortie-msg" style="font-size:12px;color:var(--dim)"></span></div>
+    </div>
+  </details>
+  <p class="sub" id="reglages-erreur" style="display:none"></p>
+</div></section>
+
+<!-- ============ AJOUT ============ -->
+<section class="page" id="pg-ajout"><div class="wrap">
+  <h2>Ajouter une prise</h2>
+  <p class="sub">Destination : <b>sources</b> · vérification · sortie. Trois façons de remplir, de la plus rapide à la plus manuelle.</p>
+
+  <div class="modes">
+    <button class="mode on" data-m="0"><span class="mt">① Catalogue de l'État</span><span class="md">Cherche dans les API publiques françaises et remplit tout seul</span></button>
+    <button class="mode" data-m="1"><span class="mt">② Depuis une adresse</span><span class="md">Colle une adresse, clique les champs dans la réponse</span></button>
+    <button class="mode" data-m="2"><span class="mt">③ À la main</span><span class="md">Formulaire complet · adresse, format, champs</span></button>
+  </div>
+
+  <div class="box" id="ajout-catalogue" style="margin-bottom:12px">
+    <h3>Catalogue de l'État (data.gouv.fr)</h3>
+    <div style="display:flex;gap:7px;margin:9px 0">
+      <input class="inp" id="cat-q" placeholder="quelques mots : entreprises, festivals, associations…">
+      <button class="btn primary" id="cat-go">Chercher</button>
+    </div>
+    <p id="cat-msg" style="font-size:12px;color:var(--dim);margin:0 0 8px"></p>
+    <div id="cat-res"></div>
+  </div>
+
+  <div class="box" id="ajout-types" style="margin-top:14px">
+    <h3>Ajouter une nouvelle source</h3>
+    <p style="font-size:12px;color:var(--dim);margin:7px 0 9px">Choisis le type : un encart s'ouvre dessous avec ce que ce type demande. La clé, si elle est demandée, est <b>rangée par le programme lui-même</b> (jamais à copier dans un fichier, jamais réaffichée). La source est enregistrée <b>éteinte</b>, puis testée sans rien appeler ; elle apparaît dans Réglages. Une source qui demande un adaptateur est enregistrée quand même, et le dit.</p>
+    <div style="max-width:420px;margin-bottom:10px"><label class="fl" for="t-type">Type de source</label><select class="inp" id="t-type">
+        <option value="api">API JSON ou CSV (adresse, clé, champs)</option><option value="mcp">Serveur MCP / prestataire</option><option value="rss">Flux RSS ou fichier OPML</option>
+        <option value="fichier">Fichier local (CSV, JSON)</option><option value="base">Base SQLite en lecture seule</option><option value="programme">Programme ou script local</option>
+        <option value="adaptateur">Autre : OAuth, curseur, GraphQL… (demande un adaptateur)</option></select></div>
+    <div id="t-rss" style="display:none"><div id="flux-rss"></div></div>
+    <div id="t-generique">
+    <div class="form">
+      <div><label class="fl" for="t-nom">Nom</label><input class="inp" id="t-nom" placeholder="par exemple : Companies House (Royaume-Uni)"></div>
+      <div><label class="fl" for="t-trouve">Ce qu'elle trouve</label><input class="inp" id="t-trouve" placeholder="par exemple : sociétés britanniques"></div>
+      <div><label class="fl" for="t-pays">Pays couverts (codes, séparés par des virgules)</label><input class="inp" id="t-pays" placeholder="GB ou monde"></div>
+      <div><label class="fl" for="t-genre">Genre de chose</label><select class="inp" id="t-genre"></select></div>
+      <div><label class="fl" for="t-main">Première ou seconde main</label><select class="inp" id="t-main"><option value="seconde">seconde main (page qui répète)</option><option value="premiere">première main (registre)</option></select></div>
+      <div><label class="fl" for="t-confiance">Niveau de confiance (0 à 1)</label><input class="inp" id="t-confiance" type="number" min="0" max="1" step="0.05" value="0.3"></div>
+      <div><label class="fl">Rôle</label><label style="font-size:12px"><input type="checkbox" id="t-verifier"> aussi pour vérifier</label></div>
+      <div id="t-cle-zone"><label class="fl" for="t-cle-val">Clé d'API (laisser vide s'il n'y en a pas)</label><input class="inp" id="t-cle-val" type="password" autocomplete="off" placeholder="collez la clé ici : elle sera rangée toute seule"></div>
+      <div><label class="fl" for="t-unite">Coût : unité · dollars par unité · unités par appel</label>
+        <div style="display:flex;gap:6px"><input class="inp" id="t-unite" value="requête"><input class="inp" id="t-dollar" type="number" min="0" step="any" value="0"><input class="inp" id="t-par" type="number" min="0" step="any" value="1"></div></div>
+    </div>
+    <div id="t-api" class="form" style="margin-top:9px">
+      <div class="full"><label class="fl" for="t-url">Adresse</label><input class="inp" id="t-url" placeholder="https://…"></div>
+      <div><label class="fl" for="t-param">Paramètre qui reçoit les mots cherchés</label><input class="inp" id="t-param" placeholder="q"></div>
+      <div><label class="fl" for="t-liste">Où est la liste des résultats</label><input class="inp" id="t-liste" placeholder="items"></div>
+      <div><label class="fl" for="t-auth">Envoi de la clé</label><select class="inp" id="t-auth"><option value="">aucune clé</option><option value="header">en-tête (nom à donner)</option><option value="bearer">Bearer</option><option value="basic">Basic (clé en identifiant)</option><option value="query">dans l'adresse (nom à donner)</option></select></div>
+      <div><label class="fl" for="t-authnom">Nom de l'en-tête ou du paramètre</label><input class="inp" id="t-authnom" placeholder="X-Api-Key"></div>
+    </div>
+    <div id="t-mcp" class="form" style="margin-top:9px;display:none">
+      <div class="full"><label class="fl" for="t-mcpurl">Adresse du serveur MCP</label><input class="inp" id="t-mcpurl" placeholder="https://…"></div>
+      <div><label class="fl" for="t-outil">Outil à appeler</label><input class="inp" id="t-outil" placeholder="search"></div>
+      <div class="full"><label class="fl" for="t-args">Arguments (JSON ; {mots_et_lieu}, {quoi}, {lieu}, {limite})</label><input class="inp" id="t-args" value='{"query": "{mots_et_lieu}"}'></div>
+      <div class="full"><label class="fl" for="t-avert">Avertissement (obligatoire pour un prestataire payant)</label><input class="inp" id="t-avert" placeholder="payant au résultat ; vérifiez les conditions d'usage"></div>
+    </div>
+    <div id="t-fichier" class="form" style="margin-top:9px;display:none">
+      <div class="full"><label class="fl" for="t-chemin">Chemin du fichier sur cette machine</label><input class="inp" id="t-chemin" placeholder="/home/…/clubs.csv"></div>
+      <div><label class="fl" for="t-format">Format</label><select class="inp" id="t-format"><option value="csv">CSV</option><option value="json">JSON</option></select></div>
+      <div><label class="fl" for="t-sep">Séparateur (CSV)</label><input class="inp" id="t-sep" value=";"></div>
+    </div>
+    <div id="t-base" class="form" style="margin-top:9px;display:none">
+      <div class="full"><label class="fl" for="t-basef">Fichier de la base (SQLite)</label><input class="inp" id="t-basef" placeholder="/home/…/ma_base.db"></div>
+      <div class="full"><label class="fl" for="t-sql">Requête SELECT (colonnes : nom, ville, genre, numero ; :q_like reçoit les mots cherchés)</label><input class="inp" id="t-sql" value="select nom, commune as ville from clubs where nom like :q_like"></div>
+      <div><label class="fl" for="t-essai">Mot d'essai (doit exister dans la base)</label><input class="inp" id="t-essai"></div>
+    </div>
+    <div id="t-prog" class="form" style="margin-top:9px;display:none">
+      <div class="full"><label class="fl" for="t-cmd">Commande (un mot par ligne)</label><textarea class="inp" id="t-cmd" rows="3" placeholder="python3&#10;/home/…/mon_script.py"></textarea></div>
+      <div><label class="fl" for="t-delai">Limite de temps (secondes)</label><input class="inp" id="t-delai" type="number" min="1" max="120" value="10"></div>
+    </div>
+    <div id="t-autre" class="form" style="margin-top:9px;display:none">
+      <div class="full"><label class="fl" for="t-aurl">Adresse du service (facultatif)</label><input class="inp" id="t-aurl" placeholder="https://…"></div>
+      <div class="full"><label class="fl" for="t-proto">Ce qui rend cette source plus difficile</label><select class="inp" id="t-proto">
+        <option value="oauth">Authentification en plusieurs étapes (OAuth)</option><option value="curseur">Pagination par curseur</option><option value="graphql">GraphQL</option>
+        <option value="imbrique">Réponse très imbriquée</option><option value="autre">Autre</option></select></div>
+      <p class="full" style="font-size:12px;color:var(--dim);margin:0">Ces cas demandent un petit programme (un adaptateur). La source est <b>enregistrée quand même</b> avec ce que tu donnes ici ; Réglages affichera « cette source demande un adaptateur » et ne l'allumera pas avant.</p>
+    </div>
+    <div id="t-champs" class="form" style="margin-top:9px">
+      <div><label class="fl" for="t-cnom">Champ du NOM</label><input class="inp" id="t-cnom" placeholder="title"></div>
+      <div><label class="fl" for="t-cville">Champ de la ville</label><input class="inp" id="t-cville"></div>
+      <div><label class="fl" for="t-cnum">Champ de l'identifiant officiel</label><input class="inp" id="t-cnum"></div>
+    </div>
+    <div id="t-exemple" style="margin-top:9px"><label class="fl" for="t-ex">Exemple de réponse du service (collez ce que vous avez vu : il sert à vérifier la sortie sans jamais appeler le service)</label><textarea class="inp" id="t-ex" rows="5" style="font-family:var(--mono)"></textarea></div>
+    <div style="display:flex;gap:7px;margin-top:11px;align-items:center;flex-wrap:wrap"><button class="btn primary" id="t-go">Enregistrer (éteinte) et tester</button><span id="t-msg" style="font-size:12px;color:var(--dim)"></span></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="box">
+      <h3 id="gauche-titre">Réponse de la source</h3>
+      <div id="gauche-adresse" style="margin-bottom:9px"><label class="fl" for="aj-url">Adresse interrogée</label>
+        <div style="display:flex;gap:7px"><input class="inp" id="aj-url" placeholder="https://…"><button class="btn" id="aj-appeler">Appeler une fois</button></div></div>
+      <div id="gauche-manuel" style="display:none">
+        <div class="form">
+          <div class="full"><label class="fl" for="m-url">Adresse</label><input class="inp" id="m-url" placeholder="https://…"></div>
+          <div><label class="fl" for="m-format">Format de la réponse</label><select class="inp" id="m-format"><option value="json">JSON</option><option value="csv">CSV (fichier)</option></select></div>
+          <div><label class="fl" for="m-items">Où est la liste des résultats</label><input class="inp" id="m-items" placeholder="par exemple : results"></div>
+          <div><label class="fl" for="m-param">Paramètre qui reçoit les mots cherchés</label><input class="inp" id="m-param" placeholder="par exemple : q"></div>
+          <div><label class="fl" for="m-sep">Séparateur (CSV)</label><input class="inp" id="m-sep" value=";"></div>
+        </div>
+      </div>
+      <pre class="raw" id="raw" style="max-height:340px;overflow:auto;display:none"></pre>
+      <p id="raw-aide" style="font-size:11.5px;color:var(--dim);margin:9px 0 0">Clique un champ pour dire ce qu'il représente. Aucun fichier à écrire.</p>
+      <p id="aj-erreur" style="font-size:12px;color:var(--dim);margin:8px 0 0;display:none"></p>
+    </div>
+    <div class="box">
+      <h3>Ce que grappes en retiendra</h3>
+      <div style="margin-bottom:9px"><label class="fl" for="aj-nom">Nom de la prise</label><input class="inp" id="aj-nom" placeholder="par exemple : Annuaire des entreprises"></div>
+      <div id="mapping"></div>
+      <div id="aj-params" style="display:none;margin-top:9px">
+        <label class="fl" for="aj-param">Quel paramètre reçoit les mots cherchés ?</label><select class="inp" id="aj-param"></select>
+      </div>
+      <div style="margin-top:9px"><label class="fl" for="aj-mot">Mot d'essai</label><input class="inp" id="aj-mot" placeholder="par exemple : handball"></div>
+      <div class="box" style="margin-top:11px;background:var(--surf2)">
+        <h3 style="margin-bottom:7px">Essai · 3 premiers noms</h3>
+        <div id="essai" style="font:500 12px var(--mono);line-height:1.8;color:var(--dim)">— rien tant qu'un nom n'est pas désigné —</div>
+      </div>
+      <div style="display:flex;gap:7px;margin-top:11px;flex-wrap:wrap">
+        <button class="btn" id="btn-test">Tester</button>
+        <button class="btn primary" id="btn-save" disabled>Enregistrer (inactive)</button>
+        <button class="btn" id="aller-reglages" style="display:none">Aller dans Réglages</button>
+      </div>
+      <p style="font-size:11px;color:var(--faint);margin:8px 0 0">Un test consomme un à trois appels réels. La prise est enregistrée désactivée : tu l'actives toi-même dans Réglages.</p>
+      <p id="aj-ok" style="font-size:12px;color:var(--dim);margin:6px 0 0"></p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ LANCEMENT ============ -->
+<section class="page" id="pg-lancement"><div class="wrap">
+  <h2>Recherches</h2>
+  <p class="sub">Préparer, lancer et suivre. Aucun nom de résultat ici : les résultats s'examinent dans Tri.</p>
+
+  <div class="two" style="align-items:start">
+    <div class="box">
+      <div class="form">
+        <div class="full"><label class="fl" for="f-quoi">Ce que je cherche</label><input class="inp" id="f-quoi" placeholder="par exemple : clubs de handball professionnels"></div>
+        <div><label class="fl" for="f-genre">Genre de chose</label>
+          <select class="inp" id="f-genre"><option>structure déclarée</option><option>groupe informel</option><option>personne</option><option>lieu</option><option>événement</option><option>peu importe</option></select></div>
+        <div><label class="fl" for="f-pays">Pays</label><input class="inp" id="f-pays" value="France"></div>
+        <div><label class="fl" for="f-lieu">Région · ville</label><input class="inp" id="f-lieu" placeholder="toutes"></div>
+        <div class="full"><label class="fl">Doit être accompagné de</label>
+          <div class="chips" id="inc"><input placeholder="ajouter un mot…"></div></div>
+        <div class="full"><label class="fl">Ne doit pas contenir</label>
+          <div class="chips" id="exc"><input placeholder="ajouter un mot…"></div></div>
+        <div class="full"><label class="fl">Exemples que je connais déjà</label>
+          <div class="chips" id="amo"><input placeholder="ajouter un nom…"></div></div>
+        <div><label class="fl" for="f-periode">Période</label>
+          <select class="inp" id="f-periode"><option>sans date</option><option>date précise</option><option>plage de dates</option></select></div>
+        <div><label class="fl" for="f-combien">Combien</label><input class="inp" id="f-combien" type="number" min="1" value="50"></div>
+        <div class="full"><label class="fl">Presets (combinables)</label><div id="f-presets" style="font-size:12.5px"></div>
+          <div class="smeta" style="font-size:11.5px;color:var(--dim)">Un preset coché limite la recherche à ses sources qui sont allumées dans Réglages.</div></div>
+      </div>
+
+      <div style="margin-top:12px"><label class="fl">Effort de recherche</label>
+        <div class="depth" id="depth"></div></div>
+
+      <div class="form" style="margin-top:12px">
+        <div><label class="fl" for="f-temps">Temps maximum (minutes)</label><input class="inp" id="f-temps" type="number" min="1" value="30"></div>
+        <div><label class="fl" for="f-appels">Appels maximum</label><input class="inp" id="f-appels" type="number" min="1" placeholder="selon l'effort"></div>
+      </div>
+
+      <div id="estimation" class="box" style="margin-top:12px;background:var(--surf2)">
+        <h3 style="margin-bottom:6px">Avant de lancer</h3>
+        <div id="est-temps" style="font-size:12.5px">Temps estimé : —</div>
+        <div id="est-cout" style="font-size:12.5px">Coût estimé : —</div>
+        <div id="est-plafond" style="font-size:12px;color:var(--dim)"></div>
+        <div id="est-message" style="font-size:12px;margin-top:4px"></div>
+        <div id="est-copies" style="font-size:12px;margin-top:4px;color:var(--dim)"></div>
+      </div>
+
+      <details id="avancees" style="margin-top:12px"><summary class="fl" style="cursor:pointer">Options avancées</summary>
+        <div class="form" style="margin-top:8px">
+          <div><label class="fl" for="f-explo">Profondeur d'exploration <span style="color:var(--faint)">· exploratoire</span></label>
+            <select class="inp" id="f-explo"><option value="0">0 — éteinte (par défaut)</option><option value="1">1 — suivre les liens des pages</option><option value="2">2 — deux niveaux de liens</option></select></div>
+          <div><label class="fl" for="f-typelieu">Type de lieu (preset Lieux)</label><select class="inp" id="f-typelieu"><option value="">tous</option></select></div>
+          <div><label class="fl" for="f-langue">Langue des résultats</label>
+            <select class="inp" id="f-langue"><option>français</option><option>anglais</option><option>français + anglais</option></select></div>
+          <div><label class="fl" for="f-page">Page entière ou extrait</label>
+            <select class="inp" id="f-page"><option value="entiere">page entière (plus lent, davantage de noms possible)</option><option value="extrait">extrait seulement (plus rapide)</option></select></div>
+          <div><label class="fl" for="f-verif">Vérification pour cette recherche</label>
+            <select class="inp" id="f-verif"><option value="">comme dans Réglages</option><option value="oui">activée</option><option value="non">coupée</option></select></div>
+          <div class="full"><label class="fl">Sites à ignorer</label><div class="chips" id="ign"><input placeholder="exemple.org puis Entrée"></div></div>
+          <div class="full"><label class="fl">Format de la sortie, pour cette recherche</label><div id="f-sortie" style="font-size:12.5px"><span class="smeta">comme dans Réglages</span></div></div>
+        </div>
+        <label class="fl" style="margin-top:10px">Planification</label>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <button class="btn" id="go-date">À une date…</button>
+          <button class="btn" id="go-rec">Tous les jours à…</button>
+        </div>
+      </details>
+
+      <div style="display:flex;gap:7px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn primary" id="go">Lancer maintenant</button>
+      </div>
+      <div id="prog" style="display:none;margin-top:10px">
+        <div class="form">
+          <div id="prog-date-w"><label class="fl" for="prog-date">Le</label><input class="inp" id="prog-date" type="datetime-local"></div>
+          <div id="prog-jours-w"><label class="fl" for="prog-jours">Quels jours</label>
+            <select class="inp" id="prog-jours"><option value="tous">tous les jours</option><option value="0">lundi</option><option value="1">mardi</option><option value="2">mercredi</option><option value="3">jeudi</option><option value="4">vendredi</option><option value="5">samedi</option><option value="6">dimanche</option></select></div>
+          <div id="prog-heure-w"><label class="fl" for="prog-heure">À</label><input class="inp" id="prog-heure" type="time" value="10:00"></div>
+        </div>
+        <div style="display:flex;gap:7px;margin-top:8px"><button class="btn primary" id="prog-ok">Programmer</button><button class="btn" id="prog-non">Annuler</button></div>
+      </div>
+      <p id="lancement-erreur" class="sub" style="display:none;margin:10px 0 0"></p>
+    </div>
+
+    <div class="box">
+      <h3>En cours</h3>
+      <div id="rien-en-cours" class="empty" style="padding:14px 0">Aucune recherche en cours.</div>
+      <div id="en-cours" style="display:none">
+        <div class="runhead" style="margin-top:9px">
+          <div><span class="big" id="rn">0</span> <span style="font-size:12px;color:var(--dim)">noms collectés</span></div>
+          <div style="font:400 11.5px var(--mono);color:var(--dim)"><span id="rcalls">0 / 0 appels</span> · <span id="reta">—</span></div>
+        </div>
+        <div style="font-size:12px;color:var(--dim)" id="rtitre"></div>
+        <div class="gauges" id="gauges"></div>
+        <div style="display:flex;gap:7px;margin-top:11px;align-items:center;flex-wrap:wrap">
+          <button class="btn" id="pause">Mettre en pause</button>
+          <button class="btn" id="stop">Arrêter · garder ce qui est trouvé</button>
+          <button class="btn" id="voir-tri" style="display:none">Voir dans Tri</button>
+          <span id="rmsg" style="font-size:12px;color:var(--dim)"></span>
+        </div>
+        <div id="bilan" style="margin-top:10px;font-size:12.5px"></div>
+        <div id="contexte" style="margin-top:12px"></div>
+      </div>
+      <p style="font-size:11px;color:var(--faint);margin:11px 0 0">La couleur dit l'étape : <b style="color:var(--f1)">sources</b>, <b style="color:var(--f2)">vérification</b>, <b style="color:var(--f3)">sortie</b>. Le compte d'appels est exact ; le temps est une fourchette.</p>
+
+      <h3 style="margin-top:16px">Programmées</h3>
+      <div class="sched" id="programmees"><div class="r"><span class="sgrow" style="color:var(--faint)">Rien de programmé.</span></div></div>
+
+      <h3 style="margin-top:16px">Dernières recherches</h3>
+      <div class="sched" id="dernieres"><div class="r"><span class="sgrow" style="color:var(--faint)">Aucune recherche pour l'instant.</span></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ TRI ============ -->
+<section class="page" id="pg-tri"><div class="wrap">
+  <h2 id="tri-titre">Tri</h2>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0 4px">
+    <label class="fl" for="tri-recherche" style="margin:0">Recherche</label>
+    <select class="inp" id="tri-recherche" style="width:auto;max-width:100%"></select>
+  </div>
+  <p class="sub">Deux signaux séparés, jamais mélangés en une note : la couleur et le mot disent <b>d'où vient un nom</b> (sa qualité de source) ;
+    le nombre dit <b>à combien d'endroits différents</b> il a été trouvé. « 3 endroits » sur le web ne vaut pas « 1 endroit » dans un registre officiel.</p>
+  <p class="sub" id="tri-sans-verif" style="display:none"><b>Vérification coupée</b> : fiabilité non mesurée. Les noms sont rendus bruts, sans recoupement.</p>
+  <p class="sub" id="tri-verifs" style="display:none"></p>
+
+  <div class="overview">
+    <div class="ov-top">
+      <div><span class="n" id="ov-n">0</span> <span style="font-size:12.5px;color:var(--dim)">noms trouvés</span></div>
+      <div class="rest" id="ov-rest"></div>
+    </div>
+    <div class="ovbar" id="ovbar"></div>
+    <div class="ovkey" id="ovkey"></div>
+  </div>
+
+  <div class="box" id="filtres" style="margin:10px 0">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input class="inp" id="tri-q" placeholder="Chercher dans les noms…" style="max-width:260px" aria-label="Chercher dans les noms">
+      <label style="font-size:12.5px" title="Comparés à ce que vous avez gardé dans les autres recherches. Un nom rejeté ailleurs peut réapparaître comme nouveau."><input type="checkbox" id="tri-nouveaux"> Nouveaux noms</label>
+      <span id="tri-filtre-etat" style="font-size:12px;color:var(--dim)"></span>
+      <button class="btn" id="tri-effacer" style="display:none;padding:3px 9px;font-size:11.5px">Effacer les filtres</button>
+      <button class="btn" id="tri-rejets" style="margin-left:auto;padding:3px 9px;font-size:11.5px">D'où vient le bruit</button>
+    </div>
+    <div id="facettes"></div>
+    <div id="rejets-panneau" style="display:none"></div>
+  </div>
+
+  <div class="tri">
+    <div class="side">
+      <h3>Classements</h3>
+      <div id="cl-list"></div>
+      <button class="cl-add" id="cl-add">+ Nouveau classement</button>
+      <div id="cl-form" style="display:none;padding:9px 11px;border-top:1px solid var(--line)">
+        <label class="fl" for="cl-nom">Nom</label><input class="inp" id="cl-nom" placeholder="par exemple : Avec un site web">
+        <label class="fl" for="cl-fait" style="margin-top:7px">Grouper par</label><select class="inp" id="cl-fait"></select>
+        <label class="fl" for="cl-ordre" style="margin-top:7px">Ordonner les paquets</label><select class="inp" id="cl-ordre"></select>
+        <div style="display:flex;gap:6px;margin-top:9px"><button class="btn primary" id="cl-ok">Créer</button><button class="btn" id="cl-non">Annuler</button></div>
+        <p id="cl-erreur" style="font-size:11.5px;color:var(--dim);margin:7px 0 0;display:none"></p>
+      </div>
+      <div id="cl-actions" style="display:flex;gap:6px;padding:8px 11px;border-top:1px solid var(--line)">
+        <button class="btn" id="cl-dup" style="padding:3px 8px;font-size:11.5px">Dupliquer</button>
+        <a class="btn" id="cl-exp" style="padding:3px 8px;font-size:11.5px;text-decoration:none;color:inherit" download>Exporter</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="views">
+        <button class="on" data-v="liste">Liste</button>
+        <button data-v="colonnes">Colonnes</button>
+        <button data-v="tableau">Tableau</button>
+        <button data-v="fiches">Fiches</button>
+        <button data-v="carte">Carte</button>
+        <button class="undo" id="undo" disabled>↶ Annuler</button>
+      </div>
+      <p id="tri-msg" style="font-size:12px;color:var(--dim);margin:0 0 8px;min-height:1.4em"></p>
+      <div id="tri-body"></div>
+      <p class="hint"><kbd>↑</kbd> <kbd>↓</kbd> naviguer · <kbd>G</kbd> garder · <kbd>R</kbd> rejeter · <kbd>P</kbd> plus tard · <kbd>Z</kbd> annuler</p>
+      <div class="box" style="margin-top:12px" id="boite-export">
+        <h3>Exporter</h3>
+        <p style="font-size:12px;color:var(--dim);margin:7px 0 9px" id="export-texte">Écrit le résultat dans les formats voulus, sans rien rechercher de nouveau : on peut recommencer avec un autre format ou un autre choix de noms autant de fois qu'on veut. Les décisions partent aussi, à part, dans <b>decisions.csv</b>.</p>
+        <div id="export-formats" style="font-size:12.5px"></div>
+        <div class="form" style="margin-top:8px">
+          <div><label class="fl" for="export-filtre">Quels noms</label><select class="inp" id="export-filtre"><option value="gardes">les noms gardés</option><option value="tout">tous les noms (y compris rejetés, mis de côté, non décidés)</option><option value="rejeter,plus_tard">rejetés et mis de côté</option></select></div>
+          <div><label class="fl" for="export-dossier">Dossier (vide = celui de Réglages)</label><input class="inp" id="export-dossier" placeholder="vide"></div>
+          <div class="full" id="export-webhook-w" style="display:none"><label class="fl" for="export-webhook">Adresse du webhook</label><input class="inp" id="export-webhook" placeholder="https://…"></div>
+        </div>
+        <div style="margin-top:9px"><button class="btn primary" id="exporter">Exporter</button>
+        <span id="export-msg" style="font-size:12px;color:var(--dim);margin-left:8px"></span></div>
+      </div>
+    </div>
+
+    <div class="detail">
+      <h3>Détail</h3>
+      <div class="dbody" id="detail"></div>
+    </div>
+  </div>
+</div></section>
+
+</main>
+
+
+<!-- ============ ASSISTANT (fiche 02) ============ -->
+<div id="assistant" style="display:none;position:fixed;inset:0;z-index:50;background:var(--bg);overflow:auto">
+  <div class="wrap" style="padding:18px 16px">
+    <div style="font:600 12px var(--mono);letter-spacing:.1em;color:var(--faint);margin-bottom:10px">GRAPPES · ASSISTANT <span id="as-mode" style="font-weight:400"></span></div>
+    <div id="as-etapes" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"></div>
+
+    <section id="as-e1" class="part p1"><div class="part-h"><span class="t">① SOURCES</span></div><div style="padding:12px">
+      <p class="sub" style="margin-top:0">Choisis où le programme va chercher. Chaque preset est un lot de sources prêtes à l'emploi pour un type de recherche.</p>
+      <div class="form" style="margin-bottom:10px">
+        <div><label class="fl" for="as-pays">Ton pays</label><select class="inp" id="as-pays"></select></div>
+        <div id="as-pays-autre-w" style="display:none"><label class="fl" for="as-pays-autre">Code du pays (deux lettres)</label><input class="inp" id="as-pays-autre" maxlength="2" placeholder="par exemple : SE"></div>
+      </div>
+      <div id="as-presets"></div>
+      <div id="as-cles" style="margin-top:12px"></div>
+      <div id="as-plafond-w" style="margin-top:12px;display:none"><label class="fl" for="as-plafond">Plafond de dépense par mois (en dollars) — tu as activé du payant</label><input class="inp" id="as-plafond" type="number" min="0" step="0.5" style="width:150px"></div>
+    </div></section>
+
+    <section id="as-e2" class="part p2" style="display:none"><div class="part-h"><span class="t">② VÉRIFICATION</span></div><div style="padding:12px">
+      <p class="sub" style="margin-top:0">Le programme recoupe chaque nom trouvé avec d'autres sources pour te dire s'il est confirmé. Tu peux la désactiver si tu préfères le brut.</p>
+      <div class="verif-off" style="margin:0 0 10px;padding:0;background:none;border:none"><label class="sw"><input type="checkbox" id="as-verif" checked><i></i><b></b></label><span id="as-verif-txt"></span></div>
+      <div id="as-verif-detail">
+        <div style="margin-bottom:10px;font-size:12.5px">
+          <label style="display:block;margin-bottom:4px"><input type="radio" name="as-mode-verif" value="memes"> Vérifier seulement avec les sources déjà cochées dans Sources</label>
+          <label style="display:block"><input type="radio" name="as-mode-verif" value="plus"> Activer en plus des sources de vérification seules</label>
+        </div>
+        <div id="as-verif-sources"></div>
+      </div>
+    </div></section>
+
+    <section id="as-e3" class="part p3" style="display:none"><div class="part-h"><span class="t">③ SORTIE</span></div><div style="padding:12px">
+      <p class="sub" style="margin-top:0">Choisis ce que tu récupères à la fin : format et emplacement.</p>
+      <div id="as-formats"></div>
+      <div style="margin-top:10px"><label class="fl" for="as-dossier">Emplacement des fichiers (laisser vide : le dossier de chaque recherche)</label><input class="inp" id="as-dossier" placeholder="par exemple : /chemin/vers/mes/resultats"></div>
+    </div></section>
+
+    <section id="as-e4" class="box" style="display:none"><h3>Récapitulatif</h3>
+      <p class="sub" style="margin-top:8px">Voici ce qui sera utilisé. Teste chaque source avant d'entrer : tu évites de découvrir une clé fausse à la première recherche. Un test ne coûte rien.</p>
+      <div id="as-recap"></div>
+    </section>
+
+    <p id="as-erreur" class="sub" style="display:none;margin-top:12px"></p>
+    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+      <button class="btn" id="as-prec">← Précédent</button>
+      <button class="btn primary" id="as-suiv">Suivant →</button>
+      <button class="btn" id="as-fermer" style="display:none">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/commun.js"></script>
+<script src="/static/reglages.js"></script>
+<script src="/static/presse.js"></script>
+<script src="/static/lancement.js"></script>
+<script src="/static/vendor/tabulator/tabulator.min.js"></script>
+<script src="/static/vendor/cytoscape/cytoscape.min.js"></script>
+<script src="/static/tri.js"></script>
+<script src="/static/ajout.js"></script>
+<script src="/static/ajout_types.js"></script>
+<script src="/static/assistant.js"></script>
+</body>
+</html>

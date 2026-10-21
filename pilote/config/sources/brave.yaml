@@ -1,0 +1,65 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: brave
+nom: Brave Search
+description: Moteur de recherche indépendant avec une API officielle (clé de l'utilisateur).
+trouve: pages web
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- web
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+cle: BRAVE_API_KEY
+cout:
+  unite: requete
+  vers_dollar: 0.005
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+note: Environ 5 $ de crédit par mois ; tarif indicatif à vérifier chez le fournisseur.
+exemple_reponse: exemples/brave.json
+moteur:
+  definition:
+    id: brave
+    type: http
+    public: true
+    url: https://api.search.brave.com/res/v1/web/search
+    method: GET
+    auth:
+      type: header
+      name: X-Subscription-Token
+      env: BRAVE_API_KEY
+    headers:
+      Accept: application/json
+    params:
+      q: '{mots_cles}'
+      count: '{limite}'
+    response:
+      format: json
+      items: web.results
+    fields:
+      title: title
+      url: url
+      description: description
+      id: url
+    quota: 20
+    raison: résultat Brave pour « {mot_cle} »

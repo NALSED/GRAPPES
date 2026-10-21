@@ -1,0 +1,45 @@
+# Types de lieu (fiche 08) : ce que l'utilisateur choisit dans Recherches, traduit UNE FOIS en étiquettes d'OpenStreetMap, qui sont les
+# mêmes dans tous les pays. Aucun code national ici. Une ligne de « osm » = une étiquette [clé, valeur] ; « * » = n'importe quelle valeur.
+# Les genres (club, association, lieu...) renvoient à une liste de types : c'est ce qu'on cherche quand aucun type n'est précisé.
+types:
+  stade:
+    libelle: Stade
+    osm: [[leisure, stadium]]
+  salle_de_sport:
+    libelle: Salle ou centre de sport
+    osm: [[leisure, sports_centre], [leisure, sports_hall], [leisure, fitness_centre]]
+  terrain_de_sport:
+    libelle: Terrain de sport
+    osm: [[leisure, pitch], [leisure, track]]
+  piscine:
+    libelle: Piscine
+    osm: [[leisure, swimming_pool], [amenity, swimming_pool]]
+  club:
+    libelle: Club (étiquette « club »)
+    osm: [[club, "*"]]
+  local_associatif:
+    libelle: Local associatif, maison des associations
+    osm: [[amenity, social_centre], [amenity, community_centre], [office, association]]
+  centre_culturel:
+    libelle: Centre culturel, centre d'art
+    osm: [[amenity, arts_centre], [amenity, community_centre]]
+  theatre:
+    libelle: Théâtre, salle de spectacle
+    osm: [[amenity, theatre], [amenity, concert_hall]]
+  salle_polyvalente:
+    libelle: Salle des fêtes, salle polyvalente
+    osm: [[amenity, events_venue], [amenity, conference_centre]]
+  bibliotheque:
+    libelle: Bibliothèque
+    osm: [[amenity, library]]
+  enseignement_superieur:
+    libelle: Université, faculté, école supérieure
+    osm: [[amenity, university], [amenity, college]]
+  lieu_de_culte:
+    libelle: Lieu de culte
+    osm: [[amenity, place_of_worship]]
+genres:
+  club: [stade, salle_de_sport, terrain_de_sport, piscine, club]
+  association: [local_associatif, centre_culturel, salle_polyvalente, club]
+  lieu: [stade, salle_de_sport, centre_culturel, theatre, salle_polyvalente, local_associatif, bibliotheque]
+  evenement: [centre_culturel, theatre, salle_polyvalente, stade]

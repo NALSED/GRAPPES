@@ -1,0 +1,50 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: google-places
+nom: Google Places (API officielle)
+description: Les lieux d'une zone par mot-clé, avec adresse, site et coordonnées, par l'API officielle
+  de Google. Clé de l'utilisateur, payant au-delà du quota gratuit.
+trouve: lieux et commerces du monde entier
+genres:
+- lieu
+- club
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- lieu
+- pays
+produit:
+- nom
+- origine
+- ville
+- site
+- coordonnees
+usages:
+- lieux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+cle: GOOGLE_PLACES_API_KEY
+cout:
+  unite: requête
+  vers_dollar: 0.035
+  par_appel: 1
+  gratuit_par_mois: 1000
+confiance: 0.5
+defaut:
+  chercher: false
+  verifier: false
+avertissement: 'Service payant de Google : chaque recherche consomme du crédit de votre compte Google,
+  au-delà du quota gratuit. Le coût est compté dans votre plafond mensuel.'
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/google-places.json
+verifie_le: '2026-10-13'
+note: Tarif indicatif (environ 35 $ les 1 000 requêtes avec site web, quota gratuit mensuel de Google
+  à vérifier). Non vérifiée contre le service réel (clé requise).
+moteur:
+  adaptateur: google_places

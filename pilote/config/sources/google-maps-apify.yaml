@@ -1,0 +1,81 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: google-maps-apify
+nom: Google Maps via Apify
+description: Les lieux d'une zone entière par mot-clé, avec nom, adresse, site, téléphone, catégorie et
+  coordonnées, par le serveur MCP d'Apify. Le plus riche pour les acteurs informels. Prestataire payant,
+  clé de l'utilisateur.
+trouve: lieux, commerces et associations de Google Maps
+genres:
+- lieu
+- club
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- lieu
+- pays
+produit:
+- nom
+- origine
+- ville
+- site
+- coordonnees
+usages:
+- lieux
+main: seconde
+origine: web
+famille: mcp
+roles:
+- chercher
+cle: APIFY_TOKEN
+cle_prefixe: 'Bearer '
+cout:
+  unite: lieu
+  vers_dollar: 0.0015
+  par_appel: 50
+  gratuit_par_mois: 0
+confiance: 0.5
+defaut:
+  chercher: false
+  verifier: false
+avertissement: 'Prestataire payant : chaque recherche consomme des crédits de votre compte chez lui, facturés
+  au lieu trouvé. Les données viennent de Google Maps par le prestataire ; vérifiez ses conditions d''utilisation
+  et celles de Google. Le coût est compté dans votre plafond mensuel.'
+prestataire: true
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/google-maps-apify.json
+verifie_le: '2026-10-13'
+note: 'À partir de 1,50 $ les 1 000 lieux (tarif indicatif, à vérifier chez Apify). Non vérifiée contre
+  le service réel (compte Apify requis) : nom de l''outil MCP et champs de l''acteur à confirmer au premier
+  essai réel.'
+moteur:
+  adaptateur: mcp_generique
+  parametres:
+    mcp: https://mcp.apify.com
+    outil: call-actor
+    cle_requise: true
+    arguments:
+      actor: compass/crawler-google-places
+      input:
+        searchStringsArray:
+        - '{mots_cles}'
+        locationQuery: '{lieu}'
+        maxCrawledPlacesPerSearch: '{limite}'
+        language: fr
+    champs:
+      nom:
+      - title
+      site:
+      - website
+      ville:
+      - city
+      pays:
+      - countryCode
+    coordonnees:
+      lat: location.lat
+      lon: location.lng
+    genre: lieu
+    origine_texte: Google Maps (lieu, via Apify)

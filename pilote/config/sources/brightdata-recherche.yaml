@@ -1,0 +1,57 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: brightdata-recherche
+nom: Bright Data — recherche sur les réseaux sociaux
+description: Pages de réseaux sociaux trouvées par une recherche ciblée (Instagram, Facebook), par le
+  serveur MCP de Bright Data. Prestataire payant, clé de l'utilisateur.
+trouve: comptes et pages de réseaux sociaux
+genres:
+- compte
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- lieu
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+famille: mcp
+roles:
+- chercher
+cle: BRIGHTDATA_API_TOKEN
+cle_prefixe: 'Bearer '
+cout:
+  unite: requête
+  vers_dollar: 0.0015
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.2
+defaut:
+  chercher: false
+  verifier: false
+avertissement: 'Prestataire payant : chaque recherche consomme des crédits de votre compte chez lui, facturés
+  au résultat. Les données sont collectées sur le réseau social par le prestataire ; vérifiez ses conditions
+  d''utilisation et celles du réseau. Le coût est compté dans votre plafond mensuel.'
+prestataire: true
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/brightdata-recherche.txt
+verifie_le: '2026-10-13'
+note: 'Tarif indicatif. Non vérifiée contre le service réel (compte requis) : le nom de l''outil (« search_engine
+  ») et la forme de la réponse sont à confirmer au premier essai réel.'
+moteur:
+  adaptateur: mcp_generique
+  parametres:
+    mcp: https://mcp.brightdata.com/mcp
+    outil: search_engine
+    cle_requise: true
+    arguments:
+      query: (site:instagram.com OR site:facebook.com) {mots_et_lieu}
+      engine: google
+    origine_texte: réseau social (page publique, via Bright Data)

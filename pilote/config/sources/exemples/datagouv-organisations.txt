@@ -1,0 +1,14 @@
+Found 2 organization(s) (query 'exemple')
+Page 1 of results:
+
+1. Ministère Exemple (ME)
+   ID: 111111111111111111111111
+   Slug: ministere-exemple
+   Badges: public-service, certified
+   URL: https://www.data.gouv.fr/organizations/ministere-exemple
+
+2. Association Imaginaire
+   ID: 222222222222222222222222
+   Slug: association-imaginaire
+   Badges: 
+   URL: https://www.data.gouv.fr/organizations/association-imaginaire

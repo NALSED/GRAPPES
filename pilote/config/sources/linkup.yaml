@@ -1,0 +1,66 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: linkup
+nom: Linkup
+description: API de recherche web pour programmes (clé de l'utilisateur).
+trouve: pages web
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- web
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+cle: LINKUP_API_KEY
+cout:
+  unite: requete
+  vers_dollar: 0.0055
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+note: 4 000 requêtes offertes à l'inscription ; tarif ensuite indicatif, à vérifier
+  chez le fournisseur.
+exemple_reponse: exemples/linkup.json
+moteur:
+  definition:
+    id: linkup
+    type: http
+    public: true
+    url: https://api.linkup.so/v1/search
+    method: POST
+    auth:
+      type: bearer
+      env: LINKUP_API_KEY
+    body:
+      type: json
+      content:
+        q: '{mots_cles}'
+        depth: standard
+        outputType: searchResults
+    response:
+      format: json
+      items: results
+    fields:
+      title: name
+      url: url
+      description: content
+      id: url
+    quota: 20
+    raison: résultat Linkup pour « {mot_cle} »

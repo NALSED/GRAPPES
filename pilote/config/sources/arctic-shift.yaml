@@ -1,0 +1,44 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: arctic-shift
+nom: Arctic Shift (archive Reddit)
+description: Archive communautaire de Reddit, sans clé. Trouve les communautés dont le nom commence par un mot du sujet.
+  Alternative à l'application Reddit, dont l'accès est durci.
+trouve: communautés Reddit
+genres:
+- compte
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-19'
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.2
+defaut:
+  chercher: false
+  verifier: false
+note: Service tiers non officiel, sans garantie de durée ; le préfixe de nom ne trouve pas une communauté dont le nom ne
+  commence pas par le mot cherché. Réponse contrôlée contre le service réel le 2026-10-19 (recherche par préfixe de nom).
+  Communautés pour adultes écartées.
+exemple_reponse: exemples/arctic-shift.json
+moteur:
+  adaptateur: arctic_shift

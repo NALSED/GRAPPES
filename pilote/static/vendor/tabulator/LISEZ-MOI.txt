@@ -1,0 +1,4 @@
+Tabulator 6.3.1 — https://tabulator.info — licence MIT (voir LICENSE), aucune dépendance.
+Fichiers recopiés tels quels depuis le paquet publié (tabulator-tables@6.3.1, dist/js/tabulator.min.js et dist/css/tabulator.min.css).
+Ils sont servis par pilote lui-même : ni npm, ni chaîne de compilation, ni réseau à l'exécution.
+Pour changer de version : remplacer ces deux fichiers par ceux de la nouvelle version et relancer les tests de la page Tri.

@@ -1,0 +1,584 @@
+{
+ "classes": [
+  "Q17487523"
+ ],
+ "entities": [
+  {
+   "aliases": [
+    "conservatoire de Pau",
+    "conservatoire Pau-Béarn-Pyrénées",
+    "CRR de Pau",
+    "conservatoire à rayonnement régional de Pau"
+   ],
+   "domains": [
+    "pau.fr"
+   ],
+   "label": "conservatoire à rayonnement régional Pau-Béarn-Pyrénées",
+   "qid": "Q131832461",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "amiens.fr"
+   ],
+   "label": "conservatoire à rayonnement régional d'Amiens",
+   "qid": "Q16011102",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "conservatoire.brest.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Brest métropole",
+   "qid": "Q18611042",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Strasbourg"
+   ],
+   "domains": [
+    "conservatoire.strasbourg.eu"
+   ],
+   "label": "conservatoire à rayonnement régional de Strasbourg",
+   "qid": "Q282200",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire à rayonnement départemental de Vannes",
+    "École nationale de musique de Vannes"
+   ],
+   "domains": [],
+   "label": "Conservatoire de Vannes",
+   "qid": "Q2994496",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire d'Angers"
+   ],
+   "domains": [
+    "angers.fr"
+   ],
+   "label": "conservatoire à rayonnement régional d'Angers",
+   "qid": "Q2994547",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire à rayonnement régional agglomération d'Annecy Pays de Savoie",
+    "Conservatoire d'Annecy"
+   ],
+   "domains": [
+    "crr.annecy.fr"
+   ],
+   "label": "conservatoire à rayonnement régional d'Annecy",
+   "qid": "Q2994548",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Besançon"
+   ],
+   "domains": [
+    "besancon.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Besançon",
+   "qid": "Q2994549",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire Maurice Ravel",
+    "Conservatoire Maurice-Ravel",
+    "Conservatoire de Bayonne"
+   ],
+   "domains": [
+    "cmdt-ravel.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Bayonne",
+   "qid": "Q2994550",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Boulogne-Billancourt"
+   ],
+   "domains": [
+    "crr-bb.seineouest.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Boulogne-Billancourt",
+   "qid": "Q2994552",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Caen"
+   ],
+   "domains": [
+    "conservatoiredecaen.fr",
+    "conservatoire-orchestre.caen.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Caen",
+   "qid": "Q2994553",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire a rayonnement regional de Cergy-Pontoise",
+    "Conservatoire à rayonnement régional de cergy-pontoise",
+    "Conservatoire À Rayonnement Régional De Cergy-Pontoise",
+    "Conservatoire de Cergy-Pontoise",
+    "CRR de Cergy"
+   ],
+   "domains": [
+    "cergypontoise.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Cergy-Pontoise",
+   "qid": "Q2994555",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Chalon-sur-Saône"
+   ],
+   "domains": [
+    "conservatoire.legrandchalon.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Chalon-sur-Saône",
+   "qid": "Q2994557",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire à rayonnement régional de Chambéry et des Pays de Savoie",
+    "Conservatoire de Chambéry"
+   ],
+   "domains": [
+    "citedesarts.chambery.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Chambéry",
+   "qid": "Q2994558",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Bordeaux Jacques Thibaud",
+    "Conservatoire national de région de Bordeaux",
+    "CRR de Bordeaux"
+   ],
+   "domains": [
+    "conservatoire.bordeaux.fr"
+   ],
+   "label": "Conservatoire à rayonnement régional de Bordeaux",
+   "qid": "Q2994559",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Clermont-Ferrand"
+   ],
+   "domains": [
+    "clermontmetropole.eu"
+   ],
+   "label": "conservatoire à rayonnement régional de Clermont-Ferrand",
+   "qid": "Q2994560",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Dijon"
+   ],
+   "domains": [
+    "dijon.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Dijon",
+   "qid": "Q2994561",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Douai",
+    "Conservatoire National de Région de Douai"
+   ],
+   "domains": [
+    "ville-douai.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Douai",
+   "qid": "Q2994562",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Grenoble"
+   ],
+   "domains": [
+    "conservatoire-grenoble.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Grenoble",
+   "qid": "Q2994563",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Académie de musique (Lille)",
+    "CNR de Lille",
+    "Conservatoire de Lille",
+    "Conservatoire national de région (Lille)"
+   ],
+   "domains": [
+    "conservatoire.lille.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Lille",
+   "qid": "Q2994564",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Lyon",
+    "C.N.R. de Lyon",
+    "Conservatoire de musique (Lyon)",
+    "Conservatoire national de région (Lyon)",
+    "CRR de Lyon"
+   ],
+   "domains": [
+    "conservatoire-lyon.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Lyon",
+   "qid": "Q2994566",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire à rayonnement régional de marseille",
+    "Conservatoire de Marseille",
+    "Conservatoire national à rayonnement régional Pierre-Barbizet",
+    "Conservatoire national de région (Marseille)",
+    "Conservatoire national de région de Marseille",
+    "conservatoire Pierre-Barbizet de Marseille"
+   ],
+   "domains": [
+    "marseille.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Marseille",
+   "qid": "Q2994567",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire à rayonnement régional de Metz-Métropole Gabriel-Pierné",
+    "Conservatoire de Metz",
+    "conservatoire Gabriel-Pierné",
+    "Conservatoire national de région de Metz",
+    "CRR de Metz-Métropole"
+   ],
+   "domains": [
+    "conservatoire.metzmetropole.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Metz",
+   "qid": "Q2994568",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Cité des Arts de Montpellier Méditerranée Métropole",
+    "Conservatoire de Montpellier",
+    "Conservatoire national supérieur de musique de Montpellier"
+   ],
+   "domains": [
+    "conservatoire.montpellier3m.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Montpellier",
+   "qid": "Q2994569",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire a rayonnement regional de Limoges",
+    "Conservatoire à rayonnement régional de limoges",
+    "Conservatoire À Rayonnement Régional De Limoges",
+    "Conservatoire de Limoges"
+   ],
+   "domains": [
+    "limoges.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Limoges",
+   "qid": "Q2994570",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Nancy",
+    "Conservatoire régional du Grand Nancy"
+   ],
+   "domains": [
+    "grand-nancy.org"
+   ],
+   "label": "conservatoire à rayonnement régional du Grand Nancy",
+   "qid": "Q2994571",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Nantes"
+   ],
+   "domains": [
+    "conservatoire.nantes.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Nantes",
+   "qid": "Q2994572",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CRR de Paris"
+   ],
+   "domains": [
+    "paris.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Paris",
+   "qid": "Q2994574",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Perpignan"
+   ],
+   "domains": [
+    "perpignanmediterranee.com"
+   ],
+   "label": "conservatoire à rayonnement régional de Perpignan",
+   "qid": "Q2994575",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Poitiers"
+   ],
+   "domains": [
+    "poitiers.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Poitiers",
+   "qid": "Q2994576",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Reims"
+   ],
+   "domains": [
+    "crr-reims.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Reims",
+   "qid": "Q2994577",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Nice",
+    "Conservatoire national à rayonnement régional Pierre-Cochereau"
+   ],
+   "domains": [
+    "crr-nice.org"
+   ],
+   "label": "conservatoire à rayonnement régional de Nice",
+   "qid": "Q2994578",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Rennes"
+   ],
+   "domains": [
+    "conservatoire.rennes.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Rennes",
+   "qid": "Q2994580",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Rouen",
+    "Conservatoire national de région de Rouen"
+   ],
+   "domains": [
+    "conservatoirederouen.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Rouen",
+   "qid": "Q2994581",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "CNR de Rueil-Malmaison",
+    "Conservatoire de Rueil-Malmaison",
+    "Conservatoire municipal de musique et de danse de Rueil-Malmaison",
+    "Conservatoire National de Région de Rueil-Malmaison",
+    "CRR de Rueil Malmaison"
+   ],
+   "domains": [
+    "crr.mairie-rueilmalmaison.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Rueil-Malmaison",
+   "qid": "Q2994582",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire à rayonnement régional de La Réunion",
+    "Conservatoire à rayonnement régional de musique, danse et art dramatique région Réunion",
+    "Conservatoire de Saint-Denis-de-La-Réunion",
+    "Conservatoire national de région de musique, danse et art dramatique de La Réunion"
+   ],
+   "domains": [
+    "conservatoire.regionreunion.com"
+   ],
+   "label": "conservatoire à rayonnement régional de Saint-Denis de La Réunion",
+   "qid": "Q2994583",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "conservatoire de Saint-Maur-des-Fossés"
+   ],
+   "domains": [
+    "saint-maur.com"
+   ],
+   "label": "conservatoire à rayonnement régional de Saint-Maur-des-Fossés",
+   "qid": "Q2994586",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Saint-Étienne"
+   ],
+   "domains": [
+    "saint-etienne.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Saint-Étienne",
+   "qid": "Q2994587",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "conservatoire à rayonnement régional (Toulouse)",
+    "conservatoire d’art dramatique de Toulouse",
+    "conservatoire national de région (Toulouse)",
+    "conservatoire national de région de musique, d'art dramatique et de danse (Toulouse)"
+   ],
+   "domains": [
+    "conservatoire.toulouse.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Toulouse",
+   "qid": "Q2994588",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Toulon",
+    "Conservatoire Toulon Provence Méditerranée",
+    "Conservatoire TPM"
+   ],
+   "domains": [
+    "conservatoire-tpm.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Toulon",
+   "qid": "Q2994589",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Tours",
+    "Conservatoire Francis-Poulenc de Tours",
+    "Conservatoire national de région de Tours",
+    "Conservatoire régional de Tours"
+   ],
+   "domains": [
+    "conservatoiretours.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Tours",
+   "qid": "Q2994590",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire de Versailles"
+   ],
+   "domains": [
+    "crr.versaillesgrandparc.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Versailles",
+   "qid": "Q2994592",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Conservatoire à rayonnement régional d'Avignon",
+    "Conservatoire à rayonnement régional Olivier Messiaen",
+    "Conservatoire d'Avignon",
+    "Conservatoire de danse du Grand Avignon",
+    "CRR du Grand Avignon",
+    "CRR GRAND AVIGNON",
+    "Conservatoire du Grand Avignon"
+   ],
+   "domains": [
+    "conservatoiregrandavignon.com"
+   ],
+   "label": "conservatoire à rayonnement régional du Grand Avignon",
+   "qid": "Q2994594",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Auditorium Conservatoire Darius-Milhaud",
+    "Conservatoire d'Aix-en-Provence",
+    "Conservatoire Darius Milhaud",
+    "Conservatoire Darius Milhaud (Aix-en-Provence)",
+    "Conservatoire Darius-Milhaud",
+    "Conservatoire Darius-Milhaud (Aix-en-Provence)"
+   ],
+   "domains": [
+    "aixenprovence.fr"
+   ],
+   "label": "conservatoire à rayonnement régional d'Aix-en-Provence",
+   "qid": "Q43058281",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "conservatoire à rayonnement régional d'Aubervilliers - La Courneuve",
+    "conservatoire d'Aubervilliers",
+    "CRR 93",
+    "CRR d'Aubervilliers",
+    "CRR d'Aubervilliers - la Courneuve"
+   ],
+   "domains": [
+    "crr93.fr"
+   ],
+   "label": "conservatoire à rayonnement régional d'Aubervilliers",
+   "qid": "Q57887",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "conservatoire à rayonnement régional Marcel Dadi",
+    "conservatoire à rayonnement régional Marcel-Dadi",
+    "conservatoire Marcel Dadi",
+    "conservatoire Marcel-Dadi",
+    "École nationale de musique de Créteil"
+   ],
+   "domains": [
+    "ville-creteil.fr"
+   ],
+   "label": "conservatoire à rayonnement régional de Créteil",
+   "qid": "Q66765088",
+   "siren": []
+  }
+ ],
+ "phrase": "Conservatoire à rayonnement régional en France",
+ "sujet_id": "g-q17487523",
+ "where": "?item wdt:P31 wd:Q17487523 ; wdt:P17 wd:Q142 ."
+}

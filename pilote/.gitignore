@@ -1,0 +1,11 @@
+config/presets_perso/
+config/reglages.yaml
+config/secrets.env
+donnees/
+outils/searxng/
+*.pyc
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.venv/
+*.verrou

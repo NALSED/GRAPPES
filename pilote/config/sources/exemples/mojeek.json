@@ -1,0 +1,19 @@
+{
+  "response": {
+    "head": {
+      "query": "club"
+    },
+    "results": [
+      {
+        "url": "https://www.example-association.example/club",
+        "title": "Association des Clubs de Lecture - Site Officiel",
+        "desc": "Fédération nationale réunissant plus de 500 clubs de lecture à travers la France. Événements littéraires, rencontres d'auteurs et ressources pour animateurs."
+      },
+      {
+        "url": "https://sports-clubs.example/annuaire",
+        "title": "Annuaire des Clubs Sportifs Amateurs - Ligue Régionale",
+        "desc": "Répertoire complet des associations sportives locales : football, tennis, natation, escalade. Inscriptions, calendriers de compétitions et actualités."
+      }
+    ]
+  }
+}

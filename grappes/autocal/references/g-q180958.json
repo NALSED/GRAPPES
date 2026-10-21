@@ -1,0 +1,1091 @@
+{
+ "classes": [
+  "Q180958"
+ ],
+ "entities": [
+  {
+   "aliases": [],
+   "domains": [
+    "med.univ-tours.fr"
+   ],
+   "label": "faculté de médecine de Tours",
+   "qid": "Q100927028",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "université de Strasbourg (1538-1970). Faculté des lettres et sciences humaines"
+   ],
+   "domains": [],
+   "label": "faculté des lettres de Strasbourg",
+   "qid": "Q101422942",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté de philosophie de l'ICP"
+   ],
+   "domains": [
+    "icp.fr"
+   ],
+   "label": "faculté de philosophie de l'Institut catholique de Paris",
+   "qid": "Q104223666",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté des lettres et sciences humaines de Bordeaux",
+    "Université de Bordeaux., Faculté de lettres",
+    "Université de Bordeaux., Faculté des lettres",
+    "Université de Bordeaux., Faculté des lettres et sciences humaines"
+   ],
+   "domains": [],
+   "label": "Faculté des lettres de Bordeaux",
+   "qid": "Q105362280",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Lettres Sorbonne Université",
+    "Paris-IV",
+    "Université Paris-Sorbonne"
+   ],
+   "domains": [
+    "lettres.sorbonne-universite.fr"
+   ],
+   "label": "Faculté des lettres de Sorbonne Université",
+   "qid": "Q106107980",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université de Lorraine Faculté de médecine"
+   ],
+   "domains": [
+    "medecine.univ-lorraine.fr"
+   ],
+   "label": "faculté de médecine de Nancy",
+   "qid": "Q106486477",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté des lettres et sciences humaines de Lyon"
+   ],
+   "domains": [],
+   "label": "faculté des lettres de Lyon",
+   "qid": "Q106857476",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "droit.u-bordeaux.fr"
+   ],
+   "label": "Faculté de droit et science politique de Bordeaux",
+   "qid": "Q107232832",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté des lettres et sciences humaines de Lille",
+    "Faculté libre des lettres et sciences humaines",
+    "FLSH",
+    "FLSH Lille"
+   ],
+   "domains": [
+    "flsh.fr"
+   ],
+   "label": "Faculté des lettres et sciences humaines de l'université catholique de Lille",
+   "qid": "Q108757155",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté des sciences de Paris-Cité"
+   ],
+   "domains": [
+    "u-paris.fr"
+   ],
+   "label": "faculté des sciences de l'université Paris-Cité",
+   "qid": "Q109024380",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Faculté des sciences et ingénierie de Sorbonne Université",
+   "qid": "Q109024382",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté de médecine (Lille)",
+    "Faculté mixte de médecine et de pharmacie",
+    "Université de Lille. Faculté de médecine",
+    "Université de Lille. Faculté de médecine et de pharmacie",
+    "Université de Lille. Faculté mixte de médecine et de pharmacie"
+   ],
+   "domains": [],
+   "label": "Faculté de médecine de Lille",
+   "qid": "Q109736742",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté de gestion, économie et sciences de Lille",
+    "faculté libre des sciences économiques et gestion",
+    "FGES"
+   ],
+   "domains": [
+    "fges.fr"
+   ],
+   "label": "faculté de gestion, économie et sciences de l'université catholique de Lille",
+   "qid": "Q110915672",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté des sciences et technologies",
+    "faculté des sciences et technologies de l'université de Lille"
+   ],
+   "domains": [
+    "sciences-technologies.univ-lille.fr"
+   ],
+   "label": "faculté des sciences et technologies de Lille",
+   "qid": "Q111208970",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Académie d'Alger. École supérieure des lettres",
+    "faculté des lettres d’Alger",
+    "faculté des lettres et sciences humaines d'Alger",
+    "faculté des lettres et sciences humaines de l'université d'Alger",
+    "université d'Alger. faculté des lettres et sciences humaines"
+   ],
+   "domains": [],
+   "label": "faculté de lettres d’Alger",
+   "qid": "Q111695520",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Faculté de droit de l'Institut catholique de Paris",
+   "qid": "Q111792756",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté des langues de Strasbourg",
+    "faculté des langues vivantes de l'université de Strasbourg",
+    "UFR de langues vivantes",
+    "université de Strasbourg, faculté des langues"
+   ],
+   "domains": [
+    "langues.unistra.fr"
+   ],
+   "label": "faculté des langues de l'université de Strasbourg",
+   "qid": "Q111986937",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FST",
+    "faculté des sciences et techniques",
+    "faculté des sciences et techniques de l'université de Haute-Alsace",
+    "FST UHA"
+   ],
+   "domains": [
+    "fst.uha.fr"
+   ],
+   "label": "faculté des sciences et techniques de Mulhouse",
+   "qid": "Q111995204",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FMA",
+    "Faculté de Marketing et d'Agrosciences"
+   ],
+   "domains": [
+    "fma.uha.fr"
+   ],
+   "label": "faculté de marketing et d'agrosciences de Colmar",
+   "qid": "Q111995883",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté Cochin Port Royal",
+    "Faculté de médecine Cochin-Port Royal",
+    "UER Cochin Port Royal",
+    "Université René Descartes (Paris). Faculté de médecine Cochin-Port Royal"
+   ],
+   "domains": [],
+   "label": "Faculté de médecine Cochin Port-Royal",
+   "qid": "Q113710339",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté de médecine de l’université Paris Descartes",
+    "faculté de médecine Paris Centre",
+    "faculté de médecine Paris-Descartes",
+    "faculté de médecine René Descartes Paris 5",
+    "Faculté Médecine Paris Descartes",
+    "UFR de médecine Paris-Descartes",
+    "unité de formation et de recherche de médecine Paris Centre",
+    "unité de formation et de recherche de médecine Paris-Descartes",
+    "unité de formation et de recherche de médecine Paris-V",
+    "Université de Paris V, Faculté de Médecine",
+    "université Paris 5, faculté de médecine",
+    "université Paris Descartes. faculté de médecine"
+   ],
+   "domains": [
+    "medecine.parisdescartes.fr",
+    "medecine.univ-paris5.fr"
+   ],
+   "label": "Faculté de Médecine Paris Descartes",
+   "qid": "Q113759620",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté d'odontologie de l'université Claude-Bernard",
+    "faculté d'odontologie de l'université Lyon 1",
+    "faculté d'odontologie de Lyon",
+    "UFR d'odontologie de Lyon"
+   ],
+   "domains": [
+    "odontologie.univ-lyon1.fr"
+   ],
+   "label": "faculté d'odontologie",
+   "qid": "Q114102608",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté de lettres de Nice",
+    "faculté de lettres et sciences humaines de Nice",
+    "faculté des lettres de Nice",
+    "faculté des lettres, arts et sciences humaines",
+    "LASH",
+    "unité de formation et de recherche lettres, arts et sciences humaines"
+   ],
+   "domains": [],
+   "label": "faculté des lettres et sciences humaines de Nice",
+   "qid": "Q115738339",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "UFR des sciences pharmaceutiques et biologiques"
+   ],
+   "domains": [
+    "pharmacie.univ-nantes.fr"
+   ],
+   "label": "Faculté de pharmacie de Nantes",
+   "qid": "Q116202378",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Institut de linguistique romane",
+   "qid": "Q120188088",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté des humanités",
+    "FHUMA"
+   ],
+   "domains": [
+    "humanites.univ-lille.fr"
+   ],
+   "label": "faculté des humanités de l'université de Lille",
+   "qid": "Q120967466",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Faculté mixte de médecine et de pharmacie de Tours",
+   "qid": "Q124150000",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "École universitaire de technologie"
+   ],
+   "domains": [
+    "eut.univ-grenoble-alpes.fr"
+   ],
+   "label": "Université Grenoble Alpes École universitaire de technologie",
+   "qid": "Q124378863",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Faculté libre de droit de Marseille",
+   "qid": "Q124812934",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "sje.univ-perp.fr"
+   ],
+   "label": "faculté de droit de Perpignan",
+   "qid": "Q124845890",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FaSEST",
+    "université de Lille -   faculté des sciences économiques, sociales et des territoires"
+   ],
+   "domains": [
+    "fasest.univ-lille.fr"
+   ],
+   "label": "faculté des sciences économiques, sociales et des territoires",
+   "qid": "Q125211721",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "LCS",
+    "Faculté des langues, cultures et sociétés de l'université de Lille",
+    "FaLCS",
+    "FLCS"
+   ],
+   "domains": [
+    "lcs.univ-lille.fr"
+   ],
+   "label": "faculté des langues, cultures et sociétés",
+   "qid": "Q125212132",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté de psychologie, des sciences de l'éducation et de la formation de l'université de Lille",
+    "PsySEF",
+    "PSYSEF"
+   ],
+   "domains": [
+    "psysef.univ-lille.fr"
+   ],
+   "label": "faculté de psychologie, des sciences de l'éducation et de la formation",
+   "qid": "Q125212201",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "IIC",
+    "Institut de l'information et de la communication"
+   ],
+   "domains": [],
+   "label": "Institut de la communication, de l'information et du document",
+   "qid": "Q125214175",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Institut des lettres de Nantes",
+    "faculté de lettres de Nantes"
+   ],
+   "domains": [
+    "lettreslangages.univ-nantes.fr"
+   ],
+   "label": "faculté des lettres de Nantes",
+   "qid": "Q128692804",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Faculté de théologie de Besançon",
+   "qid": "Q132797278",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté de pharmacie de Rennes"
+   ],
+   "domains": [
+    "pharma.univ-rennes.fr"
+   ],
+   "label": "Faculté des sciences pharmaceutiques et biologiques de Rennes",
+   "qid": "Q135394266",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "École de médecine et de pharmacie de Rennes"
+   ],
+   "domains": [],
+   "label": "Faculté mixte de médecine et de pharmacie de Rennes",
+   "qid": "Q135394285",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté de lettres d'Angers"
+   ],
+   "domains": [
+    "univ-angers.fr"
+   ],
+   "label": "faculté des lettres d'Angers",
+   "qid": "Q135876597",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "faculté des sciences de Montpellier",
+   "qid": "Q136243167",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté libre de droit de Paris"
+   ],
+   "domains": [],
+   "label": "Faculté libre de droit de l'Institut catholique de Paris",
+   "qid": "Q136485469",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté internationale pour l'enseignement du droit comparé",
+    "FIEDC",
+    "International faculty for the teaching of comparative law"
+   ],
+   "domains": [],
+   "label": "Faculté internationale de droit comparé",
+   "qid": "Q136793705",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ufr-lettres-philosophie.ube.fr"
+   ],
+   "label": "Faculté des lettres de Dijon",
+   "qid": "Q137383737",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "flsh.fr"
+   ],
+   "label": "Faculté des lettres et sciences humaines de l'Université catholique de Lille",
+   "qid": "Q137598665",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "fld-lille.fr"
+   ],
+   "label": "Faculté de droit de l'Université catholique de Lille",
+   "qid": "Q137598666",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "fmms.fr"
+   ],
+   "label": "Faculté de médecine de l'Université catholique de Lille",
+   "qid": "Q137598667",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ucly.fr"
+   ],
+   "label": "faculté de droit à l'université catholique de Lyon",
+   "qid": "Q137598709",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "sciences.univ-tours.fr"
+   ],
+   "label": "Faculté des sciences et technique",
+   "qid": "Q137845668",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université des Tanneurs",
+    "Fac Tanneurs"
+   ],
+   "domains": [
+    "lettres.univ-tours.fr"
+   ],
+   "label": "Faculté de lettres & langues de l'université de Tours",
+   "qid": "Q137845686",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "pharma.univ-tours.fr"
+   ],
+   "label": "Faculté de pharmacie de Tours",
+   "qid": "Q137846520",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université catholique de l'Ouest. Faculté de droit"
+   ],
+   "domains": [
+    "uco.fr"
+   ],
+   "label": "Faculté libre de droit d'Angers",
+   "qid": "Q137911412",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Faculté de médecine d'Avignon",
+   "qid": "Q138948737",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Université catholique de Lyon. Faculté des lettres",
+    "Faculté catholique des lettres de Lyon",
+    "faculté des lettres et civilisations"
+   ],
+   "domains": [
+    "ucly.fr"
+   ],
+   "label": "faculté des lettres de l'Université catholique de Lyon",
+   "qid": "Q140089322",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "ALLSH",
+    "faculté des lettres d'Aix",
+    "faculté des lettres et sciences humaines d'Aix"
+   ],
+   "domains": [
+    "allsh.univ-amu.fr"
+   ],
+   "label": "faculté des arts, lettres, langues et sciences humaines d'Aix-Marseille",
+   "qid": "Q16507876",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "UFR d'odontologie de Clermont-Ferrand",
+    "UFR d'odontologie, université Clermont-Auvergne"
+   ],
+   "domains": [
+    "odontologie.uca.fr"
+   ],
+   "label": "Faculté de chirurgie dentaire de Clermont-Ferrand",
+   "qid": "Q16507898",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "feg.univ-amu.fr"
+   ],
+   "label": "Faculté d'économie et de gestion d'Aix-Marseille",
+   "qid": "Q16635553",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "e-theologie.fr"
+   ],
+   "label": "département de théologie de l'université de Lorraine",
+   "qid": "Q19950921",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "chirurgie-dentaire.unistra.fr"
+   ],
+   "label": "Faculté de chirurgie dentaire de Strasbourg",
+   "qid": "Q19951022",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "UFR de droit et de sciences politiques"
+   ],
+   "domains": [
+    "ufr-droit.unicaen.fr"
+   ],
+   "label": "faculté de droit de Caen",
+   "qid": "Q20724587",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "université de Reims (1548-1793). Faculté de théologie",
+   "qid": "Q21722693",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "bâtiment de la faculté des sciences de Dijon",
+   "qid": "Q22996105",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté de droit d'Aix"
+   ],
+   "domains": [],
+   "label": "faculté de droit d'Aix-en-Provence",
+   "qid": "Q22999351",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "College de Cluny",
+    "Collège de cluny",
+    "Collège De Cluny"
+   ],
+   "domains": [],
+   "label": "collège de Cluny",
+   "qid": "Q2983747",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Paris Ouest (GH)"
+   ],
+   "domains": [
+    "hopitaux-parisouest.aphp.fr"
+   ],
+   "label": "hôpitaux universitaires Paris Ouest",
+   "qid": "Q30103341",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté de droit, de sciences politiques et de gestion de Strasbourg",
+    "faculté de droit, sciences politiques et gestion de Strasbourg"
+   ],
+   "domains": [
+    "droit.unistra.fr"
+   ],
+   "label": "faculté de droit de Strasbourg",
+   "qid": "Q3064254",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Consultissima decretorum",
+    "faculté de décret",
+    "faculté de droit de l'université de Paris",
+    "faculté de droit de la Sorbonne"
+   ],
+   "domains": [],
+   "label": "faculté de droit de Paris",
+   "qid": "Q3064259",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté de droit de Rennes",
+    "Faculté de droit de Rennes 1",
+    "faculté de droit et de science politique de l'université de Rennes 1",
+    "Faculté de droit et de science politique de Rennes"
+   ],
+   "domains": [
+    "droit.univ-rennes.fr"
+   ],
+   "label": "faculté de droit de Rennes",
+   "qid": "Q3064267",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "univ-rennes2.fr"
+   ],
+   "label": "Faculté de langues étrangères de Rennes",
+   "qid": "Q3064270",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté de lettres, langues, sciences humaines et sociales (UBS)",
+    "Faculté de Lettres, Langues, Sciences Humaines et Sociales de Bretagne-Sud"
+   ],
+   "domains": [
+    "www-facultellshs.univ-ubs.fr"
+   ],
+   "label": "Faculté de lettres, langues, sciences humaines et sociales de Bretagne-Sud",
+   "qid": "Q3064272",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté de sciences sociales et économiques",
+    "FASSE"
+   ],
+   "domains": [
+    "icp.fr"
+   ],
+   "label": "Faculté de sciences sociales, d'économie et de droit de l'Institut catholique de Paris",
+   "qid": "Q3064307",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculte de sciences economiques de Rennes 1",
+    "Faculté de sciences économiques de rennes 1",
+    "Faculté De Sciences Économiques De Rennes 1"
+   ],
+   "domains": [
+    "eco.univ-rennes1.fr"
+   ],
+   "label": "Faculté de sciences économiques de Rennes-I",
+   "qid": "Q3064308",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "theopro.unistra.fr"
+   ],
+   "label": "Faculté de théologie protestante de Strasbourg",
+   "qid": "Q3064316",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté des arts de l'Université de Paris"
+   ],
+   "domains": [],
+   "label": "Faculté des arts de Paris",
+   "qid": "Q3064321",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté des lettres et sciences humaines",
+    "faculté de lettres de Paris",
+    "faculté des lettres de l'université de Paris",
+    "faculté des lettres et sciences humaines de l'université de Paris",
+    "faculté des lettres et sciences humaines de Paris",
+    "université de Paris; faculté des lettres et sciences humaines"
+   ],
+   "domains": [],
+   "label": "faculté des lettres de Paris",
+   "qid": "Q3064325",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté de Science de Paris",
+    "Faculté des sciences de l'université de Paris",
+    "Faculte des sciences de Paris",
+    "Faculté des sciences de paris",
+    "Faculté des Sciences de Paris"
+   ],
+   "domains": [],
+   "label": "faculté des sciences de Paris",
+   "qid": "Q3064332",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Faculté des sciences de Toulouse",
+   "qid": "Q3064334",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FMM",
+    "FMMS",
+    "Faculté de médecine de l'université catholique de Lille",
+    "Faculté libre de médecine de l'Université Catholique de Lille",
+    "Faculté libre de médecine de Lille",
+    "Faculté Libre de Médecine de Lille",
+    "Université catholique de Lille. Faculté libre de médecine"
+   ],
+   "domains": [
+    "fmm-catholille.fr"
+   ],
+   "label": "Faculté de médecine, maïeutique, sciences de la santé de Lille",
+   "qid": "Q3137214",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FSJPS",
+    "Institut de criminologie de Lille"
+   ],
+   "domains": [],
+   "label": "faculté des sciences juridiques, politiques et sociales",
+   "qid": "Q3151988",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Institut lillois d'ingenierie de la sante",
+    "Institut Lillois D'ingénierie De La Santé",
+    "Institut lillois d'ingéniérie de la santé",
+    "Institut Lillois d'Ingéniérie de la Santé"
+   ],
+   "domains": [
+    "ilis.univ-lille2.fr"
+   ],
+   "label": "Institut lillois d'ingénierie de la santé",
+   "qid": "Q3152354",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "ISEO"
+   ],
+   "domains": [],
+   "label": "Institut supérieur d'études œcuméniques",
+   "qid": "Q3152551",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Institut supérieur international du parfum et de la cosmétique",
+    "Institut supérieur international du parfum et de la cosmétique et de l'aromatique alimentaire",
+    "Isipca",
+    "ISIPCA"
+   ],
+   "domains": [
+    "isipca.fr"
+   ],
+   "label": "Institut supérieur international du parfum, de la cosmétique et de l'aromatique alimentaire",
+   "qid": "Q3152629",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Europole Mer",
+    "Institut Universitaire Européen de la Mer"
+   ],
+   "domains": [
+    "www-iuem.univ-brest.fr"
+   ],
+   "label": "Institut universitaire européen de la mer",
+   "qid": "Q3152769",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SHS sorbonne",
+    "Ufr de sciences humaines et sociales sorbonne (paris descartes)",
+    "UFR de sciences humaines et sociales Sorbonne (Paris Descartes)",
+    "faculté de sciences humaines et sociales de l'Université de Paris",
+    "faculté de sciences humaines et sociales Sorbonne (Paris Descartes)"
+   ],
+   "domains": [],
+   "label": "faculté des sciences humaines et sociales de l'université Paris-Cité",
+   "qid": "Q3550822",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "faculté des lettres et sciences humaines Victor Segalen",
+   "qid": "Q38372677",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté de droit et des sciences politiques de Nantes"
+   ],
+   "domains": [
+    "droit1.univ-nantes.fr"
+   ],
+   "label": "faculté de droit de Nantes",
+   "qid": "Q53869553",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Faculté des sciences de Lyon",
+   "qid": "Q59340616",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "sciences-tech.u-pec.fr"
+   ],
+   "label": "Faculté des sciences et technologie de Créteil",
+   "qid": "Q61763565",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté des sciences juridiques de Toulouse"
+   ],
+   "domains": [
+    "tls-droit.ut-capitole.fr"
+   ],
+   "label": "faculté de droit de Toulouse",
+   "qid": "Q65920870",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté de droit et de sciences économiques de Poitiers",
+    "faculté de droit et des sciences économiques de Poitiers"
+   ],
+   "domains": [],
+   "label": "faculté de droit de Poitiers",
+   "qid": "Q65922200",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté des lettres et sciences humaines de Nancy",
+    "Université de Nancy Faculté des Lettres et des Sciences Humaines"
+   ],
+   "domains": [
+    "univ-lorraine.fr"
+   ],
+   "label": "Faculté des lettres de Nancy",
+   "qid": "Q65962820",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Faculté de droit et de sciences économiques de Bordeaux",
+    "Université de Bordeaux. Faculté de droit et des sciences économiques"
+   ],
+   "domains": [],
+   "label": "Faculté de droit de Bordeaux",
+   "qid": "Q69158721",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FDT",
+    "Faculté de théologie de Toulouse",
+    "Institut catholique de Toulouse. Faculté canonique de théologie",
+    "Institut catholique de Toulouse. Faculté de théologie"
+   ],
+   "domains": [
+    "ict-toulouse.fr"
+   ],
+   "label": "Faculté de théologie de l'Institut catholique de Toulouse",
+   "qid": "Q77860301",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Faculté des lettres de Lille",
+   "qid": "Q91228631",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté de droit de Tours",
+    "faculté de droit, d'économie et des sciences sociales"
+   ],
+   "domains": [
+    "droit.univ-tours.fr"
+   ],
+   "label": "faculté de droit de l'université de Tours",
+   "qid": "Q93421025",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "FAI",
+    "Faculté des affaires internationales de l'université du Havre",
+    "Faculté des affaires internationales du Havre",
+    "Université du Havre Faculté des affaires internationales"
+   ],
+   "domains": [
+    "fai.univ-lehavre.fr"
+   ],
+   "label": "Faculté des affaires internationales",
+   "qid": "Q93702425",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté des sciences (Marseille)",
+    "faculté des sciences d'Aix-Marseille (avant 1971)"
+   ],
+   "domains": [],
+   "label": "faculté des sciences de Marseille",
+   "qid": "Q95113817",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté des lettres d'Aix",
+    "faculté des lettres (Aix-en-Provence)",
+    "faculté des lettres d'Aix-en-Provence (1846-1971)",
+    "faculté des lettres et sciences humaines (Aix-en-Provence)",
+    "faculté des lettres et sciences humaines d'Aix-en-Provence",
+    "université d'Aix-Marseille. Faculté des lettres et sciences humaines"
+   ],
+   "domains": [],
+   "label": "faculté des lettres d'Aix-en-Provence",
+   "qid": "Q95115411",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "faculté de droit de l'université de Lyon",
+    "faculté de droit et des sciences économiques de l'université de Lyon",
+    "faculté de droit et des sciences économiques de Lyon",
+    "Université de Lyon, Faculté de droit et des sciences économiques"
+   ],
+   "domains": [],
+   "label": "faculté de droit de Lyon",
+   "qid": "Q96209609",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Faculté des sciences de Rennes",
+   "qid": "Q98539441",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "ict-toulouse.fr"
+   ],
+   "label": "faculté de droit canonique de Toulouse",
+   "qid": "Q99774734",
+   "siren": []
+  }
+ ],
+ "phrase": "Faculté en France",
+ "sujet_id": "g-q180958",
+ "where": "?item wdt:P31 wd:Q180958 ; wdt:P17 wd:Q142 ."
+}

@@ -1,0 +1,26 @@
+{
+ "results": {
+  "companies": [
+   {
+    "company": {
+     "name": "EXEMPLE HOLDINGS LTD",
+     "company_number": "12345678",
+     "jurisdiction_code": "gb",
+     "current_status": "Active",
+     "registered_address_in_full": "10 Downing Street, London SW1A 2AA, United Kingdom",
+     "opencorporates_url": "https://opencorporates.com/companies/gb/12345678"
+    }
+   },
+   {
+    "company": {
+     "name": "IMAGINAIRE TRADING LTD",
+     "company_number": "87654321",
+     "jurisdiction_code": "gb",
+     "current_status": "Active",
+     "registered_address_in_full": "25 Canada Square, Canary Wharf, London E14 5LB, United Kingdom",
+     "opencorporates_url": "https://opencorporates.com/companies/gb/87654321"
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,7 @@
+# Carte d'un preset. Ses SOURCES ne sont pas écrites ici : elles sont calculées depuis les usages que chaque source déclare.
+id: entreprises
+nom: Entreprises
+ordre: 4
+phrase: 'Entreprises : sociétés déclarées dans un registre, avec leur fonction (siège,
+  établissement, filiale, maison mère). Sert aussi à vérifier un nom.'
+usage: entreprises

@@ -1,0 +1,51 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: wikidata
+nom: Wikidata
+description: 'La base de connaissances libre de la fondation Wikimedia : organisations
+  avec leur site, leur numéro officiel et leur siège.'
+trouve: organisations de toute nature
+genres:
+- administration
+- association
+- entreprise
+- club
+- lieu
+- evenement
+pays:
+- monde
+usages:
+- organisations
+- associations
+- entreprises
+famille: api
+confiance: 0.7
+consomme:
+- sujet
+- pays
+produit:
+- nom
+- origine
+- ville
+- site
+- numero
+main: premiere
+origine: registre
+roles:
+- chercher
+- verifier
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-13'
+defaut:
+  chercher: true
+  verifier: true
+exemple_reponse: exemples/wikidata.json
+moteur:
+  registre_grappes: wikidata

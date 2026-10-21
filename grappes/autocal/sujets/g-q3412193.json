@@ -1,0 +1,16 @@
+{
+ "id": "g-q3412193",
+ "phrase": "Pôle de compétitivité en France",
+ "jeu": "test",
+ "difficulte": "facile",
+ "origine": "genere",
+ "classe": "Q3412193",
+ "r": 22,
+ "part_site": 0.955,
+ "part_siren": 0.182,
+ "notes": "pôle de compétitivité",
+ "where": "?item wdt:P31 wd:Q3412193 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q3412193"
+ ]
+}

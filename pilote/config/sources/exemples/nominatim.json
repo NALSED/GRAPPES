@@ -1,0 +1,20 @@
+[
+ {
+  "osm_type": "way",
+  "osm_id": 123456789,
+  "lat": "48.856614",
+  "lon": "2.3522219",
+  "category": "leisure",
+  "name": "Gymnase Exemple",
+  "display_name": "Gymnase Exemple, Ville-Exemple, France"
+ },
+ {
+  "osm_type": "relation",
+  "osm_id": 987654321,
+  "lat": "48.853410",
+  "lon": "2.348800",
+  "category": "boundary",
+  "name": "Ville-Exemple",
+  "display_name": "Ville-Exemple, France"
+ }
+]

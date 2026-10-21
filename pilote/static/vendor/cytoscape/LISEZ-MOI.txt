@@ -1,0 +1,4 @@
+Cytoscape.js 3.30.2 — https://js.cytoscape.org — licence MIT (voir LICENSE), aucune dépendance.
+Fichier recopié tel quel depuis le paquet publié (cytoscape@3.30.2, dist/cytoscape.min.js).
+Servi par pilote lui-même : ni npm, ni chaîne de compilation, ni réseau à l'exécution.
+Pour changer de version : remplacer ce fichier et relancer les tests de la vue Carte de Tri.

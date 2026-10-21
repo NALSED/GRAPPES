@@ -1,0 +1,16 @@
+{
+ "id": "g-q131734",
+ "phrase": "Brasserie en France",
+ "jeu": "test",
+ "difficulte": "difficile",
+ "origine": "genere",
+ "classe": "Q131734",
+ "r": 73,
+ "part_site": 0.452,
+ "part_siren": 0.123,
+ "notes": "brasserie",
+ "where": "?item wdt:P31 wd:Q131734 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q131734"
+ ]
+}

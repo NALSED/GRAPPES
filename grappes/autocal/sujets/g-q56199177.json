@@ -1,0 +1,16 @@
+{
+ "id": "g-q56199177",
+ "phrase": "Conseil régional de l'ordre des experts-comptable en France",
+ "jeu": "validation",
+ "difficulte": "moyen",
+ "origine": "genere",
+ "classe": "Q56199177",
+ "r": 23,
+ "part_site": 1.0,
+ "part_siren": 0.0,
+ "notes": "Conseil régional de l'ordre des experts-comptable",
+ "where": "?item wdt:P31 wd:Q56199177 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q56199177"
+ ]
+}

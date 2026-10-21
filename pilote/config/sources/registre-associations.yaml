@@ -1,0 +1,47 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: registre-associations
+nom: Registre des associations (France)
+description: Annuaire officiel des associations déclarées (RNA) et des entreprises
+  (SIRENE), filtré sur les associations. Gratuit, sans clé.
+trouve: clubs, associations, fédérations, œuvres caritatives déclarés
+genres:
+- association
+- club
+pays:
+- FR
+consomme:
+- sujet
+- mots_cles
+- lieu
+produit:
+- nom
+- origine
+- ville
+- numero
+usages:
+- associations
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+- verifier
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: true
+  verifier: true
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/recherche-entreprises.json
+verifie_le: '2026-10-13'
+moteur:
+  adaptateur: recherche_entreprises
+  parametres:
+    filtre: association

@@ -1,0 +1,16 @@
+# Réglages de SearXNG pour pilote (modèle ; le vrai fichier est généré avec une clé aléatoire et n'est pas suivi par git).
+use_default_settings: true
+general:
+  instance_name: "SearXNG de pilote"
+  enable_metrics: false
+server:
+  secret_key: "__CLE__"
+  bind_address: "127.0.0.1"
+  port: __PORT__
+  limiter: false          # service local, un seul utilisateur : pas de limiteur de débit (les moteurs interrogés peuvent, eux, nous limiter)
+  public_instance: false
+  image_proxy: false
+search:
+  safe_search: 0
+  autocomplete: ""
+  formats: [html, json]   # json : c'est ce que lit grappes

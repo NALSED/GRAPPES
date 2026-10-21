@@ -1,0 +1,9 @@
+# Portails de données ouvertes de type CKAN, CONTRÔLÉS (la liste des organisations répond). Un pays absent d'ici n'a pas de portail connu.
+# C'est une donnée, pas du code : corriger une adresse ou en ajouter une = modifier ce fichier.
+CA: {portail: "https://open.canada.ca/data", verifie_le: 2026-10-13}
+AU: {portail: "https://data.gov.au/data", verifie_le: 2026-10-13}
+IE: {portail: "https://data.gov.ie", verifie_le: 2026-10-13}
+DE: {portail: "https://www.govdata.de/ckan", verifie_le: 2026-10-13}
+CH: {portail: "https://ckan.opendata.swiss", verifie_le: 2026-10-13}
+# Contrôlés mais non retenus : GB (ckan.publishing.service.gov.uk répond par intermittence : erreur 502), NZ (data.govt.nz refuse les
+# programmes : protection anti-robots), US (catalog.data.gov : l'interface CKAN d'origine n'est plus offerte). À revoir.

@@ -1,0 +1,23 @@
+{
+ "resultats": [
+  {
+   "siren": "123456789",
+   "nom_entreprise": "EXEMPLE SPORTS",
+   "siege": {
+    "ville": "PARIS",
+    "code_postal": "75001"
+   },
+   "forme_juridique": "SAS"
+  },
+  {
+   "siren": "987654321",
+   "nom_entreprise": "IMAGINAIRE SERVICES",
+   "siege": {
+    "ville": "MARSEILLE",
+    "code_postal": "13001"
+   },
+   "forme_juridique": "SAS"
+  }
+ ],
+ "total": 2
+}

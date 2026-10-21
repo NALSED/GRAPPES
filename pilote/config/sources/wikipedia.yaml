@@ -1,0 +1,44 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: wikipedia
+nom: Wikipédia
+description: Articles de l'encyclopédie (leurs liens externes servent de recoupement).
+trouve: articles d'encyclopédie
+genres:
+- association
+- entreprise
+- administration
+- lieu
+- evenement
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- organisations
+main: seconde
+origine: encyclo
+famille: api
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.5
+defaut:
+  chercher: true
+  verifier: true
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+moteur:
+  prise: wikipedia
+verifie_le: '2026-10-13'
+exemple_reponse: exemples/wikipedia.json

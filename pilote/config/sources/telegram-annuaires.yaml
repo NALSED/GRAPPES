@@ -1,0 +1,49 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: telegram-annuaires
+nom: Telegram (canaux et groupes publics)
+description: Les canaux et groupes Telegram qui ont une page publique, trouvés par le méta-moteur local
+  (recherche limitée à t.me). Aucune clé, aucun compte Telegram.
+trouve: canaux et groupes Telegram publics
+genres:
+- compte
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- lieu
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+- verifier
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.2
+defaut:
+  chercher: true
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/telegram-annuaires.json
+verifie_le: '2026-10-13'
+note: 'Passe par SearXNG (127.0.0.1:8888) : source éteinte de fait si ce moteur ne répond pas. Les canaux
+  privés ne sont pas visibles. Un accès direct à Telegram (clés de l''application) viendra plus tard.'
+moteur:
+  adaptateur: telegram_annuaires
+  parametres:
+    moteur: http://127.0.0.1:8888/search
+    domaines:
+    - t.me

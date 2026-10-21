@@ -1,0 +1,16 @@
+{
+ "id": "g-q1666019",
+ "phrase": "Groupe de pression en France",
+ "jeu": "test",
+ "difficulte": "moyen",
+ "origine": "genere",
+ "classe": "Q1666019",
+ "r": 60,
+ "part_site": 0.617,
+ "part_siren": 0.15,
+ "notes": "groupe de pression",
+ "where": "?item wdt:P31 wd:Q1666019 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q1666019"
+ ]
+}

@@ -1,0 +1,67 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: mojeek
+nom: Mojeek
+description: Moteur de recherche indépendant avec son propre index (pas un revendeur de Google ou Bing). Diversifie
+  le preset Web. Clé d'API de l'utilisateur.
+trouve: pages web
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- web
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-19'
+cle: MOJEEK_API_KEY
+cout:
+  unite: requete
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+note: Éteinte tant que la clé est absente. Offre et tarif de l'API à vérifier chez le fournisseur (probablement payante).
+  Adresse et forme de réponse d'après la documentation publiée, pas encore contrôlées contre le service réel.
+exemple_reponse: exemples/mojeek.json
+moteur:
+  definition:
+    id: mojeek
+    type: http
+    public: true
+    url: https://www.mojeek.com/search
+    method: GET
+    auth:
+      type: query
+      name: api_key
+      env: MOJEEK_API_KEY
+    headers:
+      Accept: application/json
+    params:
+      q: '{mots_cles}'
+      fmt: json
+      t: '{limite}'
+    response:
+      format: json
+      items: response.results
+    fields:
+      title: title
+      url: url
+      description: desc
+      id: url
+    quota: 20
+    raison: résultat Mojeek pour « {mot_cle} »

@@ -1,0 +1,43 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: meetup
+nom: Meetup (groupes)
+description: Les groupes Meetup (clubs, associations informelles) trouvés par mot-clé. Jeton d'accès gratuit.
+trouve: groupes Meetup
+genres:
+- club
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- lieu
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+cle: MEETUP_ACCESS_TOKEN
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/meetup.json
+verifie_le: '2026-10-13'
+note: Jeton OAuth gratuit à demander à Meetup. Contrôlée sur le schéma GraphQL publié (serveur simulé),
+  pas encore contre le service réel ; Meetup réserve certaines requêtes aux comptes Pro.
+moteur:
+  adaptateur: meetup

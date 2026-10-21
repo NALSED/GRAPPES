@@ -1,0 +1,32 @@
+# Catalogue des bases officielles : Royaume-Uni. Une DONNÉE : corriger une entrée = modifier ce fichier. Taille : demandée au serveur, jamais écrite ici.
+pays: "GB"
+nom: "Royaume-Uni"
+bases:
+  - id: companies-house
+    nom: "Companies House"
+    contenu: "Sociétés immatriculées au Royaume-Uni (clé gratuite)."
+    usage: "entreprises"
+    acces: "api"
+    licence: "à vérifier"
+    url: "https://developer.company-information.service.gov.uk/"
+    source: "companies-house"
+    verifie_le: 2026-10-18
+  - id: charity-commission
+    nom: "Charity Commission (Angleterre et pays de Galles)"
+    contenu: "Registre des organisations caritatives."
+    usage: "associations"
+    acces: "site"
+    licence: "à vérifier"
+    url: "https://register-of-charities.charitycommission.gov.uk/"
+    source: "charity-commission"
+    verifie_le: 2026-10-18
+  - id: osm-geofabrik
+    nom: "OpenStreetMap (extrait Geofabrik)"
+    contenu: "Lieux cartographiés (stades, salles, centres, locaux) du pays, mis à jour chaque jour."
+    usage: "lieux"
+    acces: "fichier"
+    licence: "ODbL"
+    url: "https://download.geofabrik.de/europe/great-britain.html"
+    telechargement: "https://download.geofabrik.de/europe/great-britain-latest.osm.pbf"
+    source: "osm-overpass"
+    verifie_le: 2026-10-18

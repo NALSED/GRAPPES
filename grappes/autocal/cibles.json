@@ -1,0 +1,24 @@
+{
+ "fige_le": "2026-10-13, avant toute mesure de D69 (vérificateur de type, amorces, prises sur la validation)",
+ "regle": "Jugée sur la SEULE phrase du sujet, jamais sur un résultat. Cible A (registre officiel) : chaque membre de la catégorie désignée doit, pour exister en droit, être inscrit à un registre public français (société : RCS/SIRENE ; association : RNA) ou tenir son statut d'une autorité publique (ordre professionnel, label, classement officiel), ou la phrase restreint la catégorie à un statut encadré (« professionnels », « du CAC 40 »). Cible B (pas de liste faisant autorité) : une partie notable de la catégorie peut exister sans inscription (acteurs informels), ou les membres n'ont pas de personnalité juridique propre (événements, services, composantes, lieux), ou la catégorie est ouverte. Les témoins (R = 0) n'ont pas de cible : aucune R-précision n'y est définie.",
+ "cibles": {"A": "R-précision >= 0,90", "B": "R-précision de 0,30 à 0,40 (état de l'art mondial)"},
+ "sujets": {
+  "dev": {
+   "handball-pro": "A", "festivals-elec": "B", "g-q212805": "B", "g-q131186": "B", "g-q742421": "B",
+   "g-q180958": "B", "temoin-licornes": "temoin"
+  },
+  "validation": {
+   "cac40": "A", "g-q654502": "A", "g-q2190251": "B", "g-q56199177": "A", "supporters-foot": "B",
+   "g-q43009164": "B", "temoin-dragons": "temoin"
+  },
+  "test": {
+   "g-q3412193": "A", "g-q17487523": "A", "g-q856234": "B", "g-q1666019": "B", "g-q131734": "A",
+   "g-q2088357": "B", "temoin-sorciers": "temoin"
+  }
+ },
+ "notes": {
+  "g-q43009164": "« Club de rugby à XV » sans restriction de statut : des clubs informels existent, donc B ; à l'inverse « clubs de handball professionnels » est restreint à un statut encadré, donc A.",
+  "g-q131734": "« Brasserie » : phrase ambiguë (D68, chantier B) ; lue comme entreprise, donc A. Sujet du jeu test brûlé : classé pour mémoire, jamais mesuré ici.",
+  "test": "Le jeu test est brûlé (D67) : sa classification est consignée pour une future certification, aucune mesure n'est faite dessus."
+ }
+}

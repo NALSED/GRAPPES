@@ -1,0 +1,8 @@
+# Carte d'un preset. Ses SOURCES ne sont pas écrites ici : elles sont calculées depuis les usages que chaque source déclare.
+id: associations
+nom: Associations
+ordre: 3
+phrase: 'Associations : clubs, associations, fédérations et œuvres caritatives déclarées
+  dans un registre. Pour les groupes informels, cocher aussi Web, Réseaux sociaux
+  ou Lieux.'
+usage: associations

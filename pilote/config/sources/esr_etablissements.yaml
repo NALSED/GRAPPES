@@ -1,0 +1,40 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: esr_etablissements
+nom: Établissements d'enseignement supérieur (France)
+description: Principaux établissements d'enseignement supérieur et de recherche.
+trouve: universités, écoles, instituts
+genres:
+- administration
+pays:
+- FR
+consomme:
+- sujet
+produit:
+- nom
+- ville
+- site
+usages:
+- organisations
+main: premiere
+origine: registre
+famille: api
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: true
+  verifier: true
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+moteur:
+  prise: esr_etablissements
+verifie_le: '2026-10-13'
+exemple_reponse: exemples/esr_etablissements.json

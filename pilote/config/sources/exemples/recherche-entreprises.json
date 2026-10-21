@@ -1,0 +1,32 @@
+{
+ "results": [
+  {
+   "siren": "000000001",
+   "nom_complet": "CLUB EXEMPLE DE HANDBALL",
+   "nom_raison_sociale": "CLUB EXEMPLE DE HANDBALL",
+   "siege": {
+    "libelle_commune": "VILLEEXEMPLE",
+    "latitude": "45.0",
+    "longitude": "5.0"
+   },
+   "complements": {
+    "est_association": true,
+    "identifiant_association": "W000000001"
+   }
+  },
+  {
+   "siren": "000000002",
+   "nom_complet": "SOCIETE IMAGINAIRE DE SPORT",
+   "siege": {
+    "libelle_commune": "BOURGIMAGINAIRE"
+   },
+   "complements": {
+    "est_association": false
+   }
+  }
+ ],
+ "total_results": 2,
+ "page": 1,
+ "per_page": 25,
+ "total_pages": 1
+}

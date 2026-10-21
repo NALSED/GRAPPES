@@ -1,0 +1,62 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: companies-house
+nom: Companies House (Royaume-Uni)
+description: Registre officiel des sociétés du Royaume-Uni (numéro, ville, date de création). Clé gratuite du portail
+  des développeurs.
+trouve: sociétés enregistrées au Royaume-Uni
+genres:
+- entreprise
+pays:
+- GB
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+- numero
+- ville
+usages:
+- entreprises
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+- verifier
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-19'
+cle: COMPANIES_HOUSE_API_KEY
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+note: Proposée quand le pays choisi est le Royaume-Uni. Éteinte tant que la clé est absente. La clé s'envoie comme identifiant
+  de connexion (mot de passe vide). Forme de réponse d'après la documentation publiée, pas encore contrôlée contre le service réel.
+exemple_reponse: exemples/companies-house.json
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://api.company-information.service.gov.uk/search/companies
+    methode: GET
+    params:
+      q: '{quoi}'
+      items_per_page: '{limite}'
+    format: json
+    liste: items
+    champs:
+      nom: title
+      numero: company_number
+      ville: address.locality
+    auth:
+      type: basic
+    genre: entreprise
+    pays: GB
+    origine_texte: Companies House (registre des sociétés du Royaume-Uni)

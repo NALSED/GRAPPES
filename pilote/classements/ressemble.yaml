@@ -1,0 +1,4 @@
+nom: Les noms qui se ressemblent
+grouper_par: [ressemblance]
+ordre_paquets: solidite
+ordre_noms: alphabetique

@@ -1,0 +1,286 @@
+{
+ "classes": [
+  "Q654502"
+ ],
+ "entities": [
+  {
+   "aliases": [
+    "PFI"
+   ],
+   "domains": [
+    "phoenixintnl.com"
+   ],
+   "label": "Phoenix France Infrastructures",
+   "qid": "Q124654474",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Cap Sens",
+    "CAPSENS"
+   ],
+   "domains": [
+    "capsens.eu"
+   ],
+   "label": "CapSens",
+   "qid": "Q131607579",
+   "siren": [
+    "798709044"
+   ]
+  },
+  {
+   "aliases": [
+    "Emaging",
+    "E’maging Computer France"
+   ],
+   "domains": [
+    "emaging.fr"
+   ],
+   "label": "E'Maging Computer France",
+   "qid": "Q134644083",
+   "siren": [
+    "485077010"
+   ]
+  },
+  {
+   "aliases": [
+    "Strego",
+    "Baker Tilly Strego",
+    "Baker Tilly FR",
+    "Baker Tilly network – France",
+    "Cabinet Baker Tilly",
+    "Groupe Baker Tilly France"
+   ],
+   "domains": [
+    "bakertilly.fr"
+   ],
+   "label": "Baker Tilly France",
+   "qid": "Q135189065",
+   "siren": [
+    "852869304"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Établissements Catteau",
+   "qid": "Q135206610",
+   "siren": [
+    "576280101"
+   ]
+  },
+  {
+   "aliases": [
+    "agrizone.net",
+    "agri zone",
+    "agrizone france",
+    "agz"
+   ],
+   "domains": [
+    "agrizone.net"
+   ],
+   "label": "Agrizone",
+   "qid": "Q136039451",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Samsic",
+    "Samsic RH"
+   ],
+   "domains": [
+    "samsic-emploi.fr"
+   ],
+   "label": "Samsic Emploi",
+   "qid": "Q136431282",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [],
+   "label": "Fotomat SAS",
+   "qid": "Q137823998",
+   "siren": []
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "partners-finances.fr"
+   ],
+   "label": "Partners Finances",
+   "qid": "Q138527250",
+   "siren": [
+    "404681496"
+   ]
+  },
+  {
+   "aliases": [
+    "Nolime"
+   ],
+   "domains": [
+    "nolime.fr"
+   ],
+   "label": "Nolimé",
+   "qid": "Q138788155",
+   "siren": [
+    "933305575"
+   ]
+  },
+  {
+   "aliases": [
+    "Chems Academy Microblading",
+    "M.P. FORMATIONS"
+   ],
+   "domains": [
+    "formations-microblading.fr"
+   ],
+   "label": "Chems Academy",
+   "qid": "Q139555613",
+   "siren": [
+    "910333350"
+   ]
+  },
+  {
+   "aliases": [
+    "AMTT",
+    "AUTOAVANTAGES",
+    "CARCLIC",
+    "Club Auto AGPM",
+    "Club Auto AREAS",
+    "Club Auto COVEA",
+    "Club Auto Direct Assurances",
+    "Club Auto GMF",
+    "Club Auto MAAF",
+    "Club Auto MACSF",
+    "Club Auto MAIF",
+    "Club Auto MMA",
+    "COMPARAUTO",
+    "TIGRE BLANC AUTO"
+   ],
+   "domains": [
+    "club-auto.com"
+   ],
+   "label": "Club-Auto",
+   "qid": "Q139559500",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Swap Credit",
+    "Swap Crédit",
+    "SWAP Crédit",
+    "SWAP CRÉDIT",
+    "Swap Immobilier"
+   ],
+   "domains": [
+    "swap-credit.fr"
+   ],
+   "label": "SWAP IMMOBILIER",
+   "qid": "Q139659655",
+   "siren": [
+    "884229923"
+   ]
+  },
+  {
+   "aliases": [
+    "C-RÉDIT, C-RÉDIT SAS, c-redit, C-rédit,"
+   ],
+   "domains": [
+    "c-redit.fr"
+   ],
+   "label": "C-REDIT",
+   "qid": "Q139781614",
+   "siren": [
+    "985071976"
+   ]
+  },
+  {
+   "aliases": [
+    "AfervescenceSAS Afervescence Consulting AFERVESCENCE"
+   ],
+   "domains": [
+    "afervescence.com"
+   ],
+   "label": "Afervescence",
+   "qid": "Q139831763",
+   "siren": [
+    "900617622"
+   ]
+  },
+  {
+   "aliases": [],
+   "domains": [
+    "skadi-bain-nordique.com"
+   ],
+   "label": "SKADI",
+   "qid": "Q139960865",
+   "siren": [
+    "989157052"
+   ]
+  },
+  {
+   "aliases": [
+    "MAIDEO",
+    "Maideo Services",
+    "maideo.fr"
+   ],
+   "domains": [
+    "maideo.fr"
+   ],
+   "label": "Maideo",
+   "qid": "Q140031233",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "SAS MOTRAVA"
+   ],
+   "domains": [
+    "motrava.fr"
+   ],
+   "label": "Motrava",
+   "qid": "Q140234780",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Alter Ego Biotech SAS"
+   ],
+   "domains": [
+    "alterego-biotech.com"
+   ],
+   "label": "Alter Ego Biotech",
+   "qid": "Q141396502",
+   "siren": [
+    "912650793"
+   ]
+  },
+  {
+   "aliases": [
+    "SmartAgenda"
+   ],
+   "domains": [
+    "go.smartagenda.fr"
+   ],
+   "label": "Smartconcept",
+   "qid": "Q141521807",
+   "siren": []
+  },
+  {
+   "aliases": [
+    "Euromusique-MCM"
+   ],
+   "domains": [
+    "mcm.net"
+   ],
+   "label": "Groupe MCM",
+   "qid": "Q3117482",
+   "siren": [
+    "350787594"
+   ]
+  }
+ ],
+ "phrase": "Société par actions simplifiée en France",
+ "sujet_id": "g-q654502",
+ "where": "?item wdt:P31 wd:Q654502 ; wdt:P17 wd:Q142 ."
+}

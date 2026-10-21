@@ -1,0 +1,16 @@
+{
+ "id": "g-q2190251",
+ "phrase": "Centre des arts en France",
+ "jeu": "validation",
+ "difficulte": "moyen",
+ "origine": "genere",
+ "classe": "Q2190251",
+ "r": 90,
+ "part_site": 0.844,
+ "part_siren": 0.022,
+ "notes": "centre des arts",
+ "where": "?item wdt:P31 wd:Q2190251 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q2190251"
+ ]
+}

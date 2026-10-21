@@ -1,0 +1,16 @@
+{
+ "id": "g-q654502",
+ "phrase": "Société par actions simplifiée en France",
+ "jeu": "validation",
+ "difficulte": "facile",
+ "origine": "genere",
+ "classe": "Q654502",
+ "r": 22,
+ "part_site": 0.909,
+ "part_siren": 0.636,
+ "notes": "société par actions simplifiée",
+ "where": "?item wdt:P31 wd:Q654502 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q654502"
+ ]
+}

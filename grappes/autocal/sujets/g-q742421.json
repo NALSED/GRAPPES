@@ -1,0 +1,16 @@
+{
+ "id": "g-q742421",
+ "phrase": "Troupe théâtrale en France",
+ "jeu": "dev",
+ "difficulte": "difficile",
+ "origine": "genere",
+ "classe": "Q742421",
+ "r": 145,
+ "part_site": 0.255,
+ "part_siren": 0.069,
+ "notes": "troupe théâtrale",
+ "where": "?item wdt:P31 wd:Q742421 ; wdt:P17 wd:Q142 .",
+ "classes_ok": [
+  "Q742421"
+ ]
+}

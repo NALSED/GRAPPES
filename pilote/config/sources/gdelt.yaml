@@ -1,0 +1,76 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: gdelt
+nom: GDELT (presse mondiale)
+description: 'Articles de presse du monde entier, en plus de 100 langues, depuis 1979 : titres, journaux
+  et dates par mot-clé. Gratuit, y compris pour un usage commercial, à condition de citer le GDELT Project.'
+trouve: acteurs cités dans la presse mondiale
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- presse
+main: seconde
+origine: presse
+famille: api
+roles:
+- chercher
+- verifier
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: true
+  verifier: false
+attribution:
+  texte: 'Données de presse : GDELT Project'
+  url: https://www.gdeltproject.org
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/gdelt.json
+verifie_le: '2026-10-13'
+note: 'Obligation de la licence GDELT : citer le GDELT Project et mettre un lien vers gdeltproject.org
+  (rappelé dans les sorties et le README). Limite du service : un appel toutes les 5 secondes, respectée
+  par la source. Seuls les titres sont lus (pas le texte des articles).'
+moteur:
+  definition:
+    id: gdelt
+    type: http
+    public: true
+    url: https://api.gdeltproject.org/api/v2/doc/doc
+    method: GET
+    delai_entre_appels_s: 5.5
+    limite_resultats: 50
+    headers:
+      User-Agent: grappes-collecte/1 (outil libre de recherche d'acteurs)
+    params:
+      query: '{mots_cles}'
+      mode: artlist
+      format: json
+      maxrecords: '{limite}'
+      sort: datedesc
+    response:
+      format: json
+      items: articles
+    fields:
+      title: title
+      url: url
+      date: seendate
+      id: url
+    observation:
+      ecosysteme: presse
+      source: domain
+      nom: domain
+    quota: 4
+    raison: article de presse GDELT pour « {mot_cle} »

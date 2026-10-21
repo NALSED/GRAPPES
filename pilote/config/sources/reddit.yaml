@@ -1,0 +1,46 @@
+# Déclaration d'une source (fiche 01). Les CHOIX de l'utilisateur sont dans reglages.yaml, jamais ici.
+id: reddit
+nom: Reddit (communautés)
+description: 'Les communautés (subreddits) trouvées par mot-clé. Clé gratuite : une application Reddit
+  (identifiant et secret).'
+trouve: communautés Reddit
+genres:
+- compte
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- lieu
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+cle:
+- REDDIT_CLIENT_ID
+- REDDIT_CLIENT_SECRET
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.2
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/reddit.json
+verifie_le: '2026-10-13'
+note: Reddit refuse l'accès sans clé (constaté). Clés à créer sur reddit.com/prefs/apps. Contrôlée sur
+  serveur simulé, pas encore contre le service réel.
+moteur:
+  adaptateur: reddit
