@@ -34,7 +34,10 @@ def remplir(modele: Any, valeurs: dict[str, Any]) -> Any:
 def _lire(it: Any, chemin: str) -> Any:
     """Valeur d'un champ, avec un chemin pointé pour les champs imbriqués (« location.lat »)."""
     for p in chemin.split("."):
-        it = it.get(p) if isinstance(it, dict) else None
+        if isinstance(it, list):  # « names.0.name » : le premier élément d'une liste
+            it = it[int(p)] if p.isdigit() and int(p) < len(it) else None
+        else:
+            it = it.get(p) if isinstance(it, dict) else None
     return it
 
 

@@ -1,0 +1,58 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: acnc
+nom: ACNC Charity Register (Australie)
+description: Registre australien des organismes de bienfaisance (ACNC), via data.gov.au.
+  Sans clé.
+trouve: organismes de bienfaisance australiens
+genres:
+- association
+pays:
+- AU
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- associations
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/acnc.json
+verifie_le: '2026-10-26'
+note: Réponse réelle contrôlée le 26/10/2026 (ressource eb1e6be4-…).
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://data.gov.au/data/api/3/action/datastore_search
+    methode: GET
+    params:
+      resource_id: eb1e6be4-5b13-4feb-b28e-388bf7c26f93
+      q: '{quoi}'
+      limit: '{limite}'
+    format: json
+    liste: result.records
+    champs:
+      nom: Charity_Legal_Name
+      numero: ABN
+      ville: Town_City
+      site: Charity_Website
+    genre: association
+    pays: AU
+    origine_texte: ACNC (registre australien)

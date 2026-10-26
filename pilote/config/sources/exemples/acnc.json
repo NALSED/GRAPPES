@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "result": {
+    "records": [
+      {
+        "ABN": "94558218260",
+        "Charity_Legal_Name": "The Trustee For The British Red Cross Bush Nursing",
+        "Town_City": "Melbourne",
+        "Charity_Website": null
+      },
+      {
+        "ABN": "50169561394",
+        "Charity_Legal_Name": "Australian Red Cross Society",
+        "Town_City": "Melbourne",
+        "Charity_Website": "redcross.org.au"
+      }
+    ]
+  }
+}

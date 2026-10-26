@@ -1,0 +1,56 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: prh-finlande
+nom: Finlande — PRH (registre du commerce)
+description: Registre des entreprises finlandaises (office des brevets et de l'enregistrement,
+  PRH). Sans clé.
+trouve: entreprises enregistrées en Finlande
+genres:
+- entreprise
+pays:
+- FI
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- entreprises
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/prh-finlande.json
+verifie_le: '2026-10-26'
+note: Réponse réelle contrôlée le 26/10/2026. Le nom lu est le premier de la liste
+  des noms de l'entreprise.
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://avoindata.prh.fi/opendata-ytj-api/v3/companies
+    methode: GET
+    params:
+      name: '{quoi}'
+      maxResults: '{limite}'
+    format: json
+    liste: companies
+    champs:
+      nom: names.0.name
+      numero: businessId.value
+    genre: entreprise
+    pays: FI
+    origine_texte: PRH (registre du commerce finlandais)

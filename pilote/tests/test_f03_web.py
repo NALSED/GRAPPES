@@ -10,7 +10,7 @@ from fastapi.testclient import TestClient
 from pilote.app import creer_app
 from pilote.sources import charger_sources
 
-SOURCES_WEB = {"searxng", "tavily", "brave", "linkup", "exa", "marginalia", "mojeek", "wayback"}
+SOURCES_WEB = {"searxng", "tavily", "brave", "linkup", "exa", "marginalia", "mojeek", "wayback", "serper", "firecrawl"}  # serper et firecrawl : spécification 17, 26/10/2026
 
 
 def declarations_web(cfg):
@@ -75,8 +75,8 @@ def test_chaque_source_web_declare_main_cout_pays_et_usage(cfg):
 
 def test_les_autres_sources_citees_dans_la_fiche_ne_sont_pas_la(cfg):
     ids = set(charger_sources(cfg)[0])
-    for exclu in ("scrapingbee", "scraperapi", "zenrows", "bing", "serper", "google_custom_search"):
-        assert exclu not in ids  # fiche 03, « non retenu »
+    for exclu in ("scrapingbee", "scraperapi", "zenrows", "bing", "google_custom_search"):
+        assert exclu not in ids  # fiche 03, « non retenu » (Serper en est sorti le 26/10/2026 : spécification 17, F23-3)
 
 
 def test_les_prises_payantes_se_lisent_hors_ligne(cfg):

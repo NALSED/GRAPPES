@@ -1,0 +1,23 @@
+{
+  "status": "OK",
+  "response": {
+    "docs": [
+      {
+        "abstract": "A Colorado Democrat turned Republican, he was the only Native American during three terms in the House and 12 years in the Senate. He was also a judo expert and an Olympian.",
+        "web_url": "https://www.nytimes.com/2025/12/30/us/politics/ben-nighthorse-campbell-dead.html",
+        "headline": {
+          "main": "Ben Nighthorse Campbell, Native American Senator, Dies at 92"
+        },
+        "pub_date": "2025-12-31T02:20:05Z"
+      },
+      {
+        "abstract": "While some people slow down as they get older, or just try to maintain, these athletes went looking for a challenge in Brazilian jiu-jitsu.",
+        "web_url": "https://www.nytimes.com/2026/10/16/well/longevity-jiu-jitsu.html",
+        "headline": {
+          "main": "Fighting Father Time, Hand to Hand"
+        },
+        "pub_date": "2026-10-16T09:01:30Z"
+      }
+    ]
+  }
+}

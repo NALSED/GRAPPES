@@ -1,0 +1,69 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: guardian
+nom: The Guardian (Open Platform)
+description: Articles du Guardian par mot-clé. Clé gratuite de développeur.
+trouve: articles de presse britanniques
+genres:
+- page
+pays:
+- GB
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- presse
+main: seconde
+origine: presse
+famille: api
+roles:
+- chercher
+- verifier
+cle: GUARDIAN_API_KEY
+cout:
+  unite: requête
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/guardian.json
+verifie_le: '2026-10-26'
+note: Clé gratuite (500 requêtes par jour). Réponse réelle contrôlée le 26/10/2026.
+moteur:
+  definition:
+    id: guardian
+    type: http
+    public: true
+    url: https://content.guardianapis.com/search
+    method: GET
+    auth:
+      type: query
+      name: api-key
+      env: GUARDIAN_API_KEY
+    params:
+      q: '{mots_cles}'
+      page-size: '{limite}'
+    response:
+      format: json
+      items: response.results
+    fields:
+      title: webTitle
+      url: webUrl
+      date: webPublicationDate
+      id: webUrl
+    observation:
+      ecosysteme: presse
+      source:
+        default: theguardian.com
+      nom:
+        default: The Guardian
+    quota: 10
+    raison: article du Guardian pour « {mot_cle} »

@@ -1,0 +1,62 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: nz-charities
+nom: Charities Register (Nouvelle-Zélande)
+description: Registre officiel des organismes de bienfaisance de Nouvelle-Zélande
+  (OData). Sans clé.
+trouve: organismes de bienfaisance néo-zélandais
+genres:
+- association
+pays:
+- NZ
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- associations
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/nz-charities.json
+verifie_le: '2026-10-26'
+note: 'Réponse réelle contrôlée le 26/10/2026. Seuls nom, numéro, site et ville sont
+  demandés ($select) : le registre contient aussi des coordonnées de personnes, que
+  pilote ne demande ni ne garde (règle 8). Une apostrophe dans la saisie fait refuser
+  la requête par le service.'
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://www.odata.charities.govt.nz/Organisations
+    methode: GET
+    params:
+      $filter: substringof('{quoi}',Name)
+      $top: '{limite}'
+      $format: json
+      $select: Name,CharityRegistrationNumber,WebSiteURL,PostalAddressCity
+    format: json
+    liste: d
+    champs:
+      nom: Name
+      numero: CharityRegistrationNumber
+      site: WebSiteURL
+      ville: PostalAddressCity
+    genre: association
+    pays: NZ
+    origine_texte: Charities Register (Nouvelle-Zélande)

@@ -30,6 +30,9 @@ def main(dossier: str) -> int:
     t0 = time.time()
     arret_fichier = Path("ARRET")
     appels_max = int(spec["limites"]["appels"])
+    # Appels gardés pour les sources interrogées par adaptateur ou programme, qui passent après la collecte : la collecte s'arrête plus tôt, de
+    # sorte qu'une source explicitement choisie ne se fasse jamais manger son appel par la récupération d'une page web.
+    reserve = min(int(spec.get("reserve_sources") or 0), max(0, appels_max - 1))
     temps_max = float(spec["limites"]["temps_s"]) if spec["limites"].get("temps_s") else None
     resultat = {"statut": "erreur", "arret": "", "message": ""}
 
@@ -53,24 +56,28 @@ def main(dossier: str) -> int:
                 pause["depuis"] = None
             return pause["total"] + (time.time() - pause["depuis"] if pause["depuis"] is not None else 0.0)
 
-    def raison_d_arret() -> str:
+    def raison_d_arret(marge: int = 0) -> str:
         if arret_fichier.exists():
             return "demande"
         if temps_max is not None and time.time() - t0 - temps_en_pause() > temps_max:
             return "temps"
-        if appels_faits() >= appels_max:
+        if appels_faits() >= appels_max - marge:
             return "appels"
         return ""
 
-    def doit_s_arreter() -> bool:
+    def doit_s_arreter(marge: int = 0) -> bool:
         while pause_fichier.exists() and not arret_fichier.exists():  # pause demandée : on attend ici, sans rien perdre
             temps_en_pause()
             time.sleep(0.3)
         temps_en_pause()
-        r = raison_d_arret()
+        r = raison_d_arret(marge)
         if r:
-            resultat["arret"] = resultat["arret"] or r
+            resultat["arret"] = resultat["arret"] or (r if not marge else raison_d_arret() or "")
         return bool(r)
+
+    def arret_collecte() -> bool:
+        """Arrêt de la COLLECTE de grappes : elle laisse la réserve d'appels aux sources qui passent après elle."""
+        return doit_s_arreter(reserve)
 
     try:
         from grappes import vraisemblance as vr
@@ -94,6 +101,9 @@ def main(dossier: str) -> int:
         from grappes.storage.db import Database
 
         config = Path("config")
+        from grappes.env import load_secrets
+
+        load_secrets(config / "secrets.env")  # les clés des sources UTILISÉES (copie écrite par pilote) : les prises web les lisent dans l'environnement, comme en ligne de commande
         auto = load_autonomy(config)
         if not auto.autonome:
             resultat.update(statut="simulation", message="`autonome` est faux dans la configuration de grappes : aucun appel réel.")
@@ -108,8 +118,8 @@ def main(dossier: str) -> int:
             cfg = _ajouter_mots(cfg, config, spec["mots_a_inclure"], auto.amorcage_poids)
         fetcher = PageFetcher(auto, Journal(scfg.journal))
         budget = replace(auto, requetes_par_cycle=max(auto.requetes_par_cycle - utilises, 0))
-        collect(db, cfg, scfg, budget, fetcher, execute=True, should_stop=doit_s_arreter)
-        if not doit_s_arreter():
+        collect(db, cfg, scfg, budget, fetcher, execute=True, should_stop=arret_collecte)
+        if not arret_collecte():
             avancement.signaler("etape", etape="verification")
             _update_fiabilite(db, cfg, scfg, None, __import__("datetime").datetime.now(__import__("datetime").UTC))
         else:
@@ -119,7 +129,7 @@ def main(dossier: str) -> int:
         ctx = charger(None, cfg, db)
         phrase = cfg.grappes[0].subject
         if cc.registres:
-            http = _http_borne(Http, doit_s_arreter)(Path("donnees/decouverte_cache"), delai_s=1.0, ttl_jours=cc.cache_jours)
+            http = _http_borne(Http, arret_collecte)(Path("donnees/decouverte_cache"), delai_s=1.0, ttl_jours=cc.cache_jours)
             from grappes.decouverte.client import DecouverteError
 
             for source in cc.registres:  # une source à la fois : si la limite d'appels tombe au milieu de l'une, les autres restent
@@ -127,7 +137,7 @@ def main(dossier: str) -> int:
                     ctx.decouverts += decouvrir(phrase, http, DecouverteConfig(sources=(source,), naf=str(config / "naf_rev2.csv"), dossier_sources=str(config / "recherche")))
                     avancement.signaler("source_ok", prise=source)
                 except DecouverteError as exc:
-                    if not doit_s_arreter():  # arrêt, temps ou appels : pas une panne de la source
+                    if not arret_collecte():  # arrêt, temps ou appels : pas une panne de la source
                         avancement.signaler("source_echec", prise=source, raison=str(exc)[:200] or "la source n'a pas répondu")
                 except Exception as exc:  # noqa: BLE001 - une source de noms qui plante n'arrête pas les autres
                     avancement.signaler("source_echec", prise=source, raison=f"défaut inattendu ({type(exc).__name__})")
@@ -207,8 +217,12 @@ def main(dossier: str) -> int:
                 raise sortie["exc"]
             return sortie["noms"], ""
 
-        for source, executer_ in executions:
+        for n, (source, executer_) in enumerate(executions):
             if doit_s_arreter():
+                # une source choisie qui n'est PAS appelée doit être dite : sans cela, « n sources sur n ont répondu » comptait
+                # des sources jamais interrogées, et leur silence ressemblait à une absence de résultat.
+                for reste, _ in executions[n:]:
+                    avancement.signaler("source_echec", prise=reste, raison=f"non appelée : {resultat['arret'] or 'limite'} atteint avant son tour")
                 break
             avancement.signaler("prise_debut", prise=source)
             raison = ""

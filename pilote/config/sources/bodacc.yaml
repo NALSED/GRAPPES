@@ -1,0 +1,63 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: bodacc
+nom: BODACC (annonces légales, France)
+description: 'Bulletin officiel des annonces civiles et commerciales : créations,
+  modifications, procédures collectives, radiations. Vérifie qu''une entreprise trouvée
+  par ailleurs y figure, sur son nom EXACT. Sans clé.'
+trouve: entreprises citées dans une annonce légale
+genres:
+- entreprise
+pays:
+- FR
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- entreprises
+main: premiere
+origine: registre
+famille: api
+roles:
+- verifier
+verifie_sur: nom
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/bodacc.json
+verifie_le: '2026-10-26'
+note: 'Réponse réelle contrôlée le 26/10/2026. Ne confirme que si le nom rendu est
+  identique (forme juridique, casse, accents mis à part). La famille de l''annonce
+  n''est pas encore lue : une procédure collective n''est pas encore signalée comme
+  alerte.'
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://bodacc-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/annonces-commerciales/records
+    methode: GET
+    params:
+      where: lower(commercant)=lower("{quoi}")
+      limit: '20'
+      select: id,commercant,ville,familleavis_lib
+    format: json
+    liste: results
+    champs:
+      nom: commercant
+      ville: ville
+      numero: id
+    genre: entreprise
+    pays: FR
+    origine_texte: BODACC (annonces légales)
+    correspondance_exacte: true

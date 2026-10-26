@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Grenoble Ecole de Management",
+    "domains": [
+      "grenoble-em.com",
+      "esc-grenoble.fr"
+    ],
+    "country": "France"
+  },
+  {
+    "name": "Université Grenoble Alpes",
+    "domains": [
+      "u-grenoble3.fr",
+      "univ-grenoble-alpes.fr",
+      "ujf-grenoble.fr"
+    ],
+    "country": "France"
+  }
+]

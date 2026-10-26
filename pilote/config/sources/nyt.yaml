@@ -1,0 +1,70 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: nyt
+nom: The New York Times (Article Search)
+description: Articles du New York Times par mot-clé. Clé gratuite de développeur.
+trouve: articles de presse américains
+genres:
+- page
+pays:
+- US
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- presse
+main: seconde
+origine: presse
+famille: api
+roles:
+- chercher
+- verifier
+cle: NYT_API_KEY
+cout:
+  unite: requête
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/nyt.json
+verifie_le: '2026-10-26'
+note: Clé gratuite (500 requêtes par jour, 5 par minute). Réponse réelle contrôlée
+  le 26/10/2026.
+moteur:
+  definition:
+    id: nyt
+    type: http
+    public: true
+    url: https://api.nytimes.com/svc/search/v2/articlesearch.json
+    method: GET
+    auth:
+      type: query
+      name: api-key
+      env: NYT_API_KEY
+    params:
+      q: '{mots_cles}'
+    response:
+      format: json
+      items: response.docs
+    fields:
+      title: headline.main
+      url: web_url
+      description: abstract
+      date: pub_date
+      id: web_url
+    observation:
+      ecosysteme: presse
+      source:
+        default: nytimes.com
+      nom:
+        default: The New York Times
+    quota: 10
+    raison: article du NYT pour « {mot_cle} »

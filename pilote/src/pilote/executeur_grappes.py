@@ -63,9 +63,15 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
     lim = limites(cfg, params)
     c = lim["cran"]
     (cible / "sujets.yaml").write_text(yaml.safe_dump({"sujets": [{"nom": "recherche", "phrase": phrase}]}, allow_unicode=True), encoding="utf-8")
+    plafond = budget.plafond_mensuel(cfg)
+    depense, unites = ctx.depense_du_mois() if ctx._fabrique is not None else (0.0, {})
+    mat = materialiser(cfg, cible, {**params, "_budget": {"appels_max": lim["appels"], "plafond": plafond, "depense": depense, "unites": unites}})  # les sources choisies, leurs clés, rien d'autre
     auto = yaml.safe_load((cible / "autonomie.yaml").read_text(encoding="utf-8")) or {}
     auto.pop("quotas", None)
     auto.pop("profondeur_max", None)
+    # Les sources interrogées par adaptateur ou programme passent APRÈS la collecte de grappes : sans réserve, la collecte web mangeait toute la
+    # limite d'appels et ces sources n'étaient jamais appelées, en silence. On leur garde un appel chacune.
+    reserve = min(len(mat.adaptateurs) + len(mat.scripts), max(0, lim["appels"] - 1))
     auto.update({
         "requetes_par_cycle": lim["appels"], "pages_par_cycle": c["pages"], "nouvelles_sources_par_cycle": c["nouvelles_sources"],
         "elements_par_cycle": c["observations"], "profondeur": exploration(params), "stop_file": "donnees/STOP", "rapports_dir": "rapports",
@@ -83,9 +89,6 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
     cl = yaml.safe_load((cible / "classement.yaml").read_text(encoding="utf-8")) or {}
     cl["actif"] = False  # le pont fait lui-même le classement des faits ; la sortie de profils de grappes n'est pas utilisée
     (cible / "classement.yaml").write_text(yaml.safe_dump(cl, allow_unicode=True, sort_keys=False), encoding="utf-8")
-    plafond = budget.plafond_mensuel(cfg)
-    depense, unites = ctx.depense_du_mois() if ctx._fabrique is not None else (0.0, {})
-    mat = materialiser(cfg, cible, {**params, "_budget": {"appels_max": lim["appels"], "plafond": plafond, "depense": depense, "unites": unites}})  # les sources choisies, leurs clés, rien d'autre
     cl["fournisseurs"] = {**(cl.get("fournisseurs") or {}), "registres": mat.registres}  # seulement les registres choisis
     (cible / "classement.yaml").write_text(yaml.safe_dump(cl, allow_unicode=True, sort_keys=False), encoding="utf-8")
     for nom in ("donnees", "sorties", "rapports"):
@@ -108,7 +111,7 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
         "mots_a_inclure": list(sujet.get("inclure") or []), "mots_a_exclure": list(sujet.get("exclure") or []),
         "combien": int(sujet.get("combien") or 200), "pays_code": code_pays(cfg, sujet, rg.charger_tolerant(cfg)[0]), "sources": mat.ids, "adaptateurs": mat.adaptateurs, "verificateurs": mat.verificateurs, "scripts": mat.scripts, "jetons": mat.jetons,
         "exclues_budget": mat.exclues_budget, "origines_sources": mat.origines, "mains_sources": mat.mains, "entree": entree,
-        "plafond_atteint": depense >= plafond, "limite_source_s": min(float(lim["temps_s"]), 180.0) if lim.get("temps_s") else 180.0, "en_pause": mat.en_pause,
+        "plafond_atteint": depense >= plafond, "limite_source_s": min(float(lim["temps_s"]), 180.0) if lim.get("temps_s") else 180.0, "en_pause": mat.en_pause, "reserve_sources": reserve,
     }  # fmt: skip
     if params.get("plan"):  # le plan de travail compilé (suite_plan) : les étapes à jouer sur les noms, les requêtes à traduire, les vérifications à restreindre
         plan = dict(params["plan"])

@@ -495,12 +495,12 @@ def test_proposer_plan_ne_pose_rien_et_n_invente_aucun_nom(c):
 
 def test_lister_sources_definir_ouvrir(c):
     ls = c.post("/api/suite/aide/lister_sources", json={"role": "VERIFIER", "etat": "off"}).json()["sources"]
-    assert {s["id"] for s in ls} == {"courtlistener", "opensanctions", "wayback"}
+    assert {s["id"] for s in ls} == {"bodacc", "courtlistener", "opensanctions", "wayback"}
     c.post("/api/suite/sources/wayback/retirer")
     assert {
         s["id"]
         for s in c.post("/api/suite/aide/lister_sources", json={"role": "VERIFIER", "etat": "off"}).json()["sources"]
-    } == {"courtlistener", "opensanctions"}
+    } == {"bodacc", "courtlistener", "opensanctions"}
     d = c.post("/api/suite/aide/definir", json={"mot": "Retirer"}).json()
     assert d["mot"] == "Retirer" and "sans rien effacer" in d["definition"] and "réversible" in d["definition"]
     assert "RAPPROCHER" in c.post("/api/suite/aide/definir", json={"mot": "rapprocher"}).json()["mot"]

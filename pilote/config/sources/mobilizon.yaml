@@ -1,0 +1,57 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: mobilizon
+nom: Mobilizon (groupes)
+description: Groupes du réseau Mobilizon (instance mobilizon.fr), par recherche. Sans
+  clé.
+trouve: groupes et communautés Mobilizon
+genres:
+- association
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/mobilizon.json
+verifie_le: '2026-10-26'
+note: 'Réponse réelle contrôlée le 26/10/2026. Groupes seulement (la recherche d''événements,
+  essayée, n''a rien rendu pour « judo »). Requête GraphQL à variable : la saisie
+  n''est jamais collée dans le texte de la requête.'
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://mobilizon.fr/api
+    methode: POST
+    corps:
+      query: query($t:String!){searchGroups(term:$t,limit:20){elements{name url}}}
+      variables:
+        t: '{quoi}'
+    format: json
+    liste: data.searchGroups.elements
+    champs:
+      nom: name
+      site: url
+    genre: association
+    origine_texte: Mobilizon (mobilizon.fr)

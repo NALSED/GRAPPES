@@ -1,0 +1,19 @@
+{
+  "response": {
+    "status": "ok",
+    "results": [
+      {
+        "id": "world/2026/sep/24/racist-abuse-france-teddy-riner-far-right",
+        "webTitle": "Racist abuse of French judo star Teddy Riner investigated after he spoke about rise of far right",
+        "webUrl": "https://www.theguardian.com/world/2026/sep/24/racist-abuse-france-teddy-riner-far-right",
+        "webPublicationDate": "2026-09-24T12:31:42Z"
+      },
+      {
+        "id": "football/2026/sep/12/mikel-arteta-penalty-decision-arsenal-sunderland-unacceptable",
+        "webTitle": "Mikel Arteta says penalty given to Sunderland ‘unacceptable at this level’",
+        "webUrl": "https://www.theguardian.com/football/2026/sep/12/mikel-arteta-penalty-decision-arsenal-sunderland-unacceptable",
+        "webPublicationDate": "2026-09-12T22:47:10Z"
+      }
+    ]
+  }
+}

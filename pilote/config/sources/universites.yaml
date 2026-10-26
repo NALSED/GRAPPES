@@ -1,0 +1,54 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: universites
+nom: university-domains-list (universités)
+description: Nom d'une université vers son nom de domaine (liste publique universities.hipolabs.com).
+  Sans clé.
+trouve: universités et leur domaine web
+genres:
+- administration
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- organisations
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/universites.json
+verifie_le: '2026-10-26'
+note: 'Réponse réelle contrôlée le 26/10/2026 (en HTTP : le service ne répond pas
+  en HTTPS). Sert surtout à retrouver le site d''une université.'
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: http://universities.hipolabs.com/search
+    methode: GET
+    params:
+      name: '{quoi}'
+    format: json
+    liste: ''
+    champs:
+      nom: name
+      site: domains.0
+    genre: administration
+    origine_texte: Liste des universités (hipolabs)

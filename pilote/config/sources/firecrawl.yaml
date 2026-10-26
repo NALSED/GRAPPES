@@ -1,0 +1,65 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: firecrawl
+nom: Firecrawl (recherche web)
+description: Recherche web qui rend aussi le début du contenu des pages (API Firecrawl).
+trouve: pages web
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- web
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+- verifier
+cle: FIRECRAWL_API_KEY
+cout:
+  unite: crédit
+  vers_dollar: 0.002
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/firecrawl.json
+verifie_le: '2026-10-26'
+note: Tarif indicatif, à vérifier chez le fournisseur. Réponse réelle contrôlée le
+  26/10/2026.
+moteur:
+  definition:
+    id: firecrawl
+    type: http
+    public: true
+    url: https://api.firecrawl.dev/v1/search
+    method: POST
+    auth:
+      type: bearer
+      env: FIRECRAWL_API_KEY
+    body:
+      type: json
+      content:
+        query: '{mots_cles}'
+        limit: '{limite}'
+    response:
+      format: json
+      items: data
+    fields:
+      title: title
+      url: url
+      description: description
+      id: url
+    quota: 20
+    raison: résultat Firecrawl pour « {mot_cle} »

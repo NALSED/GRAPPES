@@ -1,0 +1,62 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: mediacloud
+nom: Media Cloud — France (collection nationale)
+description: Médias d'information qui publient sur un sujet, dans la collection «
+  France - National » de Media Cloud (343 médias). Clé gratuite.
+trouve: médias français qui parlent du sujet
+genres:
+- page
+pays:
+- FR
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- presse
+main: seconde
+origine: presse
+famille: api
+roles:
+- chercher
+cle: MEDIACLOUD_API_KEY
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/mediacloud.json
+verifie_le: '2026-10-26'
+note: 'Réponse réelle contrôlée le 26/10/2026. Les 30 derniers jours seulement. Une
+  collection par pays : un autre pays demande une autre déclaration.'
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://search.mediacloud.org/api/search/story-list
+    methode: GET
+    params:
+      q: '{mots_cles}'
+      start: '{il_y_a_30_jours}'
+      end: '{aujourdhui}'
+      cs: '34412146'
+    format: json
+    liste: stories
+    champs:
+      nom: media_name
+      site: media_url
+    genre: page
+    pays: FR
+    origine_texte: Media Cloud (France - National)
+    auth:
+      type: header
+      nom: Authorization
+      prefixe: 'Token '

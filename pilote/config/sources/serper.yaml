@@ -1,0 +1,66 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: serper
+nom: Serper (Google, résultats web)
+description: Résultats de recherche Google pour les programmes, via l'API Serper.
+trouve: pages web
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- web
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+- verifier
+cle: SERPER_API_KEY
+cout:
+  unite: requête
+  vers_dollar: 0.001
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/serper.json
+verifie_le: '2026-10-26'
+note: Tarif indicatif, à vérifier chez le fournisseur. Réponse réelle contrôlée le
+  26/10/2026.
+moteur:
+  definition:
+    id: serper
+    type: http
+    public: true
+    url: https://google.serper.dev/search
+    method: POST
+    auth:
+      type: header
+      name: X-API-KEY
+      env: SERPER_API_KEY
+    body:
+      type: json
+      content:
+        q: '{mots_cles}'
+        num: '{limite}'
+    response:
+      format: json
+      items: organic
+    fields:
+      title: title
+      url: link
+      description: snippet
+      id: link
+    quota: 20
+    raison: résultat Serper pour « {mot_cle} »

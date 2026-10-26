@@ -1,0 +1,53 @@
+{
+  "companies": [
+    {
+      "businessId": {
+        "value": "0194099-3",
+        "registrationDate": "1978-06-09",
+        "source": "3"
+      },
+      "names": [
+        {
+          "name": "Fysios Mehiläinen Oy",
+          "type": "1",
+          "registrationDate": "2024-07-16",
+          "endDate": "2026-04-30",
+          "version": 1,
+          "source": "1"
+        },
+        {
+          "name": "Fysios Oy",
+          "type": "1",
+          "registrationDate": "2017-12-31",
+          "endDate": "2024-07-16",
+          "version": 2,
+          "source": "1"
+        }
+      ]
+    },
+    {
+      "businessId": {
+        "value": "0197067-4",
+        "registrationDate": "1978-06-16",
+        "source": "3"
+      },
+      "names": [
+        {
+          "name": "Tikkurila Oyj",
+          "type": "1",
+          "registrationDate": "2010-02-17",
+          "version": 1,
+          "source": "1"
+        },
+        {
+          "name": "Tikkurila Oy",
+          "type": "1",
+          "registrationDate": "1985-12-31",
+          "endDate": "2010-02-16",
+          "version": 2,
+          "source": "1"
+        }
+      ]
+    }
+  ]
+}

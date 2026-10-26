@@ -12,6 +12,7 @@ from __future__ import annotations
 import base64
 import csv
 import io
+from datetime import date, timedelta
 from typing import Any
 
 from pilote.adaptateurs import Client, ErreurSource, mots_significatifs
@@ -82,7 +83,8 @@ def chercher(entree: dict[str, Any], client: Client, parametres: dict[str, Any])
         return []
     limite = min(int(entree.get("limite") or 25), 200)
     valeurs = {"quoi": quoi, "mots_cles": " ".join(mots_significatifs(quoi)) or quoi, "lieu": str(entree.get("lieu", "")).strip(), "sujet": str(entree.get("sujet", "")).strip(),
-               "limite": limite, "mots_et_lieu": f"{quoi} {entree.get('lieu', '')}".strip()}  # fmt: skip
+               "limite": limite, "mots_et_lieu": f"{quoi} {entree.get('lieu', '')}".strip(),
+               "aujourdhui": date.today().isoformat(), "il_y_a_30_jours": (date.today() - timedelta(days=30)).isoformat(), "il_y_a_un_an": (date.today() - timedelta(days=365)).isoformat()}  # fmt: skip
     if parametres.get("fichier"):  # fichier local : lu en entier, filtré sur le nom
         return _fichier(parametres, quoi, limite)
     entetes, extra = _entetes(parametres.get("auth") or {}, str(parametres.get("_cle", "")))
@@ -101,7 +103,18 @@ def chercher(entree: dict[str, Any], client: Client, parametres: dict[str, Any])
         brut = client.post_json(url, remplir(parametres.get("corps") or {}, valeurs), entetes, params or None)
     else:
         brut = client.get_json(url, params or None, entetes)
-    return convertir(brut, parametres)[:limite]
+    return _exactes(convertir(brut, parametres), parametres, entree)[:limite]
+
+
+def _exactes(noms: list[dict[str, Any]], parametres: dict[str, Any], entree: dict[str, Any]) -> list[dict[str, Any]]:
+    """`correspondance_exacte` : une source qui VÉRIFIE ne confirme un nom que si la source rend EXACTEMENT ce nom (formes juridiques, casse, accents et ponctuation mis
+    à part). Sans cela, la première réponse approchante serait prise pour une confirmation."""
+    if not parametres.get("correspondance_exacte"):
+        return noms
+    from pilote.rapprochement import nom_nu
+
+    voulu = nom_nu(str(entree.get("nom") or entree.get("quoi") or ""))
+    return [n for n in noms if voulu and nom_nu(n["nom"]) == voulu]
 
 
 def _fichier(parametres: dict[str, Any], quoi: str, limite: int) -> list[dict[str, Any]]:

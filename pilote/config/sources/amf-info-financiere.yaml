@@ -1,0 +1,56 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: amf-info-financiere
+nom: info-financière (AMF, France)
+description: 'Sociétés cotées qui publient une information réglementée en France (AMF).
+  Sans clé ; limite : 10 000 appels par jour et par adresse.'
+trouve: sociétés cotées françaises
+genres:
+- entreprise
+pays:
+- FR
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- entreprises
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/amf-info-financiere.json
+verifie_le: '2026-10-26'
+note: Réponse réelle contrôlée le 26/10/2026. Une entrée par société (regroupée par
+  nom) ; l'ordre est alphabétique, pas par pertinence.
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://info-financiere.gouv.fr/api/explore/v2.1/catalog/datasets/flux-amf-new-prod/records
+    methode: GET
+    params:
+      q: '{quoi}'
+      group_by: identificationsociete_iso_nom_soc
+      limit: '{limite}'
+    format: json
+    liste: results
+    champs:
+      nom: identificationsociete_iso_nom_soc
+    genre: entreprise
+    pays: FR
+    origine_texte: AMF (information réglementée)
