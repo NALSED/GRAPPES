@@ -133,6 +133,24 @@ def creer_fabrique(url: str) -> sessionmaker[Session]:
     return sessionmaker(moteur, expire_on_commit=False)
 
 
+class Rapprochement(Base):
+    """Deux fiches que le moteur de rapprochement soupçonne de parler de la même entité (spécification 16, onglet Tri). La confiance est CALCULÉE
+    (score de Splink), jamais saisie. Une personne tranche : « confirme » (les fiches se rejoignent dans la grappe) ou « separe » (elles restent
+    distinctes) ; aucun des deux n'efface une fiche, et les deux se refont. `a` et `b` sont deux Candidat de la même recherche."""
+
+    __tablename__ = "rapprochement"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    cree_le: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=maintenant)
+    recherche_id: Mapped[str] = mapped_column(ForeignKey("recherche.id"), index=True)
+    a: Mapped[int] = mapped_column(ForeignKey("candidat.id"), index=True)
+    b: Mapped[int] = mapped_column(ForeignKey("candidat.id"), index=True)
+    confiance: Mapped[float] = mapped_column(default=0.0)  # probabilité de correspondance, 0 à 1
+    pourquoi: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)  # ce que chaque comparaison a pesé : {champ: {niveau, poids}}
+    etat: Mapped[str] = mapped_column(String(12), default="a_examiner", index=True)  # a_examiner | confirme | separe
+    decide_par: Mapped[str] = mapped_column(String(64), default="")
+    decide_le: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
 class Programme(Base):
     """Lancement daté ou récurrent d'une recherche. Chaque déclenchement crée une NOUVELLE recherche (avec son identifiant)."""
 

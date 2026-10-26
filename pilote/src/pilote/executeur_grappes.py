@@ -110,6 +110,13 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
         "exclues_budget": mat.exclues_budget, "origines_sources": mat.origines, "mains_sources": mat.mains, "entree": entree,
         "plafond_atteint": depense >= plafond, "limite_source_s": min(float(lim["temps_s"]), 180.0) if lim.get("temps_s") else 180.0, "en_pause": mat.en_pause,
     }  # fmt: skip
+    if params.get("plan"):  # le plan de travail compilé (suite_plan) : les étapes à jouer sur les noms, les requêtes à traduire, les vérifications à restreindre
+        plan = dict(params["plan"])
+        sait_traduire = {a["source"] for a in mat.adaptateurs} | {s["source"] for s in mat.scripts}  # une source passée par le moteur de collecte de grappes n'a qu'une langue de requête
+        plan["traduction_non_appliquee"] = sorted(s for s in plan.get("traductions", {}) if s not in sait_traduire)
+        plan["traductions"] = {s: v for s, v in plan.get("traductions", {}).items() if s in sait_traduire}
+        plan["traduction_url"] = cfg.suite_traduction_url
+        spec["plan"] = plan
     (d / "lancement.json").write_text(json.dumps(spec, ensure_ascii=False, indent=1), encoding="utf-8")
     return spec
 
@@ -199,13 +206,49 @@ class ExecuteurGrappes:
         if res["statut"] == "simulation":
             raise RuntimeError(res.get("message", "simulation"))
         self.faire_le_bilan(ctx, spec, suivi_fichier)
+        self.dire_le_plan(ctx, spec, res.get("plan"))
         self.dire_la_verification(ctx, res.get("verifications") or [])
         lignes = json.loads((ctx.dossier / "candidats.json").read_text(encoding="utf-8")) if (ctx.dossier / "candidats.json").exists() else []
         ctx.ajouter_candidats(lignes)
+        self.proposer_les_rapprochements(ctx)
         self.compter_couts(ctx, spec, suivi_fichier)
         ctx.avancer(noms=len(lignes), arret=res.get("arret", ""), duree_s=res.get("duree_s"))
         if res.get("arret") in ("demande",):
             raise Arret()
+
+    def proposer_les_rapprochements(self, ctx: ContexteRecherche) -> None:
+        """Range en file (onglet Tri) les noms que Splink soupçonne d'être la même entité. Un échec du moteur de rapprochement est DIT au journal :
+        il ne fait jamais échouer la recherche, et l'absence de proposition ne se lit pas comme l'absence de rapprochement possible."""
+        from pilote import rapprochements
+
+        try:
+            ctx.noter("rapprochements_proposes", **rapprochements.proposer(self.cfg, ctx._fabrique, ctx.recherche_id))
+        except Exception as exc:  # noqa: BLE001 - le tri est un confort de relecture, pas une condition de la recherche
+            ctx.noter("rapprochements_indisponibles", raison=str(exc)[:300])
+
+    def dire_le_plan(self, ctx: ContexteRecherche, spec: dict[str, Any], jeu: dict[str, Any] | None) -> None:
+        """Ce que le plan de travail a FAIT à cette recherche, au journal et dans l'avancement : combien de noms chaque tuile a retirés (et
+        lesquels, en partie), les requêtes traduites avec leur original, ce qui n'a pas été appliqué et pourquoi. Un nom retiré par un filtre n'est
+        pas dans la base : sans cette trace, il aurait simplement disparu."""
+        plan = spec.get("plan")
+        if not plan:
+            return
+        jeu = jeu or {}
+        par_tuile = jeu.get("par_tuile") or {}
+        ctx.avancer(plan={
+            "appliques": plan.get("appliques", []), "non_appliques": plan.get("non_appliques", []), "retires": jeu.get("retires", 0), "non_attribues": jeu.get("non_attribues", 0),
+            "par_tuile": {k: {"nom": v["nom"], "n": v["n"]} for k, v in par_tuile.items()}, "erreurs": jeu.get("erreurs", []),
+            "traductions": jeu.get("traductions", []), "traduction_non_appliquee": plan.get("traduction_non_appliquee", []),
+        })  # fmt: skip
+        for tuile, v in par_tuile.items():
+            if v["n"]:
+                ctx.noter("plan_noms_retires", tuile=tuile, outil=v["nom"], retires=v["n"], noms=v["noms"])
+        for e in jeu.get("erreurs", []):
+            ctx.noter("plan_script_en_echec", raison=e)
+        for tr in jeu.get("traductions", []):
+            ctx.noter("plan_requete_traduite" if "echec" not in tr else "plan_traduction_en_echec", **tr)
+        if plan.get("traduction_non_appliquee"):
+            ctx.noter("plan_traduction_non_appliquee", sources=plan["traduction_non_appliquee"], raison="la source passe par le moteur de collecte de grappes, qui n'a qu'une langue de requête")
 
     def dire_la_verification(self, ctx: ContexteRecherche, bilans: list[dict[str, Any]]) -> None:
         """Combien de noms chaque source de vérification a pu examiner. Une vérification coupée au milieu est DITE : sans cela,

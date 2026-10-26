@@ -155,14 +155,35 @@ def main(dossier: str) -> int:
                     out[nom.strip()] = val.strip()
             return out
 
+        plan = spec.get("plan") or {}
+        effets_traduction: list[dict] = []
+        traduits: dict[tuple, dict] = {}
+
+        def entree_de(source: str) -> dict:
+            """La requête que reçoit cette source : traduite vers sa langue si le plan place une Traduction avant elle (l'original reste dans le journal)."""
+            t = (plan.get("traductions") or {}).get(source)
+            if not t:
+                return entree_base
+            cle = (t["de"], t["vers"])
+            if cle not in traduits:
+                from pilote.suite_traduction import traduire
+
+                try:
+                    traduits[cle] = {k: traduire(plan["traduction_url"], entree_base[k], t["de"], t["vers"]) for k in ("sujet", "quoi") if entree_base.get(k)}
+                    effets_traduction.append({"de": t["de"], "vers": t["vers"], "original": {k: entree_base[k] for k in traduits[cle]}, "traduit": traduits[cle]})
+                except (OSError, ValueError) as exc:  # le moteur de traduction a échoué : la source cherche avec la requête d'origine, et on le dit
+                    traduits[cle] = {}
+                    effets_traduction.append({"de": t["de"], "vers": t["vers"], "echec": str(exc)[:200]})
+            return {**entree_base, **traduits[cle]}
+
         secrets = cles_de_la_copie()  # seulement les clés des sources utilisées (écrites par pilote dans la copie de configuration)
         executions = [
             (a["source"], lambda a=a: adaptateurs.charger(a["module"]).chercher(
-                entree_base, adaptateurs.Client(a["source"], doit_s_arreter, signaler=avancement.signaler, delai_s=a.get("delai_s", 0.2)),
+                entree_de(a["source"]), adaptateurs.Client(a["source"], doit_s_arreter, signaler=avancement.signaler, delai_s=a.get("delai_s", 0.2)),
                 {**a.get("parametres", {}), **({"_cle": secrets.get(a["cles_noms"][0], ""), "_cles": {n: secrets.get(n, "") for n in a["cles_noms"]}} if a.get("cles_noms") else {})}))
             for a in spec.get("adaptateurs", [])
         ]  # fmt: skip
-        executions += [(sc["source"], lambda sc=sc: programmes.executer(sc, entree_base, cwd=Path.cwd())) for sc in spec.get("scripts", [])]
+        executions += [(sc["source"], lambda sc=sc: programmes.executer(sc, entree_de(sc["source"]), cwd=Path.cwd())) for sc in spec.get("scripts", [])]
         limite_source = float(spec.get("limite_source_s") or 180)
 
         def isole(executer_):
@@ -246,6 +267,11 @@ def main(dossier: str) -> int:
             lignes.append(faits_candidat(c, par_nom.get(nn, []), site_key, spec.get("pays_code", ""), prov))
             if len(lignes) >= int(spec.get("combien", 200)):
                 break
+        if plan.get("chemins") is not None:  # le plan de travail : on ne garde que les noms que ses branches laissent passer, AVANT de vérifier (inutile de vérifier ce qu'on retire)
+            from pilote import suite_plan, suite_script
+
+            lignes, bilan_plan = suite_plan.appliquer(lignes, plan, suite_script.executer)
+            resultat["plan"] = {**bilan_plan, "traductions": effets_traduction}
         from pilote.pont.verification import verifier_candidats
 
         # la vérification des candidats appartient à l'étape « vérification » : la jauge doit couvrir le travail qu'elle annonce.

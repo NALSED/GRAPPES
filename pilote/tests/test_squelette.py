@@ -43,7 +43,7 @@ def test_configuration_aucun_chemin_en_dur(cfg, tmp_path):
 def test_configuration_livree_est_lisible():
     c = charger()
     assert c.service.port == 8443 and c.service.https and c.service.hote == "127.0.0.1"
-    assert c.grappes_racine.name == "grappes" and c.fils >= 1
+    assert str(c.grappes_racine) == "/opt/grappes" and c.fils >= 1
 
 
 def test_la_requete_repond_sans_attendre_la_fin(cfg):

@@ -1,0 +1,10 @@
+{
+  "total": 1,
+  "data": [
+    {
+      "name": "club_exemple",
+      "displayName": "Club Exemple",
+      "url": "https://peertube.example/video-channels/club_exemple"
+    }
+  ]
+}

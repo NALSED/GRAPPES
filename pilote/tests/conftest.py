@@ -18,7 +18,6 @@ def copier_config(dest: Path, grappes_secrets: str = "", **surcharges) -> Path:
     y["service"]["https"] = False
     y["service"]["hotes_autorises"] = ["testserver"]  # le nom d'hôte du client de test (l'application n'accepte que la boucle locale)
     y["donnees"].pop("copies", None)  # jamais le vrai disque des copies : elles vont dans le dossier temporaire du test
-    y["grappes"]["racine"] = str((RACINE.parent / "grappes").resolve())  # la copie est ailleurs : le chemin relatif ne s y résoudrait plus
     y["grappes"]["secrets"] = grappes_secrets
     for k, v in surcharges.items():
         y[k] = {**y.get(k, {}), **v} if isinstance(v, dict) else v

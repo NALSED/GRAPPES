@@ -23,3 +23,7 @@ et leur mention est ajoutée à `SOURCES.txt` à côté des fichiers de sortie d
 ## Licence
 
 MIT (fichier `LICENSE`). Les bibliothèques copiées dans `static/vendor/` (Tabulator, Cytoscape.js) gardent leur propre licence MIT.
+
+## Nouvelle interface (`/suite`)
+
+En plus des pages ci-dessus, l'interface décrite par la spécification `suite/pilote` est servie sur `/suite` : Réglages (sources et outils), Recherche (simple, plan de travail libre appliqué par le moteur, recherches sauvegardées), Tri (rapprochements proposés par Splink, à confirmer ou séparer) et l'Aide. Les sources y sont les déclarations de `config/sources`. Voir `docs/inspirations_aleph_maltego.md` pour l'export FollowTheMoney (`.ftm`).

@@ -1,0 +1,56 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1). Éteinte par défaut.
+id: radio-browser
+nom: radio-browser (annuaire des radios)
+description: Annuaire communautaire des radios par nom et par pays. Sans clé.
+trouve: stations de radio
+genres:
+- page
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- presse
+main: seconde
+origine: presse
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/radio-browser.json
+verifie_le: '2026-10-26'
+note: 'Rôle CATALOGUE dans la spécification (question 14 § 1 non tranchée) : branché
+  ici comme source qui cherche. Forme d''après la documentation publiée, pas contrôlée.'
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://de1.api.radio-browser.info/json/stations/search
+    methode: GET
+    params:
+      name: '{quoi}'
+      limit: '{limite}'
+      hidebroken: 'true'
+    format: json
+    liste: ''
+    champs:
+      nom: name
+      site: homepage
+      ville: state
+    genre: page
+    origine_texte: radio-browser.info

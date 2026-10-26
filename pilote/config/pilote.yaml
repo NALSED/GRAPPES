@@ -86,7 +86,7 @@ chemins:
   portails_ckan: portails_ckan.yaml  # portails de données ouvertes contrôlés, par pays
 # Genres génériques : chaque source fait correspondre SON vocabulaire (codes d'activité, catégories...) à ces genres.
 # Aucun code national n'est connu du cœur du programme.
-genres: [club, entreprise, association, administration, lieu, evenement, personne, page, compte]
+genres: [club, entreprise, association, administration, lieu, evenement, page, compte]  # pas de « personne » : règle 8, grappes vise les personnes morales
 
 # Pays proposés à l'assistant (données, pas du code). Un autre pays se saisit par son code à deux lettres.
 pays_proposes: {FR: France, GB: Royaume-Uni, NZ: Nouvelle-Zélande, NO: Norvège, EE: Estonie, CZ: Tchéquie, PL: Pologne, US: États-Unis, CA: Canada, DE: Allemagne, BE: Belgique, CH: Suisse, ES: Espagne, IT: Italie}

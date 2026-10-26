@@ -24,6 +24,8 @@ def verifier_candidats(lignes: list[dict], spec: dict, secrets: dict[str, str], 
         parametres = {**v.get("parametres", {}), **({"_cle": secrets.get(v["cles_noms"][0], ""), "_cles": {n: secrets.get(n, "") for n in v["cles_noms"]}} if v.get("cles_noms") else {})}
         signaler("prise_debut", prise=source)
         a_verifier = [l for l in lignes if sur_le_nom or l.get("site")]
+        if v.get("en_amont") is not None:  # posée après certaines sources sur le plan : elle ne vérifie que les noms que ces sources ont trouvés
+            a_verifier = [l for l in a_verifier if set(l.get("trouve_par") or []) & set(v["en_amont"])]
         faits_ok, examines, coupee = 0, 0, ""
         plafond = int(v.get("parametres", {}).get("max_candidats") or 0)  # source à crédits comptés : on n'examine que les premiers (les mieux classés)
         for ligne in a_verifier:

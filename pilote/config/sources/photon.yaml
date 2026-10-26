@@ -1,0 +1,56 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1). Éteinte par défaut.
+id: photon
+nom: Photon (géocodage de lieux nommés)
+description: 'Géocodeur sur données OpenStreetMap : trouve des lieux nommés. Instance
+  publique de komoot : usage raisonnable seulement, volume = instance auto-hébergée.'
+trouve: lieux nommés
+genres:
+- lieu
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- lieux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/photon.json
+verifie_le: '2026-10-26'
+note: Politique d'usage de l'instance publique à vérifier avant tout volume (spécification
+  17, P3 au-delà d'un usage léger). Forme de réponse d'après la documentation publiée,
+  pas encore contrôlée.
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://photon.komoot.io/api/
+    methode: GET
+    params:
+      q: '{mots_et_lieu}'
+      limit: '{limite}'
+    format: json
+    liste: features
+    champs:
+      nom: properties.name
+      ville: properties.city
+    genre: lieu
+    origine_texte: Photon (OpenStreetMap)

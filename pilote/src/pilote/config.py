@@ -49,6 +49,8 @@ class Config:
     genres: tuple[str, ...] = ()  # genres génériques que les sources font correspondre à leur vocabulaire propre
     pays_proposes: dict = field(default_factory=dict)
     secrets_grappes: str = ""  # fichier de clés de grappes (lecture seule, relatif à sa racine) ; vide = aucun
+    suite_traduction_url: str = ""  # service de traduction compatible LibreTranslate pour la tuile Traduction ; vide = la tuile n'est pas appliquée (et le plan le dit)
+    suite_modele_url: str = ""  # serveur de modèle local de l'Aide (type Ollama) ; vide = aucun modèle, l'Aide marche par ses puces
 
     def _rel(self, cle: str, defaut: str) -> Path:
         return _chemin(str(self.chemins.get(cle, defaut)), self.dossier_config)
@@ -164,4 +166,6 @@ def charger(fichier: str | Path | None = None) -> Config:
         genres=tuple(y.get("genres") or ()),
         secrets_grappes=str(g.get("secrets", "")),
         pays_proposes=dict(y.get("pays_proposes") or {}),
+        suite_modele_url=str((y.get("suite") or {}).get("modele_url", "")),
+        suite_traduction_url=str((y.get("suite") or {}).get("traduction_url", "")),
     )

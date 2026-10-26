@@ -48,6 +48,14 @@ def verificatrices(cfg: Config, params: dict[str, Any]) -> list[Declaration]:
     Deux conditions de Réglages : la vérification doit être active, et une source qui ne sait QUE vérifier n'est appelée qu'en
     mode « plus » (« ajouter des sources de vérification seules »). En mode « memes », la vérification reste le recoupement
     entre les sources de recherche, comme le dit le réglage."""
+    explicites = params.get("verificatrices")
+    if explicites is not None:  # les sources de vérification POSÉES sur le plan de travail : la personne les a voulues, ni l'interrupteur ni le mode de Réglages ne les écartent
+        decls, _ = charger_sources(cfg)
+        return [
+            decls[s] for s in explicites
+            if s in decls and "verifier" in decls[s].roles and "adaptateur" in decls[s].moteur and decls[s].verifie_sur in ("site", "nom")
+            and (not decls[s].cles or cles.toutes_presentes(cfg, decls[s].cles))
+        ]  # fmt: skip
     reg, _ = rg.charger_tolerant(cfg)
     actif = params.get("verification")
     if not (reg["verification"]["active"] if actif is None else actif):
@@ -194,7 +202,8 @@ def materialiser(cfg: Config, cible: Path, params: dict[str, Any]) -> Materialis
     rf.write_text(texte, encoding="utf-8")
     for d in verif:
         donnes = {**(d.moteur.get("parametres") or {}), **rg.parametres_donnes(reg, d.id)}
-        res.verificateurs.append({"source": d.id, "verifie_sur": d.verifie_sur, "module": str(d.moteur["adaptateur"]), "parametres": donnes, "cles_noms": d.cles})
+        en_amont = {v["id"]: v.get("en_amont") for v in (params.get("plan") or {}).get("verificateurs", [])}.get(d.id)  # None = tous les résultats
+        res.verificateurs.append({"source": d.id, "verifie_sur": d.verifie_sur, "module": str(d.moteur["adaptateur"]), "parametres": donnes, "cles_noms": d.cles, "en_amont": en_amont})
         res.jetons[d.id] = d.id
         res.origines[d.id], res.mains[d.id] = d.origine, d.main
         res.couts[d.id] = rg.choix_source(reg, d)["cout"]

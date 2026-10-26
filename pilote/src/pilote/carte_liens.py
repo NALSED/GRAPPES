@@ -19,9 +19,9 @@ PLAFOND = 60  # nombre maximal de points dessinés, quoi qu'on demande : au-del�
 TYPES = {  # type de relation donné par les sources -> famille dessinée
     "etablissement_de": "siege", "a_pour_etablissement": "siege", "siege": "siege",
     "maison_mere": "maison_mere", "maison_mere_ultime": "maison_mere", "filiale_de": "maison_mere",
-    "trouve_via": "trouve_via", "meme_adresse": "meme_adresse",
+    "trouve_via": "trouve_via", "meme_adresse": "meme_adresse", "meme_entite": "meme_entite",
 }  # fmt: skip
-LIBELLES = {"siege": "siège / établissement", "maison_mere": "maison mère", "trouve_via": "trouvé via", "meme_adresse": "même adresse", "autre": "autre lien"}
+LIBELLES = {"siege": "siège / établissement", "maison_mere": "maison mère", "trouve_via": "trouvé via", "meme_adresse": "même adresse", "meme_entite": "même entité (confirmé dans Tri)", "autre": "autre lien"}
 
 
 def _aretes(cands: list[Candidat]) -> list[tuple[int | str, int | str, str, str]]:

@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.7,
+          45.2
+        ]
+      },
+      "properties": {
+        "name": "Maison des Associations",
+        "city": "Grenoble",
+        "country": "France"
+      }
+    }
+  ]
+}

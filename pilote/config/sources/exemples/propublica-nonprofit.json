@@ -1,0 +1,13 @@
+{
+  "total_results": 1,
+  "organizations": [
+    {
+      "ein": 123456789,
+      "strein": "12-3456789",
+      "name": "Example Community Foundation",
+      "city": "Springfield",
+      "state": "IL",
+      "ntee_code": "T20"
+    }
+  ]
+}

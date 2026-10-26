@@ -19,6 +19,7 @@ from pilote import (
     ajout,
     api_presse,
     api_reglages,
+    api_suite,
     carte_liens,
     catalogue,
     copies_locales,
@@ -141,6 +142,7 @@ def creer_app(cfg: Config | None = None, executeur: Executeur | None = None, url
     app.state.cfg, app.state.fabrique, app.state.gestionnaire = cfg, fabrique, gestionnaire
     app.include_router(api_reglages.construire(cfg, fabrique))
     app.include_router(api_presse.construire(cfg, fabrique))
+    app.include_router(api_suite.construire(cfg, fabrique, gestionnaire))
 
     def session():
         with fabrique() as s:
@@ -436,6 +438,11 @@ def creer_app(cfg: Config | None = None, executeur: Executeur | None = None, url
     @app.get("/")
     def accueil() -> FileResponse:
         return FileResponse(STATIC / "index.html")
+
+    @app.get("/suite")
+    def suite_accueil() -> FileResponse:
+        """La nouvelle interface (spécification `suite/pilote`), à côté de l'actuelle qu'elle ne remplace pas (D-suite-1)."""
+        return FileResponse(STATIC / "suite" / "index.html")
 
     if STATIC.exists():
         app.mount("/static", StaticFiles(directory=STATIC), name="static")

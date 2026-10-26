@@ -1,0 +1,54 @@
+/* Généré par outils/generer_suite.py depuis charte/tokens.json — ne pas modifier à la main. */
+:root {
+  --police-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --police-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+  --etiquette-taille: 11px;
+  --etiquette-interligne: 16px;
+  --etiquette-graisse: 600;
+  --etiquette-crenage: 0.06em;
+  --legende-taille: 12px;
+  --legende-interligne: 18px;
+  --legende-graisse: 400;
+  --corps-taille: 13px;
+  --corps-interligne: 20px;
+  --corps-graisse: 400;
+  --corps-fort-taille: 13px;
+  --corps-fort-interligne: 20px;
+  --corps-fort-graisse: 600;
+  --controle-taille: 14px;
+  --controle-interligne: 20px;
+  --controle-graisse: 400;
+  --titre-s-taille: 15px;
+  --titre-s-interligne: 22px;
+  --titre-s-graisse: 600;
+  --titre-m-taille: 17px;
+  --titre-m-interligne: 24px;
+  --titre-m-graisse: 600;
+  --titre-l-taille: 22px;
+  --titre-l-interligne: 30px;
+  --titre-l-graisse: 600;
+  --chiffre-taille: 28px;
+  --chiffre-interligne: 34px;
+  --chiffre-graisse: 600;
+  --code-taille: 12px;
+  --code-interligne: 20px;
+  --code-graisse: 400;
+  --espace-1: 4px;
+  --espace-2: 8px;
+  --espace-3: 12px;
+  --espace-4: 16px;
+  --espace-5: 20px;
+  --espace-6: 24px;
+  --espace-8: 32px;
+}
+
+.t-etiquette { font-family: var(--police-sans); font-size: var(--etiquette-taille); line-height: var(--etiquette-interligne); font-weight: var(--etiquette-graisse); letter-spacing: var(--etiquette-crenage); text-transform: uppercase; }
+.t-legende { font-family: var(--police-sans); font-size: var(--legende-taille); line-height: var(--legende-interligne); font-weight: var(--legende-graisse); }
+.t-corps { font-family: var(--police-sans); font-size: var(--corps-taille); line-height: var(--corps-interligne); font-weight: var(--corps-graisse); }
+.t-corps-fort { font-family: var(--police-sans); font-size: var(--corps-fort-taille); line-height: var(--corps-fort-interligne); font-weight: var(--corps-fort-graisse); }
+.t-controle { font-family: var(--police-sans); font-size: var(--controle-taille); line-height: var(--controle-interligne); font-weight: var(--controle-graisse); }
+.t-titre-s { font-family: var(--police-sans); font-size: var(--titre-s-taille); line-height: var(--titre-s-interligne); font-weight: var(--titre-s-graisse); }
+.t-titre-m { font-family: var(--police-sans); font-size: var(--titre-m-taille); line-height: var(--titre-m-interligne); font-weight: var(--titre-m-graisse); }
+.t-titre-l { font-family: var(--police-sans); font-size: var(--titre-l-taille); line-height: var(--titre-l-interligne); font-weight: var(--titre-l-graisse); }
+.t-chiffre { font-family: var(--police-sans); font-size: var(--chiffre-taille); line-height: var(--chiffre-interligne); font-weight: var(--chiffre-graisse); }
+.t-code { font-family: var(--police-mono); font-size: var(--code-taille); line-height: var(--code-interligne); font-weight: var(--code-graisse); }

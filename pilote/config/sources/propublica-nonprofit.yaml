@@ -1,0 +1,56 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1). Éteinte par défaut.
+id: propublica-nonprofit
+nom: ProPublica Nonprofit Explorer (États-Unis)
+description: Organisations à but non lucratif américaines déclarées à l'administration
+  fiscale (IRS), avec leur numéro EIN. Sans clé.
+trouve: organisations à but non lucratif américaines
+genres:
+- association
+pays:
+- US
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- associations
+main: premiere
+origine: registre
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/propublica-nonprofit.json
+verifie_le: '2026-10-26'
+note: Forme de réponse d'après la documentation publiée, pas encore contrôlée contre
+  le service réel. Sans clé.
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://projects.propublica.org/nonprofits/api/v2/search.json
+    methode: GET
+    params:
+      q: '{quoi}'
+    format: json
+    liste: organizations
+    champs:
+      nom: name
+      numero: ein
+      ville: city
+    genre: association
+    origine_texte: ProPublica Nonprofit Explorer (données IRS)
+    pays: US

@@ -1,0 +1,13 @@
+{
+  "type_": "Communities",
+  "communities": [
+    {
+      "community": {
+        "id": 1,
+        "name": "clubs_exemple",
+        "title": "Clubs Exemple",
+        "actor_id": "https://lemmy.world/c/clubs_exemple"
+      }
+    }
+  ]
+}

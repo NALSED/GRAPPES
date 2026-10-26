@@ -5,10 +5,10 @@ description = "Pilote : lancer, trier et décider les recherches de grappes"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
-dependencies = ["fastapi", "uvicorn", "sqlalchemy>=2", "pyyaml>=6", "apscheduler>=3.10,<4", "openpyxl>=3.1", "cleanco>=2"]
+dependencies = ["fastapi", "uvicorn", "sqlalchemy>=2", "pyyaml>=6", "apscheduler>=3.10,<4", "openpyxl>=3.1", "cleanco>=2", "langdetect>=1.0.9", "splink>=5,<6", "duckdb>=1.4,<2", "pandas"]  # duckdb < 2 : la version 2.0 plante (instruction illégale) sur le processeur virtuel de cette VM
 
 [project.optional-dependencies]
-dev = ["pytest", "httpx", "ruff", "playwright"]
+dev = ["pytest", "httpx", "ruff", "playwright", "followthemoney"]
 
 [project.scripts]
 pilote = "pilote.__main__:main"

@@ -1,0 +1,56 @@
+# Déclaration d'une source (fiche 01) — branchée le 26/10/2026 (spécification 17, P1). Éteinte par défaut.
+id: lemmy
+nom: Lemmy (communautés)
+description: Communautés du réseau Lemmy, par recherche sur l'instance lemmy.world.
+  Sans clé.
+trouve: communautés de discussion
+genres:
+- compte
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+exemple_reponse: exemples/lemmy.json
+verifie_le: '2026-10-26'
+note: Communautés seulement, jamais un compte nommé (règle 8). Forme d'après la documentation
+  publiée, pas contrôlée.
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://lemmy.world/api/v3/search
+    methode: GET
+    params:
+      q: '{quoi}'
+      type_: Communities
+      limit: '{limite}'
+    format: json
+    liste: communities
+    champs:
+      nom: community.title
+      site: community.actor_id
+    genre: compte
+    origine_texte: Lemmy (lemmy.world)
