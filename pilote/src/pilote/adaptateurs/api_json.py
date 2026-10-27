@@ -2,10 +2,10 @@
 recherche), la façon d'envoyer la clé, le chemin de la liste de résultats et la correspondance des champs sont des RÉGLAGES de la
 source (`moteur.parametres`). Sert à brancher le registre d'un pays sans écrire une ligne de code.
 
-Réglages : `url`, `methode` (GET), `params` (valeurs avec {quoi}, {mots_cles}, {lieu}, {sujet}, {mots_et_lieu}, {limite}), `auth`
+Réglages : `url`, `methode` (GET), `params` (valeurs avec {quoi}, {mots_cles}, {lieu}, {sujet}, {mots_et_lieu}, {limite}, {pays}), `auth`
 ({type: header|bearer|basic|query, nom, prefixe}), `format` (json|csv), `delimiteur`, `liste` (chemin pointé de la liste), `champs`
 ({nom, ville, genre, numero, site, pays}: chemins pointés), `genres` (valeur de la source -> genre générique), `genre` (défaut),
-`origine_texte`, `pays` (code ajouté aux noms), `filtre_local` (csv/fichiers entiers : ne garder que les lignes dont le nom contient un mot)."""
+`origine_texte`, `pays` (code ajouté aux noms), `site_prefixe` (adresse à placer devant un `site` qui n'est qu'un identifiant), `filtre_local` (csv/fichiers entiers : ne garder que les lignes dont le nom contient un mot)."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ import io
 from datetime import date, timedelta
 from typing import Any
 
-from pilote.adaptateurs import Client, ErreurSource, mots_significatifs, nom_normalise
+from pilote.adaptateurs import Client, ErreurSource, alias_de, mots_significatifs, nom_normalise
 from pilote.adaptateurs.mcp_generique import _lire, _liste, remplir
 
 LIT_PARAMETRES = True
@@ -60,8 +60,12 @@ def convertir(brut: Any, parametres: dict[str, Any] | None = None) -> list[dict[
         for k in ("ville", "site", "pays"):
             if lu.get(k):
                 e[k] = lu[k]
+        if e.get("site") and p.get("site_prefixe") and not e["site"].startswith(("http://", "https://")):
+            e["site"] = str(p["site_prefixe"]) + e["site"]  # le service ne rend qu'un identifiant ou un slug (chaîne YouTube, agenda OpenAgenda) : l'adresse s'en déduit
         if lu.get("numero"):
             e["numero"] = lu["numero"]
+        if isinstance(champs.get("alias"), str) and champs["alias"] and (autres := alias_de(lu["nom"], _lire(it, champs["alias"]))):  # les autres noms déclarés (texte ou liste)
+            e["alias"] = autres
         if genre:
             e["genre"] = genre
         if p.get("pays") and "pays" not in e:
@@ -83,7 +87,7 @@ def chercher(entree: dict[str, Any], client: Client, parametres: dict[str, Any])
         return []
     limite = min(int(entree.get("limite") or 25), 200)
     valeurs = {"quoi": quoi, "mots_cles": " ".join(mots_significatifs(quoi)) or quoi, "lieu": str(entree.get("lieu", "")).strip(), "sujet": str(entree.get("sujet", "")).strip(),
-               "limite": limite, "mots_et_lieu": f"{quoi} {entree.get('lieu', '')}".strip(),
+               "limite": limite, "pays": str(entree.get("pays") or "").upper(), "mots_et_lieu": f"{quoi} {entree.get('lieu', '')}".strip(),
                "aujourdhui": date.today().isoformat(), "il_y_a_30_jours": (date.today() - timedelta(days=30)).isoformat(), "il_y_a_un_an": (date.today() - timedelta(days=365)).isoformat()}  # fmt: skip
     if parametres.get("fichier"):  # fichier local : lu en entier, filtré sur le nom
         return _fichier(parametres, quoi, limite)
@@ -108,11 +112,18 @@ def chercher(entree: dict[str, Any], client: Client, parametres: dict[str, Any])
 
 def _exactes(noms: list[dict[str, Any]], parametres: dict[str, Any], entree: dict[str, Any]) -> list[dict[str, Any]]:
     """`correspondance_exacte` : une source qui VÉRIFIE ne confirme un nom que si la source rend EXACTEMENT ce nom (formes juridiques, casse, accents et ponctuation mis
-    à part). Sans cela, la première réponse approchante serait prise pour une confirmation."""
-    if not parametres.get("correspondance_exacte"):
+    à part). Sans cela, la première réponse approchante serait prise pour une confirmation.
+    Ne joue qu'en vérification et en enrichissement (l'entrée porte alors un `nom`) : en recherche par mots, il n'y a pas de nom à retrouver, et un filtre exact viderait toujours la liste."""
+    if not parametres.get("correspondance_exacte") or "nom" not in entree:
         return noms
-    voulu = nom_normalise(str(entree.get("nom") or entree.get("quoi") or ""))  # sans cleanco : ce code tourne aussi dans l'interpréteur de grappes, qui ne l'a pas
-    return [n for n in noms if voulu and nom_normalise(n["nom"]) == voulu]
+    voulu = nom_normalise(str(entree["nom"] or ""))  # sans cleanco : ce code tourne aussi dans l'interpréteur de grappes, qui ne l'a pas
+    if not voulu:
+        return []
+    exacts = [n for n in noms if nom_normalise(n["nom"]) == voulu]
+    # Un nom que le SERVICE déclare être un autre nom de l'entité (« CEA » est le sigle du Commissariat) est une preuve, rangée après les noms identiques. Les alias de la
+    # fiche interrogée, eux, ne servent pas ici : ils feraient confirmer le Commissariat par la société qui s'appelle littéralement « CEA ».
+    par_alias = [n for n in noms if n not in exacts and voulu in {nom_normalise(a) for a in n.get("alias") or []}]
+    return exacts + par_alias
 
 
 def _fichier(parametres: dict[str, Any], quoi: str, limite: int) -> list[dict[str, Any]]:

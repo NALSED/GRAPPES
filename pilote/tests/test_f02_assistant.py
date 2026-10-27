@@ -33,6 +33,7 @@ def test_premiere_installation_detectee_et_menu_cache_cote_page(cfg):
     assert "body.sans-menu.tab{display:none}" in css.replace(" ", "")  # le menu est caché tant que l'assistant n'est pas terminé
 
 
+@pytest.mark.reseau
 def test_le_comportement_de_la_page_sous_node(cfg, tmp_path):
     if shutil.which("node") is None:
         pytest.skip("node absent")

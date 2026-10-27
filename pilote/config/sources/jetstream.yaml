@@ -1,0 +1,53 @@
+# Déclaration d'une source (fiche 01) — branchée le 27/10/2026 (spécification 26 § 2, P1), flux réel contrôlé. Éteinte par défaut.
+id: jetstream
+nom: Bluesky Jetstream (flux des messages)
+description: >-
+  Le flux public de tous les messages de Bluesky, rejoué sur les dernières minutes : rend les comptes qui ont publié un message contenant tous les mots (et emoji) cherchés.
+  Jetstream n'a aucun filtre par mot, il est fait ici. Sans clé.
+trouve: comptes Bluesky qui parlent du sujet à l'instant
+genres:
+- compte
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- emoji
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+fiabilite: D
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.2
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-27'
+exemple_reponse: exemples/jetstream.json
+note: >-
+  Flux réel contrôlé le 27/10/2026 : environ 45 messages par seconde en temps réel (dont une ou deux en français), donc une écoute de quelques secondes ne verrait presque rien ; Jetstream
+  accepte un `cursor` et rejoue dix minutes en quelques secondes, ce que fait la source (30 minutes par défaut, lecture bornée à 25 secondes : sur une fenêtre large la lecture peut être partielle, et
+  les mots rares ne ressortent que s'ils ont été dits dans la fenêtre). Un emoji seul est cherché (♻️ : 5 comptes en 25 s). La spécification 17 range Jetstream en OUTIL ; le rôle OUTIL d'une
+  source relève de la question n° 1 de 14-questions-ouvertes.md (toujours ouverte) : elle est déclarée « chercher » en attendant. Un compte est une personne tant que son nom ne porte pas d'indice
+  institutionnel (règle 8).
+moteur:
+  adaptateur: jetstream
+  parametres:
+    minutes: 30
+    fenetre_s: 25

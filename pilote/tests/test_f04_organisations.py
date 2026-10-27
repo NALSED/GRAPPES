@@ -33,6 +33,7 @@ def declarations_organisations(cfg):
 
 
 # --- [ ] data.gouv.fr, Wikidata et ROR répondent et rendent des noms.
+@pytest.mark.reseau
 def test_ror_rend_des_noms():
     if not en_ligne("https://api.ror.org/v2/organizations?query=universite"):
         pytest.skip("pas de réseau")
@@ -41,6 +42,7 @@ def test_ror_rend_des_noms():
     assert noms[0]["numero"].startswith("https://ror.org/") and all(n["genre"] == "administration" for n in noms)
 
 
+@pytest.mark.reseau
 def test_datagouv_par_son_serveur_mcp_rend_des_noms():
     if not en_ligne("https://mcp.data.gouv.fr/"):
         pytest.skip("pas de réseau")
@@ -79,6 +81,7 @@ def test_lecture_des_organisations_de_data_gouv_sur_un_exemple():
 
 
 # --- [ ] ROR est interrogeable par nom et par pays.
+@pytest.mark.reseau
 def test_ror_par_nom_et_par_pays():
     if not en_ligne("https://api.ror.org/v2/organizations?query=universite"):
         pytest.skip("pas de réseau")
@@ -92,6 +95,7 @@ def test_ror_par_nom_et_par_pays():
 
 
 # --- [ ] La source CKAN générique fonctionne avec au moins deux portails de pays différents en ne changeant que l'adresse.
+@pytest.mark.reseau
 def test_ckan_deux_portails_de_deux_pays_en_changeant_seulement_l_adresse():
     portails = {"CA": "https://open.canada.ca/data", "IE": "https://data.gov.ie"}
     if not all(en_ligne(p + "/api/3/action/organization_list?limit=1") for p in portails.values()):
@@ -172,6 +176,7 @@ def test_singulier_pour_interroger_des_noms_d_organisations():
 
 
 # --- [ ] Les noms issus de ces sources portent la couleur « registre » dans Tri et sont marqués première main.
+@pytest.mark.reseau
 def test_recherche_reelle_les_noms_sont_registre_et_premiere_main(cfg):
     import time
 

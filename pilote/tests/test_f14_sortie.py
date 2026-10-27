@@ -180,6 +180,7 @@ def test_le_gexf_est_un_graphe_valide_avec_ses_liens(monde):
 
 
 # --- [ ] resultat_tsites.csv est accepté par trouver-sites SANS aucune retouche manuelle.
+@pytest.mark.reseau
 def test_resultat_tsites_est_accepte_par_trouver_sites_sans_retouche(monde, tmp_path):
     c, _ = monde
     if not Path("/opt/trouver-sites/pipeline/tsites/importer.py").exists():

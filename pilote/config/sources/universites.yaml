@@ -47,6 +47,7 @@ moteur:
     methode: GET
     params:
       name: '{quoi}'
+    correspondance_exacte: true
     format: json
     liste: ''
     champs:

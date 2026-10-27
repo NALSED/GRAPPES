@@ -238,6 +238,7 @@ def test_catalogue_chercher_assemble_apis_et_jeux(cfg, monkeypatch):
     assert r["apis"][0]["base"] == "https://recherche-entreprises.api.gouv.fr" and len(r["jeux"]) == 2
 
 
+@pytest.mark.reseau
 def test_rendu_de_la_page_ajout_sous_node():
     import shutil
     import subprocess

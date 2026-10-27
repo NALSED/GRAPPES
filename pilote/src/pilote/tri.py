@@ -250,6 +250,7 @@ def fiche(cfg: Config, fabrique: sessionmaker[Session], rid: str, cid: int) -> d
     return {
         "id": c.id, "nom": c.nom, "verifications": verifications, "enrichissements": enrichissements, "origine": c.genre_source, "origine_phrase": cl.ORIGINE_LIBELLE.get(c.genre_source, ""), "endroits": c.nb_endroits,
         "ville": c.ville, "pays": c.pays, "site": c.site, "numero_officiel": c.numero_officiel, "genre_de_chose": c.genre_de_chose,
+        "alias": list((c.faits or {}).get("alias") or []),  # les autres noms que les sources déclarent (sigle, acronyme) : une preuve montrée, jamais une identité
         "decision": ligne.decision, "ressemble_a": ligne.ressemble_a, "sources": sources, "fonction": ligne.fonction, "bloc": ligne.racine,
         "relations": c.relations or [], "rapprochement": ligne.rapproche,
         "verification": True if (r.parametres or {}).get("verification") is None else bool((r.parametres or {}).get("verification")),

@@ -213,6 +213,7 @@ def test_presets_calcules_depuis_les_usages_declares(cfg):
     assert os.path.exists(cfg.dossier_presets / "personnalise.yaml")
 
 
+@pytest.mark.reseau
 def test_rendu_de_la_page_sous_node(cfg, tmp_path):
     import subprocess
 

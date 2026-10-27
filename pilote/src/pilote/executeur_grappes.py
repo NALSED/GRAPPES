@@ -21,6 +21,7 @@ import yaml
 from pilote import budget
 from pilote import reglages as rg
 from pilote.config import Config
+from pilote.emoji_texte import contient, sans_emoji
 from pilote.lancement import code_pays, exploration, limites, phrase_du_sujet
 from pilote.moteur_sources import materialiser
 from pilote.taches import Arret, ContexteRecherche
@@ -62,7 +63,13 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
     phrase = phrase_du_sujet(sujet)
     lim = limites(cfg, params)
     c = lim["cran"]
-    (cible / "sujets.yaml").write_text(yaml.safe_dump({"sujets": [{"nom": "recherche", "phrase": phrase}]}, allow_unicode=True), encoding="utf-8")
+    # Le moteur de collecte de grappes n'a qu'une phrase, et aucune de ses prises ne déclare chercher l'emoji : il ne le reçoit pas (le bilan le dit). Les sources par adaptateur
+    # le reçoivent ou non source par source, dans le pont. Exception dite : une saisie faite SEULEMENT d'emoji ne laisse aucune phrase au moteur, qui en exige une ; il la reçoit
+    # alors telle quelle, et le bilan le dit au lieu de prétendre le contraire.
+    phrase_moteur = sans_emoji(phrase)
+    emoji_seul = contient(phrase) and not phrase_moteur
+    phrase_moteur = phrase_moteur or phrase
+    (cible / "sujets.yaml").write_text(yaml.safe_dump({"sujets": [{"nom": "recherche", "phrase": phrase_moteur}]}, allow_unicode=True), encoding="utf-8")
     plafond = budget.plafond_mensuel(cfg)
     depense, unites = ctx.depense_du_mois() if ctx._fabrique is not None else (0.0, {})
     mat = materialiser(cfg, cible, {**params, "_budget": {"appels_max": lim["appels"], "plafond": plafond, "depense": depense, "unites": unites}})  # les sources choisies, leurs clés, rien d'autre
@@ -118,6 +125,7 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
         "mots_a_inclure": list(sujet.get("inclure") or []), "mots_a_exclure": list(sujet.get("exclure") or []),
         "combien": int(sujet.get("combien") or 200), "pays_code": code_pays(cfg, sujet, rg.charger_tolerant(cfg)[0]), "sources": mat.ids, "adaptateurs": mat.adaptateurs, "verificateurs": mat.verificateurs, "scripts": mat.scripts, "jetons": mat.jetons,
         "exclues_budget": mat.exclues_budget, "origines_sources": mat.origines, "mains_sources": mat.mains, "entree": entree,
+        "emoji": {"saisie": contient(" ".join([phrase, str(sujet.get("lieu", "")), *map(str, sujet.get("inclure") or [])])), "ok": mat.emoji_ok, "moteur_recoit": emoji_seul},
         "plafond_atteint": depense >= plafond, "limite_source_s": min(float(lim["temps_s"]), 180.0) if lim.get("temps_s") else 180.0, "en_pause": mat.en_pause, "reserve_sources": reserve, "reserve_verification": reserve_verif,
     }  # fmt: skip
     if params.get("plan"):  # le plan de travail compilé (suite_plan) : les étapes à jouer sur les noms, les requêtes à traduire, les vérifications à restreindre
@@ -216,6 +224,7 @@ class ExecuteurGrappes:
         if res["statut"] == "simulation":
             raise RuntimeError(res.get("message", "simulation"))
         self.faire_le_bilan(ctx, spec, suivi_fichier)
+        self.dire_l_emoji(ctx, spec)
         self.dire_le_plan(ctx, spec, res.get("plan"))
         self.dire_la_verification(ctx, res.get("verifications") or [])
         lignes = json.loads((ctx.dossier / "candidats.json").read_text(encoding="utf-8")) if (ctx.dossier / "candidats.json").exists() else []
@@ -259,6 +268,24 @@ class ExecuteurGrappes:
             ctx.noter("plan_requete_traduite" if "echec" not in tr else "plan_traduction_en_echec", **tr)
         if plan.get("traduction_non_appliquee"):
             ctx.noter("plan_traduction_non_appliquee", sources=plan["traduction_non_appliquee"], raison="la source passe par le moteur de collecte de grappes, qui n'a qu'une langue de requête")
+
+    def dire_l_emoji(self, ctx: ContexteRecherche, spec: dict[str, Any]) -> None:
+        """Règle 1 appliquée à la requête : un emoji que la source ne cherche pas n'est pas transmis, et la recherche DIT à combien de sources. Sans cela, elles rendaient zéro
+        résultat sans explication (un service qui découpe en mots perd l'emoji à l'indexation)."""
+        e = spec.get("emoji") or {}
+        if not e.get("saisie"):
+            return
+        ok = set(e.get("ok") or [])
+        par_le_pont = {a["source"] for a in spec.get("adaptateurs", [])} | {s["source"] for s in spec.get("scripts", [])}
+        sans = [s for s in spec.get("sources", []) if s not in ok]
+        # saisie faite que d'emoji : le moteur de collecte l'a reçue telle quelle (il exige une phrase) ; ses sources n'ont donc PAS été privées de l'emoji, on ne le prétend pas
+        a_l_aveugle = [s for s in sans if e.get("moteur_recoit") and s not in par_le_pont]
+        non = [s for s in sans if s not in a_l_aveugle]
+        ctx.avancer(emoji={"transmis": sorted(ok & set(spec.get("sources", []))), "non_transmis": non, "a_l_aveugle": a_l_aveugle})
+        if non:
+            ctx.noter("emoji_non_transmis", sources=non)
+        if a_l_aveugle:
+            ctx.noter("emoji_envoye_sans_garantie", sources=a_l_aveugle)
 
     def dire_la_verification(self, ctx: ContexteRecherche, bilans: list[dict[str, Any]]) -> None:
         """Combien de noms chaque source de vérification a pu examiner. Une vérification coupée au milieu est DITE : sans cela,

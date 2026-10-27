@@ -1,0 +1,69 @@
+# Déclaration d'une source (fiche 01) — branchée le 27/10/2026 (spécification 26 § 2, P2 : clé gratuite à créer). Éteinte par défaut.
+id: youtube
+nom: YouTube (chaînes)
+description: >-
+  Les chaînes YouTube trouvées par mot-clé, par l'API officielle (YouTube Data API v3, search.list, type=channel). Source de première main, gratuite dans un quota journalier :
+  mieux que de payer un prestataire pour la même information de seconde main. Une clé de projet Google est requise.
+trouve: chaînes YouTube
+genres:
+- compte
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+- pays
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: premiere
+origine: web
+fiabilite: C
+famille: api
+roles:
+- chercher
+cle: YOUTUBE_API_KEY
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 3000
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-27'
+exemple_reponse: exemples/youtube.json
+note: >-
+  NON vérifiée contre le service réel : aucune clé YouTube n'est enregistrée sur cette machine. Forme et quota d'après la documentation officielle (developers.google.com/youtube/v3, lue
+  le 27/10/2026) : GET /youtube/v3/search?part=snippet&type=channel&q=…&regionCode=…&maxResults=… rend {items: [{id: {channelId}, snippet: {title}}]}. Quota cité mot pour mot par la
+  page « Quota costs » : « search / list : 100 quota per day. Each call costs 1 quota. » — soit 100 recherches par jour au maximum (3 000 par mois comptés ici) ; le quota du projet est
+  à confirmer dans la console Google avant de dimensionner l'usage, il peut changer. La clé part dans l'adresse (paramètre « key », seul mode de l'API) : elle n'est jamais journalisée.
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://www.googleapis.com/youtube/v3/search
+    methode: GET
+    auth:
+      type: query
+      nom: key
+    params:
+      part: snippet
+      type: channel
+      q: '{quoi}'
+      regionCode: '{pays}'
+      maxResults: '{limite}'
+    format: json
+    liste: items
+    champs:
+      nom: snippet.title
+      site: id.channelId
+    site_prefixe: https://www.youtube.com/channel/
+    genre: compte
+    origine_texte: YouTube (chaîne publique)

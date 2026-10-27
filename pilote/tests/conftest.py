@@ -26,6 +26,13 @@ def copier_config(dest: Path, grappes_secrets: str = "", **surcharges) -> Path:
     return f
 
 
+def pytest_collection_modifyitems(items):
+    """Un test qui demande le navigateur de test dépend d'un outil extérieur : il porte la marque `reseau` sans qu'on ait à l'écrire à chaque fois."""
+    for item in items:
+        if "chromium" in getattr(item, "fixturenames", ()):
+            item.add_marker(pytest.mark.reseau)
+
+
 @pytest.fixture
 def cfg(tmp_path):
     return charger(copier_config(tmp_path))

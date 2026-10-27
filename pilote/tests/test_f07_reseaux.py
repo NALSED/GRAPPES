@@ -43,6 +43,7 @@ def du_preset(cfg):
 
 
 # --- [ ] Telegram fonctionne par annuaires, sans clé payante.
+@pytest.mark.reseau
 def test_telegram_par_annuaires_sans_cle_rend_des_comptes():
     if not en_ligne("http://127.0.0.1:8888/healthz"):
         pytest.skip("SearXNG local absent")
@@ -152,6 +153,7 @@ def test_bluesky_et_mastodon_sont_gratuits_sans_cle(cfg):
         assert d.cle == "" and not d.payant and d.defaut == {"chercher": False, "verifier": False}
 
 
+@pytest.mark.reseau
 def test_bluesky_et_mastodon_publics_repondent():
     if not en_ligne("https://public.api.bsky.app/xrpc/app.bsky.actor.searchActors?q=a&limit=1"):
         pytest.skip("pas de réseau")
@@ -175,8 +177,7 @@ def test_les_trois_prestataires_utilisent_le_meme_module_generique(cfg):
 @pytest.fixture
 def faux_mcp(tmp_path):
     py = charger_config().python_grappes
-    if not py.exists():
-        pytest.skip("interpréteur de grappes absent")
+    assert py.exists(), f"l'interpréteur de grappes est introuvable ({py}) : pilote ne peut pas tourner sans lui, ce test ne se saute pas"
     with socket.socket() as s:
         s.bind(("127.0.0.1", 0))
         port = s.getsockname()[1]

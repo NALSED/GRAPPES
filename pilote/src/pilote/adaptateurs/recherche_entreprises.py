@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pilote.adaptateurs import Client, ErreurSource, mots_significatifs
+from pilote.adaptateurs import Client, ErreurSource, alias_de, mots_significatifs
 
 URL = "https://recherche-entreprises.api.gouv.fr/search"
 PAR_PAGE = 25
@@ -58,6 +58,8 @@ def convertir(rep: dict[str, Any], filtre: str = "", etablissements: int = 0) ->
             "numero": str(c.get("identifiant_association") or r.get("siren") or ""), "ville": str(s.get("libelle_commune") or "").title(),
             "pays": "FR", "genre": genre, "fonction": "siège",
         }  # fmt: skip
+        if alias := alias_de(nom, r.get("sigle")):  # le sigle déclaré au registre (CEA), que nom_complet ne porte que collé entre parenthèses
+            e["alias"] = alias
         if s.get("latitude") and s.get("longitude"):
             try:
                 e["coordonnees"] = {"lat": float(s["latitude"]), "lon": float(s["longitude"])}

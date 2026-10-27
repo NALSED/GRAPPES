@@ -37,6 +37,7 @@ def sources_du_preset(cfg):
 
 
 # --- [ ] Le registre français des associations et Wikidata répondent et rendent des noms.
+@pytest.mark.reseau
 def test_le_registre_francais_des_associations_rend_des_associations():
     if not en_ligne("https://recherche-entreprises.api.gouv.fr/search?q=a&per_page=1"):
         pytest.skip("pas de réseau")

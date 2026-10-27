@@ -4,7 +4,7 @@
 "use strict";
 (function(){
   function el(id){return document.getElementById(id)}
-  var PANNEAUX={api:"t-api",mcp:"t-mcp",fichier:"t-fichier",base:"t-base",programme:"t-prog",adaptateur:"t-autre"};
+  var PANNEAUX={api:"t-api",mcp:"t-mcp",fichier:"t-fichier",base:"t-base",base_exterieure:"t-baseext",programme:"t-prog",adaptateur:"t-autre"};
   function afficher(){
     var t=el("t-type").value;
     el("t-rss").style.display=t==="rss"?"block":"none";
@@ -12,7 +12,7 @@
     Object.keys(PANNEAUX).forEach(function(k){el(PANNEAUX[k]).style.display=k===t?"grid":"none"});
     el("t-champs").style.display=(t==="api"||t==="mcp"||t==="fichier")?"grid":"none";
     el("t-exemple").style.display=(t==="api"||t==="mcp")?"block":"none";
-    el("t-cle-zone").style.display=(t==="fichier"||t==="base"||t==="programme")?"none":"block";
+    el("t-cle-zone").style.display=(t==="fichier"||t==="base"||t==="base_exterieure"||t==="programme")?"none":"block";
   }
   function genres(){
     api("/api/reglages").then(function(d){el("t-genre").innerHTML=d.genres.map(function(g){return '<option value="'+esc(g)+'">'+esc(g)+"</option>"}).join("")}).catch(function(){});
@@ -44,6 +44,8 @@
     if(t==="adaptateur")return {type:"adaptateur",spec:Object.assign(commun,{url:el("t-aurl").value.trim(),protocole:el("t-proto").value})};
     if(t==="fichier")return {type:"fichier",spec:Object.assign(commun,{chemin:el("t-chemin").value.trim(),format:el("t-format").value,delimiteur:el("t-sep").value,champs:champs,liste:el("t-liste").value.trim()})};
     if(t==="base")return {type:"base",spec:Object.assign(commun,{base:el("t-basef").value.trim(),requete:el("t-sql").value,mot_essai:el("t-essai").value.trim()})};
+    if(t==="base_exterieure")return {type:"base_exterieure",spec:Object.assign(commun,{systeme:el("t-bx-sys").value,hote:el("t-bx-hote").value.trim(),port:parseInt(el("t-bx-port").value,10)||"",base_nom:el("t-bx-base").value.trim(),
+      utilisateur:el("t-bx-user").value.trim(),mot_de_passe:el("t-bx-mdp").value,requete:el("t-bx-sql").value,mot_essai:el("t-bx-essai").value.trim()})};
     return {type:"programme",spec:Object.assign(commun,{commande:el("t-cmd").value.split("\n").map(function(x){return x.trim()}).filter(Boolean),delai_s:parseFloat(el("t-delai").value)||10,exemple:exemple})};
   }
   el("t-type").onchange=afficher;
@@ -52,7 +54,7 @@
     el("t-msg").textContent="Enregistrement et test en cours…";
     var chemin=c.type==="programme"?"/api/programmes-locaux":"/api/ajout/source",corpsEnvoye=c.type==="programme"?Object.assign({nom:c.spec.nom},c.spec):c;
     envoyer(chemin,"POST",corpsEnvoye).then(function(r){
-      el("t-cle-val").value="";  /* la clé est rangée côté serveur : on ne la garde pas dans la page */
+      el("t-cle-val").value="";el("t-bx-mdp").value="";  /* la clé et le mot de passe sont rangés côté serveur : on ne les garde pas dans la page */
       if(c.type==="adaptateur"){el("t-msg").textContent="Enregistrée, éteinte : cette source demande un adaptateur (un petit programme à écrire). Elle apparaît dans Réglages avec ce message et ne s’allume pas avant.";return}
       el("t-msg").textContent="Enregistrée, éteinte. "+(r.test.statut==="ok"?"Test local réussi : ":"Test local échoué : ")+(r.test.statut==="ok"?(r.test.noms_exemple||[]).map(function(n){return n.nom}).join(", "):r.test.raison)
         +(r.test.statut==="ok"?" — à activer dans Réglages.":" — elle reste éteinte tant que le test ne passe pas.");

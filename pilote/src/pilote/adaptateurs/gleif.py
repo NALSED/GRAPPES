@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pilote.adaptateurs import Client, ErreurSource, mots_significatifs, singulier
+from pilote.adaptateurs import Client, ErreurSource, alias_de, mots_significatifs, singulier
 
 URL = "https://api.gleif.org/api/v1/lei-records"
 ENTETE = {"Accept": "application/vnd.api+json"}
@@ -27,10 +27,11 @@ def convertir(rep: dict[str, Any]) -> list[dict[str, Any]]:
         if not nom:
             continue
         adr = e.get("legalAddress") or {}
+        autres = alias_de(nom, [o.get("name", "") for o in (e.get("otherNames") or []) + (e.get("transliteratedOtherNames") or []) if isinstance(o, dict)])  # `entity.otherNames[].name`, relevé sur une réponse réelle
         out.append({
             "nom": nom.title() if nom.isupper() else nom, "origine": "GLEIF (identifiants d'entités juridiques)", "numero": str(e.get("registeredAs") or a.get("lei") or ""),
             "ville": str(adr.get("city") or "").title(), "pays": str(adr.get("country") or ""), "genre": "entreprise",
-            "fonction": "filiale" if _lien(r, "direct-parent") else "siège", "relations": [],
+            "fonction": "filiale" if _lien(r, "direct-parent") else "siège", "relations": [], **({"alias": autres} if autres else {}),
             "_parent": _lien(r, "direct-parent"), "_ultime": _lien(r, "ultimate-parent"),
         })  # fmt: skip
     return out

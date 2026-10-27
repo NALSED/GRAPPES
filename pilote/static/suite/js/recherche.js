@@ -156,6 +156,7 @@ function ligneSauvegardee(r) {
       h("div", { class: "sauvee-meta" }, h("span", { class: "fort" }, r.titre), h("span", { class: `mode ${avancee ? "avancee" : ""}`.trim() }, r.mode)),
       h("span", { class: "legende" }, r.detail),
       r.verification && h("span", { class: "legende", dataset: { verification: r.id } }, r.verification),
+      r.emoji && h("span", { class: "legende", dataset: { emoji: r.id } }, r.emoji),
       r.ecartes && h("details", { class: "legende", dataset: { ecartes: r.id } },
         h("summary", {}, `${r.ecartes.n} écarté${r.ecartes.n > 1 ? "s" : ""} par un filtre`), // règle 1 : un retrait reste consultable
         h("ul", {}, r.ecartes.noms.map((nom) => h("li", {}, nom))),

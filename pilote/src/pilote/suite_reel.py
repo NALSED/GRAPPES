@@ -14,6 +14,7 @@ from typing import Any
 
 from pilote import cles
 from pilote import reglages as rg
+from pilote.adaptateurs import base_exterieure
 from pilote.api_reglages import adaptateur_manquant, voyant
 from pilote.config import Config
 from pilote.etat_sources import lire as lire_etat
@@ -112,6 +113,10 @@ def vue_source(
     else:
         etat = "warn"  # jamais testée, test échoué, clé absente, en pause, adaptateur manquant : « à vérifier »
     copie = _copie(cfg, d)
+    base_ext = d.moteur.get("adaptateur") == "base_exterieure"  # Accès : API / Copie locale / Base extérieure (ni quota, ni date de copie, mais une adresse de machine et des identifiants)
+    acces = "base_exterieure" if base_ext else "copie_locale" if copie is not None else "api"
+    p_ext = (d.moteur.get("parametres") or {}) if base_ext else {}
+    machine = f"{p_ext.get('hote', '')}:{p_ext.get('port') or base_exterieure.SYSTEMES.get(str(p_ext.get('systeme', '')), '')}/{p_ext.get('base_nom', '')}" if base_ext else ""
     if copie is not None and not copie["installee"] and etat != "off":
         etat = "warn"  # une source en copie locale sans sa copie ne peut rien rendre : « à vérifier », jamais « ok »
     cats = _cats(d)
@@ -128,7 +133,7 @@ def vue_source(
         "langue": sur.get("langue") or LANGUE_DU_PAYS.get(pays[0], ""), "etat": etat, "quota": _quota(d, e, unites), "description": d.description,
         "retiree": bool(sur.get("retiree")), "test_reussi": teste, "tests": tests, "declaree": True, "cle_requise": bool(d.cles),
         "cle": bool(d.cles) and cles.toutes_presentes(cfg, d.cles), "voyant": mot, "domaine": domaine_source(d), "chercher": ch["chercher"], "verifier": ch["verifier"],
-        "copie": copie, "peut_chercher": "chercher" in d.roles, "verifie_sur": d.verifie_sur if "adaptateur" in d.moteur else "", "avertissement": d.avertissement, "adaptateur_manquant": manquant,
+        "emoji": "emoji" in d.consomme, "acces": acces, "machine": machine, "copie": copie, "peut_chercher": "chercher" in d.roles, "verifie_sur": d.verifie_sur if "adaptateur" in d.moteur else "", "avertissement": d.avertissement, "adaptateur_manquant": manquant,
     }  # fmt: skip
 
 

@@ -1,0 +1,8 @@
+{
+  "after": [1, 125325],
+  "total": 2,
+  "agendas": [
+    {"uid": 62695, "official": true, "title": "Club Exemple — agenda", "slug": "club-exemple", "description": "Les événements du club.", "image": ""},
+    {"uid": 62696, "official": false, "title": "Médiathèque Exemple", "slug": "mediatheque-exemple", "description": "", "image": ""}
+  ]
+}

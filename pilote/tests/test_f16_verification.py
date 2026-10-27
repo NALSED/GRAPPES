@@ -79,6 +79,7 @@ def test_un_arret_demande_coupe_la_verification_sans_perdre_les_candidats(monkey
 
 
 # --- [ ] Contre le vrai service : un site connu reçoit une capture, un site inventé n'en reçoit pas.
+@pytest.mark.reseau
 def test_wayback_reel_sur_des_candidats():
     if not en_ligne("https://archive.org/wayback/available?url=archive.org"):
         pytest.skip("pas de réseau")
@@ -90,6 +91,7 @@ def test_wayback_reel_sur_des_candidats():
 
 
 # --- [ ] De bout en bout : une vraie recherche (programme local + pont de grappes) ajoute la capture Wayback au candidat qui a un site.
+@pytest.mark.reseau
 def test_recherche_complete_avec_wayback_en_verification(cfg, tmp_path):
     import json
     import sys

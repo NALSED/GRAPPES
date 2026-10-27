@@ -9,7 +9,7 @@ import json
 import re
 from typing import Any
 
-from pilote.adaptateurs import Client, ErreurSource
+from pilote.adaptateurs import Client, ErreurSource, alias_de
 
 LIT_PARAMETRES = True
 LIEN = re.compile(r"\[([^\]\n]{2,200})\]\((https?://[^)\s]+)\)")
@@ -72,6 +72,9 @@ def convertir(brut: Any, parametres: dict[str, Any] | None = None) -> list[dict[
                         e["coordonnees"] = {"lat": float(_lire(it, coord["lat"])), "lon": float(_lire(it, coord["lon"]))}
                 except (KeyError, TypeError, ValueError):
                     pass
+                chemins = [p["alias"]] if isinstance(p.get("alias"), str) else list(p.get("alias") or [])  # champs qui portent les autres noms déclarés (texte ou liste)
+                if autres := alias_de(lu["nom"], *[_lire(it, c) for c in chemins]):
+                    e["alias"] = autres
                 out.append(e)
         return out
     if not isinstance(brut, str):

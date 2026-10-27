@@ -206,6 +206,7 @@ def test_ressemblances_prudentes():
     assert set(r) == {1, 2}  # « Paris Handball » n'est pas le début ni la fin de « Paris Saint-Germain Handball »
 
 
+@pytest.mark.reseau
 def test_rendu_de_la_page_tri_sous_node():
     import subprocess
 

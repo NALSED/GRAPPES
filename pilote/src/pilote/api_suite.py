@@ -9,7 +9,7 @@ from fastapi import APIRouter, Body, HTTPException
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session, sessionmaker
 
-from pilote import actions, budget, rapprochements, suite, suite_modele, suite_plan, suite_reel, tri
+from pilote import actions, budget, emoji_texte, rapprochements, suite, suite_modele, suite_plan, suite_reel, tri
 from pilote.base import Candidat, Journal, Recherche
 from pilote.config import Config
 from pilote.refus import ConfigRefusee
@@ -56,6 +56,7 @@ def construire(cfg: Config, fabrique: sessionmaker[Session], gestionnaire: Any) 
                     rch["resultat"] = _resultat(s, rch["recherche_id"]) or rch["resultat"]
                     rch["verification"] = _verification(s, rch["recherche_id"])
                     rch["ecartes"] = _ecartes(s, rch["recherche_id"])
+                    rch["emoji"] = _emoji(s, rch["recherche_id"])
         v["modele"] = bool(cfg.suite_modele_url) and suite_modele.disponible(cfg.suite_modele_url)
         return v
 
@@ -66,6 +67,19 @@ def construire(cfg: Config, fabrique: sessionmaker[Session], gestionnaire: Any) 
         if not n:
             return None
         return {"n": n, "noms": [x for e in evts for x in (e.detail or {}).get("noms", [])]}
+
+    def _emoji(s: Session, rid: str) -> str:
+        """« emoji non transmis à n sources » : la saisie contenait un emoji et ces sources ne déclarent pas le chercher."""
+        rch = s.get(Recherche, rid)
+        bilan = ((rch.avancement if rch else None) or {}).get("emoji") or {}
+        non, aveugle = [str(x) for x in bilan.get("non_transmis") or []], [str(x) for x in bilan.get("a_l_aveugle") or []]
+        nom_source = tri.noms_de_sources(cfg)
+        morceaux = []
+        if non:
+            morceaux.append(f"emoji non transmis à {len(non)} source{'s' if len(non) > 1 else ''} : " + ", ".join(nom_source(x) for x in non))
+        if aveugle:  # saisie faite seulement d'emoji : le moteur de collecte l'a reçue telle quelle, sans que ses sources déclarent le chercher
+            morceaux.append(f"emoji envoyé tel quel à {len(aveugle)} source{'s' if len(aveugle) > 1 else ''} qui ne déclarent pas le chercher : " + ", ".join(nom_source(x) for x in aveugle))
+        return " · ".join(morceaux)
 
     def _verification(s: Session, rid: str) -> str:
         """« X sur Y noms vérifiés » par source de vérification : une absence de signalement ne veut JAMAIS dire « vérifié » (décision du 27/10 : budget des clés gratuites, limite dite)."""
@@ -380,7 +394,7 @@ def construire(cfg: Config, fabrique: sessionmaker[Session], gestionnaire: Any) 
     @r.post("/aide/verifier_plan")
     def aide_verifier(corps: dict[str, Any] = Corps) -> dict[str, Any]:
         langue = suite.detecter_langue(str(corps["saisie"])) if corps.get("saisie") else corps.get("langue")
-        return {"constats": suite.verifier_plan(suite.charger(cfg, unites()), langue), "langue_saisie": langue}
+        return {"constats": suite.verifier_plan(suite.charger(cfg, unites()), langue, saisie_emoji=emoji_texte.contient(str(corps.get("saisie") or ""))), "langue_saisie": langue}
 
     @r.post("/aide/definir")
     def aide_definir(corps: dict[str, Any] = Corps) -> dict[str, Any]:

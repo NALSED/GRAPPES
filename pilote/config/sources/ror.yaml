@@ -21,6 +21,7 @@ produit:
 - ville
 - site
 - numero
+- alias
 main: premiere
 origine: registre
 roles:

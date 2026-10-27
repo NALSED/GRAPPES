@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pilote.adaptateurs import Client, singulier
+from pilote.adaptateurs import Client, alias_de, singulier
 
 URL = "https://api.ror.org/v2/organizations"
 # vocabulaire de ROR -> genres génériques du programme
@@ -20,6 +20,11 @@ def _nom(item: dict[str, Any]) -> str:
         if "ror_display" in (n.get("types") or []):
             return str(n.get("value", "")).strip()
     return str((noms[0] if noms else {}).get("value", "")).strip()
+
+
+def _alias(item: dict[str, Any], nom: str) -> list[str]:
+    """Les noms de type `acronym` et `alias` (ROR v2 en documente quatre : acronym, alias, label, ror_display). « CEA » est un `acronym`."""
+    return alias_de(nom, [n.get("value", "") for n in item.get("names") or [] if {"acronym", "alias"} & set(n.get("types") or [])])
 
 
 def convertir(rep: dict[str, Any]) -> list[dict[str, Any]]:
@@ -38,6 +43,8 @@ def convertir(rep: dict[str, Any]) -> list[dict[str, Any]]:
             "genre": next((GENRES[t] for t in types if t in GENRES), ""),
             "relations": [{"type": RELATIONS.get(r.get("type", ""), r.get("type", "")), "vers": str(r.get("label", ""))} for r in it.get("relationships") or [] if r.get("label")],
         }  # fmt: skip
+        if alias := _alias(it, nom):
+            e["alias"] = alias
         if loc.get("lat") is not None and loc.get("lng") is not None:
             e["coordonnees"] = {"lat": loc["lat"], "lon": loc["lng"]}
         out.append(e)

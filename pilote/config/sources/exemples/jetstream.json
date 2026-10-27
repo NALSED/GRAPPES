@@ -1,0 +1,6 @@
+{
+  "profiles": [
+    {"did": "did:plc:exemple000000000000001", "handle": "club-exemple.bsky.social", "displayName": "Club Exemple"},
+    {"did": "did:plc:exemple000000000000002", "handle": "mediatheque.exemple.example", "displayName": "Médiathèque Exemple"}
+  ]
+}

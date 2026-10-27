@@ -161,15 +161,17 @@ def main(dossier: str) -> int:
 
         from pilote import adaptateurs
         from pilote.adaptateurs import programmes
+        from pilote.emoji_texte import requete_pour
+        from pilote.regle8 import genre_retenu
 
-        entree_base = {"sujet": phrase, "pays": spec.get("pays_code", ""), "limite": int(spec.get("combien", 200)), **spec.get("entree", {})}
+        entree_base = {"sujet": spec.get("phrase") or phrase, "pays": spec.get("pays_code", ""), "limite": int(spec.get("combien", 200)), **spec.get("entree", {})}
 
         def vers_decouvert(source: str, n: dict) -> Decouvert:
             num = str(n.get("numero", "") or "")
             return Decouvert(
                 str(n["nom"]).strip(), source, num or str(n["nom"]).strip(), str(n.get("ville", "") or ""), str(n.get("site", "") or ""),
-                num if num.isdigit() and len(num) in (9, 14) else "", str(n.get("origine", "")), str(n.get("genre", "") or ""), "",
-                {k: json.dumps(n[k], ensure_ascii=False) for k in ("relations", "coordonnees", "fonction") if n.get(k)},
+                num if num.isdigit() and len(num) in (9, 14) else "", str(n.get("origine", "")), genre_retenu(str(n.get("genre", "") or ""), str(n["nom"])), "",
+                {k: json.dumps(n[k], ensure_ascii=False) for k in ("relations", "coordonnees", "fonction", "alias") if n.get(k)},
             )  # fmt: skip
 
         def cles_de_la_copie() -> dict[str, str]:
@@ -185,8 +187,20 @@ def main(dossier: str) -> int:
         effets_traduction: list[dict] = []
         traduits: dict[tuple, dict] = {}
 
+        emoji_ok = set((spec.get("emoji") or {}).get("ok") or [])
+
         def entree_de(source: str) -> dict:
-            """La requête que reçoit cette source : traduite vers sa langue si le plan place une Traduction avant elle (l'original reste dans le journal)."""
+            """La requête que reçoit cette source : traduite vers sa langue si le plan place une Traduction avant elle (l'original reste dans le journal), et privée de ses
+            emoji si la source ne déclare pas les chercher (`consomme: emoji`) : un service qui découpe en mots perd l'emoji sans le dire et rendrait zéro résultat."""
+            return requete_pour(entree_traduite(source), source in emoji_ok)
+
+        def emoji_seul(source: str) -> bool:
+            """La saisie n'est faite que d'emoji que cette source ne cherche pas : une fois retirés il ne reste rien à lui demander (on ne l'appelle pas, et on le dit)."""
+            avant, apres = entree_traduite(source), entree_de(source)
+            textes = lambda e: [str(e.get("quoi") or ""), *map(str, e.get("mots_cles") or [])]
+            return any(t.strip() for t in textes(avant)) and not any(t.strip() for t in textes(apres))
+
+        def entree_traduite(source: str) -> dict:
             t = (plan.get("traductions") or {}).get(source)
             if not t:
                 return entree_base
@@ -243,6 +257,9 @@ def main(dossier: str) -> int:
                 for reste, _ in executions[n:]:
                     avancement.signaler("source_echec", prise=reste, raison=f"non appelée : {resultat['arret'] or 'limite'} atteint avant son tour")
                 break
+            if source not in emoji_ok and emoji_seul(source):
+                avancement.signaler("prise_fin", prise=source, trouves=0, noms=0, statut="non appelée : la saisie ne contient qu'un emoji, que cette source ne cherche pas")  # ni succès ni panne
+                continue
             avancement.signaler("prise_debut", prise=source)
             raison = ""
             try:

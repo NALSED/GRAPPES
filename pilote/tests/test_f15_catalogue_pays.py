@@ -74,6 +74,7 @@ def test_phrase_de_taille():
     assert catalogue_pays.phrase_taille(5_100_000_000) == "5.1 Go" and catalogue_pays.phrase_taille(123_000_000) == "123 Mo" and "inconnu" in catalogue_pays.phrase_taille(None)
 
 
+@pytest.mark.reseau
 def test_taille_reelle_demandee_au_serveur_sans_rien_telecharger(cfg):
     url = next(b["telechargement"] for b in catalogue_pays.charger(cfg)[0]["EE"]["bases"] if "telechargement" in b)
     n = catalogue_pays.taille(url)

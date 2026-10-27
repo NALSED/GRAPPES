@@ -15,6 +15,7 @@ produit:
 - numero
 - fonction
 - relations
+- alias
 usages:
 - entreprises
 cle: ''

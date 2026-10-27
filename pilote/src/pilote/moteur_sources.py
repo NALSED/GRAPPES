@@ -105,6 +105,16 @@ class Materialise:
     couts: dict[str, dict[str, Any]] = field(default_factory=dict)  # source -> coût effectif (pour compter la dépense)
     verificateurs: list[dict[str, Any]] = field(default_factory=list)  # {source, module, parametres, cles_noms} : sources « vérifier » appelées sur chaque candidat qui a un site
     en_pause: list[dict[str, str]] = field(default_factory=list)  # sources mises en pause par le disjoncteur (fiche 11) : écartées sans être appelées
+    emoji_ok: list[str] = field(default_factory=list)  # sources utilisées qui déclarent chercher un emoji (`consomme: emoji`, essayé contre le service réel) : les seules à le recevoir
+
+
+def _delai(donnes: dict[str, Any]) -> dict[str, float]:
+    """`parametres.delai_s` : la pause minimale entre deux appels, quand le service limite son débit. Une valeur illisible (réglage de l'utilisateur) est ignorée, elle ne fait pas échouer la recherche."""
+    try:
+        d = float(donnes.get("delai_s") or 0)
+    except (TypeError, ValueError):
+        return {}
+    return {"delai_s": min(d, 30.0)} if d > 0 else {}
 
 
 def materialiser(cfg: Config, cible: Path, params: dict[str, Any]) -> Materialise:
@@ -127,7 +137,8 @@ def materialiser(cfg: Config, cible: Path, params: dict[str, Any]) -> Materialis
         utilisees = [d for d in utilisees if d.id in gardes]
         verif = [d for d in verif if d.id in gardes]
     res = Materialise(ids=[d.id for d in utilisees], origines={d.id: d.origine for d in utilisees}, mains={d.id: d.main for d in utilisees},
-                      exclues_budget=exclues, couts={d.id: rg.choix_source(reg, d)["cout"] for d in utilisees}, en_pause=en_pause)
+                      exclues_budget=exclues, couts={d.id: rg.choix_source(reg, d)["cout"] for d in utilisees}, en_pause=en_pause,
+                      emoji_ok=sorted(d.id for d in utilisees if "emoji" in d.consomme))
     dossier = cible / "recherche"
     dossier.mkdir(exist_ok=True)
     par_id: dict[str, Path] = {}
@@ -157,7 +168,7 @@ def materialiser(cfg: Config, cible: Path, params: dict[str, Any]) -> Materialis
             donnes = {**(m.get("parametres") or {}), **rg.parametres_donnes(reg, d.id)}
             donnes["_dossier_config"] = str(cfg.dossier_config)  # où l'adaptateur retrouve les catalogues de données (types de lieu...)
             donnes["_dossier_copies"] = str(cfg.dossier_copies)  # et les copies locales de bases (source « fichier_local »)
-            res.adaptateurs.append({"source": d.id, "module": str(m["adaptateur"]), "parametres": donnes, "cles_noms": d.cles, "local": not d.mode.get("en_ligne", True)})
+            res.adaptateurs.append({"source": d.id, "module": str(m["adaptateur"]), "parametres": donnes, "cles_noms": d.cles, "local": not d.mode.get("en_ligne", True), **_delai(donnes)})
             res.jetons[d.id] = d.id
             continue
         elif "flux_rss" in m:  # la liste de flux de l'utilisateur : une prise de grappes par flux
@@ -205,7 +216,8 @@ def materialiser(cfg: Config, cible: Path, params: dict[str, Any]) -> Materialis
         donnes = {**(d.moteur.get("parametres") or {}), **rg.parametres_donnes(reg, d.id), "_dossier_copies": str(cfg.dossier_copies)}
         du_plan = {v["id"]: v for v in (params.get("plan") or {}).get("verificateurs", [])}.get(d.id) or {}
         en_amont = du_plan.get("en_amont")  # None = tous les résultats
-        res.verificateurs.append({"source": d.id, "fonction": du_plan.get("fonction") or "verifier", "verifie_sur": d.verifie_sur, "module": str(d.moteur["adaptateur"]), "parametres": donnes, "cles_noms": d.cles, "en_amont": en_amont, "local": not d.mode.get("en_ligne", True)})
+        res.verificateurs.append({"source": d.id, "fonction": du_plan.get("fonction") or "verifier", "verifie_sur": d.verifie_sur, "module": str(d.moteur["adaptateur"]), "parametres": donnes, "cles_noms": d.cles, "en_amont": en_amont, "local": not d.mode.get("en_ligne", True),
+                                **_delai(donnes)})  # `parametres.delai_s` : la pause minimale entre deux appels, quand le service limite son débit
         res.jetons[d.id] = d.id
         res.origines[d.id], res.mains[d.id] = d.origine, d.main
         res.couts[d.id] = rg.choix_source(reg, d)["cout"]

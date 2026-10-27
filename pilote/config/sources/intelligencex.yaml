@@ -39,7 +39,7 @@ mode:
   local: false
 verifie_le: '2026-10-27'
 note: >-
-  Non vérifiée contre le service réel : aucune clé Intelligence X n'est enregistrée sur cette machine. La forme des réponses (identifiant de recherche, puis
+  Remplacée par RDAP (27/10/2026) : même fonction (historique d'un domaine), sans clé, sans compte, en données structurées et par une norme IETF ; à retirer si Sednal est d'accord. Non vérifiée contre le service réel : aucune clé Intelligence X n'est enregistrée sur cette machine. La forme des réponses (identifiant de recherche, puis
   liste de relevés du seau « whois ») suit la documentation publique du service. Le seul seau interrogé est « whois », en dur dans l'adaptateur.
 moteur:
   adaptateur: intelligencex

@@ -1,0 +1,13 @@
+# Search results for club
+
+> Public Matrix rooms matching "club" on MatrixRooms.info.
+
+## [Club Exemple \- discussion](<https://matrixrooms.info/room/club-exemple:serveur.example>) (42 members)
+
+- **Alias:** `#club-exemple:serveur.example`
+- Salon du club, ouvert à toutes et tous\.
+
+## [Médiathèque Exemple](<https://matrixrooms.info/room/mediatheque:serveur.example>) (7 members)
+
+- **Alias:** `#mediatheque:serveur.example`
+- Annonces de la médiathèque\.

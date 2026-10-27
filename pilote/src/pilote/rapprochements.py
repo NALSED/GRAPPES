@@ -39,7 +39,7 @@ class Indisponible(RuntimeError):
 
 
 def _fiche(c: Candidat) -> dict[str, Any]:
-    return {"id": c.id, "nom": c.nom, "ville": c.ville or "", "numero": c.numero_officiel or "", "site": c.site or ""}
+    return {"id": c.id, "nom": c.nom, "ville": c.ville or "", "numero": c.numero_officiel or "", "site": c.site or "", "alias": list((c.faits or {}).get("alias") or [])}
 
 
 def _scorer(fiches: list[dict[str, Any]], seuil: float) -> list[dict[str, Any]]:

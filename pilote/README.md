@@ -8,8 +8,8 @@ Une application = une fonction : grappes reste la multiprise et garde sa ligne d
 * **Installer et démarrer** : `./installer.sh` puis `./lancer.sh` à la racine du dépôt (ou `outils/installer_service.sh` pour un service systemd) (crée l'environnement, installe, active le service). Adresse : `https://127.0.0.1:8443`
   (certificat auto-signé créé au premier lancement ; `service.https: false` pour du HTTP simple ; `service.hote: 0.0.0.0` pour
   l'ouvrir au réseau, sans comptes : à ne faire que sur un réseau de confiance).
-* **Tests** : `.venv/bin/python -m pytest` (500 tests ; ceux de l'interface `/suite` passent par un navigateur Chromium s'il est installé, sinon ils sont sautés).
-* **Version 1.0** : voir `docs/v1.md` (contenu, règles, mesures, limites, installation des bases locales).
+* **Tests** : `.venv/bin/python -m pytest` (576 tests). `-m "not reseau"` (505 tests) ne dépend d'aucun service extérieur et ne saute jamais ; les 71 autres (marque `reseau` : Internet, SearXNG, Overpass, node, navigateur de test, bases de données) se sautent quand leur service est absent, et le disent.
+* **Version 1.1** : voir `docs/v1.md` (contenu, règles, mesures, limites, installation des bases locales). `docs/emoji.md` (recherche par emoji), `docs/classement.md` (ordre des résultats).
 * **Pages** : Réglages (état matériel des prises), Ajout (nouvelle prise), Lancement (sujet, profondeur, suivi), Tri (paquets, décisions).
 
 

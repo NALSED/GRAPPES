@@ -166,6 +166,7 @@ def test_api_programmes_et_comptes_des_recherches(cfg):
         assert une["noms"] == 2 and une["tries"] == 0
 
 
+@pytest.mark.reseau
 @pytest.mark.parametrize("page", ["rendu_lancement.mjs"])
 def test_rendu_de_la_page_lancement_sous_node(page):
     import shutil

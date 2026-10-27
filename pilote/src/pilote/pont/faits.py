@@ -17,6 +17,8 @@ import json
 from dataclasses import dataclass, field
 from typing import Any
 
+from pilote.adaptateurs import alias_de
+
 ORIGINES = ("registre", "presse", "encyclo", "web", "texte")  # du plus solide au plus fragile
 CLASSE_ECOSYSTEME = {"web": "web", "rss": "presse", "wikipedia": "encyclo"}  # classe d'une page selon son écosystème, faute de mieux
 
@@ -110,6 +112,7 @@ def faits_candidat(c: Any, decouverts_du_nom: list[Any], site_key, pays: str, pr
     relations = [r for lot in _liens(decouverts_du_nom, "relations") for r in lot]
     coord = next(iter(_liens(decouverts_du_nom, "coordonnees")), None)
     fonction = next(iter(_liens(decouverts_du_nom, "fonction")), "")
+    alias = alias_de(c.nom, [a for lot in _liens(decouverts_du_nom, "alias") for a in lot])  # les autres noms déclarés par les sources, sans le nom de la fiche
     return {
         "nom": c.nom,
         "genre_source": origine_de(ps),
@@ -121,5 +124,5 @@ def faits_candidat(c: Any, decouverts_du_nom: list[Any], site_key, pays: str, pr
         "site": site_de(c.ref, domaine),
         "numero_officiel": numero_officiel(decouverts_du_nom),
         "relations": relations,
-        "faits": {"ref": c.ref, "preuves": ps, **({"coordonnees": coord} if coord else {}), **({"fonction": fonction} if fonction else {})},
+        "faits": {"ref": c.ref, "preuves": ps, **({"coordonnees": coord} if coord else {}), **({"fonction": fonction} if fonction else {}), **({"alias": alias} if alias else {})},
     }

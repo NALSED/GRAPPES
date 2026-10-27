@@ -1,0 +1,50 @@
+# Déclaration d'une source (fiche 01) — branchée le 27/10/2026 (spécification 26 § 1), réponse réelle contrôlée. Éteinte par défaut.
+id: rdap
+nom: RDAP (registre du nom de domaine)
+description: >-
+  Ce que le registre d'un nom de domaine dit de lui, en JSON structuré (successeur normalisé de WHOIS) : bureau d'enregistrement, dates, statut, organisation titulaire quand
+  elle est déclarée. Sur le site d'une fiche déjà trouvée ; ne cherche jamais par un mot. Aucun champ de contact de personne n'est gardé. Sans clé.
+trouve: ce que l'infrastructure d'une organisation dit d'elle (domaine)
+genres:
+- entreprise
+- association
+- administration
+pays:
+- monde
+consomme:
+- site
+produit:
+- site
+- origine
+- detail
+usages:
+- web
+main: premiere
+origine: registre
+fiabilite: B
+famille: api
+roles:
+- enrichir
+verifie_sur: site
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.7
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-27'
+note: >-
+  Réponses réelles contrôlées le 27/10/2026 (danone.com, cea.fr, wikipedia.org) via rdap.org. 10 requêtes par 10 secondes sur rdap.org : la pause entre deux appels est de 1,1 s.
+  Le registre français rend nom, courriel et téléphone de contacts : ils sont ignorés (règle n° 8). Remplace Intelligence X, dont la seule fonction retenue était l'historique WHOIS.
+exemple_reponse: exemples/rdap.json
+moteur:
+  adaptateur: rdap
+  parametres:
+    delai_s: 1.1

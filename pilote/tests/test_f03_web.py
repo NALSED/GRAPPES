@@ -16,10 +16,11 @@ SOURCES_WEB = {"searxng", "tavily", "brave", "linkup", "exa", "marginalia", "moj
 def declarations_web(cfg):
     decls, problemes = charger_sources(cfg)
     assert problemes == []
-    return {d.id: d for d in decls.values() if "web" in d.usages}
+    return {d.id: d for d in decls.values() if "web" in d.usages and d.roles != ["enrichir"]}  # sans RDAP (ENRICHIR, registre du domaine), rangé aussi dans Web : voir plus bas
 
 
 # --- [ ] SearXNG est installé sur la VM et répond en local.
+@pytest.mark.reseau
 def test_searxng_repond_en_local():
     try:
         with urllib.request.urlopen("http://127.0.0.1:8888/search?q=handball&format=json", timeout=30) as r:
@@ -114,3 +115,10 @@ def test_wayback_ne_cherche_pas_par_nom():
 def test_mojeek_est_eteinte_sans_cle_et_dans_le_preset_web(cfg):
     d = declarations_web(cfg)["mojeek"]
     assert d.cle == "MOJEEK_API_KEY" and d.defaut["chercher"] is False
+
+
+# --- [ ] RDAP (spécification 26) : la catégorie Web gagne une autre nature d'information, ce que l'infrastructure d'une organisation dit d'elle.
+def test_rdap_est_rangee_dans_web_comme_un_enrichissement_de_premiere_main(cfg):
+    decls, _ = charger_sources(cfg)
+    r = decls["rdap"]
+    assert "web" in r.usages and r.roles == ["enrichir"] and r.main == "premiere" and r.fiabilite == "B" and r.cles == []

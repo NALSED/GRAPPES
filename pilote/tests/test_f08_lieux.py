@@ -95,6 +95,7 @@ def test_nominatim_ne_depasse_jamais_une_requete_par_seconde_meme_si_on_demande_
     assert len(h) == 3 and all(h[i + 1] - h[i] >= 0.99 for i in range(2)), [round(h[i + 1] - h[i], 2) for i in range(2)]
 
 
+@pytest.mark.reseau
 def test_nominatim_reel_donne_la_zone_de_grenoble():
     if not en_ligne("https://nominatim.openstreetmap.org/status.php"):
         pytest.skip("pas de réseau")
@@ -131,6 +132,7 @@ def test_nominatim_sans_surface_utilise_le_rectangle():
 
 
 # --- [ ] Overpass rend des lieux d'un type donné dans cette zone, en respectant ses limites.
+@pytest.mark.reseau
 def test_overpass_reel_rend_des_lieux_du_type_demande_dans_la_zone():
     noms = overpass_reel({"lieu": "Grenoble", "pays": "FR", "type_lieu": ["stade"], "limite": 20})
     assert noms and all(n["nom"] and n["origine"].startswith("OpenStreetMap") for n in noms)
@@ -240,6 +242,7 @@ def test_sans_endroit_ni_type_choisi_la_source_ne_s_applique_pas():
 
 
 # --- [ ] Le même genre (« club ») fonctionne sur DEUX pays sans code spécifique.
+@pytest.mark.reseau
 @pytest.mark.parametrize(("lieu", "pays", "boite"), [("Grenoble", "FR", (45.0, 45.3, 5.5, 6.0)), ("Bristol", "GB", (51.3, 51.6, -3.0, -2.4))])
 def test_le_genre_club_fonctionne_dans_deux_pays_sans_code_specifique(lieu, pays, boite):
     noms = overpass_reel({"lieu": lieu, "pays": pays, "genre": "club", "limite": 30})

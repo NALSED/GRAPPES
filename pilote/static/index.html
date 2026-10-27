@@ -143,7 +143,7 @@
     <p style="font-size:12px;color:var(--dim);margin:7px 0 9px">Choisis le type : un encart s'ouvre dessous avec ce que ce type demande. La clé, si elle est demandée, est <b>rangée par le programme lui-même</b> (jamais à copier dans un fichier, jamais réaffichée). La source est enregistrée <b>éteinte</b>, puis testée sans rien appeler ; elle apparaît dans Réglages. Une source qui demande un adaptateur est enregistrée quand même, et le dit.</p>
     <div style="max-width:420px;margin-bottom:10px"><label class="fl" for="t-type">Type de source</label><select class="inp" id="t-type">
         <option value="api">API JSON ou CSV (adresse, clé, champs)</option><option value="mcp">Serveur MCP / prestataire</option><option value="rss">Flux RSS ou fichier OPML</option>
-        <option value="fichier">Fichier local (CSV, JSON)</option><option value="base">Base SQLite en lecture seule</option><option value="programme">Programme ou script local</option>
+        <option value="fichier">Fichier local (CSV, JSON)</option><option value="base">Base SQLite en lecture seule</option><option value="base_exterieure">Base extérieure (PostgreSQL, MySQL, MariaDB)</option><option value="programme">Programme ou script local</option>
         <option value="adaptateur">Autre : OAuth, curseur, GraphQL… (demande un adaptateur)</option></select></div>
     <div id="t-rss" style="display:none"><div id="flux-rss"></div></div>
     <div id="t-generique">
@@ -181,6 +181,17 @@
       <div class="full"><label class="fl" for="t-basef">Fichier de la base (SQLite)</label><input class="inp" id="t-basef" placeholder="/home/…/ma_base.db"></div>
       <div class="full"><label class="fl" for="t-sql">Requête SELECT (colonnes : nom, ville, genre, numero ; :q_like reçoit les mots cherchés)</label><input class="inp" id="t-sql" value="select nom, commune as ville from clubs where nom like :q_like"></div>
       <div><label class="fl" for="t-essai">Mot d'essai (doit exister dans la base)</label><input class="inp" id="t-essai"></div>
+    </div>
+    <div id="t-baseext" class="form" style="margin-top:9px;display:none">
+      <div><label class="fl" for="t-bx-sys">Système</label><select class="inp" id="t-bx-sys"><option value="postgresql">PostgreSQL</option><option value="mysql">MySQL ou MariaDB</option></select></div>
+      <div><label class="fl" for="t-bx-hote">Adresse de la machine</label><input class="inp" id="t-bx-hote" placeholder="par exemple : 192.168.1.20"></div>
+      <div><label class="fl" for="t-bx-port">Port (vide = le port habituel)</label><input class="inp" id="t-bx-port" type="number" min="1" max="65535"></div>
+      <div><label class="fl" for="t-bx-base">Nom de la base</label><input class="inp" id="t-bx-base"></div>
+      <div><label class="fl" for="t-bx-user">Identifiant</label><input class="inp" id="t-bx-user" autocomplete="off"></div>
+      <div><label class="fl" for="t-bx-mdp">Mot de passe</label><input class="inp" id="t-bx-mdp" type="password" autocomplete="off" placeholder="rangé tout seul, jamais réaffiché"></div>
+      <div class="full"><label class="fl" for="t-bx-sql">Requête SELECT (colonnes : nom, ville, genre, numero, site, pays ; :q_like reçoit les mots cherchés)</label><input class="inp" id="t-bx-sql" value="select nom, ville from organisations where nom ilike :q_like"></div>
+      <div><label class="fl" for="t-bx-essai">Mot d'essai (doit exister dans la base)</label><input class="inp" id="t-bx-essai"></div>
+      <p class="note full">Cette base est la vôtre : son contenu est de votre responsabilité, et la règle n° 8 du programme ne peut pas la contrôler à votre place. La liaison est chiffrée dès que la base n’est pas sur cette machine, et la lecture seule est imposée par la base elle-même.</p>
     </div>
     <div id="t-prog" class="form" style="margin-top:9px;display:none">
       <div class="full"><label class="fl" for="t-cmd">Commande (un mot par ligne)</label><textarea class="inp" id="t-cmd" rows="3" placeholder="python3&#10;/home/…/mon_script.py"></textarea></div>

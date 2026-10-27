@@ -1,0 +1,8 @@
+{
+  "kind": "youtube#searchListResponse",
+  "regionCode": "FR",
+  "items": [
+    {"kind": "youtube#searchResult", "id": {"kind": "youtube#channel", "channelId": "UCexemple0000000000000001"}, "snippet": {"title": "Club Exemple", "channelTitle": "Club Exemple", "description": "La chaîne du club."}},
+    {"kind": "youtube#searchResult", "id": {"kind": "youtube#channel", "channelId": "UCexemple0000000000000002"}, "snippet": {"title": "Médiathèque Exemple", "channelTitle": "Médiathèque Exemple", "description": ""}}
+  ]
+}

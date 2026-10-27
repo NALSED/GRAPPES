@@ -624,7 +624,7 @@ def _accepte_entree(n: dict[str, Any]) -> bool:
     return n["role"] != "ENTREE"
 
 
-def verifier_plan(e: dict[str, Any], langue_saisie: str | None = None) -> list[dict[str, Any]]:
+def verifier_plan(e: dict[str, Any], langue_saisie: str | None = None, saisie_emoji: bool = False) -> list[dict[str, Any]]:
     """Les huit contrôles de la spécification 11, dans l'ordre, sans aucun modèle : les mêmes tuiles donnent toujours les mêmes constats.
     Deux niveaux : « bloquant » (la recherche ne donnera rien) et « remarque » (elle tournera mais mal)."""
     nodes, edges = e["plan"]["nodes"], e["plan"]["edges"]
@@ -687,6 +687,12 @@ def verifier_plan(e: dict[str, Any], langue_saisie: str | None = None) -> list[d
                         n,
                         f"cherche en {s['langue']}, ta saisie est en {langue_saisie} : elle cherchera avec les mots d'une autre langue. Une tuile Traduction avant réglerait ça.",
                     )
+    if saisie_emoji:  # 6 aussi : la saisie contient un emoji, et aucune source allumée posée sur le plan ne déclare le chercher (`consomme: emoji`)
+        allumees = [s for n in posees for s in [sources[n["ref"]]] if s["etat"] != "off" and not s["retiree"]]
+        if not any(s.get("emoji") for s in allumees):
+            entree = next((n for n in nodes if n["role"] == "ENTREE"), nodes[0] if nodes else None)
+            if entree is not None:
+                c(6, "remarque", entree, "ta saisie contient un emoji, et aucune source allumée de ce plan ne déclare le chercher : il ne leur sera transmis à aucune, la recherche se fera sans lui.")
     for ed in edges:  # 7
         a, b = par_id[ed["from"]], par_id[ed["to"]]
         if b["role"] == "ENTREE" or a["role"] == "GRAPPES":

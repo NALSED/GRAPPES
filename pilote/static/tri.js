@@ -353,6 +353,7 @@
         '<div class="dkv"><span class="k">D’où il vient</span><span class="v" style="color:'+COULEUR[f.origine]+'">'+esc(f.origine_phrase)+"</span></div>"
         +'<div class="dkv"><span class="k">Trouvé à</span><span class="v">'+plur(f.endroits,"endroit")+"</span></div>"
         +(f.genre_de_chose?'<div class="dkv"><span class="k">Genre</span><span class="v">'+esc(f.genre_de_chose)+"</span></div>":"")
+        +(f.alias&&f.alias.length?'<div class="dkv"><span class="k">Autres noms déclarés</span><span class="v">'+f.alias.map(esc).join(" · ")+"</span></div>":"")
         +'<div class="dkv"><span class="k">Ville</span><span class="v">'+(esc(f.ville)||"—")+"</span></div>"
         +'<div class="dkv"><span class="k">Site web</span><span class="v">'+(f.site?esc(f.site):"non trouvé")+"</span></div>"
         +(f.numero_officiel?'<div class="dkv"><span class="k">Numéro officiel</span><span class="v">'+esc(f.numero_officiel)+"</span></div>":"")

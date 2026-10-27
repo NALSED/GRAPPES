@@ -1,0 +1,46 @@
+# Déclaration d'une source (fiche 01) — branchée le 27/10/2026 (spécification 26 § 2, P1), réponse réelle contrôlée. Éteinte par défaut.
+id: matrixrooms
+nom: MatrixRooms.info (salons Matrix)
+description: Les salons Matrix publics trouvés par mot, dans l'annuaire MatrixRooms.info (titre, nombre de membres, lien). Sans clé.
+trouve: salons Matrix publics (communautés)
+genres:
+- compte
+pays:
+- monde
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: seconde
+origine: web
+fiabilite: D
+famille: api
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.2
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-27'
+exemple_reponse: exemples/matrixrooms.txt
+note: >-
+  Réponse réelle contrôlée le 27/10/2026 (recherche « collectif », page markdown /md/search/<terme>) ; robots.txt autorise les robots. La spécification 17 le voyait comme un moteur
+  SearXNG : l'adaptateur lit directement la page markdown du service, ce qui évite d'en dépendre. Un salon est une communauté, jamais un compte nommé (règle 8).
+moteur:
+  adaptateur: matrixrooms
+  parametres:
+    delai_s: 1.0

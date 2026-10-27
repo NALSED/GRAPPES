@@ -11,6 +11,7 @@ Jamais de déduction : une commune absente du registre reste vide. Un nom est ce
 
 from __future__ import annotations
 
+import json
 import urllib.parse
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -29,6 +30,7 @@ from grappes.decouverte.traduction import (
     noyau,
     racine,
 )
+from grappes.semantic.scoring import normalize
 
 API_ENTREPRISES = "https://recherche-entreprises.api.gouv.fr/search"
 
@@ -65,13 +67,28 @@ class DecouverteConfig:
     verifier_type: bool = True  # D69 : écarter en amont les candidats des prises dont le type déclaré contredit le sujet
 
 
+# Les autres noms que Wikidata déclare pour l'élément (« CEA » est un alias du Commissariat) : une PREUVE de nom, jamais une identité (document 24, point 2).
+ALIAS_WIKIDATA = 'OPTIONAL { ?item skos:altLabel ?alias . FILTER(LANG(?alias) IN ("fr", "en")) } '
+
+
+def _alias(d: Decouvert, r: dict[str, str]) -> None:
+    """Range l'alias d'une ligne de réponse dans `liens["alias"]` (liste JSON), sans doublon ni le nom lui-même."""
+    a = r.get("alias", "").strip()
+    if not a or normalize(a) == normalize(d.nom):
+        return
+    vus = json.loads(d.liens.get("alias", "[]"))
+    if a not in vus and len(vus) < 12:
+        d.liens["alias"] = json.dumps([*vus, a], ensure_ascii=False)
+
+
 def wikidata(cls: ClasseWikidata, http: Http, cfg: DecouverteConfig) -> list[Decouvert]:
     lien = "wdt:P31/wdt:P279*" if cfg.sous_classes else "wdt:P31"
-    q = (
-        "SELECT ?item ?itemLabel ?site ?siren ?villeLabel WHERE { ?item %s wd:%s ; wdt:P17 wd:%s . "
-        "OPTIONAL { ?item wdt:P856 ?site } OPTIONAL { ?item wdt:P1616 ?siren } "
-        "OPTIONAL { ?item wdt:P159|wdt:P131 ?ville } "
-        'SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en" } } LIMIT %d'
+    q = (  # sous-requête : la LIMIT borne les ÉLÉMENTS, pas les lignes que les alias multiplient ensuite
+        (
+            "SELECT ?item ?itemLabel ?site ?siren ?villeLabel ?alias WHERE { { SELECT ?item WHERE { ?item %s wd:%s ; wdt:P17 wd:%s } LIMIT %d } "
+            "OPTIONAL { ?item wdt:P856 ?site } OPTIONAL { ?item wdt:P1616 ?siren } "
+            "OPTIONAL { ?item wdt:P159|wdt:P131 ?ville } " + ALIAS_WIKIDATA + 'SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en" } }'
+        )
         % (lien, cls.qid, cfg.pays_wikidata, cfg.limite_wikidata)
     )
     par: dict[str, Decouvert] = {}
@@ -88,6 +105,7 @@ def wikidata(cls: ClasseWikidata, http: Http, cfg: DecouverteConfig) -> list[Dec
         v = r.get("villeLabel", "")
         if v and not v.startswith("Q") and not d.ville:
             d.ville = v
+        _alias(d, r)
     return sorted(par.values(), key=lambda d: d.identifiant)
 
 
@@ -99,10 +117,9 @@ def _details(items: list[str], http: Http, requete: str) -> list[Decouvert]:
     for i in range(0, len(items), 150):
         lot = items[i : i + 150]
         q = (
-            "SELECT ?item ?itemLabel ?site ?siren ?villeLabel WHERE { VALUES ?item { %s } "
+            "SELECT ?item ?itemLabel ?site ?siren ?villeLabel ?alias WHERE { VALUES ?item { %s } "
             "OPTIONAL { ?item wdt:P856 ?site } OPTIONAL { ?item wdt:P1616 ?siren } "
-            "OPTIONAL { ?item wdt:P159|wdt:P131 ?ville } "
-            'SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en" } }'
+            "OPTIONAL { ?item wdt:P159|wdt:P131 ?ville } " + ALIAS_WIKIDATA + 'SERVICE wikibase:label { bd:serviceParam wikibase:language "fr,en" } }'
         ) % " ".join("wd:" + x for x in lot)
         par: dict[str, Decouvert] = {}
         for r in http.sparql(q):
@@ -115,6 +132,7 @@ def _details(items: list[str], http: Http, requete: str) -> list[Decouvert]:
             v = r.get("villeLabel", "")
             if v and not v.startswith("Q"):
                 d.ville = d.ville or v
+            _alias(d, r)
         out += list(par.values())
     return out
 

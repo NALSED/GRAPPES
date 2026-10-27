@@ -72,6 +72,8 @@ def issues(fichier: Path, jetons: dict[str, str]) -> dict[str, dict[str, str]]:
             if st == "ok":
                 if par_source.get(sid, {}).get("issue") != "echec":
                     par_source[sid] = {"issue": "ok", "raison": ""}
+            elif st.startswith("non appelée"):  # on ne l'a pas interrogée (ex. saisie faite d'emoji qu'elle ne cherche pas) : ni répondu, ni en échec
+                par_source.setdefault(sid, {"issue": "non_appelee", "raison": st})
             elif st.startswith(("erreur", "quota")) or (st.startswith("arrêté") and re.search(r"HTTP (401|403)", st)):  # une clé refusée arrête la source pour le cycle : c'est un échec, pas un succès
                 par_source[sid] = {"issue": "echec", "raison": phrase_raison(st.partition(" : ")[2] or st)}
     return par_source
@@ -81,11 +83,14 @@ def bilan(cfg: Config, fichier: Path, jetons: dict[str, str], utilisees: list[st
     """Met à jour les compteurs et le disjoncteur de chaque source utilisée, et rend le bilan de la recherche."""
     resultat = issues(fichier, jetons)
     etats = etat_sources.lire(cfg)
-    repondu, echecs, nouvelles_pauses = 0, [], []
+    repondu, echecs, nouvelles_pauses, non_appelees = 0, [], [], 0
     for sid in utilisees:
         r = resultat.get(sid)
         if r is None:
             repondu += 1  # aucune panne signalée : comptée comme ayant répondu
+            continue
+        if r["issue"] == "non_appelee":
+            non_appelees += 1
             continue
         e = etats.get(sid, {})
         if r["issue"] == "ok":
@@ -101,7 +106,7 @@ def bilan(cfg: Config, fichier: Path, jetons: dict[str, str], utilisees: list[st
             nouvelles_pauses.append({"source": sid, "nom": noms.get(sid, sid), "raison": f"{n} erreurs de suite"})
         etat_sources.noter(cfg, sid, **champs)
         echecs.append({"source": sid, "nom": noms.get(sid, sid), "raison": r["raison"]})
-    total = len(utilisees)
+    total = len(utilisees) - non_appelees  # une source qu'on n'a pas interrogée n'a ni répondu ni manqué à répondre
     phrase = f"{repondu} source{'s' if repondu > 1 else ''} sur {total} {'ont' if repondu > 1 else 'a'} répondu" if total else "Aucune source n'a été utilisée"
     return {"repondu": repondu, "total": total, "phrase": phrase, "echecs": echecs, "nouvelles_pauses": nouvelles_pauses}
 

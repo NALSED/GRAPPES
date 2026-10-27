@@ -13,15 +13,15 @@ from typing import Any
 import yaml
 
 from pilote import cles
-from pilote.adaptateurs import ErreurSource, base_sql
+from pilote.adaptateurs import ErreurSource, base_exterieure, base_sql
 from pilote.config import Config
 from pilote.refus import ConfigRefusee, ecrire_atomique, yaml_texte
 from pilote.sources import Declaration, charger_sources, valider_declaration
 from pilote.tests_source import tester
 
 MAX_EXEMPLE = 2_000_000
-TYPES = ("api", "mcp", "fichier", "base", "adaptateur")
-FAMILLES = {"api": "api", "mcp": "mcp", "fichier": "fichier", "base": "base", "adaptateur": "api"}
+TYPES = ("api", "mcp", "fichier", "base", "base_exterieure", "adaptateur")
+FAMILLES = {"api": "api", "mcp": "mcp", "fichier": "fichier", "base": "base", "base_exterieure": "base", "adaptateur": "api"}
 # Ce que le déclaratif ne couvre pas : la source est enregistrée quand même, et dit en clair qu'elle demande un adaptateur.
 PROTOCOLES = {
     "oauth": "authentification en plusieurs étapes (OAuth)",
@@ -73,7 +73,7 @@ def _commun(spec: dict[str, Any], ident: str, type_: str) -> dict[str, Any]:
         "famille": FAMILLES[type_], "roles": roles or ["chercher"], "cle": cle,
         "cout": {"unite": str(cout.get("unite") or "appel"), "vers_dollar": cout.get("vers_dollar", 0), "par_appel": cout.get("par_appel", 1), "gratuit_par_mois": cout.get("gratuit_par_mois", 0)},
         "confiance": float(spec.get("confiance", 0.3)), "defaut": {"chercher": False, "verifier": False},
-        "mode": {"en_ligne": type_ in ("api", "mcp"), "local": type_ in ("fichier", "base")}, "exemple_reponse": f"exemples/{ident}.json",
+        "mode": {"en_ligne": type_ in ("api", "mcp", "base_exterieure"), "local": type_ in ("fichier", "base")}, "exemple_reponse": f"exemples/{ident}.json",
         "note": "Ajoutée par l'utilisateur.",
     }  # fmt: skip
     if spec.get("cle_prefixe"):
@@ -162,6 +162,73 @@ def _base(spec: dict[str, Any]) -> dict[str, Any]:
     return {"adaptateur": "base_sql", "parametres": p}
 
 
+AVERTISSEMENT_BASE_EXTERIEURE = (
+    "Cette base est la vôtre : son contenu est de votre responsabilité, et la règle n° 8 du programme (aucune donnée de personne physique comme clé de rapprochement) ne peut pas la contrôler "
+    "à votre place, parce que la requête est écrite par vous. Seules les colonnes nom, ville, genre, numéro, site et pays sont gardées ; n'y mettez pas le nom d'une personne."
+)
+
+
+def _base_exterieure(spec: dict[str, Any], ident: str) -> tuple[dict[str, Any], dict[str, str]]:
+    """(moteur, identifiants à ranger). Les identifiants ne sont JAMAIS écrits dans la déclaration (versionnée) : seulement les noms des variables de `secrets.env`."""
+    p: dict[str, Any] = {
+        "systeme": _texte(spec, "systeme").lower(), "hote": _texte(spec, "hote"), "port": spec.get("port") or "", "base_nom": _texte(spec, "base_nom"),
+        "requete": _texte(spec, "requete"), "origine_texte": _texte(spec, "origine_texte", _texte(spec, "nom")),
+    }  # fmt: skip
+    try:
+        p["requete"] = base_exterieure.verifier_requete(p["requete"])
+        base_exterieure.verifier_adresse(p)
+    except ErreurSource as exc:
+        raise ConfigRefusee(str(exc)) from exc
+    if not p["base_nom"]:
+        raise ConfigRefusee("Donnez le nom de la base à interroger.")
+    if not p["port"]:
+        p.pop("port")
+    for k in ("tls", "tls_verifier"):
+        if k in spec:
+            p[k] = bool(spec[k])
+    if spec.get("delai_requete_s"):
+        p["delai_requete_s"] = int(spec["delai_requete_s"])
+    if spec.get("genre"):
+        p["genre"] = _texte(spec, "genre")
+    utilisateur, mot_de_passe = _texte(spec, "utilisateur"), str(spec.get("mot_de_passe") or "")
+    if not utilisateur:
+        raise ConfigRefusee("Donnez l'identifiant de la base : le programme le range lui-même, vous n'avez pas à le placer dans un fichier.")
+    base = _identifiant(_texte(spec, "nom")).upper().replace("-", "_")
+    base = (base if base[0].isalpha() else "SOURCE_" + base)[:40]
+    p["utilisateur_env"] = f"{base}_UTILISATEUR"
+    identifiants = {p["utilisateur_env"]: utilisateur}
+    if mot_de_passe:  # une base sans mot de passe (accès « trust » sur la machine) : pas de clé vide à ranger, rien d'orphelin si l'enregistrement échoue
+        p["mot_de_passe_env"] = f"{base}_MOT_DE_PASSE"
+        identifiants[p["mot_de_passe_env"]] = mot_de_passe
+    return {"adaptateur": "base_exterieure", "parametres": p}, identifiants
+
+
+def _enregistrer_base_exterieure(cfg: Config, spec: dict[str, Any], ident: str) -> tuple[Declaration, dict[str, Any]]:
+    moteur, identifiants = _base_exterieure(spec, ident)
+    for nom, valeur in identifiants.items():
+        if cles.presente(cfg, nom) and cles.valeur(cfg, nom) != valeur:
+            raise ConfigRefusee(f"Une clé nommée {nom} existe déjà : elle n'est pas remplacée. Choisissez un autre nom de source.")
+    d = _commun(spec, ident, "base_exterieure")
+    d.update(moteur=moteur, cle=list(identifiants), avertissement=AVERTISSEMENT_BASE_EXTERIEURE, confiance=float(spec.get("confiance", 0.3)))
+    d["consomme"], d["produit"] = ["sujet", "mots_cles"], ["nom", "origine", "ville", "numero"]
+    d["note"] = "Base extérieure ajoutée par l'utilisateur : un appel réseau vers sa machine, sans quota ni date de copie."
+    try:
+        lignes = base_exterieure.lignes({**moteur["parametres"], "_cles": identifiants}, _texte(spec, "mot_essai", "a"), 20)
+    except ErreurSource as exc:
+        raise ConfigRefusee(str(exc)) from exc
+    if not lignes:
+        raise ConfigRefusee("La requête n'a rendu aucune ligne pour le mot d'essai : donnez un « mot_essai » qui existe dans la base.")
+    valider_declaration(d, cfg, f"{ident}.yaml")  # refus clair avant d'écrire quoi que ce soit
+    if any("\n" in v or "\r" in v for v in identifiants.values()):
+        raise ConfigRefusee("L'identifiant et le mot de passe tiennent sur une seule ligne.")  # avant d'écrire la première clé : jamais un identifiant orphelin
+    for nom, valeur in identifiants.items():
+        cles.ecrire(cfg, nom, valeur)  # rangés dans le fichier de clés (droits 600), jamais dans la déclaration ni dans une réponse
+    ecrire_atomique(cfg.dossier_sources / d["exemple_reponse"], json.dumps(lignes, ensure_ascii=False, default=str))
+    ecrire_atomique(cfg.dossier_sources / f"{ident}.yaml", yaml_texte(d, "# Source ajoutée par l'utilisateur (page Ajout) : base extérieure. Éteinte tant que son test local n'a pas passé.\n"))
+    decl = charger_sources(cfg)[0][ident]
+    return decl, tester(cfg, decl)
+
+
 def _exemple(cfg: Config, type_: str, spec: dict[str, Any], moteur: dict[str, Any]) -> str:
     """L'exemple de réponse ENREGISTRÉ avec la source (le test local n'appelle jamais le service). Fourni par l'utilisateur pour une API ou un serveur MCP
     (c'est la réponse qu'il a vue en préparant la source) ; tiré du fichier ou de la base elle-même, en local, pour ceux-là."""
@@ -206,6 +273,8 @@ def enregistrer(cfg: Config, type_: str, spec: dict[str, Any]) -> tuple[Declarat
         raise ConfigRefusee(f"Une clé nommée {_texte(spec, 'cle')} existe déjà : elle n'est pas remplacée. Laissez le nom vide, le programme en choisira un libre.")
     if type_ == "adaptateur":
         return _enregistrer_sans_adaptateur(cfg, spec, ident, valeur_cle)
+    if type_ == "base_exterieure":
+        return _enregistrer_base_exterieure(cfg, spec, ident)
     moteur = {"api": _api, "mcp": _mcp, "fichier": _fichier, "base": _base}[type_](spec)
     d = _commun(spec, ident, type_)
     d["moteur"] = moteur

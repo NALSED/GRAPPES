@@ -178,12 +178,14 @@ export function ficheSource(id) {
       h("div", { class: "deux-col" }, lecture("Coût", s.cout), lecture("Pays", s.pays)),
       zones.fiab,
       h("div", { class: "deux-col" }, f.langue.el, h("div", {})),
-      h("div", { class: "deux-col" }, lecture("Quota", s.copie ? "Copie locale" : s.quota ? `${s.quota.utilise} / ${s.quota.plafond} · ${s.quota.unite}` : "illimité"), lecture("Adresse", s.domaine)),
+      h("div", { class: "deux-col" }, lecture("Quota", s.acces === "base_exterieure" ? "Base extérieure" : s.copie ? "Copie locale" : s.quota ? `${s.quota.utilise} / ${s.quota.plafond} · ${s.quota.unite}` : "illimité"), lecture("Adresse", s.domaine)),
       s.description && h("p", { class: "douce" }, s.description),
-      lecture("Accès", s.copie ? "Copie locale" : "API"),
+      lecture("Accès", s.acces === "base_exterieure" ? "Base extérieure" : s.copie ? "Copie locale" : "API"),
+      s.acces === "base_exterieure" && lecture("Machine", s.machine), // une adresse et des identifiants, ni clé d'API, ni quota, ni date de copie
+      s.acces === "base_exterieure" && h("span", { class: "legende" }, "identifiants enregistrés"),
       s.copie && lecture("Mise à jour", s.copie.installee ? s.copie.date : "copie non installée sur cette machine"),
       h("p", { class: "legende" }, "Le nom, le coût, le pays et le quota viennent de la déclaration de la source : ils ne se changent pas d'ici."),
-      !s.copie && s.cle_requise && f.cle.el, !s.copie && s.cle_requise && s.cle && h("span", { class: "legende" }, "clé enregistrée"),
+      !s.copie && s.acces !== "base_exterieure" && s.cle_requise && f.cle.el, !s.copie && s.acces !== "base_exterieure" && s.cle_requise && s.cle && h("span", { class: "legende" }, "clé enregistrée"),
       h("div", { class: "champ" }, h("span", { class: "titre-champ" }, "État"), h("div", { class: "pied-boutons" }, pastilleEtat(s.etat, ETATS_SOURCE), interrupteur)),
       tests,
     ]

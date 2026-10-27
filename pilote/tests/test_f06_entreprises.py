@@ -30,6 +30,7 @@ def sources_du_preset(cfg):
 
 
 # --- [ ] recherche-entreprises, GLEIF et Wikidata répondent et rendent des noms.
+@pytest.mark.reseau
 def test_recherche_entreprises_rend_des_societes_avec_leur_fonction():
     if not en_ligne("https://recherche-entreprises.api.gouv.fr/search?q=a&per_page=1"):
         pytest.skip("pas de réseau")
@@ -39,6 +40,7 @@ def test_recherche_entreprises_rend_des_societes_avec_leur_fonction():
     assert all(r["type"] == "a_pour_etablissement" for r in siege["relations"])
 
 
+@pytest.mark.reseau
 def test_gleif_rend_des_noms():
     if not en_ligne("https://api.gleif.org/api/v1/lei-records?page%5Bsize%5D=1"):
         pytest.skip("pas de réseau")
@@ -52,6 +54,7 @@ def test_wikidata_est_une_source_du_preset(cfg):
 
 
 # --- [ ] GLEIF rend bien la maison mère et la maison mère ultime d'une entité connue.
+@pytest.mark.reseau
 def test_gleif_rend_la_maison_mere_et_la_maison_mere_ultime():
     if not en_ligne("https://api.gleif.org/api/v1/lei-records?page%5Bsize%5D=1"):
         pytest.skip("pas de réseau")

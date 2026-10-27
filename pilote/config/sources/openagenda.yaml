@@ -1,0 +1,68 @@
+# Déclaration d'une source (fiche 01) — branchée le 27/10/2026 (spécification 26 § 2, P2 : clé gratuite à créer). Éteinte par défaut.
+id: openagenda
+nom: OpenAgenda (agendas)
+description: >-
+  Les agendas publiés sur OpenAgenda, la plateforme française d'événements des communes, lieux culturels et collectifs : chaque agenda est une organisation ou un groupe
+  qui publie. Recherche par mot sur le titre et les termes clés des agendas. L'usage est gratuit mais une clé est requise, même en lecture.
+trouve: organisations et groupes locaux qui publient des événements
+genres:
+- association
+- administration
+- evenement
+pays:
+- FR
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+- site
+usages:
+- reseaux_sociaux
+main: premiere
+origine: web
+fiabilite: C
+famille: api
+roles:
+- chercher
+cle: OPENAGENDA_API_KEY
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-27'
+exemple_reponse: exemples/openagenda.json
+note: >-
+  NON vérifiée contre le service réel : aucune clé OpenAgenda n'est enregistrée sur cette machine (compte gratuit, clé dans les paramètres du compte, envoyée dans l'en-tête « key »).
+  Forme d'après la documentation officielle (developers.openagenda.com, lue le 27/10/2026) : GET /v2/agendas?search=…&size=… rend {agendas: [{uid, title, slug, description…}], total, after}.
+  Le fiabilité C est celle d'un site déclaratif (l'organisateur écrit lui-même sa fiche). Il n'existe pas de route d'événements globale : la recherche par mot passe par les agendas ;
+  filtrer les événements d'un agenda par mot et par zone géographique (search, geo) reste à confirmer au premier essai réel. Le rôle CATALOGUE (liste des agendas) dépend de la
+  question n° 1 de 14-questions-ouvertes.md, toujours ouverte : il n'est pas figé ici.
+moteur:
+  adaptateur: api_json
+  parametres:
+    url: https://api.openagenda.com/v2/agendas
+    methode: GET
+    auth:
+      type: header
+      nom: key
+    params:
+      search: '{quoi}'
+      size: '{limite}'
+    format: json
+    liste: agendas
+    champs:
+      nom: title
+      site: slug
+    site_prefixe: https://openagenda.com/
+    origine_texte: OpenAgenda (agenda publié)
+    pays: FR

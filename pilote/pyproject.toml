@@ -1,14 +1,14 @@
 [project]
 name = "pilote"
-version = "1.0.0"
+version = "1.1.0"
 description = "Pilote : lancer, trier et décider les recherches de grappes"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
-dependencies = ["fastapi", "uvicorn", "sqlalchemy>=2", "pyyaml>=6", "apscheduler>=3.10,<4", "openpyxl>=3.1", "cleanco>=2", "langdetect>=1.0.9", "splink>=5,<6", "duckdb>=1.4,<2", "pandas"]  # duckdb < 2 : la version 2.0 plante (instruction illégale) sur le processeur virtuel de cette VM
+dependencies = ["fastapi", "uvicorn", "sqlalchemy>=2", "pyyaml>=6", "apscheduler>=3.10,<4", "openpyxl>=3.1", "cleanco>=2", "langdetect>=1.0.9", "splink>=5,<6", "duckdb>=1.4,<2", "pandas", "pg8000>=1.31", "pymysql>=1.1"]  # duckdb < 2 : la version 2.0 plante (instruction illégale) sur le processeur virtuel de cette VM
 
 [project.optional-dependencies]
-dev = ["pytest", "httpx", "ruff", "playwright", "followthemoney"]
+dev = ["pytest", "httpx", "ruff", "playwright", "followthemoney", "emoji", "regex"]  # emoji et regex : l'oracle des tests de reconnaissance des emoji (UTS #51)
 
 [project.scripts]
 pilote = "pilote.__main__:main"
@@ -19,6 +19,9 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+# Une marque mal écrite échoue au lieu d'être ignorée. `-m "not reseau"` : tout ce qui ne dépend d'aucun service extérieur, et qui ne se saute JAMAIS.
+addopts = "--strict-markers"
+markers = ["reseau: dépend du réseau ou d'un service ou outil extérieur au dépôt (Internet, SearXNG, Overpass, node, navigateur de test) ; peut se sauter quand il est absent"]
 # Avertissement de la bibliothèque de test (httpx sous starlette), sans rapport avec pilote : répété à chaque lancement, il ne dit rien d'utile.
 filterwarnings = ["ignore::DeprecationWarning:fastapi.testclient", "ignore:Using `httpx` with `starlette.testclient`"]
 

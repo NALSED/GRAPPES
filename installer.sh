@@ -15,6 +15,9 @@ for app in grappes pilote; do
   "$racine/$app/.venv/bin/pip" -q install -e "$racine/$app"
 done
 
+# Pilotes de base de données (PostgreSQL, MySQL, MariaDB) : le pont de pilote tourne dans l'interpréteur de grappes et en a besoin pour la source « base extérieure ».
+"$racine/grappes/.venv/bin/pip" -q install pg8000 pymysql || true
+
 # Fichiers de clés d'API : créés vides, à remplir (jamais versionnés).
 [ -f "$racine/grappes/config/secrets.env" ] || {
   printf '# Clés d API de grappes, une par ligne : TAVILY_API_KEY=...\n' > "$racine/grappes/config/secrets.env"

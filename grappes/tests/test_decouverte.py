@@ -93,3 +93,21 @@ def test_domaine_type_plus_complement_et_mots_ignores():
     assert domaine_wikidata("Les éleveurs de dragons verts en Corrèze", H()) is None
     # un seul mot : pas de complément
     assert domaine_wikidata("Brasserie en France", H()) is None
+
+
+def test_wikidata_garde_les_alias_dans_les_liens_et_la_limite_borne_les_elements():
+    """Document 24, point 2 : les alias (skos:altLabel) multiplient les lignes ; la LIMIT doit rester sur les ÉLÉMENTS et les alias vont dans `liens`."""
+    from grappes.decouverte.registres import wikidata
+
+    vues: list[str] = []
+
+    class Http:
+        def sparql(self, q):
+            vues.append(q)
+            return [{"item": "Q868550", "itemLabel": "Commissariat à l'énergie atomique", "alias": "CEA"},
+                    {"item": "Q868550", "itemLabel": "Commissariat à l'énergie atomique", "alias": "Commissariat à l'énergie atomique"},  # le nom lui-même : écarté
+                    {"item": "Q868550", "itemLabel": "Commissariat à l'énergie atomique", "alias": "AFNI"}]
+
+    [d] = wikidata(ClasseWikidata("Q31855", "institut", "", 10, True), Http(), DecouverteConfig(limite_wikidata=50))
+    assert d.liens["alias"] == '["CEA", "AFNI"]'
+    assert "skos:altLabel" in vues[0] and "{ SELECT ?item WHERE" in vues[0] and vues[0].count("LIMIT 50") == 1
