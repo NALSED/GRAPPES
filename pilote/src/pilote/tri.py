@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import uuid
 from collections import Counter
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -220,6 +221,28 @@ def separer(fabrique: sessionmaker[Session], rid: str, cid: int, qui: str) -> No
             raise Introuvable(cid)
         c.faits = {**(c.faits or {}), "separe": True}
         s.add(Journal(recherche_id=rid, qui=qui, evenement="noms_separes", detail={"candidat": cid}))
+
+
+def marquer_personne_morale(cfg: Config, fabrique: sessionmaker[Session], rid: str, cid: int, qui: str) -> dict[str, Any]:
+    """Lève la règle n° 8 sur UNE fiche, au cas par cas (27-leviers-regle8-a-faire-par-sednal.md) : « compte » redevient
+    le genre de cette seule fiche, au lieu de « personne ». Ne touche ni à la règle par défaut ni aux autres fiches, et
+    rien n'est effacé : la trace reste dans `faits` et dans le journal, comme `separer`. Reclassée, la fiche redevient
+    candidate à un rapprochement ; on relance aussitôt la recherche de rapprochements pour cette recherche."""
+    with fabrique.begin() as s:
+        c = s.get(Candidat, cid)
+        if c is None or c.recherche_id != rid:
+            raise Introuvable(cid)
+        if (c.genre_de_chose or "").strip().lower() != "personne":
+            raise ValueError("Cette fiche n'est pas écartée par la règle n° 8 ; il n'y a rien à lever.")
+        c.genre_de_chose = "compte"
+        c.faits = {**(c.faits or {}), "regle8_leve": {"qui": qui, "quand": datetime.now(UTC).isoformat(timespec="seconds")}}
+        s.add(Journal(recherche_id=rid, qui=qui, evenement="regle8_levee", detail={"candidat": cid, "nom": c.nom}))
+    from pilote import rapprochements
+
+    try:
+        return rapprochements.proposer(cfg, fabrique, rid)
+    except rapprochements.Indisponible:
+        return {"proposes": 0, "comparees": 0}  # la levée est faite ; seule la recherche de nouveaux rapprochements a échoué, elle se referera
 
 
 def fiche(cfg: Config, fabrique: sessionmaker[Session], rid: str, cid: int) -> dict[str, Any]:

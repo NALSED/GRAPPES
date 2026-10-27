@@ -42,6 +42,7 @@
     var p={profondeur:depthSel,limites:{temps_minutes:temps||null,appels:appels||null},verification:v==="oui"?true:v==="non"?false:null,
            presets:cochees("f-presets"),exploration:parseInt(el("f-explo").value,10)||0};
     if(el("f-page").value==="extrait")p.lire_la_page=false;
+    if(el("f-regle8").checked)p.regle8_afficher_comptes=true;
     if(el("f-typelieu").value)p.type_lieu=[el("f-typelieu").value];
     if(puces.ign.length)p.sites_a_ignorer=puces.ign.slice();
     var so=cochees("f-sortie");if(so.length)p.sortie={actifs:so};

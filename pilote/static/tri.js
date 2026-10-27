@@ -353,6 +353,7 @@
         '<div class="dkv"><span class="k">D’où il vient</span><span class="v" style="color:'+COULEUR[f.origine]+'">'+esc(f.origine_phrase)+"</span></div>"
         +'<div class="dkv"><span class="k">Trouvé à</span><span class="v">'+plur(f.endroits,"endroit")+"</span></div>"
         +(f.genre_de_chose?'<div class="dkv"><span class="k">Genre</span><span class="v">'+esc(f.genre_de_chose)+"</span></div>":"")
+        +(f.genre_de_chose==="personne"?'<div class="dnote">Écartée du rapprochement par la règle n° 8 (compte au nom d’une personne physique). Si c’est en réalité une organisation, <button class="btn" id="personne-morale" style="padding:2px 8px;font-size:11.5px">marquez-la comme personne morale</button>.</div>':"")
         +(f.alias&&f.alias.length?'<div class="dkv"><span class="k">Autres noms déclarés</span><span class="v">'+f.alias.map(esc).join(" · ")+"</span></div>":"")
         +'<div class="dkv"><span class="k">Ville</span><span class="v">'+(esc(f.ville)||"—")+"</span></div>"
         +'<div class="dkv"><span class="k">Site web</span><span class="v">'+(f.site?esc(f.site):"non trouvé")+"</span></div>"
@@ -369,6 +370,7 @@
         var champ=zone.querySelector('input[data-src="'+b.dataset.conf+'"]');
         envoyer("/api/reglages/source/"+encodeURIComponent(b.dataset.conf),"PUT",{confiance:parseFloat(champ.value)}).then(function(){message("Confiance de la source enregistrée (elle vaut aussi dans Réglages).")}).catch(function(e){message(e.message)})}});
       var sp=el("separer");if(sp)sp.onclick=function(){envoyer("/api/recherches/"+rid+"/noms/"+mon+"/separer","POST",{}).then(function(){charger(true)})};
+      var pm=el("personne-morale");if(pm)pm.onclick=function(){envoyer("/api/recherches/"+rid+"/noms/"+mon+"/personne_morale","POST",{}).then(function(){charger(true);chargerFiche(mon,d)}).catch(function(e){message(e.message)})};
     }).catch(function(e){  /* une fiche qui ne se charge pas doit le dire : un panneau vide ressemblait à un nom sans détail */
       var zone=el("dtail");
       if(zone&&sel===mon&&e&&e.name!=="AbortError")zone.innerHTML='<div class="dnote">Le détail de ce nom n’a pas pu être chargé : '+esc(e.message)+"</div>";

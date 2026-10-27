@@ -38,5 +38,7 @@ resultat:                  # sorties/resultat.csv (une colonne NOM)
   confiance_min: null      # null = niveau_probable ; entités assignées à une grappe au-dessus de ce seuil
   inclure_ambigus: false
   inclure_personnes: false # ATTENTION : à true, les personnes physiques figurent en clair dans resultat.csv
-  # indices_institution: [...]  # mots qui désignent un compte institutionnel (défaut : liste intégrée)
+  # indices_institution: [...]  # mots qui désignent un compte institutionnel (défaut : liste intégrée) ; REMPLACE la liste par défaut,
+  #                              # donc ré-écrire les mots qu'on veut garder. Lue ici par le moteur (clustering/assign.py) ET par pilote
+  #                              # (regle8.genre_retenu, pont/executer.py) : les deux restent sur la même liste, qui ne vit qu'ici.
   suffixes: [officiel, official, channel, chaîne, chaine]   # ignorés pour fusionner les variantes d'un nom

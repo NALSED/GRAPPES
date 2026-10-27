@@ -9,7 +9,7 @@ import yaml
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 
-from pilote import rapprochements
+from pilote import rapprochements, tri
 from pilote.app import creer_app
 from pilote.base import Candidat, Recherche
 from pilote.grappes_lib import brancher
@@ -90,3 +90,58 @@ def test_la_fiche_d_un_compte_de_personne_reste_affichee_avec_son_genre(cfg, mot
         with app.state.fabrique() as s:
             c = s.scalars(select(Candidat).where(Candidat.recherche_id == rid)).one()
             assert (c.nom, c.genre_de_chose) == ("Marie Dupont", "personne")  # rien n'est supprimé (règle 1) : le genre le dit à l'écran
+
+
+# --- les trois leviers de 27-leviers-regle8-a-faire-par-sednal.md : ni l'un ni l'autre ne débride la règle par défaut
+
+
+def test_genre_retenu_accepte_des_indices_supplementaires_sans_toucher_au_defaut(moteur):
+    """Lever 1 : la liste que Sednal tient dans `config/scoring.yaml` (resultat.indices_institution), passée en plus de celle du moteur."""
+    from grappes.personnes import DEFAULT_INSTITUTION_HINTS
+    from pilote.regle8 import genre_retenu
+
+    assert genre_retenu("compte", "Comité de Quartier Saint-Bruno") == "personne"  # « comité » n'est pas un indice par défaut
+    plus = (*DEFAULT_INSTITUTION_HINTS, "comité")
+    assert genre_retenu("compte", "Comité de Quartier Saint-Bruno", plus) == "compte"  # avec l'indice ajouté par configuration
+    assert genre_retenu("compte", "Marie Dupont", plus) == "personne"  # un indice en plus ne change rien pour les autres noms
+
+
+def test_marquer_personne_morale_leve_la_regle_sur_une_seule_fiche(cfg, moteur):
+    """Lever 2 : une action sur UNE fiche, réversible comme `separer`, qui ne touche à rien d'autre."""
+    app = creer_app(cfg)
+    with TestClient(app):
+        rid = _creer(app, [("Les Amis Discrets", "Lyon"), ("Les Amis Discrets", "Lyon"), ("Marie Dupont", "Lyon")])  # aucun indice institutionnel : écartées par défaut
+        assert rapprochements.proposer(cfg, app.state.fabrique, rid) == {"proposes": 0, "comparees": 0}
+        with app.state.fabrique() as s:
+            ids = [c.id for c in s.scalars(select(Candidat).where(Candidat.recherche_id == rid, Candidat.nom == "Les Amis Discrets"))]
+        res = tri.marquer_personne_morale(cfg, app.state.fabrique, rid, ids[0], "sednal")  # une seule des deux fiches, d'abord
+        with app.state.fabrique() as s:
+            c = s.get(Candidat, ids[0])
+            assert c.genre_de_chose == "compte"  # reclassée, cette fiche seulement
+            assert c.faits["regle8_leve"]["qui"] == "sednal"  # trace : rien ne disparaît en silence
+            marie = s.scalars(select(Candidat).where(Candidat.recherche_id == rid, Candidat.nom == "Marie Dupont")).one()
+            assert marie.genre_de_chose == "personne"  # cette autre fiche n'est pas touchée : ce n'est pas la règle par défaut qui a changé
+        assert res["comparees"] == 1  # une seule fiche levée pour l'instant, rien à comparer encore
+        res = tri.marquer_personne_morale(cfg, app.state.fabrique, rid, ids[1], "sednal")  # la seconde, maintenant
+        assert res["comparees"] == 2 and res["proposes"] == 1  # les deux fiches levées sont repassées dans le lot normal, et se ressemblent
+
+
+def test_marquer_personne_morale_refuse_une_fiche_que_la_regle_n_ecarte_pas(cfg, moteur):
+    app = creer_app(cfg)
+    with TestClient(app):
+        rid = _creer(app, [("Association des Amis du Vercors", "Grenoble")])
+        with app.state.fabrique() as s:
+            cid = s.scalars(select(Candidat).where(Candidat.recherche_id == rid)).one().id
+        with pytest.raises(ValueError):
+            tri.marquer_personne_morale(cfg, app.state.fabrique, rid, cid, "sednal")
+
+
+def test_regle8_afficher_comptes_se_valide_comme_une_case_oui_non():
+    """Lever 3 : la case d'une recherche précise, validée par `lancement.valider_options` comme les autres options avancées."""
+    from pilote.config import Config
+    from pilote.lancement import LancementInvalide, valider_options
+
+    assert valider_options(Config(), {"regle8_afficher_comptes": True})["regle8_afficher_comptes"] is True
+    assert valider_options(Config(), {})  == {}  # absente par défaut : la règle s'applique comme partout ailleurs
+    with pytest.raises(LancementInvalide):
+        valider_options(Config(), {"regle8_afficher_comptes": "oui"})  # pas un booléen : refusé, comme « page entière ou extrait »

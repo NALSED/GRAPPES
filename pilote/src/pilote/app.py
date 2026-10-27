@@ -343,6 +343,11 @@ def creer_app(cfg: Config | None = None, executeur: Executeur | None = None, url
         _tri(tri.separer, fabrique, rid, cid, qui or cfg.qui_par_defaut)
         return {"ok": True}
 
+    @app.post("/api/recherches/{rid}/noms/{cid}/personne_morale")
+    def marquer_personne_morale(rid: str, cid: int, qui: str | None = None) -> dict[str, Any]:
+        """Lève la règle n° 8 sur cette seule fiche (27-leviers-regle8-a-faire-par-sednal.md) : « Marquer comme personne morale »."""
+        return _tri(tri.marquer_personne_morale, cfg, fabrique, rid, cid, qui or cfg.qui_par_defaut)
+
     @app.get("/api/recherches/{rid}/noms/{cid}")
     def fiche(rid: str, cid: int) -> dict[str, Any]:
         return _tri(tri.fiche, cfg, fabrique, rid, cid)

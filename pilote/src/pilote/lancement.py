@@ -117,6 +117,11 @@ def valider_options(cfg: Config, parametres: dict[str, Any], formats_connus: set
         raise LancementInvalide("La profondeur d'exploration doit être 0 (éteinte), 1 ou 2.")
     if p.get("lire_la_page") is not None and not isinstance(p["lire_la_page"], bool):
         raise LancementInvalide("« Page entière ou extrait » se règle par oui ou non.")
+    if p.get("regle8_afficher_comptes") is not None and not isinstance(p["regle8_afficher_comptes"], bool):
+        # Lever 3 de 27-leviers-regle8-a-faire-par-sednal.md : scopé à CETTE recherche, jamais une case globale. À faux (par défaut), la
+        # règle n° 8 s'applique comme partout ailleurs ; à vrai, les comptes qu'elle aurait écartés entrent dans le lot normal des
+        # candidats et tout rapprochement qui en sort passe par l'onglet Tri — rien n'est automatique.
+        raise LancementInvalide("« Afficher les comptes écartés par la règle n° 8 » se règle par oui ou non.")
     if "sites_a_ignorer" in p:
         brut = p["sites_a_ignorer"]
         if not isinstance(brut, list):

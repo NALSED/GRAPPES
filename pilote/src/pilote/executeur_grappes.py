@@ -127,6 +127,7 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
         "exclues_budget": mat.exclues_budget, "origines_sources": mat.origines, "mains_sources": mat.mains, "entree": entree,
         "emoji": {"saisie": contient(" ".join([phrase, str(sujet.get("lieu", "")), *map(str, sujet.get("inclure") or [])])), "ok": mat.emoji_ok, "moteur_recoit": emoji_seul},
         "plafond_atteint": depense >= plafond, "limite_source_s": min(float(lim["temps_s"]), 180.0) if lim.get("temps_s") else 180.0, "en_pause": mat.en_pause, "reserve_sources": reserve, "reserve_verification": reserve_verif,
+        "regle8_afficher_comptes": bool(params.get("regle8_afficher_comptes", False)),  # lever 3 (27-leviers-regle8-a-faire-par-sednal.md) : scopé à cette recherche, validé dans lancement.valider_options
     }  # fmt: skip
     if params.get("plan"):  # le plan de travail compilé (suite_plan) : les étapes à jouer sur les noms, les requêtes à traduire, les vérifications à restreindre
         plan = dict(params["plan"])

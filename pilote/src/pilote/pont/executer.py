@@ -166,11 +166,21 @@ def main(dossier: str) -> int:
 
         entree_base = {"sujet": spec.get("phrase") or phrase, "pays": spec.get("pays_code", ""), "limite": int(spec.get("combien", 200)), **spec.get("entree", {})}
 
+        # Règle n° 8, deux leviers (27-leviers-regle8-a-faire-par-sednal.md) : la liste d'indices est celle que le moteur lit déjà dans
+        # `config/scoring.yaml` (`resultat.indices_institution`) — pilote et moteur restent sur la même liste, que Sednal tient lui-même.
+        # Et une recherche peut demander à ne PAS reclasser les comptes en « personne » (`regle8_afficher_comptes`, validé dans
+        # `lancement.valider_options`) : les comptes concernés entrent alors dans le lot normal des candidats, et tout rapprochement qui en
+        # sort passe par l'onglet Tri comme n'importe quel autre — rien n'est automatique, la règle par défaut ne change pour personne d'autre.
+        _hints_regle8 = cfg.scoring.resultat_indices_institution
+        _leve_regle8 = bool(spec.get("regle8_afficher_comptes"))
+
         def vers_decouvert(source: str, n: dict) -> Decouvert:
             num = str(n.get("numero", "") or "")
+            genre_brut = str(n.get("genre", "") or "")
+            genre = genre_brut if _leve_regle8 else genre_retenu(genre_brut, str(n["nom"]), _hints_regle8)
             return Decouvert(
                 str(n["nom"]).strip(), source, num or str(n["nom"]).strip(), str(n.get("ville", "") or ""), str(n.get("site", "") or ""),
-                num if num.isdigit() and len(num) in (9, 14) else "", str(n.get("origine", "")), genre_retenu(str(n.get("genre", "") or ""), str(n["nom"])), "",
+                num if num.isdigit() and len(num) in (9, 14) else "", str(n.get("origine", "")), genre, "",
                 {k: json.dumps(n[k], ensure_ascii=False) for k in ("relations", "coordonnees", "fonction", "alias") if n.get(k)},
             )  # fmt: skip
 
