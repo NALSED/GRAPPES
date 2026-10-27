@@ -32,17 +32,19 @@ Trois parties, avec les « pas rempli » et les anomalies. Les chiffres viennent
 
 ### 2.1 Fusion / doublons (Splink) contre la vérité
 
-FEBRL1 (1 000 fiches, 500 paires vraies), moteur final :
+FEBRL1 (1 000 fiches, 500 paires vraies). **Mesure du 26/10 (moteur d'alors)** puis **remesure du 27/10 avant la v1 (moteur actuel)** :
 
 ````
-seuil  proposées  VP   FP   FN   précision  rappel
-  0.2        471  471    0   29   1.000      0.942
-  0.3        456  456    0   44   1.000      0.912
-  0.5        450  450    0   50   1.000      0.900
-  0.7        448  448    0   52   1.000      0.896
-  0.8        434  434    0   66   1.000      0.868
-  0.9        375  375    0  125   1.000      0.750
+            26/10 (moteur d'alors)          27/10 (moteur actuel, v1)
+seuil  proposées  FP   FN  rappel     proposées  FP   FN  rappel   précision
+  0.2        471   0   29   0.942          450   0   50   0.900     1.000
+  0.3        456   0   44   0.912          435   0   65   0.870     1.000
+  0.5        450   0   50   0.900          435   0   65   0.870     1.000
+  0.8        434   0   66   0.868          434   0   66   0.868     1.000
+  0.9        375   0  125   0.750          375   0  125   0.750     1.000
 ````
+
+**Le rappel a baissé de 0,942 à 0,900 au seuil 0,2 entre les deux mesures.** Cause connue : le 27/10, un numéro officiel différent est devenu presque décisif (deux entités distinctes, pas une faute de saisie) et un même nom n'est plus compté deux fois ; c'est ce qui règle les cas français (Club Alpin, deux boulangeries Martin) mais FEBRL, jeu de personnes dont les identifiants sont corrompus dans les doublons, y perd des paires. Compromis assumé : la précision reste 1,000, et le jeu français (25 cas) donne au seuil 0,2 une précision de 0,923 et un rappel de 1,000 (un seul faux positif connu : « Croix-Rouge française » et sa délégation de Paris).
 
 Lecture des faux négatifs un par un : noms écorchés ou champs inversés, ou identifiants changés dans le doublon. Aucun faux positif. FEBRL est un jeu de **personnes** : il sert ici à mesurer le moteur, pas à traiter des personnes.
 

@@ -336,3 +336,56 @@ def test_un_nom_partage_se_departage_par_le_lieu_et_le_dit(tmp_path):
     assert len(sans) == 7 and "7 entités portent exactement ce nom" in sans[0]["origine"]
     avec = mod.chercher({"quoi": "renault", "lieu": "92"}, adaptateurs.Client("u"), p)
     assert len(avec) == 1 and "portent exactement" not in avec[0]["origine"]
+
+
+# --- Cadrage du 27/10 (spécification 17 §5) : Intelligence X = WHOIS d'un domaine déjà trouvé, JAMAIS les fuites
+def test_intelligence_x_n_interroge_que_le_seau_whois_pour_un_domaine(monkeypatch):
+    from pilote.adaptateurs import intelligencex as ix
+
+    appels = []
+
+    class Faux(adaptateurs.Client):
+        def post_json(self, url, corps=None, headers=None, params=None):
+            appels.append(("POST", url, corps, headers))
+            return {"id": "abc", "status": 0}
+
+        def get_json(self, url, params=None, headers=None):
+            appels.append(("GET", url, params, headers))
+            return {"records": [{"bucket": "whois", "date": "2019-04-02T00:00:00Z"}, {"bucket": "whois", "date": "2024-11-30T00:00:00Z"}, {"bucket": "leaks.public", "date": "2020-01-01"}]}
+
+    p = {"_cle": "cle-de-test"}
+    r = ix.chercher({"nom": "Club Test", "site": "https://www.club-test.fr/accueil?x=1"}, Faux("intelx"), p)
+    assert appels[0][2]["term"] == "club-test.fr" and appels[0][2]["buckets"] == ["whois"]  # jamais un seau vide : il voudrait dire « tous », fuites comprises
+    assert r[0]["site"] == "club-test.fr" and "2 relevés du 2019-04-02 au 2024-11-30" in r[0]["origine"] and "leaks" not in str(r)  # le relevé hors whois est ignoré
+    appels.clear()
+    assert ix.chercher({"nom": "Jean Dupont", "site": ""}, Faux("intelx"), p) == [] and appels == []  # pas de domaine : aucun appel, aucune recherche par nom
+    assert ix.chercher({"nom": "x", "site": "jean.dupont@example.org"}, Faux("intelx"), p) == [] and appels == []  # une adresse de courriel n'est pas un domaine
+    with __import__("pytest").raises(adaptateurs.ErreurSource, match="clé"):
+        ix.chercher({"site": "club-test.fr"}, Faux("intelx"), {})
+    assert ix.SEAUX == ["whois"]
+
+
+def test_les_prestataires_de_collecte_sont_eteints_avertis_et_sur_la_cle_de_l_utilisateur():
+    """Cadrage du 27/10 (Apify, Bright Data, ZenRows) : éteints par défaut, avertissement à l'allumage, clé de l'utilisateur, entrée = mot-clé ou lieu."""
+    from pathlib import Path
+
+    import yaml
+
+    racine = Path(__file__).resolve().parents[1] / "config" / "sources"
+    for ident in ("apify-facebook", "apify-instagram", "brightdata-recherche", "google-maps-apify", "intelligencex"):
+        d = yaml.safe_load((racine / f"{ident}.yaml").read_text(encoding="utf-8"))
+        assert d["defaut"] == {"chercher": False, "verifier": False}, ident
+        assert d["cle"], f"{ident} : la clé est celle de l'utilisateur"
+        if ident != "intelligencex":
+            assert d["prestataire"] is True and d["avertissement"], ident
+            entree = str(d["moteur"]["parametres"].get("arguments"))
+            assert "{mots_et_lieu}" in entree or "{mots" in entree or "{lieu" in entree, f"{ident} : l'entrée doit être un mot-clé ou un lieu, jamais un compte"
+
+
+def test_une_alerte_n_est_jamais_masquee_par_un_homonyme_sans_mesure(tmp_path):
+    t = tmp_path / "os.csv"
+    t.write_text("caption,sanctions,dataset\nAcme Holding,,Registre de propriété\nAcme Holding,Mesure UE 2023,Liste UE\n", encoding="utf-8")
+    fl.importer(t, "os2", tmp_path, {"format": "csv", "colonnes": {"nom": "caption", "themes": "sanctions", "detail": "dataset"}})
+    p = {"base": "os2", "_dossier_copies": str(tmp_path), "signal": ["alerte", "information"]}
+    r = adaptateurs.charger("fichier_local").chercher({"nom": "Acme Holding"}, adaptateurs.Client("os2"), p)
+    assert [x["signal"] for x in r] == ["alerte", "information"]  # la vérification retient le premier : l'alerte

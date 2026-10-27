@@ -116,7 +116,7 @@ def vue_source(
         etat = "warn"  # une source en copie locale sans sa copie ne peut rien rendre : « à vérifier », jamais « ok »
     cats = _cats(d)
     pays = _pays(d)
-    role = sur.get("role") or ("CHERCHER" if "chercher" in d.roles else "VERIFIER")
+    role = sur.get("role") or ("CHERCHER" if "chercher" in d.roles else "VERIFIER" if "verifier" in d.roles else "ENRICHIR")
     tests = []
     if e.get("teste_le"):
         tests.append(

@@ -272,9 +272,12 @@ def construire(cfg: Config, fabrique: sessionmaker[Session], gestionnaire: Any) 
         verifs: list[str] = []
         for v in comp["verificateurs"] if comp else []:
             s = par_id.get(v["id"])
+            if s is None:
+                raise HTTPException(422, f"La source « {v['id']} » n'existe pas.")
+            verbe = "enrichit" if v.get("fonction") == "enrichir" else "vérifie"
             raison = (
                 "elle est éteinte dans Réglages" if s["etat"] == "off"
-                else "elle ne vérifie ni par l'adresse ni par le nom d'un résultat" if not s["verifie_sur"]
+                else f"elle ne {verbe} ni par l'adresse, ni par le nom, ni par la ville d'un résultat" if not s["verifie_sur"]
                 else "sa clé d'API est absente" if s["cle_requise"] and not s["cle"]
                 else ""
             )  # fmt: skip

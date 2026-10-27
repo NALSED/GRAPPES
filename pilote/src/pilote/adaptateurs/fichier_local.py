@@ -38,6 +38,8 @@ def _convertir(lignes: list[dict[str, Any]], parametres: dict[str, Any], verific
                 item["signal"] = "confirmation"
             item["nom"] = nom or r["nom"]
         out.append(item)
+    if verification:  # le premier résultat est celui que la vérification retient : une alerte ne doit jamais être masquée par un homonyme sans mesure
+        out.sort(key=lambda i: {"alerte": 0, "information": 1}.get(i.get("signal", ""), 2))
     return out
 
 

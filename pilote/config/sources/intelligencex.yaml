@@ -1,0 +1,45 @@
+# Déclaration d'une source (fiche 01) — Intelligence X, LIMITÉ au WHOIS / historique de domaine (cadrage du 27/10/2026). Éteinte par défaut.
+id: intelligencex
+nom: Intelligence X (WHOIS d'un domaine)
+description: >-
+  Historique WHOIS d'un nom de domaine déjà présent sur une fiche trouvée par ailleurs (date des relevés). Ne cherche jamais par un mot ou un nom, et
+  n'interroge jamais la partie fuites du service (identifiants volés, dark web), hors cadre sans exception.
+trouve: relevés WHOIS d'un domaine déjà connu
+genres:
+- entreprise
+- association
+pays:
+- monde
+consomme:
+- sujet
+produit:
+- site
+- origine
+usages:
+- entreprises
+main: seconde
+origine: web
+fiabilite: D
+famille: api
+roles:
+- enrichir
+verifie_sur: site
+cle: INTELX_API_KEY
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 1
+  gratuit_par_mois: 0
+confiance: 0.4
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: true
+  local: false
+verifie_le: '2026-10-27'
+note: >-
+  Non vérifiée contre le service réel : aucune clé Intelligence X n'est enregistrée sur cette machine. La forme des réponses (identifiant de recherche, puis
+  liste de relevés du seau « whois ») suit la documentation publique du service. Le seul seau interrogé est « whois », en dur dans l'adaptateur.
+moteur:
+  adaptateur: intelligencex
