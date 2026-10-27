@@ -25,6 +25,24 @@ from pilote import fichier_local as fl
 from pilote.config import charger
 
 UA = "pilote/0.1 (copie locale ; usage personnel)"
+MARGE_INCONNUE_GO = 10  # place exigée quand le serveur n'annonce aucune taille (extrait SPARQL, HEAD refusée) : on ne part pas en supposant zéro
+
+
+SIGNATURES = {".zip": b"PK\x03\x04", ".gz": b"\x1f\x8b", ".bz2": b"BZh"}
+
+
+def verifier_contenu(fichier: Path) -> None:
+    """Une archive doit commencer par sa signature. Un serveur qui répond une page d'erreur avec le code 200 (quota, maintenance,
+    adresse périmée) écrivait sinon du HTML sous le nom du zip, et l'import échouait beaucoup plus loin, sur une autre erreur."""
+    attendue = SIGNATURES.get(fichier.suffix.lower())
+    if not attendue:
+        return
+    with open(fichier, "rb") as f:
+        debut = f.read(len(attendue))
+    if debut != attendue:
+        apercu = debut.decode("utf-8", "replace")
+        fichier.unlink(missing_ok=True)
+        raise SystemExit(f"{fichier.name} n'est pas une archive {fichier.suffix} (reçu « {apercu} »…) : adresse périmée, quota, ou page d'erreur du serveur.")
 
 
 def telecharger(url: str, dest: Path, attendu: int | None = None) -> None:
@@ -50,6 +68,7 @@ def telecharger(url: str, dest: Path, attendu: int | None = None) -> None:
     if attendu and partiel.stat().st_size != attendu:
         raise SystemExit(f"Taille reçue {partiel.stat().st_size} ≠ taille annoncée {attendu} : {url}")
     partiel.replace(dest)
+    verifier_contenu(dest)  # taille inconnue (le serveur n'annonce rien) : au moins, ce n'est pas une page d'erreur
 
 
 def extraire_sparql(sp: dict, dest: Path) -> None:
@@ -120,9 +139,17 @@ def main(argv: list[str]) -> int:
         total += taille
         cibles.append((d, taille))
     libre = shutil.disk_usage(cfg.dossier_copies).free
-    print(f"{base} : {total / 1e9:.2f} Go à télécharger, {libre / 1e9:.1f} Go libres")
-    if total * 3 > libre:
-        raise SystemExit("Pas assez de place (téléchargement + base indexée ≈ 3× le poids annoncé). Rien n'est téléchargé.")
+    # Tailles inconnues : un serveur qui n'annonce pas `Content-Length` (ou qui refuse la requête HEAD) donnait 0, et le contrôle de place
+    # ci-dessous passait toujours — il ne protégeait rien justement dans le cas où l'on ignore ce qu'on va recevoir. On exige alors une marge
+    # fixe, et `MARGE_INCONNUE_GO` dit laquelle plutôt que de faire comme si la taille était nulle.
+    inconnues = [d["fichier"] for d, t in cibles if not t and not d.get("sparql")]
+    annonce = f"{total / 1e9:.2f} Go à télécharger" if total else "taille non annoncée par le serveur"
+    print(f"{base} : {annonce}, {libre / 1e9:.1f} Go libres" + (f" ; taille inconnue pour {', '.join(inconnues)}" if inconnues else ""))
+    besoin = total * 3 if total else 0
+    if inconnues or any(d.get("sparql") for d, _ in cibles):
+        besoin = max(besoin, MARGE_INCONNUE_GO * 1_000_000_000)
+    if besoin > libre:
+        raise SystemExit(f"Pas assez de place : il faut environ {besoin / 1e9:.0f} Go libres (téléchargement + base indexée), il en reste {libre / 1e9:.1f}. Rien n'est téléchargé.")
     for d, taille in cibles:
         dest = dossier_dl / d["fichier"]
         fichiers[d["fichier"]] = dest

@@ -200,6 +200,10 @@ class ExecuteurGrappes:
         if spec["en_pause"]:  # le disjoncteur a mis des sources en pause : elles ne sont pas appelées, et on le dit
             ctx.avancer(sources_en_pause=spec["en_pause"])
             ctx.noter("sources_en_pause", sources=spec["en_pause"])
+        if spec.get("regle8_afficher_comptes"):  # la règle la plus sérieuse du projet a été levée pour cette recherche : ça se lit après coup, pas seulement avant
+            ctx.avancer(regle8_levee=True)
+            ctx.noter("regle8_levee_pour_la_recherche", portee="cette recherche seulement",
+                      effet="les comptes au nom d'une personne physique entrent dans le rapprochement ; chaque paire reste à trancher dans l'onglet Tri")  # fmt: skip
         suivi_fichier = ctx.dossier / "avancement.jsonl"
         suivi_fichier.unlink(missing_ok=True)
         (ctx.dossier / "ARRET").unlink(missing_ok=True)

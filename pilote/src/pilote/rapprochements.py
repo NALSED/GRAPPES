@@ -78,7 +78,11 @@ def _deja_liees(cands: list[Candidat]) -> set[tuple[int, int]]:
 def proposer(cfg: Config, fabrique: sessionmaker[Session], rid: str) -> dict[str, Any]:
     """Range en file les rapprochements d'une recherche. Rend {proposes, comparees}. Lève `Indisponible` si le moteur ne tourne pas."""
     with fabrique() as s:
-        cands = [c for c in s.scalars(select(Candidat).where(Candidat.recherche_id == rid)) if (c.genre_de_chose or "").strip().lower() != "personne"]
+        # Règle 8 : une fiche de genre « personne » n'entre pas dans un rapprochement, SAUF si une personne a explicitement levé la règle sur
+        # cette fiche-là (`tri.marquer_personne_morale`, trace dans `faits.regle8_leve`). Le genre n'est jamais réécrit : il dit ce que la
+        # collecte a constaté, la levée dit ce qu'une personne a décidé, et les deux restent lisibles côte à côte.
+        cands = [c for c in s.scalars(select(Candidat).where(Candidat.recherche_id == rid))
+                 if (c.genre_de_chose or "").strip().lower() != "personne" or (c.faits or {}).get("regle8_leve")]  # fmt: skip
         deja = {(r.a, r.b) for r in s.scalars(select(Rapprochement).where(Rapprochement.recherche_id == rid))}
         liees = _deja_liees(cands)
     if len(cands) < 2:

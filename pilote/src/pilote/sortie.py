@@ -96,6 +96,8 @@ def jeu_de_donnees(cfg: Config, fabrique: sessionmaker[Session], rid: str, decis
             "numero_officiel": l.numero_officiel, "decision": l.decision, "motif_rejet": l.motif if l.decision == "rejeter" else "",
             "sources": [nom_source(t) for t in sorted(set(l.trouve_par))], "relations": [x for x in (c.relations or []) if isinstance(x, dict)],
             "coordonnees": faits.get("coordonnees") if isinstance(faits.get("coordonnees"), dict) else None,
+            # Règle 8 : le constat de la collecte et la levée éventuelle, pour les formats qui ont à les distinguer (voir `formats/ftm.py`)
+            "regle8_personne": bool(faits.get("regle8_personne")), "regle8_leve": bool(faits.get("regle8_leve")),
         })  # fmt: skip
     ids = mentions.sources_de_la_recherche(cfg.dossier_recherche(rid)) or sorted({t for l in lignes for t in l.trouve_par})
     trace = {

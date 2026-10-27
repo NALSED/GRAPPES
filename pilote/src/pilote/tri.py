@@ -17,7 +17,7 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from pilote import classements as cl
 from pilote import motifs, tri_filtres
-from pilote.base import DECISIONS, Candidat, Decision, Journal, Recherche
+from pilote.base import DECISIONS, Candidat, Decision, Journal, Rapprochement, Recherche
 from pilote.config import Config
 
 SOURCES_ECOSYSTEMES = {"web": "Recherche web", "wikipedia": "Wikipédia", "rss": "Flux de presse", "texte": "Lecture d'articles"}
@@ -223,26 +223,52 @@ def separer(fabrique: sessionmaker[Session], rid: str, cid: int, qui: str) -> No
         s.add(Journal(recherche_id=rid, qui=qui, evenement="noms_separes", detail={"candidat": cid}))
 
 
-def marquer_personne_morale(cfg: Config, fabrique: sessionmaker[Session], rid: str, cid: int, qui: str) -> dict[str, Any]:
-    """Lève la règle n° 8 sur UNE fiche, au cas par cas (27-leviers-regle8-a-faire-par-sednal.md) : « compte » redevient
-    le genre de cette seule fiche, au lieu de « personne ». Ne touche ni à la règle par défaut ni aux autres fiches, et
-    rien n'est effacé : la trace reste dans `faits` et dans le journal, comme `separer`. Reclassée, la fiche redevient
-    candidate à un rapprochement ; on relance aussitôt la recherche de rapprochements pour cette recherche."""
+def _ecartee_par_regle8(c: Candidat) -> bool:
+    return (c.genre_de_chose or "").strip().lower() == "personne" or bool((c.faits or {}).get("regle8_personne"))
+
+
+def marquer_personne_morale(fabrique: sessionmaker[Session], rid: str, cid: int, qui: str) -> dict[str, Any]:
+    """Lève la règle n° 8 sur UNE fiche : une personne déclare que celle-ci est une personne morale malgré son nom.
+
+    N'ÉCRASE RIEN (règle 1) : le genre reste celui que la collecte a constaté, la levée s'ajoute à côté, dans
+    `faits.regle8_leve` (qui, quand). C'est `rapprochements.proposer` qui lit cette levée pour laisser la fiche entrer
+    dans le lot des candidats. Réversible par `annuler_personne_morale`, qui retire la levée et rien d'autre.
+
+    Ne relance PAS le moteur de rapprochement : il tourne dans un sous-processus avec un délai de deux minutes, qui n'a
+    rien à faire dans la requête d'un clic. L'appelant enchaîne sur la route « proposer » de la recherche, qui existe
+    déjà pour ça et sait dire qu'elle est indisponible."""
     with fabrique.begin() as s:
         c = s.get(Candidat, cid)
         if c is None or c.recherche_id != rid:
             raise Introuvable(cid)
-        if (c.genre_de_chose or "").strip().lower() != "personne":
+        if not _ecartee_par_regle8(c):
             raise ValueError("Cette fiche n'est pas écartée par la règle n° 8 ; il n'y a rien à lever.")
-        c.genre_de_chose = "compte"
+        if (c.faits or {}).get("regle8_leve"):
+            raise ValueError("La règle n° 8 est déjà levée sur cette fiche.")
         c.faits = {**(c.faits or {}), "regle8_leve": {"qui": qui, "quand": datetime.now(UTC).isoformat(timespec="seconds")}}
         s.add(Journal(recherche_id=rid, qui=qui, evenement="regle8_levee", detail={"candidat": cid, "nom": c.nom}))
-    from pilote import rapprochements
+    return {"candidat": cid, "leve": True, "a_reproposer": True}
 
-    try:
-        return rapprochements.proposer(cfg, fabrique, rid)
-    except rapprochements.Indisponible:
-        return {"proposes": 0, "comparees": 0}  # la levée est faite ; seule la recherche de nouveaux rapprochements a échoué, elle se referera
+
+def annuler_personne_morale(fabrique: sessionmaker[Session], rid: str, cid: int, qui: str) -> dict[str, Any]:
+    """Retire la levée de la règle n° 8 sur une fiche : elle redevient écartée du rapprochement. Les rapprochements déjà
+    proposés pour cette fiche sont retirés de la file tant qu'ils n'ont pas été tranchés — une décision déjà prise, elle,
+    reste lisible (règle 1) : on ne réécrit pas l'histoire, on arrête seulement d'en proposer de nouveaux."""
+    with fabrique.begin() as s:
+        c = s.get(Candidat, cid)
+        if c is None or c.recherche_id != rid:
+            raise Introuvable(cid)
+        if not (c.faits or {}).get("regle8_leve"):
+            raise ValueError("La règle n° 8 n'est pas levée sur cette fiche.")
+        faits = {**(c.faits or {})}
+        faits.pop("regle8_leve")
+        c.faits = faits
+        attente = [r for r in s.scalars(select(Rapprochement).where(Rapprochement.recherche_id == rid, Rapprochement.etat == "a_examiner"))
+                   if cid in (r.a, r.b)]  # fmt: skip
+        for r in attente:
+            s.delete(r)
+        s.add(Journal(recherche_id=rid, qui=qui, evenement="regle8_levee_annulee", detail={"candidat": cid, "nom": c.nom, "rapprochements_retires": len(attente)}))
+    return {"candidat": cid, "leve": False, "rapprochements_retires": len(attente)}
 
 
 def fiche(cfg: Config, fabrique: sessionmaker[Session], rid: str, cid: int) -> dict[str, Any]:
@@ -274,6 +300,8 @@ def fiche(cfg: Config, fabrique: sessionmaker[Session], rid: str, cid: int) -> d
         "id": c.id, "nom": c.nom, "verifications": verifications, "enrichissements": enrichissements, "origine": c.genre_source, "origine_phrase": cl.ORIGINE_LIBELLE.get(c.genre_source, ""), "endroits": c.nb_endroits,
         "ville": c.ville, "pays": c.pays, "site": c.site, "numero_officiel": c.numero_officiel, "genre_de_chose": c.genre_de_chose,
         "alias": list((c.faits or {}).get("alias") or []),  # les autres noms que les sources déclarent (sigle, acronyme) : une preuve montrée, jamais une identité
+        # Règle 8 : ce que la collecte a constaté, et la levée éventuelle. L'écran a besoin des deux pour proposer le bon geste.
+        "regle8_ecartee": _ecartee_par_regle8(c), "regle8_leve": (c.faits or {}).get("regle8_leve") or None,
         "decision": ligne.decision, "ressemble_a": ligne.ressemble_a, "sources": sources, "fonction": ligne.fonction, "bloc": ligne.racine,
         "relations": c.relations or [], "rapprochement": ligne.rapproche,
         "verification": True if (r.parametres or {}).get("verification") is None else bool((r.parametres or {}).get("verification")),

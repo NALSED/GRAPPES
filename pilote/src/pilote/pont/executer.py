@@ -162,26 +162,31 @@ def main(dossier: str) -> int:
         from pilote import adaptateurs
         from pilote.adaptateurs import programmes
         from pilote.emoji_texte import requete_pour
-        from pilote.regle8 import genre_retenu
+        from pilote.regle8 import est_personne
 
         entree_base = {"sujet": spec.get("phrase") or phrase, "pays": spec.get("pays_code", ""), "limite": int(spec.get("combien", 200)), **spec.get("entree", {})}
 
-        # Règle n° 8, deux leviers (27-leviers-regle8-a-faire-par-sednal.md) : la liste d'indices est celle que le moteur lit déjà dans
-        # `config/scoring.yaml` (`resultat.indices_institution`) — pilote et moteur restent sur la même liste, que Sednal tient lui-même.
-        # Et une recherche peut demander à ne PAS reclasser les comptes en « personne » (`regle8_afficher_comptes`, validé dans
-        # `lancement.valider_options`) : les comptes concernés entrent alors dans le lot normal des candidats, et tout rapprochement qui en
-        # sort passe par l'onglet Tri comme n'importe quel autre — rien n'est automatique, la règle par défaut ne change pour personne d'autre.
+        # Règle n° 8 et ses leviers. La liste d'indices est celle que le moteur lit déjà dans `config/scoring.yaml`
+        # (`resultat.indices_institution`) : pilote et moteur restent sur une seule liste, que Sednal tient lui-même.
+        # Le CONSTAT (« ce nom est celui d'une personne physique ») est toujours posé et toujours tracé dans les faits de la fiche, même quand
+        # un levier change le genre écrit : c'est lui que lisent les garde-fous qu'un levier n'a pas à ouvrir (sortie FollowTheMoney).
+        # Le levier de recherche (`regle8_afficher_comptes`, validé dans `lancement.valider_options`) ne fait qu'une chose : laisser le genre
+        # déclaré par la source au lieu de le remplacer par « personne », pour que ces comptes entrent dans le lot normal des candidats. Tout
+        # rapprochement qui en sort passe par l'onglet Tri comme les autres — rien n'est automatique.
         _hints_regle8 = cfg.scoring.resultat_indices_institution
         _leve_regle8 = bool(spec.get("regle8_afficher_comptes"))
 
         def vers_decouvert(source: str, n: dict) -> Decouvert:
             num = str(n.get("numero", "") or "")
             genre_brut = str(n.get("genre", "") or "")
-            genre = genre_brut if _leve_regle8 else genre_retenu(genre_brut, str(n["nom"]), _hints_regle8)
+            personne = est_personne(genre_brut, str(n["nom"]), _hints_regle8)
+            genre = genre_brut if (_leve_regle8 or not personne) else "personne"
+            liens = {k: json.dumps(n[k], ensure_ascii=False) for k in ("relations", "coordonnees", "fonction", "alias") if n.get(k)}
+            if personne:
+                liens["regle8"] = json.dumps(True)  # le constat suit la fiche, quel que soit le genre écrit
             return Decouvert(
                 str(n["nom"]).strip(), source, num or str(n["nom"]).strip(), str(n.get("ville", "") or ""), str(n.get("site", "") or ""),
-                num if num.isdigit() and len(num) in (9, 14) else "", str(n.get("origine", "")), genre, "",
-                {k: json.dumps(n[k], ensure_ascii=False) for k in ("relations", "coordonnees", "fonction", "alias") if n.get(k)},
+                num if num.isdigit() and len(num) in (9, 14) else "", str(n.get("origine", "")), genre, "", liens,
             )  # fmt: skip
 
         def cles_de_la_copie() -> dict[str, str]:
@@ -243,8 +248,8 @@ def main(dossier: str) -> int:
             def tourne() -> None:
                 try:
                     sortie["noms"] = executer_()
-                except BaseException as exc:  # noqa: BLE001 - la recherche continue avec les autres sources
-                    sortie["exc"] = exc
+                except Exception as exc:  # noqa: BLE001 - la recherche continue avec les autres sources ; mais PAS les signaux
+                    sortie["exc"] = exc  # `BaseException` avalait aussi KeyboardInterrupt et SystemExit : un arrêt demandé devenait « cette source a échoué »
 
             t = threading.Thread(target=tourne, daemon=True)
             t.start()

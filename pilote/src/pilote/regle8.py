@@ -5,26 +5,29 @@ d'un résultat de réseau social est « compte », et le filtre de `rapprochemen
 compte de personne physique devenait une clé de rapprochement (NIST SP 800-188 : un quasi-identifiant ne sert jamais de clé de liaison).
 La fiche reste affichée (règle 1) ; elle n'est simplement jamais candidate à un rapprochement.
 
-Les indices institutionnels ne sont PAS dupliqués ici : ce sont ceux du moteur (`DEFAULT_INSTITUTION_HINTS`), complétés par la liste que Sednal
-tient lui-même dans `config/scoring.yaml` (`resultat.indices_institution` — déjà lue par le moteur à l'affectation des entités, voir
-`clustering/assign.py`). Pilote et moteur lisent donc la même liste, modifiable sans toucher au code (27-leviers-regle8-a-faire-par-sednal.md §1).
+Les indices institutionnels ne sont PAS dupliqués ici : ce sont ceux du moteur (`DEFAULT_INSTITUTION_HINTS`), que `config/scoring.yaml`
+(`resultat.indices_institution`) remplace quand Sednal le renseigne — la même liste que le moteur lit à l'affectation des entités
+(`clustering/assign.py`). Pilote et moteur restent donc sur une seule liste, modifiable sans toucher au code.
 
-Deux leviers supplémentaires, documentés dans le même fichier : lever la règle sur UNE fiche précise après coup (`tri.marquer_personne_morale`),
-ou pour UNE recherche entière au moment de la lancer (`hints=None` ci-dessous, piloté par `lancement.py`/`executer.py`). Aucun des deux ne
-touche à la règle par défaut ni au moteur : voir ce fichier pour le détail."""
+DEUX SORTIES, et c'est le point important : `est_personne` dit CE QUI A ÉTÉ CONSTATÉ (ce nom est celui d'une personne physique), `genre_retenu`
+dit CE QUI EST ÉCRIT sur la fiche. Les deux sont séparés parce que les leviers (lever la règle sur une fiche, ou pour une recherche) changent le
+second sans effacer le premier : le constat est tracé dans les faits de la fiche (`faits.regle8_personne`), et c'est lui — jamais le genre seul —
+que lisent les garde-fous qui n'ont pas à être ouverts par un levier, comme la sortie FollowTheMoney."""
 
 from __future__ import annotations
 
 
-def genre_retenu(genre: str, nom: str, hints: tuple[str, ...] | None = None) -> str:
-    """Le genre que reçoit la fiche : « compte » sans indice institutionnel dans le nom devient « personne », le reste passe tel quel.
-
-    `hints`, quand fourni, remplace la liste par défaut du moteur (c'est `executer.py` qui y met celle de `config/scoring.yaml`, déjà
-    étendue par le moteur avec `DEFAULT_INSTITUTION_HINTS`). `hints=None` garde le comportement du moteur tel quel."""
+def est_personne(genre: str, nom: str, hints: tuple[str, ...] | None = None) -> bool:
+    """Vrai si ce résultat est celui d'une personne physique au sens de la règle 8 : un « compte » dont le nom ne porte aucun indice
+    institutionnel (sans nom, ou dans le doute : vrai, comme le moteur). Ne dépend d'aucun levier : c'est le constat, pas la décision."""
     if (genre or "").strip().lower() != "compte":
-        return genre
+        return False
     # import tardif : le moteur n'est sur le chemin d'import qu'une fois la copie branchée
     from grappes.personnes import is_institution
 
-    institution = is_institution(nom, hints) if hints is not None else is_institution(nom)
-    return genre if institution else "personne"
+    return not (is_institution(nom, hints) if hints is not None else is_institution(nom))
+
+
+def genre_retenu(genre: str, nom: str, hints: tuple[str, ...] | None = None) -> str:
+    """Le genre que reçoit la fiche : « compte » sans indice institutionnel dans le nom devient « personne », le reste passe tel quel."""
+    return "personne" if est_personne(genre, nom, hints) else genre

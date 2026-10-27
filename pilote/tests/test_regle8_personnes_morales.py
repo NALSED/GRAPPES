@@ -36,9 +36,15 @@ def test_les_copies_locales_ne_versent_aucune_colonne_de_personne():
             assert imp.get("exclure") or imp.get("garder"), f"{f.name} : aucun filtre de classe contre les personnes physiques"
 
 
-def test_la_config_personnes_de_grappes_reste_desactivee_et_sans_consommateur_de_rapprochement(cfg):
-    """Ne se saute JAMAIS : la racine de grappes vient de la configuration (comme `grappes_lib`), pas d'un chemin en dur. Configuration introuvable : échec."""
-    fichier = cfg.grappes_racine / cfg.grappes_config / "personnes.yaml"
+def test_la_config_personnes_de_grappes_reste_desactivee_et_sans_consommateur_de_rapprochement():
+    """Ne se saute JAMAIS, et ne dépend pas de l'endroit où le dépôt est posé.
+
+    On lit la configuration LIVRÉE (`charger()` sans argument), pas la copie temporaire de la fixture `cfg` : cette copie vit dans un dossier
+    de test, où « ../grappes » ne mène nulle part, et le test échouait alors sur son propre montage au lieu de vérifier la règle 8."""
+    from pilote.config import charger
+
+    livree = charger()
+    fichier = livree.grappes_racine / livree.grappes_config / "personnes.yaml"
     assert fichier.exists(), f"config/personnes.yaml de grappes introuvable ({fichier}) : la règle 8 ne peut pas être vérifiée"
     assert yaml.safe_load(fichier.read_text(encoding="utf-8"))["collecte"] is False  # préparé, non activé : l'activer est une décision de Sednal
     for f in (RACINE / "src" / "pilote").glob("rapprochement*.py"):
@@ -106,24 +112,30 @@ def test_genre_retenu_accepte_des_indices_supplementaires_sans_toucher_au_defaut
     assert genre_retenu("compte", "Marie Dupont", plus) == "personne"  # un indice en plus ne change rien pour les autres noms
 
 
-def test_marquer_personne_morale_leve_la_regle_sur_une_seule_fiche(cfg, moteur):
-    """Lever 2 : une action sur UNE fiche, réversible comme `separer`, qui ne touche à rien d'autre."""
+def test_marquer_personne_morale_n_ecrase_pas_le_genre_et_s_annule(cfg, moteur):
+    """Lever 2 : une décision sur UNE fiche, qui s'AJOUTE au constat au lieu de l'écraser (règle 1), et qui s'annule."""
     app = creer_app(cfg)
     with TestClient(app):
         rid = _creer(app, [("Les Amis Discrets", "Lyon"), ("Les Amis Discrets", "Lyon"), ("Marie Dupont", "Lyon")])  # aucun indice institutionnel : écartées par défaut
         assert rapprochements.proposer(cfg, app.state.fabrique, rid) == {"proposes": 0, "comparees": 0}
         with app.state.fabrique() as s:
             ids = [c.id for c in s.scalars(select(Candidat).where(Candidat.recherche_id == rid, Candidat.nom == "Les Amis Discrets"))]
-        res = tri.marquer_personne_morale(cfg, app.state.fabrique, rid, ids[0], "sednal")  # une seule des deux fiches, d'abord
+        for cid in ids:
+            assert tri.marquer_personne_morale(app.state.fabrique, rid, cid, "sednal")["leve"] is True
         with app.state.fabrique() as s:
             c = s.get(Candidat, ids[0])
-            assert c.genre_de_chose == "compte"  # reclassée, cette fiche seulement
-            assert c.faits["regle8_leve"]["qui"] == "sednal"  # trace : rien ne disparaît en silence
+            assert c.genre_de_chose == "personne"  # le CONSTAT n'est pas réécrit : la levée vit à côté
+            assert c.faits["regle8_leve"]["qui"] == "sednal"
             marie = s.scalars(select(Candidat).where(Candidat.recherche_id == rid, Candidat.nom == "Marie Dupont")).one()
-            assert marie.genre_de_chose == "personne"  # cette autre fiche n'est pas touchée : ce n'est pas la règle par défaut qui a changé
-        assert res["comparees"] == 1  # une seule fiche levée pour l'instant, rien à comparer encore
-        res = tri.marquer_personne_morale(cfg, app.state.fabrique, rid, ids[1], "sednal")  # la seconde, maintenant
-        assert res["comparees"] == 2 and res["proposes"] == 1  # les deux fiches levées sont repassées dans le lot normal, et se ressemblent
+            assert marie.genre_de_chose == "personne" and not (marie.faits or {}).get("regle8_leve")  # les autres fiches ne bougent pas
+        res = rapprochements.proposer(cfg, app.state.fabrique, rid)  # la levée se lit ici, et nulle part ailleurs
+        assert res["comparees"] == 2 and res["proposes"] == 1
+        # … et elle s'annule : la fiche ressort du rapprochement, les paires en attente sont retirées
+        annule = tri.annuler_personne_morale(app.state.fabrique, rid, ids[0], "sednal")
+        assert annule["leve"] is False and annule["rapprochements_retires"] == 1
+        with app.state.fabrique() as s:
+            assert not (s.get(Candidat, ids[0]).faits or {}).get("regle8_leve")
+        assert rapprochements.proposer(cfg, app.state.fabrique, rid)["comparees"] == 1  # une seule fiche levée reste
 
 
 def test_marquer_personne_morale_refuse_une_fiche_que_la_regle_n_ecarte_pas(cfg, moteur):
@@ -133,7 +145,30 @@ def test_marquer_personne_morale_refuse_une_fiche_que_la_regle_n_ecarte_pas(cfg,
         with app.state.fabrique() as s:
             cid = s.scalars(select(Candidat).where(Candidat.recherche_id == rid)).one().id
         with pytest.raises(ValueError):
-            tri.marquer_personne_morale(cfg, app.state.fabrique, rid, cid, "sednal")
+            tri.marquer_personne_morale(app.state.fabrique, rid, cid, "sednal")
+        with pytest.raises(ValueError):  # et on n'annule pas une levée qui n'existe pas
+            tri.annuler_personne_morale(app.state.fabrique, rid, cid, "sednal")
+
+
+def test_la_sortie_followthemoney_n_est_pas_ouverte_par_le_levier_de_recherche():
+    """Correctif du point 8 de la revue : le levier d'une RECHERCHE ne doit pas écrire une personne physique dans la sortie FtM.
+
+    Le genre seul ne suffit pas à l'en empêcher : avec le levier, il vaut « compte ». C'est le constat de la collecte
+    (`regle8_personne`) qui tient la porte, et seule une décision humaine fiche par fiche (`regle8_leve`) la rouvre."""
+    import tempfile
+
+    from pilote.formats import ftm
+
+    def ecrit(ligne):
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "x.ftm.json"
+            bilan = ftm.ecrire({"lignes": [{"nom": "Marie Dupont", "decision": None, "endroits": 1, "confirmations": 1, "site": "", "fonction": "", **ligne}], "trace": {"recherche": "r"}}, "", {}, f)
+            return bool(f.read_text(encoding="utf-8").strip()), bilan["ignorees_personnes_physiques"]
+
+    assert ecrit({"genre": "personne"}) == (False, 1)  # règle 8 par défaut
+    assert ecrit({"genre": "compte", "regle8_personne": True}) == (False, 1)  # levier de recherche : le constat tient la porte
+    assert ecrit({"genre": "compte"}) == (True, 0)  # un compte d'organisation sort normalement
+    assert ecrit({"genre": "personne", "regle8_personne": True, "regle8_leve": True}) == (True, 0)  # décision humaine sur CETTE fiche : elle sort
 
 
 def test_regle8_afficher_comptes_se_valide_comme_une_case_oui_non():

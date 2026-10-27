@@ -345,8 +345,14 @@ def creer_app(cfg: Config | None = None, executeur: Executeur | None = None, url
 
     @app.post("/api/recherches/{rid}/noms/{cid}/personne_morale")
     def marquer_personne_morale(rid: str, cid: int, qui: str | None = None) -> dict[str, Any]:
-        """Lève la règle n° 8 sur cette seule fiche (27-leviers-regle8-a-faire-par-sednal.md) : « Marquer comme personne morale »."""
-        return _tri(tri.marquer_personne_morale, cfg, fabrique, rid, cid, qui or cfg.qui_par_defaut)
+        """Lève la règle n° 8 sur cette seule fiche : « Marquer comme personne morale ». Ne relance pas le moteur de
+        rapprochement — l'écran enchaîne sur /api/suite/tri/proposer/{rid}, qui sait dire s'il est indisponible."""
+        return _tri(tri.marquer_personne_morale, fabrique, rid, cid, qui or cfg.qui_par_defaut)
+
+    @app.delete("/api/recherches/{rid}/noms/{cid}/personne_morale")
+    def annuler_personne_morale(rid: str, cid: int, qui: str | None = None) -> dict[str, Any]:
+        """Retire la levée de la règle n° 8 sur cette fiche : elle redevient écartée du rapprochement."""
+        return _tri(tri.annuler_personne_morale, fabrique, rid, cid, qui or cfg.qui_par_defaut)
 
     @app.get("/api/recherches/{rid}/noms/{cid}")
     def fiche(rid: str, cid: int) -> dict[str, Any]:

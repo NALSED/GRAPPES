@@ -103,25 +103,34 @@ def main(argv: list[str]) -> int:
     a_faire = [t for t in voulus if t not in faits]
     print(f"GDELT France : {len(voulus)} fichiers dans la fenêtre de {jours} jours, {len(a_faire)} à traiter", flush=True)
     prochain = (con.execute("SELECT max(id) FROM donnees").fetchone()[0] or 0) + 1
-    t0, n_lignes = time.time(), 0
+    t0, n_lignes, i = time.time(), 0, 0
+    # Par TRANCHES, et c'est le point : `pool.map` sur toute la fenêtre soumettait les ~8 600 quarts d'heure d'un coup, et les résultats
+    # terminés s'empilaient en mémoire pendant que la boucle insérait ligne à ligne. Sur 90 jours, la mémoire montait sans borne. Une tranche
+    # de quelques fils à la fois borne ce qui attend d'être écrit, et `executemany` écrit par lots au lieu d'un appel par ligne.
+    tranche = max(fils * 4, 8)
     with ThreadPoolExecutor(fils) as pool:
-        for i, (ts, lignes) in enumerate(zip(a_faire, pool.map(lire, a_faire), strict=True), 1):
-            for nom, source, adresse, jour in lignes or []:
-                n = fl.nom_normalise(nom)
-                if not n:
-                    continue
-                con.execute(
-                    "INSERT INTO donnees(id, nom, nom_n, pays, genre, site, themes, detail) VALUES (?,?,?,?,?,?,?,?)",
-                    (prochain, nom, n, "FR", "page", source, jour, f"cité dans {source} le {jour[:4]}-{jour[4:6]}-{jour[6:]} : {adresse}"),
-                )
-                con.execute("INSERT INTO noms(nom_n, donnee) VALUES (?,?)", (n, prochain))
-                prochain += 1
-                n_lignes += 1
-            if lignes is not None and datetime.strptime(ts, "%Y%m%d%H%M%S").replace(tzinfo=UTC) < maintenant - timedelta(hours=3):  # les plus récents arrivent en retard : repris la fois suivante
-                con.execute("INSERT OR IGNORE INTO fichiers VALUES (?)", (ts,))
-            if i % 96 == 0:  # un jour de traité : on valide (reprise possible)
-                con.commit()
-                print(f"  {i}/{len(a_faire)} fichiers, {n_lignes} lignes, {int(time.time() - t0)} s", flush=True)
+        for debut in range(0, len(a_faire), tranche):
+            lot_ts = a_faire[debut : debut + tranche]
+            for ts, lignes in zip(lot_ts, pool.map(lire, lot_ts), strict=True):
+                i += 1
+                lot_d, lot_n = [], []
+                for nom, source, adresse, jour in lignes or []:
+                    n = fl.nom_normalise(nom)
+                    if not n:
+                        continue
+                    lot_d.append((prochain, nom, n, "FR", "page", source, jour, f"cité dans {source} le {jour[:4]}-{jour[4:6]}-{jour[6:]} : {adresse}"))
+                    lot_n.append((n, prochain))
+                    prochain += 1
+                    n_lignes += 1
+                if lot_d:
+                    con.executemany("INSERT INTO donnees(id, nom, nom_n, pays, genre, site, themes, detail) VALUES (?,?,?,?,?,?,?,?)", lot_d)
+                    con.executemany("INSERT INTO noms(nom_n, donnee) VALUES (?,?)", lot_n)
+                if lignes is not None and datetime.strptime(ts, "%Y%m%d%H%M%S").replace(tzinfo=UTC) < maintenant - timedelta(hours=3):  # les plus récents arrivent en retard : repris la fois suivante
+                    con.execute("INSERT OR IGNORE INTO fichiers VALUES (?)", (ts,))
+                if i % 96 == 0:  # un jour de traité : on valide (reprise possible)
+                    con.commit()
+                    print(f"  {i}/{len(a_faire)} fichiers, {n_lignes} lignes, {int(time.time() - t0)} s", flush=True)
+            con.commit()  # fin de tranche : ce qui est lu est écrit, rien ne reste en attente
     # fenêtre glissante : tout ce qui est plus vieux que `jours` part
     coupe = limite.strftime("%Y%m%d")
     con.execute("DELETE FROM noms WHERE donnee IN (SELECT id FROM donnees WHERE themes < ?)", (coupe,))

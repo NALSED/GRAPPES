@@ -124,5 +124,8 @@ def faits_candidat(c: Any, decouverts_du_nom: list[Any], site_key, pays: str, pr
         "site": site_de(c.ref, domaine),
         "numero_officiel": numero_officiel(decouverts_du_nom),
         "relations": relations,
-        "faits": {"ref": c.ref, "preuves": ps, **({"coordonnees": coord} if coord else {}), **({"fonction": fonction} if fonction else {}), **({"alias": alias} if alias else {})},
-    }
+        # `regle8_personne` : le constat posé par `pilote.regle8.est_personne` au moment de la collecte. Il reste vrai même quand un levier
+        # a laissé le genre déclaré par la source, et c'est lui que lisent les garde-fous qu'un levier n'ouvre pas (sortie FollowTheMoney).
+        "faits": {"ref": c.ref, "preuves": ps, **({"regle8_personne": True} if any(_liens(decouverts_du_nom, "regle8")) else {}),
+                  **({"coordonnees": coord} if coord else {}), **({"fonction": fonction} if fonction else {}), **({"alias": alias} if alias else {})},
+    }  # fmt: skip

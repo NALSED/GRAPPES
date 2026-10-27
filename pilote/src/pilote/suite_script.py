@@ -54,7 +54,11 @@ def executer(code: str, entree: str) -> dict:
                 "-rn",
                 *cmd,
             ]  # pas de réseau ; si l'espace de noms est refusé, on retombe sur l'exécution simple ci-dessous
-        for essai in (cmd, cmd[3:] if cmd[0] == "unshare" else cmd):
+        # Repli sans `unshare` : on retire les DEUX éléments du préfixe (« unshare », « -rn »). En retirer trois perdait
+        # l'interpréteur, et la commande de repli levait FileNotFoundError('-I') sur toute machine où l'espace de noms
+        # existe mais est refusé (noyau sans espaces de noms non privilégiés, conteneur sans droits).
+        essais = [cmd, cmd[2:]] if cmd[0] == "unshare" else [cmd]
+        for essai in essais:
             try:
                 p = subprocess.run(
                     essai,
@@ -68,7 +72,9 @@ def executer(code: str, entree: str) -> dict:
                 )
             except subprocess.TimeoutExpired:
                 return {"ok": False, "sortie": "", "erreur": f"Le script a dépassé {DELAI_S} secondes."}
-            if p.returncode != 0 and "unshare" in p.stderr and essai is cmd and cmd[0] == "unshare":
+            except OSError as exc:  # commande introuvable : dit en français, jamais une pile d'appels à l'écran
+                return {"ok": False, "sortie": "", "erreur": f"Le script n'a pas pu être lancé ({exc})."}
+            if p.returncode != 0 and "unshare" in p.stderr and essai is not essais[-1]:
                 continue
             break
     if p.returncode in (-24, 152, -9):  # SIGXCPU / SIGKILL : la limite de processeur ou de mémoire a coupé le script

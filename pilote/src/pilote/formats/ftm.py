@@ -76,10 +76,25 @@ def entite(r: dict, trace: dict) -> dict:
     return {"id": identifiant(r), "schema": schema, "properties": p}
 
 
+def _personne_physique(r: dict) -> bool:
+    """Règle 8, pour CETTE sortie. Deux signaux, pas un :
+
+    * le genre « personne » écrit sur la fiche ;
+    * `regle8_personne`, le constat posé à la collecte (`pilote.regle8.est_personne`), qui reste vrai même quand le levier de recherche
+      « afficher les comptes écartés » a laissé le genre déclaré par la source. Sans ce second signal, un levier prévu pour le seul
+      rapprochement ouvrait aussi cette sortie, en silence.
+
+    Une seule chose rouvre la porte : qu'une personne ait explicitement déclaré CETTE fiche comme personne morale dans l'onglet Tri
+    (`regle8_leve`). Un interrupteur de recherche ne suffit jamais ; une décision humaine, fiche par fiche, oui."""
+    if r.get("regle8_leve"):
+        return False
+    return (r.get("genre") or "").strip().lower() == "personne" or bool(r.get("regle8_personne"))
+
+
 def ecrire(jeu: dict, contenu: str, options: dict, chemin: Path) -> dict:
-    """Règle 8 de grappes : on vise les personnes morales. Une fiche dont le genre est « personne » n'est PAS écrite (le schéma `Person` n'existe
-    pas ici) ; leur nombre est rendu, pour que l'absence se dise."""
-    gardees = [r for r in jeu["lignes"] if (r.get("genre") or "").strip().lower() != "personne"]
+    """Règle 8 de grappes : on vise les personnes morales. Une fiche de personne physique n'est PAS écrite (le schéma `Person` n'existe
+    pas ici) ; leur nombre est rendu, pour que l'absence se dise. Voir `_personne_physique` pour ce qui compte comme telle."""
+    gardees = [r for r in jeu["lignes"] if not _personne_physique(r)]
     lignes = [json.dumps(entite(r, jeu["trace"]), ensure_ascii=False, sort_keys=True) for r in gardees]
     chemin.write_text("".join(x + "\n" for x in lignes), encoding="utf-8")
     return {"fichiers": [chemin], "ignorees_personnes_physiques": len(jeu["lignes"]) - len(gardees)}
