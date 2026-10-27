@@ -218,3 +218,44 @@ def test_le_poids_classe_les_homonymes_et_l_expression_passe_avant_les_mots(tmp_
     fl.importer(t, "u", tmp_path, spec)
     assert [r["numero"] for r in fl.exact(tmp_path, "u", "renault")] == ["100000002", "100000003", "100000001"]
     assert fl.chercher_par_mots(tmp_path, "u", "air france")[0]["numero"] == "100000005"  # l'expression « air france » avant « france air »
+
+
+def test_la_traduction_pivote_par_l_anglais_en_deux_appels(monkeypatch):
+    from pilote import suite_traduction as st
+
+    appels = []
+    monkeypatch.setattr(st, "_appel", lambda url, texte, de, vers: appels.append((de, vers)) or f"{texte}>{vers}")
+    assert st.traduire("http://x", "Association", "fr", "es") == "Association>en>es"
+    assert appels == [("fr", "en"), ("en", "es")]
+    appels.clear()
+    assert st.traduire("http://x", "Association", "fr", "en") == "Association>en" and appels == [("fr", "en")]
+
+
+def test_gdelt_garde_la_presse_francaise_et_les_organisations_seulement(monkeypatch):
+    import io
+    import zipfile
+
+    sys_path = __import__("sys").path
+    sys_path.insert(0, "outils")
+    import gdelt_local as g
+
+    def ligne(source, orgs, traduction=""):
+        c = [""] * 27
+        c[1], c[3], c[4], c[11], c[12], c[14], c[25] = "20261026120000", source, "https://" + source + "/a", "Jean Dupont", "Jean Dupont,10", orgs, traduction
+        return "\t".join(c)
+
+    contenu = "\n".join([
+        ligne("lemonde.fr", "Danone,12;Croix-Rouge,40;Danone,90"),  # site en .fr : gardé, une ligne par organisation
+        ligne("example.com", "Acme,5"),  # ni .fr ni français : écarté
+        ligne("example.be", "Fondation Test,5", "srclc:fra;eng:Moses"),  # article en français : gardé
+        ligne("lefigaro.fr", ""),  # aucune organisation : rien
+    ])
+    zbuf = io.BytesIO()
+    with zipfile.ZipFile(zbuf, "w") as z:
+        z.writestr("x.gkg.csv", contenu)
+    monkeypatch.setattr(g, "_telecharger", lambda url: zbuf.getvalue() if "translation" not in url else None)
+    lignes = g.lire("20261026120000")
+    assert {(n, s) for n, s, _, _ in lignes} == {("Danone", "lemonde.fr"), ("Croix-Rouge", "lemonde.fr"), ("Fondation Test", "example.be")}
+    assert not any("Dupont" in n for n, *_ in lignes)  # les personnes ne sont jamais lues
+    monkeypatch.setattr(g, "_telecharger", lambda url: None)
+    assert g.lire("20261026120000") is None  # fichier absent : rien à noter comme traité

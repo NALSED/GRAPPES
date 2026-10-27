@@ -29,5 +29,14 @@ Formats lus : CSV, TSV, JSONL, GeoJSON, SQLite déjà constitué ; en clair ou d
 | `wikidata-fr` | organisations de France (pays, siège ou SIREN) | 592 508 | ≈ 0,19 Go |
 | `geonames-fr` | lieux de France | 174 784 | < 0,1 Go |
 | `geoboundaries-fr` | régions | 13 | < 0,01 Go |
+| `gdelt-local` | organisations citées dans la presse française des 90 derniers jours | voir ci-dessous | ≈ 1 Go |
 
-Non faits : modèles de traduction (question 3 de la fiche 14 non tranchée), GDELT et géocodeur OSM France complet (cadrage à part, document 22).
+Non fait : le géocodeur OSM France complet (cadrage à part, document 22).
+
+## GDELT : fenêtre de 90 jours, France
+
+`.venv/bin/python outils/gdelt_local.py` télécharge les fichiers GKG de 15 minutes de la fenêtre (presse en anglais et presse traduite, où se trouve le français), garde les articles de sites en « .fr » ou en français, et verse UNE ligne par organisation citée (jamais les personnes). Il est reprenable, supprime ce qui sort de la fenêtre et se relance pour mettre à jour. 90 jours = 8 640 quarts d'heure, ≈ 1 h de téléchargement ici. Les fichiers des trois dernières heures arrivent en retard chez GDELT : ils sont repris à la fois suivante.
+
+## Traduction : LibreTranslate auto-hébergé
+
+Voir `outils/libretranslate/LISEZMOI.md`. Local seulement (127.0.0.1:5000), modèles fr, es, de, it, ar, ru, zh ↔ en, réglage `suite.traduction_url` de `config/pilote.yaml`. Une source en copie locale (adaptateur) reçoit la requête traduite ; une source « prise » de grappes (Wikipédia, Wikidata…) ne le peut pas, le plan le dit.

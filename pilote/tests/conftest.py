@@ -17,6 +17,7 @@ def copier_config(dest: Path, grappes_secrets: str = "", **surcharges) -> Path:
     y = yaml.safe_load(f.read_text(encoding="utf-8"))
     y["service"]["https"] = False
     y["service"]["hotes_autorises"] = ["testserver"]  # le nom d'hôte du client de test (l'application n'accepte que la boucle locale)
+    y.pop("suite", None)  # jamais le vrai service de traduction de la machine : un test qui en veut un le passe en surcharge
     y["donnees"].pop("copies", None)  # jamais le vrai disque des copies : elles vont dans le dossier temporaire du test
     y["grappes"]["secrets"] = grappes_secrets
     for k, v in surcharges.items():

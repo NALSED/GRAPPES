@@ -1,0 +1,52 @@
+# Déclaration d'une source (fiche 01) — copie LOCALE de GDELT, filtrée France, fenêtre glissante de 90 jours (document 22, §5, tranché le 27/10/2026).
+id: gdelt-local
+nom: GDELT France (copie locale, 90 jours)
+description: >-
+  Les organisations citées dans la presse en français ou des sites en .fr durant les 90 derniers jours (GDELT, fichiers GKG), lues dans une copie locale :
+  aucun appel réseau, aucun quota. Une ligne par organisation et par article, avec le journal et l'adresse de l'article. Les personnes citées ne sont jamais lues.
+trouve: organisations citées dans la presse française récente
+genres:
+- page
+pays:
+- FR
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+- site
+usages:
+- presse
+main: seconde
+origine: presse
+fiabilite: D
+famille: fichier
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 0
+  gratuit_par_mois: 0
+confiance: 0.3
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: false
+  local: true
+verifie_le: '2026-10-27'
+attribution:
+  texte: 'Données de presse : GDELT Project'
+  url: https://www.gdeltproject.org
+note: >-
+  Fenêtre de 90 jours, comme `retention_days` de grappes : au-delà, un sujet n'est plus suivi. Les noms d'organisations viennent d'une extraction
+  automatique (bruit attendu : « Office Quebec », fragments de nom). La copie se met à jour avec `outils/gdelt_local.py` (reprenable, supprime ce qui sort
+  de la fenêtre). Le filtre « France » garde aussi des sites francophones d'autres pays (langue française).
+moteur:
+  adaptateur: fichier_local
+  parametres:
+    base: gdelt-fr
+    origine: GDELT (copie locale, presse française des 90 derniers jours)

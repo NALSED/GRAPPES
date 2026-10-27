@@ -13,7 +13,26 @@ DELAI_S = 20
 
 
 def traduire(url: str, texte: str, de: str, vers: str) -> str:
-    """Le texte traduit. Lève OSError / ValueError : l'appelant garde alors la requête d'origine et le dit."""
+    """Le texte traduit. Lève OSError / ValueError : l'appelant garde alors la requête d'origine et le dit.
+
+    Les modèles installés vont de et vers l'anglais. Le service SAIT composer deux modèles (fr → es via en), mais la version 1.9.6 de LibreTranslate
+    avec Argos 1.11 rend alors le texte anglais intermédiaire (constaté le 27/10/2026) : on pivote donc nous-mêmes, en deux appels."""
+    if de not in ("en", "auto") and vers != "en" and de != vers:
+        return _un_appel(url, _un_appel(url, texte, de, "en"), "en", vers)
+    return _un_appel(url, texte, de, vers)
+
+
+def _un_appel(url: str, texte: str, de: str, vers: str) -> str:
+    """Un appel ; si le modèle rend le texte tel quel (il prend « Sports Association » en capitales pour un nom propre), un second essai en minuscules, la première lettre rétablie."""
+    r = _appel(url, texte, de, vers)
+    if r.casefold() == texte.casefold() and texte != texte.lower() and de != vers:
+        r2 = _appel(url, texte.lower(), de, vers)
+        if r2.casefold() != texte.casefold():
+            return r2[:1].upper() + r2[1:] if texte[:1].isupper() else r2
+    return r
+
+
+def _appel(url: str, texte: str, de: str, vers: str) -> str:
     corps = json.dumps({"q": texte, "source": de, "target": vers, "format": "text"}).encode()
     req = urllib.request.Request(
         url.rstrip("/") + "/translate", data=corps, headers={"Content-Type": "application/json"}

@@ -1,0 +1,12 @@
+[Unit]
+Description=LibreTranslate auto-hébergé pour pilote (local seulement)
+After=network.target
+
+[Service]
+User=sednal
+ExecStart=/mnt/carte/pilote-copies/libretranslate/lancer.sh
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
