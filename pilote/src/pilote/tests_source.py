@@ -290,6 +290,7 @@ def test_reel(cfg: Config, d: Declaration, mot: str, cout: dict[str, Any]) -> di
         elif "adaptateur" in d.moteur:
             client = adaptateurs.Client(d.id, delai_s=0.5)
             params["_dossier_config"] = str(cfg.dossier_config)
+            params["_dossier_copies"] = str(cfg.dossier_copies)
             if d.cles:
                 params["_cle"] = cles.valeur(cfg, d.cles[0])
                 params["_cles"] = {n: cles.valeur(cfg, n) for n in d.cles}

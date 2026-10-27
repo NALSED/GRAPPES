@@ -42,7 +42,7 @@ FIABILITE_DE_LA_CLASSE = {"registre": "B", "encyclo": "C"}  # par défaut : B po
 
 
 def fiabilite_par_defaut(d: Declaration) -> str:
-    return FIABILITE_DE_LA_CLASSE.get(d.origine, "D")
+    return d.fiabilite or FIABILITE_DE_LA_CLASSE.get(d.origine, "D")  # la déclaration peut la fixer (SIRENE, RNA : registre officiel de première main = A)
 
 
 class AvertissementRequis(Exception):
@@ -76,6 +76,20 @@ def _quota(d: Declaration, e: dict[str, Any], unites: dict[str, float] | None) -
     return None
 
 
+def _copie(cfg: Config, d: Declaration) -> dict[str, Any] | None:
+    """Pour une source en copie locale : la copie est-elle installée sur cette machine, de quand, de combien de lignes (document 22). Sinon None."""
+    if d.mode.get("en_ligne", True) or d.moteur.get("adaptateur") != "fichier_local":
+        return None
+    from pilote import fichier_local as fl
+
+    base = str((d.moteur.get("parametres") or {}).get("base") or "")
+    try:
+        m = fl.meta(cfg.dossier_copies, base)
+    except fl.BaseLocaleErreur:
+        return {"installee": False, "date": "", "lignes": 0}
+    return {"installee": True, "date": m.get("importe_le", ""), "lignes": int(m.get("lignes") or 0)}
+
+
 def vue_source(
     cfg: Config,
     d: Declaration,
@@ -97,6 +111,9 @@ def vue_source(
         etat = "ok"
     else:
         etat = "warn"  # jamais testée, test échoué, clé absente, en pause, adaptateur manquant : « à vérifier »
+    copie = _copie(cfg, d)
+    if copie is not None and not copie["installee"] and etat != "off":
+        etat = "warn"  # une source en copie locale sans sa copie ne peut rien rendre : « à vérifier », jamais « ok »
     cats = _cats(d)
     pays = _pays(d)
     role = sur.get("role") or ("CHERCHER" if "chercher" in d.roles else "VERIFIER")
@@ -111,7 +128,7 @@ def vue_source(
         "langue": sur.get("langue") or LANGUE_DU_PAYS.get(pays[0], ""), "etat": etat, "quota": _quota(d, e, unites), "description": d.description,
         "retiree": bool(sur.get("retiree")), "test_reussi": teste, "tests": tests, "declaree": True, "cle_requise": bool(d.cles),
         "cle": bool(d.cles) and cles.toutes_presentes(cfg, d.cles), "voyant": mot, "domaine": domaine_source(d), "chercher": ch["chercher"], "verifier": ch["verifier"],
-        "peut_chercher": "chercher" in d.roles, "verifie_sur": d.verifie_sur if "adaptateur" in d.moteur else "", "avertissement": d.avertissement, "adaptateur_manquant": manquant,
+        "copie": copie, "peut_chercher": "chercher" in d.roles, "verifie_sur": d.verifie_sur if "adaptateur" in d.moteur else "", "avertissement": d.avertissement, "adaptateur_manquant": manquant,
     }  # fmt: skip
 
 

@@ -1,0 +1,67 @@
+# Déclaration d'une source (fiche 01) — copie LOCALE d'OpenSanctions (document 21 : pas de yente, une copie de données, pas un second juge).
+id: opensanctions-local
+nom: OpenSanctions (copie locale)
+description: >-
+  Listes de sanctions et de signalements (cibles uniquement), lues dans une copie locale : aucun appel réseau, aucun quota, donc TOUS les noms d'une recherche sont vérifiables. Sert uniquement à vérifier le NOM d'une organisation déjà trouvée (égalité exacte) ; un résultat est une alerte à contrôler, pas une confirmation. Les personnes physiques ne sont jamais versées.
+trouve: organisations sous sanctions ou signalées
+genres:
+- entreprise
+- association
+pays:
+- monde
+produit:
+- nom
+- origine
+- pays
+usages:
+- entreprises
+main: seconde
+origine: registre
+fiabilite: B
+famille: fichier
+roles:
+- verifier
+verifie_sur: nom
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 0
+  gratuit_par_mois: 0
+confiance: 0.8
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: false
+  local: true
+verifie_le: '2026-10-27'
+attribution:
+  texte: 'OpenSanctions (opensanctions.org), licence CC BY-NC 4.0'
+  url: https://www.opensanctions.org/licensing/
+note: >-
+  CC-BY-NC : usage personnel, les données ne sortent pas de la VM (déclaré par Sednal le 27/10/2026). Le jour où grappes sert à un client ou dans un cadre professionnel, cette source doit être payée ou retirée : remonter la question, ne pas la trancher.
+moteur:
+  adaptateur: fichier_local
+  parametres:
+    base: opensanctions
+    origine: OpenSanctions (copie locale)
+    signal: [alerte, information]
+    installation:
+      accord: 'Sednal, 27/10/2026, documents 21 et 22 (ordre de travail, feu vert)'
+      telechargements:
+      - url: https://data.opensanctions.org/datasets/latest/default/targets.simple.csv
+        fichier: cibles.csv
+      import:
+        fichiers: [cibles.csv]
+        format: csv
+        colonnes:
+          nom: name
+          alias: aliases
+          pays: countries
+          detail: dataset
+          themes: sanctions
+        defauts: {genre: entreprise}
+        separateur_alias: ';'
+        garder:
+          schema: '^(Organization|Company|PublicBody)$'

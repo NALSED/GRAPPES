@@ -71,8 +71,10 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
     auto.pop("profondeur_max", None)
     # Les sources interrogées par adaptateur ou programme passent APRÈS la collecte de grappes : sans réserve, la collecte web mangeait toute la
     # limite d'appels et ces sources n'étaient jamais appelées, en silence. On leur garde un appel chacune.
-    reserve_verif = min(max(3 * len(mat.verificateurs), lim["appels"] // 4), max(0, lim["appels"] - 1)) if mat.verificateurs else 0  # la vérification passe en dernier : sans part réservée, elle examine 0 nom
-    reserve = min(len(mat.adaptateurs) + len(mat.scripts), max(0, lim["appels"] - 1 - reserve_verif))
+    en_ligne_v = [v for v in mat.verificateurs if not v.get("local")]  # une copie locale n'appelle personne : ni part d'appels réservée, ni plafond de noms
+    en_ligne_a = [a for a in mat.adaptateurs if not a.get("local")]
+    reserve_verif = min(max(3 * len(en_ligne_v), lim["appels"] // 4), max(0, lim["appels"] - 1)) if en_ligne_v else 0  # la vérification passe en dernier : sans part réservée, elle examine 0 nom
+    reserve = min(len(en_ligne_a) + len(mat.scripts), max(0, lim["appels"] - 1 - reserve_verif))
     auto.update({
         "requetes_par_cycle": lim["appels"], "pages_par_cycle": c["pages"], "nouvelles_sources_par_cycle": c["nouvelles_sources"],
         "elements_par_cycle": c["observations"], "profondeur": exploration(params), "stop_file": "donnees/STOP", "rapports_dir": "rapports",
@@ -109,7 +111,8 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
         entree["genre"] = str(params["genre"])
     for v in mat.verificateurs:  # chaque vérificatrice a sa part de la réserve : la première ne mange pas tout
         v["parametres"] = {**(v.get("parametres") or {})}
-        v["parametres"].setdefault("max_candidats", max(1, reserve_verif // len(mat.verificateurs)))
+        if not v.get("local"):
+            v["parametres"].setdefault("max_candidats", max(1, reserve_verif // len(en_ligne_v)))
     spec = {
         "phrase": phrase, "limites": {"appels": lim["appels"], "temps_s": lim["temps_s"]},
         "mots_a_inclure": list(sujet.get("inclure") or []), "mots_a_exclure": list(sujet.get("exclure") or []),

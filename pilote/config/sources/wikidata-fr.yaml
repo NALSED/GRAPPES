@@ -1,0 +1,92 @@
+# Déclaration d'une source (fiche 01) — copie LOCALE de Wikidata, organisations situées en France (document 22, étape 4).
+id: wikidata-fr
+nom: Wikidata France (copie locale)
+description: >-
+  Les organisations de France décrites dans Wikidata (entreprises, associations, collectivités, universités… : toute entité d'une classe d'organisation dont
+  le pays ou le siège est la France, ou qui a un SIREN), avec leurs variantes de nom, leur SIREN et leur LEI quand ils existent, lues dans une copie locale. Collaboratif : un nom trouvé ici
+  se confirme ailleurs. Le filtre est une classe d'organisation, jamais un tri a posteriori : aucune personne physique n'est versée.
+trouve: organisations de France et leurs noms alternatifs
+genres:
+- entreprise
+- association
+pays:
+- FR
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+- ville
+- numero
+- site
+usages:
+- entreprises
+main: seconde
+origine: encyclo
+fiabilite: C
+famille: fichier
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 0
+  gratuit_par_mois: 0
+confiance: 0.6
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: false
+  local: true
+verifie_le: '2026-10-27'
+attribution:
+  texte: 'Wikidata (wikidata.org), données sous licence CC0'
+  url: https://www.wikidata.org/
+note: >-
+  Piège de circularité : Wikidata recopie souvent d'autres sources ; ne pas le compter comme une confirmation indépendante d'un registre. L'extraction passe
+  par QLever (qlever.dev), qui interroge tout Wikidata sans le dump de 1,4 To. Le champ « thèmes » porte l'identifiant Wikidata de l'entité.
+moteur:
+  adaptateur: fichier_local
+  parametres:
+    base: wikidata-fr
+    origine: Wikidata (copie locale, organisations de France)
+    installation:
+      accord: 'Sednal, 27/10/2026, document 22 (ordre de travail, feu vert)'
+      telechargements:
+      - fichier: organisations.csv
+        sparql:
+          url: https://qlever.dev/api/wikidata
+          page: 50000
+          requete: |
+            PREFIX wd: <http://www.wikidata.org/entity/>
+            PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            SELECT ?item (SAMPLE(?n) AS ?nom) (SAMPLE(?c) AS ?classe) (SAMPLE(?s) AS ?siren) (SAMPLE(?l) AS ?lei) (SAMPLE(?w) AS ?site) (SAMPLE(?v) AS ?ville)
+                   (GROUP_CONCAT(DISTINCT ?a; separator="§") AS ?alias) WHERE {
+              { SELECT ?item WHERE { ?item wdt:P31/wdt:P279* wd:Q43229 . { ?item wdt:P17 wd:Q142 } UNION { ?item wdt:P159/wdt:P17 wd:Q142 } UNION { ?item wdt:P1616 ?sir } } GROUP BY ?item ORDER BY ?item LIMIT 50000 OFFSET {decalage} }
+              ?item wdt:P31 ?c .
+              OPTIONAL { ?item rdfs:label ?nomfr . FILTER(LANG(?nomfr) = "fr") }
+              OPTIONAL { ?item rdfs:label ?nomen . FILTER(LANG(?nomen) = "en") }
+              BIND(COALESCE(?nomfr, ?nomen) AS ?n)
+              OPTIONAL { ?item wdt:P1616 ?s } OPTIONAL { ?item wdt:P1278 ?l } OPTIONAL { ?item wdt:P856 ?w }
+              OPTIONAL { ?item wdt:P159 ?hq . ?hq rdfs:label ?v . FILTER(LANG(?v) = "fr") }
+              OPTIONAL { ?item skos:altLabel ?a . FILTER(LANG(?a) = "fr" || LANG(?a) = "en") }
+            } GROUP BY ?item
+      import:
+        fichiers: [organisations.csv]
+        format: csv
+        colonnes:
+          nom: nom
+          alias: alias
+          numero: siren
+          ville: ville
+          site: site
+          themes: item
+          detail: classe
+        separateur_alias: '§'
+        exclure:
+          nom: '^$'

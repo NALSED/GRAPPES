@@ -1,0 +1,81 @@
+# Déclaration d'une source (fiche 01) — copie LOCALE de SIRENE (document 22 de la suite). Même donnée officielle que l'API, sans quota.
+id: sirene-local
+nom: SIRENE (copie locale, France)
+description: >-
+  Toutes les entreprises et associations immatriculées en France (stock des unités légales de l'INSEE), lues dans une copie locale : aucun appel réseau, aucun quota. Les entrepreneurs individuels (personnes physiques) ne sont jamais versés. Vérifie un nom sur l'égalité exacte.
+trouve: entreprises, associations et organisations immatriculées en France
+genres:
+- entreprise
+- association
+pays:
+- FR
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+- ville
+- numero
+usages:
+- entreprises
+main: premiere
+origine: registre
+fiabilite: A
+famille: fichier
+roles:
+- chercher
+- verifier
+verifie_sur: nom
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 0
+  gratuit_par_mois: 0
+confiance: 0.95
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: false
+  local: true
+verifie_le: '2026-10-27'
+attribution:
+  texte: 'Base Sirene des entreprises et de leurs établissements (INSEE), Licence Ouverte 2.0'
+  url: https://www.data.gouv.fr/fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/
+note: La ville est celle du siège. Mise à jour mensuelle du stock ; la copie porte sa date d'import.
+moteur:
+  adaptateur: fichier_local
+  parametres:
+    base: sirene
+    origine: SIRENE (INSEE, copie locale)
+    installation:
+      accord: 'Sednal, 27/10/2026, document 22 (ordre de travail, feu vert)'
+      telechargements:
+      - url: https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-072119/stock-stockunitelegale-csv.zip
+        fichier: unites.zip
+      - url: https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-072713/stock-stocketablissement-csv.zip
+        fichier: etablissements.zip
+      import:
+        fichiers: [unites.zip]
+        format: csv
+        colonnes:
+          nom: denominationUniteLegale
+          alias: [sigleUniteLegale, denominationUsuelle1UniteLegale, denominationUsuelle2UniteLegale, denominationUsuelle3UniteLegale]
+          numero: siren
+          detail: categorieJuridiqueUniteLegale
+        defauts: {pays: FR, genre: entreprise}
+        poids:
+          colonne: trancheEffectifsUniteLegale
+          actif: {colonne: etatAdministratifUniteLegale, valeur: A, bonus: 100}
+        separateur_alias: '§'
+        exclure:
+          categorieJuridiqueUniteLegale: '^1'
+          statutDiffusionUniteLegale: '^P$'
+        jointures:
+        - fichier: etablissements.zip
+          format: csv
+          cle: siren
+          colonnes: {ville: libelleCommuneEtablissement}
+          garder: {etablissementSiege: '^true$'}

@@ -25,7 +25,7 @@ MOTEURS = ("prise", "definition", "registre_grappes", "adaptateur", "script", "f
 CHAMPS_CONNUS = {
     "id", "nom", "description", "trouve", "genres", "pays", "consomme", "produit", "usages", "main", "famille", "cle", "cout", "confiance",
     "defaut", "roles", "avertissement", "mode", "exemple_reponse", "test_connexion", "moteur", "verifie_le", "prestataire", "note", "origine",
-    "parametres", "cle_prefixe", "attribution", "verifie_sur",
+    "parametres", "cle_prefixe", "attribution", "verifie_sur", "fiabilite",
 }  # fmt: skip
 
 
@@ -60,6 +60,7 @@ class Declaration:
     prestataire: bool = False
     note: str = ""
     verifie_sur: str = ""  # « site » (adresse du candidat) ou « nom » (son nom) : la source vérifie chaque candidat après la recherche, elle ne cherche pas ; vide = elle cherche seulement
+    fiabilite: str = ""  # lettre A–F (code Admiralty) donnée par la déclaration quand l'origine ne suffit pas à la deviner (ex. A : registre officiel de première main) ; vide = défaut selon la classe
     attribution: dict[str, str] = field(default_factory=dict)  # mention OBLIGATOIRE de la source dans les sorties et le README : {texte, url} (ex. GDELT)
 
     @property
@@ -157,6 +158,9 @@ def valider_declaration(d: dict[str, Any], cfg: Config, fichier: str = "") -> De
     attribution = d.get("attribution") or {}
     if attribution and (not isinstance(attribution, dict) or not str(attribution.get("texte", "")).strip() or not str(attribution.get("url", "")).startswith(("http://", "https://"))):
         raise ConfigRefusee(f"{nom_f} : « attribution » demande un « texte » et une « url » (http:// ou https://).")
+    fiabilite = str(d.get("fiabilite") or "")
+    if fiabilite and fiabilite not in tuple("ABCDEF"):
+        raise ConfigRefusee(f"{nom_f} : « fiabilite » est une lettre de A à F (code Admiralty).")
     verifie_sur = str(d.get("verifie_sur") or "")
     if verifie_sur and (verifie_sur not in ("site", "nom") or "verifier" not in roles or "adaptateur" not in moteur):
         raise ConfigRefusee(f"{nom_f} : « verifie_sur » vaut « site » ou « nom » et demande le rôle « verifier » avec un adaptateur.")
@@ -167,7 +171,7 @@ def valider_declaration(d: dict[str, Any], cfg: Config, fichier: str = "") -> De
         defaut={"chercher": bool(defaut.get("chercher", False)), "verifier": bool(defaut.get("verifier", False))}, roles=roles,
         avertissement=str(d.get("avertissement") or "").strip(), mode={"en_ligne": bool(mode.get("en_ligne", True)), "local": bool(mode.get("local", False))},
         moteur=moteur, cles=liste_cles, cle_prefixe=str(d.get("cle_prefixe") or ""), origine=origine, parametres=params, exemple_reponse=str(d.get("exemple_reponse") or ""), test_connexion=dict(d.get("test_connexion") or {}),
-        verifie_le=str(d.get("verifie_le") or ""), prestataire=bool(d.get("prestataire", False)), note=str(d.get("note") or "").strip(), attribution=attribution, verifie_sur=verifie_sur,
+        verifie_le=str(d.get("verifie_le") or ""), prestataire=bool(d.get("prestataire", False)), note=str(d.get("note") or "").strip(), attribution=attribution, verifie_sur=verifie_sur, fiabilite=fiabilite,
     )  # fmt: skip
 
 

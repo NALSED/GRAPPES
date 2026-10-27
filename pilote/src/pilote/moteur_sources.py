@@ -156,7 +156,8 @@ def materialiser(cfg: Config, cible: Path, params: dict[str, Any]) -> Materialis
         elif "adaptateur" in m:
             donnes = {**(m.get("parametres") or {}), **rg.parametres_donnes(reg, d.id)}
             donnes["_dossier_config"] = str(cfg.dossier_config)  # où l'adaptateur retrouve les catalogues de données (types de lieu...)
-            res.adaptateurs.append({"source": d.id, "module": str(m["adaptateur"]), "parametres": donnes, "cles_noms": d.cles})
+            donnes["_dossier_copies"] = str(cfg.dossier_copies)  # et les copies locales de bases (source « fichier_local »)
+            res.adaptateurs.append({"source": d.id, "module": str(m["adaptateur"]), "parametres": donnes, "cles_noms": d.cles, "local": not d.mode.get("en_ligne", True)})
             res.jetons[d.id] = d.id
             continue
         elif "flux_rss" in m:  # la liste de flux de l'utilisateur : une prise de grappes par flux
@@ -201,9 +202,9 @@ def materialiser(cfg: Config, cible: Path, params: dict[str, Any]) -> Materialis
         texte += "\nactifs: [" + ", ".join(actifs) + "]\n"
     rf.write_text(texte, encoding="utf-8")
     for d in verif:
-        donnes = {**(d.moteur.get("parametres") or {}), **rg.parametres_donnes(reg, d.id)}
+        donnes = {**(d.moteur.get("parametres") or {}), **rg.parametres_donnes(reg, d.id), "_dossier_copies": str(cfg.dossier_copies)}
         en_amont = {v["id"]: v.get("en_amont") for v in (params.get("plan") or {}).get("verificateurs", [])}.get(d.id)  # None = tous les résultats
-        res.verificateurs.append({"source": d.id, "verifie_sur": d.verifie_sur, "module": str(d.moteur["adaptateur"]), "parametres": donnes, "cles_noms": d.cles, "en_amont": en_amont})
+        res.verificateurs.append({"source": d.id, "verifie_sur": d.verifie_sur, "module": str(d.moteur["adaptateur"]), "parametres": donnes, "cles_noms": d.cles, "en_amont": en_amont, "local": not d.mode.get("en_ligne", True)})
         res.jetons[d.id] = d.id
         res.origines[d.id], res.mains[d.id] = d.origine, d.main
         res.couts[d.id] = rg.choix_source(reg, d)["cout"]

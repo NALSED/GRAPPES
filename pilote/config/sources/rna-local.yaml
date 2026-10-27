@@ -1,0 +1,72 @@
+# Déclaration d'une source (fiche 01) — copie LOCALE du Répertoire National des Associations (document 22).
+id: rna-local
+nom: RNA (copie locale, associations de France)
+description: >-
+  Toutes les associations déclarées en France (Répertoire National des Associations), lues dans une copie locale : aucun appel réseau, aucun quota. Seuls le nom, l'objet et la commune sont gardés ; jamais les noms de dirigeants. Vérifie un nom sur l'égalité exacte.
+trouve: associations déclarées en France
+genres:
+- association
+pays:
+- FR
+consomme:
+- sujet
+- mots_cles
+produit:
+- nom
+- origine
+- ville
+- numero
+usages:
+- associations
+main: premiere
+origine: registre
+fiabilite: A
+famille: fichier
+roles:
+- chercher
+- verifier
+verifie_sur: nom
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 0
+  gratuit_par_mois: 0
+confiance: 0.95
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: false
+  local: true
+verifie_le: '2026-10-27'
+attribution:
+  texte: 'Répertoire National des Associations (ministère de l''Intérieur), Licence Ouverte 2.0'
+  url: https://www.data.gouv.fr/fr/datasets/repertoire-national-des-associations/
+note: Deux fichiers (import et Waldec) versés dans la même base. Mise à jour mensuelle.
+moteur:
+  adaptateur: fichier_local
+  parametres:
+    base: rna
+    origine: Répertoire National des Associations (copie locale)
+    installation:
+      accord: 'Sednal, 27/10/2026, document 22 (ordre de travail, feu vert)'
+      telechargements:
+      - url: https://media.interieur.gouv.fr/rna/rna_import_20261001.zip
+        fichier: import.zip
+      - url: https://media.interieur.gouv.fr/rna/rna_waldec_20261001.zip
+        fichier: waldec.zip
+      import:
+        fichiers: [import.zip, waldec.zip]
+        format: csv
+        delimiteur: ';'
+        encodage: utf-8-sig
+        colonnes:
+          nom: titre
+          alias: titre_court
+          numero: {premier: [id, observation], motif: '^W\d{9}$'}
+          ville: adrs_libcommune|libcom
+          detail: objet
+          themes: position
+        defauts: {pays: FR, genre: association}
+        separateur_alias: '§'

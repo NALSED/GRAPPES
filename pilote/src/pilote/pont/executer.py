@@ -76,6 +76,17 @@ def main(dossier: str) -> int:
             resultat["arret"] = resultat["arret"] or (r if not marge else raison_d_arret() or "")
         return bool(r)
 
+    def arret_local() -> bool:
+        """Arrêt d'une source en COPIE LOCALE : elle n'appelle personne, donc la limite d'appels ne la concerne pas (seuls l'arrêt demandé et le temps)."""
+        while pause_fichier.exists() and not arret_fichier.exists():  # la pause vaut pour elle aussi
+            temps_en_pause()
+            time.sleep(0.3)
+        temps_en_pause()
+        r = "demande" if arret_fichier.exists() else ("temps" if temps_max is not None and time.time() - t0 - temps_en_pause() > temps_max else "")
+        if r:
+            resultat["arret"] = resultat["arret"] or r
+        return bool(r)
+
     def arret_collecte() -> bool:
         """Arrêt de la COLLECTE de grappes : elle laisse la réserve d'appels aux sources qui passent après elle."""
         return doit_s_arreter(reserve + reserve_verif)
@@ -194,7 +205,7 @@ def main(dossier: str) -> int:
         secrets = cles_de_la_copie()  # seulement les clés des sources utilisées (écrites par pilote dans la copie de configuration)
         executions = [
             (a["source"], lambda a=a: adaptateurs.charger(a["module"]).chercher(
-                entree_de(a["source"]), adaptateurs.Client(a["source"], arret_sources, signaler=avancement.signaler, delai_s=a.get("delai_s", 0.2)),
+                entree_de(a["source"]), adaptateurs.Client(a["source"], arret_local if a.get("local") else arret_sources, signaler=avancement.signaler, delai_s=a.get("delai_s", 0.2)),
                 {**a.get("parametres", {}), **({"_cle": secrets.get(a["cles_noms"][0], ""), "_cles": {n: secrets.get(n, "") for n in a["cles_noms"]}} if a.get("cles_noms") else {})}))
             for a in spec.get("adaptateurs", [])
         ]  # fmt: skip
@@ -224,8 +235,9 @@ def main(dossier: str) -> int:
                 raise sortie["exc"]
             return sortie["noms"], ""
 
+        locales = {a["source"] for a in spec.get("adaptateurs", []) if a.get("local")}
         for n, (source, executer_) in enumerate(executions):
-            if doit_s_arreter():
+            if (arret_local() if source in locales else doit_s_arreter()):
                 # une source choisie qui n'est PAS appelée doit être dite : sans cela, « n sources sur n ont répondu » comptait
                 # des sources jamais interrogées, et leur silence ressemblait à une absence de résultat.
                 for reste, _ in executions[n:]:
@@ -297,7 +309,7 @@ def main(dossier: str) -> int:
         from pilote.pont.verification import verifier_candidats
 
         # la vérification des candidats appartient à l'étape « vérification » : la jauge doit couvrir le travail qu'elle annonce.
-        bilans = verifier_candidats(lignes, spec, secrets, doit_s_arreter, limite_source, avancement.signaler)
+        bilans = verifier_candidats(lignes, spec, secrets, doit_s_arreter, limite_source, avancement.signaler, arret_local)
         avancement.signaler("etape", etape="sortie")
         Path("candidats.json").write_text(json.dumps(lignes, ensure_ascii=False, indent=1), encoding="utf-8")
         resultat["verifications"] = bilans

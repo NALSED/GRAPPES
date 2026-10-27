@@ -340,4 +340,4 @@ def test_les_types_de_lieu_se_choisissent_ailleurs_pas_dans_le_preset(cfg):
 def test_les_sources_de_lieux_sont_universelles_et_declarent_leur_origine(cfg):
     d = du_preset(cfg)
     assert d["osm-overpass"].pays == ["monde"] and d["osm-overpass"].main == "premiere" and d["nominatim"].main == "seconde"  # même base : Nominatim ne compte pas deux fois
-    assert all(x.pays == ["monde"] for x in d.values())
+    assert all(x.pays == ["monde"] for x in d.values() if x.mode.get("en_ligne", True))  # les copies locales de la France (document 22) sont, elles, limitées à la France par décision du 27/10

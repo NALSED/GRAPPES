@@ -6,7 +6,7 @@ from __future__ import annotations
 import time
 
 
-def verifier_candidats(lignes: list[dict], spec: dict, secrets: dict[str, str], doit_s_arreter, limite_source: float, signaler) -> list[dict]:
+def verifier_candidats(lignes: list[dict], spec: dict, secrets: dict[str, str], doit_s_arreter, limite_source: float, signaler, arret_local=None) -> list[dict]:
     """Appelle chaque source « vérifier » sur chaque candidat à vérifier, APRÈS le classement. Une vérification ne trouve rien et ne compte
     pas comme endroit de plus : elle s'ajoute dans `faits.verifications` ({source, origine, preuve, signal} ; signal = « confirmation »
     ou « alerte »). Une source qui échoue ou dépasse son temps est laissée de côté pour le reste de la recherche ; un arrêt demandé coupe
@@ -17,7 +17,9 @@ def verifier_candidats(lignes: list[dict], spec: dict, secrets: dict[str, str], 
     from pilote import adaptateurs
 
     bilans: list[dict] = []
+    arret_general = doit_s_arreter
     for v in spec.get("verificateurs", []):
+        doit_s_arreter = arret_local if (v.get("local") and arret_local) else arret_general  # une copie locale n'est pas bornée par la limite d'appels
         source, debut, hors_service = v["source"], time.time(), ""
         sur_le_nom = v.get("verifie_sur", "site") == "nom"
         client = adaptateurs.Client(source, doit_s_arreter, signaler=signaler, delai_s=v.get("delai_s", 0.2))

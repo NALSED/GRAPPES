@@ -1,0 +1,61 @@
+# Déclaration d'une source (fiche 01) — copie LOCALE des limites administratives de la France (geoBoundaries, document 22).
+id: geoboundaries-fr
+nom: geoBoundaries France (copie locale)
+description: >-
+  Régions et départements de France (limites administratives officielles, géométrie simplifiée) : nom, identifiant et emprise, lus dans une copie locale.
+trouve: régions et départements de France
+genres:
+- lieu
+pays:
+- FR
+consomme:
+- sujet
+- lieu
+produit:
+- nom
+- origine
+- numero
+usages:
+- lieux
+main: premiere
+origine: registre
+fiabilite: A
+famille: fichier
+roles:
+- chercher
+cle: ''
+cout:
+  unite: appel
+  vers_dollar: 0
+  par_appel: 0
+  gratuit_par_mois: 0
+confiance: 0.9
+defaut:
+  chercher: false
+  verifier: false
+mode:
+  en_ligne: false
+  local: true
+verifie_le: '2026-10-27'
+attribution:
+  texte: 'geoBoundaries (geoboundaries.org), Licence Ouverte Etalab 2.0'
+  url: https://www.geoboundaries.org/
+note: La colonne « détail » porte l'emprise « minlon,minlat,maxlon,maxlat ». La géométrie elle-même n'est pas gardée.
+moteur:
+  adaptateur: fichier_local
+  parametres:
+    base: geoboundaries-fr
+    origine: geoBoundaries (copie locale, France)
+    installation:
+      accord: 'Sednal, 27/10/2026, document 22 (ordre de travail, feu vert)'
+      telechargements:
+      - url: https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/FRA/ADM1/geoBoundaries-FRA-ADM1_simplified.geojson
+        fichier: adm1.geojson
+      import:
+        fichiers: [adm1.geojson]
+        format: geojson
+        colonnes:
+          nom: shapeName
+          numero: shapeID
+          detail: emprise
+        defauts: {pays: FR, genre: lieu}
