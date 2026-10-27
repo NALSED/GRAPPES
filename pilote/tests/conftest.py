@@ -19,6 +19,13 @@ def copier_config(dest: Path, grappes_secrets: str = "", **surcharges) -> Path:
     y["service"]["hotes_autorises"] = ["testserver"]  # le nom d'hôte du client de test (l'application n'accepte que la boucle locale)
     y.pop("suite", None)  # jamais le vrai service de traduction de la machine : un test qui en veut un le passe en surcharge
     y["donnees"].pop("copies", None)  # jamais le vrai disque des copies : elles vont dans le dossier temporaire du test
+    # La racine de grappes est relative dans la configuration livrée (« ../grappes », le dossier voisin dans le dépôt). Une fois la
+    # configuration COPIÉE dans un dossier temporaire, ce chemin relatif suit la copie et ne mène plus nulle part : le pont ne pouvait
+    # pas démarrer, et toute recherche lancée dans un test finissait en « echec » pour une raison qui n'avait rien à voir avec le test.
+    # On la rend ABSOLUE à la copie : la configuration livrée reste relative (elle doit l'être, le dépôt se pose où l'on veut), et les
+    # tests pointent sur le vrai moteur. Un chemin déjà absolu est gardé tel quel.
+    if not Path(str(y["grappes"].get("racine", "../grappes"))).is_absolute():
+        y["grappes"]["racine"] = str((RACINE / str(y["grappes"].get("racine", "../grappes"))).resolve())
     y["grappes"]["secrets"] = grappes_secrets
     for k, v in surcharges.items():
         y[k] = {**y.get(k, {}), **v} if isinstance(v, dict) else v
