@@ -102,7 +102,7 @@ function message(m, i) {
   if (m.type === "def") return h("div", { class: "bulle-r" }, h("span", { class: "fort" }, m.mot), " — ", m.definition); // la définition est celle de la liste close, mot pour mot
   if (m.type === "choix") return h("div", { class: "bulle-r" }, h("p", { class: "legende" }, m.titre), h("div", { class: "aide-choix" }, m.options.map((o) => h("button", { type: "button", class: "aide-puce", onclick: o.agir }, o.libelle))));
   if (m.type === "liste") return h("div", { class: "aide-carte" }, h("span", { class: "etiquette-col" }, m.titre), m.lignes.map(([nom, role]) => h("div", { class: "aide-tuile" }, h("span", { class: "trait" }), h("span", { class: "nom" }, nom), etiquetteRole(role, { auto: true }))));
-  if (m.type === "ouvrir") return h("div", { class: "bulle-r" }, bouton({ libelle: `${VERBES.ouvrir} ${m.ecran.split("/").pop()}`, petit: true, onclick: () => app.naviguer(m.ecran) }));
+  if (m.type === "ouvrir") return h("div", { class: "bulle-r" }, bouton({ libelle: m.ecran.split("/").pop(), petit: true, onclick: () => app.naviguer(m.ecran) }));
   if (m.type === "plan") {
     const fini = m.etat !== "propose";
     return h("div", { class: "aide-carte" },

@@ -64,6 +64,7 @@ export function etiquetteRole(role, { auto = false } = {}) {
 
 export function quotaVue(source) {
   if (source.etat === "off") return h("span", { class: "legende pale chiffres" }, "éteinte");
+  if (source.copie) return h("span", { class: "legende chiffres", title: source.copie.installee ? `copie du ${source.copie.date}` : "non installée sur cette machine" }, "Copie locale"); // pas « illimité » : une copie a une date de fraîcheur
   const q = source.quota;
   if (!q) return h("span", { class: "legende pale" }, "—");
   const pct = source.pct ?? 0;

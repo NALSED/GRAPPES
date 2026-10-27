@@ -55,15 +55,26 @@ def construire(cfg: Config, fabrique: sessionmaker[Session], gestionnaire: Any) 
                 if rch.get("recherche_id"):
                     rch["resultat"] = _resultat(s, rch["recherche_id"]) or rch["resultat"]
                     rch["verification"] = _verification(s, rch["recherche_id"])
+                    rch["ecartes"] = _ecartes(s, rch["recherche_id"])
         v["modele"] = bool(cfg.suite_modele_url) and suite_modele.disponible(cfg.suite_modele_url)
         return v
+
+    def _ecartes(s: Session, rid: str) -> dict[str, Any] | None:
+        """Règle 1 : un nom écarté par un filtre ne disparaît pas en silence. Le nombre réel, et les noms que le journal a gardés (30 au plus par tuile)."""
+        evts = s.scalars(select(Journal).where(Journal.recherche_id == rid, Journal.evenement == "plan_noms_retires")).all()
+        n = sum(int((e.detail or {}).get("retires") or 0) for e in evts)
+        if not n:
+            return None
+        return {"n": n, "noms": [x for e in evts for x in (e.detail or {}).get("noms", [])]}
 
     def _verification(s: Session, rid: str) -> str:
         """« X sur Y noms vérifiés » par source de vérification : une absence de signalement ne veut JAMAIS dire « vérifié » (décision du 27/10 : budget des clés gratuites, limite dite)."""
         rch = s.get(Recherche, rid)
         bilans = [b for b in ((rch.avancement if rch else None) or {}).get("verifications") or [] if isinstance(b, dict)]
         nom_source = tri.noms_de_sources(cfg)
-        return " · ".join(f"{nom_source(str(b.get('source', '')))} : {b.get('examines', 0)} sur {b.get('a_verifier', 0)} noms vérifiés" for b in bilans)
+        return " · ".join(
+            f"{nom_source(str(b.get('source', '')))} : {b.get('examines', 0)} sur {b.get('a_verifier', 0)} noms {'enrichis' if b.get('fonction') == 'enrichir' else 'vérifiés'}" for b in bilans
+        )
 
     def _resultat(s: Session, rid: str) -> str | None:
         rch = s.get(Recherche, rid)

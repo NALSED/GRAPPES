@@ -53,7 +53,7 @@ def verificatrices(cfg: Config, params: dict[str, Any]) -> list[Declaration]:
         decls, _ = charger_sources(cfg)
         return [
             decls[s] for s in explicites
-            if s in decls and "verifier" in decls[s].roles and "adaptateur" in decls[s].moteur and decls[s].verifie_sur in ("site", "nom")
+            if s in decls and ({"verifier", "enrichir"} & set(decls[s].roles)) and "adaptateur" in decls[s].moteur and decls[s].verifie_sur in ("site", "nom", "ville")
             and (not decls[s].cles or cles.toutes_presentes(cfg, decls[s].cles))
         ]  # fmt: skip
     reg, _ = rg.charger_tolerant(cfg)
@@ -203,8 +203,9 @@ def materialiser(cfg: Config, cible: Path, params: dict[str, Any]) -> Materialis
     rf.write_text(texte, encoding="utf-8")
     for d in verif:
         donnes = {**(d.moteur.get("parametres") or {}), **rg.parametres_donnes(reg, d.id), "_dossier_copies": str(cfg.dossier_copies)}
-        en_amont = {v["id"]: v.get("en_amont") for v in (params.get("plan") or {}).get("verificateurs", [])}.get(d.id)  # None = tous les résultats
-        res.verificateurs.append({"source": d.id, "verifie_sur": d.verifie_sur, "module": str(d.moteur["adaptateur"]), "parametres": donnes, "cles_noms": d.cles, "en_amont": en_amont, "local": not d.mode.get("en_ligne", True)})
+        du_plan = {v["id"]: v for v in (params.get("plan") or {}).get("verificateurs", [])}.get(d.id) or {}
+        en_amont = du_plan.get("en_amont")  # None = tous les résultats
+        res.verificateurs.append({"source": d.id, "fonction": du_plan.get("fonction") or "verifier", "verifie_sur": d.verifie_sur, "module": str(d.moteur["adaptateur"]), "parametres": donnes, "cles_noms": d.cles, "en_amont": en_amont, "local": not d.mode.get("en_ligne", True)})
         res.jetons[d.id] = d.id
         res.origines[d.id], res.mains[d.id] = d.origine, d.main
         res.couts[d.id] = rg.choix_source(reg, d)["cout"]

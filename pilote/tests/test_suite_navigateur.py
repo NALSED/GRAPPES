@@ -60,6 +60,10 @@ def test_les_31_pictogrammes_et_le_vocabulaire_ferme():
             "cluster",
             "connecteur",
             "fournisseur",
+            "Ouvrir",  # n'est pas dans la liste close des verbes (nommage.md) : « Modifier » ouvre un objet
+            "Chargement",
+            "base locale",  # « Copie locale », jamais « base locale », « dump » ni « cache » à l'écran
+            "dump",
         ):
             assert interdit not in texte, f"{f.name} emploie « {interdit} » (liste close des mots)"
 

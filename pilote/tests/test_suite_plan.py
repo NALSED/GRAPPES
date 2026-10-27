@@ -206,7 +206,7 @@ def test_la_verification_agit_sur_les_resultats_des_sources_placees_avant_elle()
         [lien("saisie", "n1"), lien("saisie", "n2"), lien("n1", "nv"), lien("nv", "grappes"), lien("n2", "grappes")],
     )
     c = comp(p)
-    assert c["sources"] == ["a", "b"] and c["verificateurs"] == [{"id": "v", "en_amont": ["a"]}]
+    assert c["sources"] == ["a", "b"] and c["verificateurs"] == [{"id": "v", "en_amont": ["a"], "fonction": "verifier"}]
     assert any("vérifie les résultats des sources placées avant" in x["texte"] for x in c["appliques"])
 
 

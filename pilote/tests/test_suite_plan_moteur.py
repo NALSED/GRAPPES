@@ -211,3 +211,40 @@ def test_la_traduction_change_la_requete_de_la_source_et_garde_l_original(tmp_pa
             json={"saisie": "je cherche une association de boxe", "mode": "Avancée", "plan": plan, "cats": ["perso"]},
         )
         assert r.status_code == 202 and "moteur de traduction" in r.json()["non_appliques"][0]["raison"]
+
+
+def test_un_nom_ecarte_par_un_filtre_reste_consultable(cfg2, tmp_path):
+    """Règle 1 : « N écartés, les montrer » — le retrait n'est pas une disparition silencieuse."""
+    with TestClient(creer_app(cfg2)) as c:
+        a = programme(c, tmp_path, "prog-a", PROG_A)
+        for s in c.get("/api/suite/etat").json()["sources"]:
+            if s["id"] != a and s["chercher"]:
+                c.post(f"/api/suite/sources/{s['id']}/eteindre", json={})
+        opts = [["Garder si le champ", "ville"], ["est égal à", "Lyon"]]
+        plan = {"nodes": [noeud("saisie", "Ta saisie", "ENTREE"), noeud("grappes", "Grappes", "GRAPPES"), noeud("na", role="CHERCHER", ref=a), noeud("f", "Filtre", "OUTIL", "filtre", opts=opts)],
+                "edges": [lien("saisie", "na"), lien("na", "f"), lien("f", "grappes")]}  # fmt: skip
+        r = c.post("/api/suite/lancer", json={"saisie": "clubs", "mode": "Avancée", "plan": plan, "cats": ["perso"], "pays": "FR"})
+        rid = r.json()["recherche_id"]
+        attendre(c, rid)
+        e = c.get("/api/suite/etat").json()["recherches"][0]["ecartes"]
+        assert e == {"n": 1, "noms": ["Club Paris"]}
+
+
+def test_l_arret_demande_n_attend_pas_une_source_lente(cfg2, tmp_path):
+    """Dette de test du 26/10 : l'arrêt demandé à 8 s mettait 58 s à aboutir quand une source dormait 45 s. Il doit abandonner la source lente."""
+    lent = "import json, sys, time\nd = json.load(sys.stdin)\nif 'lents' in d.get('quoi', ''):\n    time.sleep(40)\nprint(json.dumps([{'nom': 'Club Lent', 'origine': 'l'}]))\n"  # lente seulement pour la vraie recherche, pas pour le test de la source
+    with TestClient(creer_app(cfg2)) as c:
+        a = programme(c, tmp_path, "prog-lent", lent)
+        for s in c.get("/api/suite/etat").json()["sources"]:
+            if s["id"] != a and s["chercher"]:
+                c.post(f"/api/suite/sources/{s['id']}/eteindre", json={})
+        plan = {"nodes": [noeud("saisie", "Ta saisie", "ENTREE"), noeud("grappes", "Grappes", "GRAPPES"), noeud("na", role="CHERCHER", ref=a)], "edges": [lien("saisie", "na"), lien("na", "grappes")]}
+        r = c.post("/api/suite/lancer", json={"saisie": "clubs lents", "mode": "Avancée", "plan": plan, "cats": ["perso"], "pays": "FR"})
+        rid = r.json()["recherche_id"]
+        time.sleep(4)
+        t0 = time.time()
+        assert c.post(f"/api/recherches/{rid}/arret").status_code in (200, 202)
+        while time.time() - t0 < 30 and c.get(f"/api/recherches/{rid}").json()["etat"] not in ("terminee", "echec", "arretee", "interrompue"):
+            time.sleep(0.3)
+        assert c.get(f"/api/recherches/{rid}").json()["etat"] == "arretee"
+        assert time.time() - t0 < 15, "l'arrêt a attendu la source lente"

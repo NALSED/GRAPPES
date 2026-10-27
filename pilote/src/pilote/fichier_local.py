@@ -303,9 +303,30 @@ def exact(dossier_copies: str | Path, base: str, nom: str, limite: int = 20) -> 
         con.close()
 
 
-def chercher_par_mots(dossier_copies: str | Path, base: str, texte: str, limite: int = 50) -> list[dict[str, Any]]:
+def _dans_le_lieu(r: Any, lieu: str) -> bool:
+    """Le lieu désambiguïse : une ville (nom mis à plat identique) ou un département / code postal (chiffres, début du code postal gardé dans « thèmes »)."""
+    chiffres = re.sub(r"\D", "", lieu)
+    if chiffres and len(chiffres) == len(re.sub(r"\s", "", lieu)):
+        return str(r["themes"] or "").startswith(chiffres)
+    return nom_normalise(str(r["ville"] or "")) == nom_normalise(lieu)
+
+
+def homonymes(dossier_copies: str | Path, base: str, nom: str) -> int:
+    """Combien d'entrées portent EXACTEMENT ce nom : au-dessus de quelques-unes, une liste triée par nom ne suffit plus, il faut désambiguïser."""
+    voulu = nom_normalise(nom)
+    if not voulu:
+        return 0
+    con = _ouvrir(dossier_copies, base)
+    try:
+        return con.execute("SELECT count(DISTINCT donnee) FROM noms WHERE nom_n = ?", (voulu,)).fetchone()[0]
+    finally:
+        con.close()
+
+
+def chercher_par_mots(dossier_copies: str | Path, base: str, texte: str, limite: int = 50, lieu: str = "") -> list[dict[str, Any]]:
     """Recherche d'une organisation par ses mots : l'égalité exacte d'abord, puis les noms qui contiennent tous les mots (le dernier en préfixe).
-    Un numéro officiel (suite de chiffres) est cherché tel quel."""
+    Un numéro officiel (suite de chiffres) est cherché tel quel. `lieu` (ville, département ou code postal) restreint aux entrées de ce lieu : c'est ce qui
+    désambiguïse un nom partagé par des dizaines d'entités (blocage multi-champs, jamais le nom seul)."""
     brut = re.sub(r"\s+", "", texte)
     con = _ouvrir(dossier_copies, base)
     try:
@@ -316,8 +337,11 @@ def chercher_par_mots(dossier_copies: str | Path, base: str, texte: str, limite:
         if not mots:
             return []
         vus: dict[int, dict[str, Any]] = {}
-        for r in con.execute("SELECT DISTINCT d.* FROM noms n JOIN donnees d ON d.id = n.donnee WHERE n.nom_n = ? ORDER BY d.poids DESC LIMIT ?", (voulu, limite)):
-            vus[r["id"]] = _ligne(r)
+        for r in con.execute("SELECT DISTINCT d.* FROM noms n JOIN donnees d ON d.id = n.donnee WHERE n.nom_n = ? ORDER BY d.poids DESC LIMIT ?", (voulu, 5000 if lieu else limite)):
+            if not lieu or _dans_le_lieu(r, lieu):
+                vus[r["id"]] = _ligne(r)
+                if len(vus) >= limite:
+                    break
         requetes = []
         if len(mots) > 1:
             requetes.append('"' + " ".join(mots) + '" *')  # les mots à la suite, dans l'ordre (« Air France » avant « France Air »)
@@ -329,7 +353,7 @@ def chercher_par_mots(dossier_copies: str | Path, base: str, texte: str, limite:
                 "SELECT DISTINCT d.*, length(n.nom_n) AS long FROM fts JOIN noms n ON n.id = fts.rowid JOIN donnees d ON d.id = n.donnee WHERE fts MATCH ? LIMIT 5000",
                 (requete,),
             )
-            candidats = sorted((r for r in cur if r["id"] not in vus), key=lambda r: (-r["poids"], r["long"]))  # les mieux pesés d'abord, puis les noms les plus courts
+            candidats = sorted((r for r in cur if r["id"] not in vus and (not lieu or _dans_le_lieu(r, lieu))), key=lambda r: (-r["poids"], r["long"]))  # les mieux pesés d'abord, puis les noms les plus courts
             for r in candidats[: limite - len(vus)]:
                 vus[r["id"]] = _ligne(r)
         return list(vus.values())

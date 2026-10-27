@@ -10,6 +10,11 @@ Document 22 de la suite. Une source de type `fichier_local` lit une copie locale
 
 Formats lus : CSV, TSV, JSONL, GeoJSON, SQLite déjà constitué ; en clair ou dans un zip. `import` accepte : `colonnes` (nom, alias, ville, numero, pays, genre, site, themes, detail ; « a|b » = la première colonne non vide ; `{premier: [...], motif: regex}`), `defauts`, `garder` / `exclure` (colonne → expression régulière), `jointures` (compléter une colonne depuis un second fichier), `poids` (classer les homonymes), `separateur_alias`.
 
+## Noms partagés et ENRICHIR
+
+* **Désambiguïser** : la recherche accepte un lieu (ville, département ou code postal) ; sans lieu, une source qui voit plus de trois entités de même nom le dit dans chaque résultat. SIRENE porte le code postal du siège et le code d'activité pour cela.
+* **ENRICHIR** : une copie locale peut aussi enrichir une fiche déjà trouvée (`enrichit_par: ville | nom`, `classes`) : elle ajoute, à côté de la fiche et avec sa source, par exemple les coordonnées de sa ville (GeoNames).
+
 ## Règles
 
 * Une base locale apporte des **données**, jamais un juge : le rapprochement reste dans Fusion/doublons.

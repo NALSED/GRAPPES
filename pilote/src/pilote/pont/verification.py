@@ -21,11 +21,13 @@ def verifier_candidats(lignes: list[dict], spec: dict, secrets: dict[str, str], 
     for v in spec.get("verificateurs", []):
         doit_s_arreter = arret_local if (v.get("local") and arret_local) else arret_general  # une copie locale n'est pas bornée par la limite d'appels
         source, debut, hors_service = v["source"], time.time(), ""
-        sur_le_nom = v.get("verifie_sur", "site") == "nom"
+        cle_ligne = v.get("verifie_sur", "site")  # ce qui sert de clé : l'adresse, le nom ou (enrichir) la ville de la fiche
+        enrichit = v.get("fonction") == "enrichir"
+        sur_le_nom = cle_ligne == "nom"
         client = adaptateurs.Client(source, doit_s_arreter, signaler=signaler, delai_s=v.get("delai_s", 0.2))
         parametres = {**v.get("parametres", {}), **({"_cle": secrets.get(v["cles_noms"][0], ""), "_cles": {n: secrets.get(n, "") for n in v["cles_noms"]}} if v.get("cles_noms") else {})}
         signaler("prise_debut", prise=source)
-        a_verifier = [l for l in lignes if sur_le_nom or l.get("site")]
+        a_verifier = [l for l in lignes if sur_le_nom or l.get(cle_ligne if cle_ligne in ("site", "ville") else "site")]
         if v.get("en_amont") is not None:  # posée après certaines sources sur le plan : elle ne vérifie que les noms que ces sources ont trouvés
             a_verifier = [l for l in a_verifier if set(l.get("trouve_par") or []) & set(v["en_amont"])]
         faits_ok, examines, coupee = 0, 0, ""
@@ -43,7 +45,7 @@ def verifier_candidats(lignes: list[dict], spec: dict, secrets: dict[str, str], 
                 coupee = f"limite de temps de la source atteinte ({limite_source:g} s)"
                 break
             try:
-                trouves = adaptateurs.charger(v["module"]).chercher({"site": ligne.get("site", ""), "nom": ligne["nom"], "quoi": ligne["nom"], "pays": ligne.get("pays", "")}, client, parametres)
+                trouves = adaptateurs.charger(v["module"]).chercher({"site": ligne.get("site", ""), "nom": ligne["nom"], "quoi": ligne["nom"], "pays": ligne.get("pays", ""), "ville": ligne.get("ville", ""), "fonction": v.get("fonction", "verifier")}, client, parametres)
             except adaptateurs.LimiteAtteinte:
                 coupee = "arrêt ou limite d'appels atteinte"
                 break
@@ -52,7 +54,12 @@ def verifier_candidats(lignes: list[dict], spec: dict, secrets: dict[str, str], 
                 signaler("source_echec", prise=source, raison=hors_service)
                 continue
             examines += 1
-            if trouves:
+            if trouves and enrichit:
+                faits_ok += 1
+                champs = {k: trouves[0][k] for k in ("ville", "site", "numero", "pays", "genre", "coordonnees", "detail") if trouves[0].get(k) and trouves[0][k] != ligne.get(k)}
+                if champs:  # jamais écraser (règle 1) : l'information en plus vit à côté de la fiche, avec sa source
+                    ligne.setdefault("faits", {}).setdefault("enrichissements", []).append({"source": source, "origine": str(trouves[0].get("origine", "")), "champs": champs})
+            elif trouves:
                 faits_ok += 1
                 ligne.setdefault("faits", {}).setdefault("verifications", []).append(
                     {"source": source, "origine": str(trouves[0].get("origine", "")), "preuve": str(trouves[0].get("numero", "")), "signal": str(trouves[0].get("signal") or "confirmation")})  # fmt: skip
@@ -61,6 +68,6 @@ def verifier_candidats(lignes: list[dict], spec: dict, secrets: dict[str, str], 
         complete = not hors_service and not coupee
         signaler("prise_fin", prise=source, trouves=faits_ok, noms=0, examines=examines, a_verifier=len(a_verifier),
                  statut="erreur : défaut" if hors_service else "ok" if complete else "partielle")  # fmt: skip
-        bilans.append({"source": source, "examines": examines, "a_verifier": len(a_verifier), "trouves": faits_ok,
+        bilans.append({"source": source, "fonction": v.get("fonction", "verifier"), "examines": examines, "a_verifier": len(a_verifier), "trouves": faits_ok,
                        "complete": complete, "raison": hors_service or coupee})  # fmt: skip
     return bilans

@@ -48,11 +48,50 @@ def chercher(entree: dict[str, Any], client: Client, parametres: dict[str, Any])
         raise ErreurSource("Le dossier des copies locales n'est pas connu de la source.")
     if client.doit_s_arreter():
         raise LimiteAtteinte
+    if entree.get("fonction") == "enrichir":
+        return _enrichir(entree, dossier, parametres)
     verification = bool(entree.get("nom"))  # une vérification donne le nom d'un résultat déjà trouvé ; une recherche donne `quoi`
     try:
         if verification:
             return _convertir(fl.exact(dossier, base, str(entree["nom"])), parametres, True, str(entree["nom"]))
         quoi = str(entree.get("quoi") or "").strip()
-        return _convertir(fl.chercher_par_mots(dossier, base, quoi, int(entree.get("limite") or 50)), parametres, False) if quoi else []
+        if not quoi:
+            return []
+        lieu = str(entree.get("lieu") or "").strip()
+        trouves = _convertir(fl.chercher_par_mots(dossier, base, quoi, int(entree.get("limite") or 50), lieu), parametres, False)
+        n = 0 if lieu else fl.homonymes(dossier, base, quoi)
+        if n > 3:  # un nom partagé : la liste ne dit pas laquelle est la bonne, on dit ce qui la départagerait
+            for t in trouves:
+                t["origine"] += f" ({n} entités portent exactement ce nom : précisez la ville ou le département, ou donnez le numéro officiel)"
+        return trouves
     except fl.BaseLocaleErreur as exc:
         raise ErreurSource(str(exc)) from exc
+
+
+def _enrichir(entree: dict[str, Any], dossier: str, parametres: dict[str, Any]) -> list[dict[str, Any]]:
+    """ENRICHIR : la copie rend de l'information EN PLUS pour une fiche déjà trouvée, retrouvée par son nom ou par sa ville (`enrichit_par`).
+    `classes` : préfixes du champ « thèmes » à retenir (ex. GeoNames : PPL = lieu habité). Le plus lourd (poids) d'abord."""
+    cle = str(parametres.get("enrichit_par") or "nom")
+    valeur = str(entree.get(cle) or "").strip()
+    if not valeur:
+        return []
+    classes = tuple(parametres.get("classes") or ())
+    try:
+        lignes = [r for r in fl.exact(dossier, str(parametres.get("base") or ""), valeur, 50) if not classes or str(r.get("themes") or "").startswith(classes)]
+    except fl.BaseLocaleErreur as exc:
+        raise ErreurSource(str(exc)) from exc
+    if not lignes:
+        return []
+    if classes:  # l'ordre de `classes` est un ordre de préférence (le lieu habité avant la division administrative)
+        lignes.sort(key=lambda r: next(i for i, c in enumerate(classes) if str(r.get("themes") or "").startswith(c)))
+    r = lignes[0]
+    item = {"nom": str(entree.get("nom") or valeur), "origine": str(parametres.get("origine") or f"copie locale « {parametres.get('base')} »")}
+    for c in ("site", "numero", "pays"):
+        if r.get(c):
+            item[c] = r[c]
+    morceaux = str(r.get("detail") or "").split()
+    if len(morceaux) == 2 and all(m.replace(".", "", 1).replace("-", "", 1).isdigit() for m in morceaux):
+        item["coordonnees"] = {"lat": float(morceaux[0]), "lon": float(morceaux[1])}
+    elif r.get("detail"):
+        item["detail"] = r["detail"]
+    return [item]

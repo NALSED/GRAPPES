@@ -21,6 +21,8 @@ origine: web
 famille: api
 roles:
 - chercher
+- enrichir
+verifie_sur: nom
 cle: ''
 cout:
   unite: appel

@@ -3,7 +3,7 @@ id: geonames-fr
 nom: GeoNames France (copie locale)
 description: >-
   Noms de lieux de France (communes, quartiers, divisions administratives) avec leurs variantes et leurs coordonnées, lus dans une copie locale : aucun appel réseau. Remplace Photon et Nominatim pour retrouver un lieu par son nom.
-trouve: lieux de France par leur nom
+trouve: lieux de France par leur nom ; ajoute les coordonnées à une fiche qui a une ville
 genres:
 - lieu
 pays:
@@ -23,6 +23,8 @@ fiabilite: B
 famille: fichier
 roles:
 - chercher
+- enrichir
+verifie_sur: ville
 cle: ''
 cout:
   unite: appel
@@ -45,6 +47,8 @@ moteur:
   adaptateur: fichier_local
   parametres:
     base: geonames-fr
+    enrichit_par: ville
+    classes: [PPL, ADM4, ADM3]
     origine: GeoNames (copie locale, France)
     installation:
       accord: 'Sednal, 27/10/2026, document 22 (ordre de travail, feu vert)'

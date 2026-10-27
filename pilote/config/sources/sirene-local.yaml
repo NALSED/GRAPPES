@@ -44,7 +44,7 @@ verifie_le: '2026-10-27'
 attribution:
   texte: 'Base Sirene des entreprises et de leurs établissements (INSEE), Licence Ouverte 2.0'
   url: https://www.data.gouv.fr/fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/
-note: La ville est celle du siège. Mise à jour mensuelle du stock ; la copie porte sa date d'import.
+note: La ville et le code postal sont ceux du siège (ils départagent les homonymes) ; le détail porte le code d'activité (APE) puis la catégorie juridique. Mise à jour mensuelle du stock ; la copie porte sa date d'import.
 moteur:
   adaptateur: fichier_local
   parametres:
@@ -64,7 +64,7 @@ moteur:
           nom: denominationUniteLegale
           alias: [sigleUniteLegale, denominationUsuelle1UniteLegale, denominationUsuelle2UniteLegale, denominationUsuelle3UniteLegale]
           numero: siren
-          detail: categorieJuridiqueUniteLegale
+          detail: [activitePrincipaleUniteLegale, categorieJuridiqueUniteLegale]
         defauts: {pays: FR, genre: entreprise}
         poids:
           colonne: trancheEffectifsUniteLegale
@@ -77,5 +77,5 @@ moteur:
         - fichier: etablissements.zip
           format: csv
           cle: siren
-          colonnes: {ville: libelleCommuneEtablissement}
+          colonnes: {ville: libelleCommuneEtablissement, themes: codePostalEtablissement}
           garder: {etablissementSiege: '^true$'}

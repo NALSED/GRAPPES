@@ -19,7 +19,8 @@ from pilote.refus import ConfigRefusee, lire_yaml
 ID = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
 VARIABLE = re.compile(r"^[A-Z][A-Z0-9_]{1,63}$")
 MAINS = {"premiere": "première main", "seconde": "seconde main"}
-ROLES = ("chercher", "verifier")
+ROLES = ("chercher", "verifier")  # les rôles par défaut d'une source
+ROLES_VALIDES = (*ROLES, "enrichir")  # « enrichir » doit être demandé : il n'est jamais un rôle par défaut
 ORIGINES = ("registre", "presse", "encyclo", "web", "texte")  # d'où vient un nom : du plus solide au plus fragile
 MOTEURS = ("prise", "definition", "registre_grappes", "adaptateur", "script", "flux_rss")  # comment une source est interrogée
 CHAMPS_CONNUS = {
@@ -138,8 +139,8 @@ def valider_declaration(d: dict[str, Any], cfg: Config, fichier: str = "") -> De
     if not isinstance(defaut, dict) or any(not isinstance(v, bool) for v in defaut.values()) or set(defaut) - set(ROLES):
         raise ConfigRefusee(f"{nom_f} : « defaut » donne seulement chercher et verifier, chacun à oui ou non.")
     roles = _liste(d, "roles", nom_f) if d.get("roles") is not None else list(ROLES)
-    if set(roles) - set(ROLES):
-        raise ConfigRefusee(f"{nom_f} : un rôle ne peut être que « chercher » ou « verifier ».")
+    if set(roles) - set(ROLES_VALIDES):
+        raise ConfigRefusee(f"{nom_f} : un rôle ne peut être que « chercher », « verifier » ou « enrichir ».")
     mode = d.get("mode") or {"en_ligne": True, "local": False}
     if not isinstance(mode, dict) or any(not isinstance(v, bool) for v in mode.values()):
         raise ConfigRefusee(f"{nom_f} : « mode » dit si la source tourne en ligne et/ou en copie locale (oui ou non).")
@@ -162,8 +163,8 @@ def valider_declaration(d: dict[str, Any], cfg: Config, fichier: str = "") -> De
     if fiabilite and fiabilite not in tuple("ABCDEF"):
         raise ConfigRefusee(f"{nom_f} : « fiabilite » est une lettre de A à F (code Admiralty).")
     verifie_sur = str(d.get("verifie_sur") or "")
-    if verifie_sur and (verifie_sur not in ("site", "nom") or "verifier" not in roles or "adaptateur" not in moteur):
-        raise ConfigRefusee(f"{nom_f} : « verifie_sur » vaut « site » ou « nom » et demande le rôle « verifier » avec un adaptateur.")
+    if verifie_sur and (verifie_sur not in ("site", "nom", "ville") or not ({"verifier", "enrichir"} & set(roles)) or "adaptateur" not in moteur or (verifie_sur == "ville" and "enrichir" not in roles)):
+        raise ConfigRefusee(f"{nom_f} : « verifie_sur » vaut « site » ou « nom » (rôle « verifier » ou « enrichir » avec un adaptateur), ou « ville » (rôle « enrichir »).")
     return Declaration(
         id=ident, nom=nom.strip(), description=str(d.get("description", "")).strip(), trouve=str(d.get("trouve", "")).strip(), genres=genres, pays=pays,
         consomme=_liste(d, "consomme", nom_f, requis=False), produit=_liste(d, "produit", nom_f, requis=False), usages=_liste(d, "usages", nom_f),

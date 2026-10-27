@@ -64,7 +64,7 @@ function dessiner() {
   const racine = document.getElementById("app");
   const haut = window.scrollY;
   racine.replaceChildren(barre(), h("main", { class: "page" }, h("div", { class: "page-in" }, app.onglet === "reglages" ? pageReglages() : app.onglet === "tri" ? pageTri() : pageRechercheTete())),
-    h("footer", { class: "pied" }, h("a", { href: "/" }, "Ouvrir l'ancienne interface (Lancement, Tri)")));
+    h("footer", { class: "pied" }, h("a", { href: "/" }, "Ancienne interface (Lancement, Tri)")));
   window.scrollTo(0, haut);
   redessinerAide();
 }

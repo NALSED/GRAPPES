@@ -259,3 +259,80 @@ def test_gdelt_garde_la_presse_francaise_et_les_organisations_seulement(monkeypa
     assert not any("Dupont" in n for n, *_ in lignes)  # les personnes ne sont jamais lues
     monkeypatch.setattr(g, "_telecharger", lambda url: None)
     assert g.lire("20261026120000") is None  # fichier absent : rien à noter comme traité
+
+
+# --- ENRICHIR : un pas du moteur APRÈS la recherche, qui ajoute de l'information à une fiche déjà trouvée, avec sa source, sans rien écraser (règle 1)
+def test_enrichir_ajoute_les_coordonnees_d_une_ville_sans_ecraser(tmp_path):
+    t = tmp_path / "FR.txt"
+    t.write_text("1\tGrenoble\tGrenoble\t\t45.17869\t5.71479\tP\tPPLA2\n2\tArrondissement de Grenoble\tx\tGrenoble\t45.1\t5.79\tA\tADM3\n3\tGrenoble\tGrenoble\t\t45.18\t5.72\tA\tADM4\n", encoding="utf-8")
+    entetes = ["id", "name", "ascii", "alt", "lat", "lon", "fclass", "fcode"]
+    fl.importer(t, "geo", tmp_path, {"format": "tsv", "entetes": entetes, "colonnes": {"nom": "name", "alias": "alt", "numero": "id", "detail": ["lat", "lon"], "themes": "fcode"}})
+    p = {"base": "geo", "_dossier_copies": str(tmp_path), "enrichit_par": "ville", "classes": ["PPL", "ADM4", "ADM3"]}
+    client = adaptateurs.Client("geo")
+    mod = adaptateurs.charger("fichier_local")
+    r = mod.chercher({"fonction": "enrichir", "nom": "Club Alpin", "ville": "Grenoble"}, client, p)
+    assert r[0]["coordonnees"] == {"lat": 45.17869, "lon": 5.71479}  # le lieu habité avant l'arrondissement
+    assert mod.chercher({"fonction": "enrichir", "nom": "Club", "ville": ""}, client, p) == []
+    assert mod.chercher({"fonction": "enrichir", "nom": "Club", "ville": "Nullepart"}, client, p) == []
+
+
+def test_le_moteur_enrichit_la_fiche_et_garde_l_original(tmp_path):
+    import sys
+    import time
+
+    from conftest import copier_config
+    from fastapi.testclient import TestClient
+
+    from pilote.app import creer_app
+    from pilote.config import charger
+
+    cfg = charger(copier_config(tmp_path))
+    t = tmp_path / "FR.txt"
+    t.write_text("1\tGrenoble\tGrenoble\t\t45.17869\t5.71479\tP\tPPLA2\n", encoding="utf-8")
+    fl.importer(t, "geonames-fr", cfg.dossier_copies, {"format": "tsv", "entetes": ["id", "name", "ascii", "alt", "lat", "lon", "fclass", "fcode"], "colonnes": {"nom": "name", "numero": "id", "detail": ["lat", "lon"], "themes": "fcode"}})
+    prog = tmp_path / "clubs.py"
+    prog.write_text('import json, sys\njson.load(sys.stdin)\nprint(json.dumps([{"nom": "Club Alpin", "ville": "Grenoble", "origine": "p"}, {"nom": "Club Sans Ville", "origine": "p"}]))\n', encoding="utf-8")
+    with TestClient(creer_app(cfg)) as c:
+        r = c.post("/api/programmes-locaux", json={"nom": "clubs", "commande": [sys.executable, str(prog)], "genres": ["association"], "pays": ["FR"]})
+        src = r.json()["id"]
+        for s in c.get("/api/suite/etat").json()["sources"]:
+            if s["id"] != src and s["chercher"]:
+                c.post(f"/api/suite/sources/{s['id']}/eteindre", json={})
+        assert c.post(f"/api/suite/sources/{src}/allumer", json={}).status_code == 200
+        assert c.post("/api/suite/sources/geonames-fr/allumer", json={"confirme": True}).status_code == 200
+        assert c.put("/api/suite/sources/geonames-fr", json={"role": "ENRICHIR"}).status_code == 200
+        n = lambda i, role=None, ref=None: {"id": i, "nom": i, "role": role, "ref": ref, "x": 0, "y": 0, "opts": []}
+        plan = {"nodes": [n("saisie", "ENTREE"), n("grappes", "GRAPPES"), n("p", "CHERCHER", src), n("g", "ENRICHIR", "geonames-fr")], "edges": [{"from": "saisie", "to": "p"}, {"from": "p", "to": "g"}, {"from": "g", "to": "grappes"}]}
+        plan["nodes"][0]["role"], plan["nodes"][1]["role"] = "ENTREE", "GRAPPES"
+        r = c.post("/api/suite/lancer", json={"saisie": "clubs", "mode": "Avancée", "plan": plan, "cats": ["perso"], "pays": "FR"})
+        assert r.status_code == 202, r.text
+        assert any("enrichit" in x["texte"] for x in r.json()["appliques"])
+        rid = r.json()["recherche_id"]
+        t0 = time.time()
+        while time.time() - t0 < 120 and c.get(f"/api/recherches/{rid}").json()["etat"] not in ("terminee", "echec", "arretee", "interrompue"):
+            time.sleep(0.3)
+        assert c.get(f"/api/recherches/{rid}").json()["etat"] == "terminee"
+        cands = {x["nom"]: x for x in json.loads(next(cfg.dossier_recherche(rid).rglob("candidats.json")).read_text(encoding="utf-8"))}
+        enr = cands["Club Alpin"]["faits"]["enrichissements"]
+        assert enr[0]["source"] == "geonames-fr" and enr[0]["champs"]["coordonnees"]["lat"] == 45.17869 and "GeoNames" in enr[0]["origine"]
+        assert cands["Club Alpin"]["ville"] == "Grenoble"  # l'original est intact
+        assert "enrichissements" not in (cands["Club Sans Ville"].get("faits") or {})  # sans ville, rien à ajouter, rien inventé
+        assert "1 sur 1 noms enrichis" in c.get("/api/suite/etat").json()["recherches"][0]["verification"]
+
+
+def test_un_nom_partage_se_departage_par_le_lieu_et_le_dit(tmp_path):
+    """Cas « Renault » : le nom seul ne départage pas des dizaines d'homonymes ; le lieu le fait, et sans lieu la source dit qu'il en faut un."""
+    t = tmp_path / "u.csv"
+    lignes = ["siren,nom,ville,cp"] + [f"10000000{i},RENAULT,VILLE{i},{10000 + i}" for i in range(6)] + ["200000001,RENAULT,BOULOGNE-BILLANCOURT,92100"]
+    t.write_text("\n".join(lignes) + "\n", encoding="utf-8")
+    fl.importer(t, "u", tmp_path, {"format": "csv", "colonnes": {"nom": "nom", "numero": "siren", "ville": "ville", "themes": "cp"}})
+    assert fl.homonymes(tmp_path, "u", "Renault") == 7
+    assert [r["numero"] for r in fl.chercher_par_mots(tmp_path, "u", "renault", lieu="Boulogne-Billancourt")] == ["200000001"]
+    assert [r["numero"] for r in fl.chercher_par_mots(tmp_path, "u", "renault", lieu="92")] == ["200000001"]  # le département
+    assert [r["numero"] for r in fl.chercher_par_mots(tmp_path, "u", "renault", lieu="10003")] == ["100000003"]  # le code postal
+    mod = adaptateurs.charger("fichier_local")
+    p = {"base": "u", "_dossier_copies": str(tmp_path)}
+    sans = mod.chercher({"quoi": "renault"}, adaptateurs.Client("u"), p)
+    assert len(sans) == 7 and "7 entités portent exactement ce nom" in sans[0]["origine"]
+    avec = mod.chercher({"quoi": "renault", "lieu": "92"}, adaptateurs.Client("u"), p)
+    assert len(avec) == 1 and "portent exactement" not in avec[0]["origine"]

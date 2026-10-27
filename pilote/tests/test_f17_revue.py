@@ -221,7 +221,7 @@ def test_une_verification_coupee_est_dite(cfg, monkeypatch):
     lignes = [{"nom": f"N{i}", "site": f"n{i}.example"} for i in range(5)]
     spec = {"verificateurs": [{"source": "wayback", "module": "wayback", "verifie_sur": "site"}]}
     bilans = verifier_candidats(lignes, spec, {}, lambda: appels["n"] >= 2, 60.0, lambda *a, **k: None)
-    assert bilans == [{"source": "wayback", "examines": 2, "a_verifier": 5, "trouves": 0, "complete": False, "raison": "arrêt ou limite d'appels atteinte"}]
+    assert bilans == [{"source": "wayback", "fonction": "verifier", "examines": 2, "a_verifier": 5, "trouves": 0, "complete": False, "raison": "arrêt ou limite d'appels atteinte"}]
     ctx = FauxContexte()
     ExecuteurGrappes(cfg).dire_la_verification(ctx, bilans)
     assert ctx.avances["verifications"] == bilans

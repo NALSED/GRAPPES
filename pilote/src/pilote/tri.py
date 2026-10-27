@@ -245,8 +245,10 @@ def fiche(cfg: Config, fabrique: sessionmaker[Session], rid: str, cid: int) -> d
         sources.append({"nom": SOURCES_ECOSYSTEMES.get(eco, eco), "detail": detail})
     verifications = [{"nom": nom_source(v.get("source", "")), "origine": str(v.get("origine", "")), "preuve": str(v.get("preuve", "")), "signal": str(v.get("signal") or "confirmation")}
                      for v in (c.faits or {}).get("verifications", []) if isinstance(v, dict)]  # ce que les sources « vérifier » ont rendu (ex. capture Wayback)
+    enrichissements = [{"nom": nom_source(v.get("source", "")), "origine": str(v.get("origine", "")), "champs": v.get("champs") or {}}
+                       for v in (c.faits or {}).get("enrichissements", []) if isinstance(v, dict)]  # ce que les sources « enrichir » ont AJOUTÉ à côté de la fiche, sans l'écraser
     return {
-        "id": c.id, "nom": c.nom, "verifications": verifications, "origine": c.genre_source, "origine_phrase": cl.ORIGINE_LIBELLE.get(c.genre_source, ""), "endroits": c.nb_endroits,
+        "id": c.id, "nom": c.nom, "verifications": verifications, "enrichissements": enrichissements, "origine": c.genre_source, "origine_phrase": cl.ORIGINE_LIBELLE.get(c.genre_source, ""), "endroits": c.nb_endroits,
         "ville": c.ville, "pays": c.pays, "site": c.site, "numero_officiel": c.numero_officiel, "genre_de_chose": c.genre_de_chose,
         "decision": ligne.decision, "ressemble_a": ligne.ressemble_a, "sources": sources, "fonction": ligne.fonction, "bloc": ligne.racine,
         "relations": c.relations or [], "rapprochement": ligne.rapproche,

@@ -135,13 +135,14 @@ def compiler(plan: dict[str, Any], sources: list[dict[str, Any]], outils: list[d
     cherchent, verifient = [], []
     for i in chemin_sources:
         s = par_source[ref(i)]
-        if s["role"] == "VERIFIER":
+        if s["role"] in ("VERIFIER", "ENRICHIR"):  # elles ne cherchent pas : elles travaillent sur les noms trouvés avant elles
             verifient.append(
                 {
                     "id": s["id"],
                     "tuile": i,
+                    "fonction": "enrichir" if s["role"] == "ENRICHIR" else "verifier",
                     "en_amont": sorted(
-                        {ref(a) for a in ancetres_sources[i] if par_source[ref(a)]["role"] != "VERIFIER"}
+                        {ref(a) for a in ancetres_sources[i] if par_source[ref(a)]["role"] not in ("VERIFIER", "ENRICHIR")}
                     )
                     or None,
                 }
@@ -184,7 +185,7 @@ def compiler(plan: dict[str, Any], sources: list[dict[str, Any]], outils: list[d
                 visiter(e["to"], etapes + etapes_de(m, e), vu + (m,), source)
 
     for i in chemin_sources:
-        if par_source[ref(i)]["role"] != "VERIFIER":
+        if par_source[ref(i)]["role"] not in ("VERIFIER", "ENRICHIR"):
             visiter(i, [], (i,), par_source[ref(i)]["id"])
     # --- la sortie, les outils sans effet réel, ceux qu'on ne branche pas
     formats: list[str] | None = None
@@ -246,13 +247,13 @@ def compiler(plan: dict[str, Any], sources: list[dict[str, Any]], outils: list[d
             {
                 "tuile": v["tuile"],
                 "nom": nodes[v["tuile"]]["nom"],
-                "texte": "vérifie "
+                "texte": ("vérifie " if v["fonction"] == "verifier" else "enrichit ")
                 + ("les résultats des sources placées avant elle" if v["en_amont"] else "tous les résultats"),
             }
         )
     ordre = {i: k for k, i in enumerate(nodes)}
     return {
-        "sources": sorted(dict.fromkeys(cherchent), key=lambda s: min(ordre[i] for i in chemin_sources if ref(i) == s)), "verificateurs": [{"id": v["id"], "en_amont": v["en_amont"]} for v in verifient],
+        "sources": sorted(dict.fromkeys(cherchent), key=lambda s: min(ordre[i] for i in chemin_sources if ref(i) == s)), "verificateurs": [{"id": v["id"], "en_amont": v["en_amont"], "fonction": v["fonction"]} for v in verifient],
         "chemins": chemins, "traductions": traductions, "format": formats, "appliques": appliques, "non_appliques": non_appliques,
         "pays_equiv": pays_equiv or {},
     }  # fmt: skip
@@ -303,7 +304,7 @@ def _traduction(
     sources_apres = [
         m
         for m in descendants
-        if nodes[m].get("ref") in par_source and par_source[nodes[m]["ref"]]["role"] != "VERIFIER"
+        if nodes[m].get("ref") in par_source and par_source[nodes[m]["ref"]]["role"] not in ("VERIFIER", "ENRICHIR")
     ]
     if not sources_apres:
         dire_non(i, "placée après les sources, elle traduirait les résultats : ce n'est pas encore branché")

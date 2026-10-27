@@ -155,7 +155,11 @@ function ligneSauvegardee(r) {
     h("div", { class: "sauvee-texte" },
       h("div", { class: "sauvee-meta" }, h("span", { class: "fort" }, r.titre), h("span", { class: `mode ${avancee ? "avancee" : ""}`.trim() }, r.mode)),
       h("span", { class: "legende" }, r.detail),
-      r.verification && h("span", { class: "legende", dataset: { verification: r.id } }, r.verification)),
+      r.verification && h("span", { class: "legende", dataset: { verification: r.id } }, r.verification),
+      r.ecartes && h("details", { class: "legende", dataset: { ecartes: r.id } },
+        h("summary", {}, `${r.ecartes.n} écarté${r.ecartes.n > 1 ? "s" : ""} par un filtre`), // règle 1 : un retrait reste consultable
+        h("ul", {}, r.ecartes.noms.map((nom) => h("li", {}, nom))),
+        r.ecartes.noms.length < r.ecartes.n && h("span", { class: "legende" }, `Les ${r.ecartes.noms.length} premiers sont listés.`))),
     h("span", { class: "legende chiffres" }, fmtDate(r.date)),
     h("span", { class: "legende fort" }, r.resultat),
     h("div", { class: "sauvee-actions" },

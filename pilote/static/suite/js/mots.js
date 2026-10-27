@@ -33,7 +33,7 @@ export const TUILES_FIXES = {
 export const VERBES = {
   ajouter: "Ajouter", modifier: "Modifier", enregistrer: "Enregistrer", annuler: "Annuler", fermer: "Fermer", allumer: "Allumer",
   eteindre: "Éteindre", retirer: "Retirer", supprimer: "Supprimer", lancer: "Lancer", reutiliser: "Réutiliser", confirmer: "Confirmer", separer: "Séparer",
-  remettre: "Remettre par défaut", ranger: "Ranger", filtrer: "Filtrer", replier: "Replier", deplier: "Déplier", ouvrir: "Ouvrir",
+  remettre: "Remettre par défaut", ranger: "Ranger", filtrer: "Filtrer", replier: "Replier", deplier: "Déplier",
 };
 
 export const COUTS = ["gratuit", "payant"];

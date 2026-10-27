@@ -49,7 +49,7 @@ function ligneTranchee(c) {
 
 export function pageTri() {
   const d = app.tri.donnees;
-  if (!d) return h("p", { class: "vide" }, "Chargement…");
+  if (!d) return h("p", { class: "vide", "aria-busy": "true" });
   return [
     h("div", { class: "page-tete" }, h("div", { class: "page-titre" }, h("h1", {}, "Tri"), h("p", { class: "douce" }, d.a_examiner.length ? compteRapprochements(d.a_examiner.length) : ""))),
     d.a_examiner.length ? h("div", { class: "cartes" }, d.a_examiner.map(carte)) : h("p", { class: "note" }, TRI.vide),
