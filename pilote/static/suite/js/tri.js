@@ -7,7 +7,7 @@ import { TRI, VERBES, aPluriel, compteRapprochements, fmtDate } from "./mots.js"
 import { bouton, carteRepliable } from "./ui.js";
 
 const NIVEAU = { haute: 85, moyenne: 60 }; // à partir de 85 % : etat-ok ; à partir de 60 % : etat-attention ; en dessous : neutre (le rouge est réservé à retirer et supprimer)
-const LIBELLES = { nom: "Nom", ville: "Ville", numero: "Identifiant" };
+const LIBELLES = { nom: "Nom", distinctif: "Mots distinctifs du nom", chiffres: "Chiffres du nom", ville: "Ville", numero: "Identifiant" };
 
 function explication(pourquoi) {
   return Object.entries(pourquoi || {}).map(([champ, v]) => `${LIBELLES[champ] || champ} : ${v.niveau}${v.niveau === "absent d'un côté" ? "" : ` (×${Number((2 ** v.poids).toPrecision(2))})`}`).join(" · ");

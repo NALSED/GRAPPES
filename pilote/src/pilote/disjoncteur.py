@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -33,6 +34,21 @@ def _expiree(d: dict[str, Any]) -> bool:
     return (datetime.now(UTC) - depuis).total_seconds() >= DELAI_REPRISE_S
 
 
+def phrase_raison(raison: str) -> str:
+    """Une panne dite en français : « guardian : HTTP 401 » ne dit pas quoi faire ; « la clé est refusée » si."""
+    import re
+
+    m = re.search(r"HTTP (\d{3})", raison)
+    code = m.group(1) if m else ""
+    if code in ("401", "403"):
+        return f"La clé d'API est refusée par la source (HTTP {code}) : vérifiez-la dans Réglages."
+    if code == "402":
+        return "Les crédits de la source sont épuisés (HTTP 402)."
+    if code == "429":
+        return "La source demande d'attendre (HTTP 429) : trop d'appels."
+    return raison
+
+
 def issues(fichier: Path, jetons: dict[str, str]) -> dict[str, dict[str, str]]:
     """source -> {ok|echec, raison}, d'après le fichier d'avancement. Une source dont aucune prise n'a dit ni oui ni non n'y figure pas."""
     par_source: dict[str, dict[str, str]] = {}
@@ -50,14 +66,14 @@ def issues(fichier: Path, jetons: dict[str, str]) -> dict[str, dict[str, str]]:
         if ev == "source_ok":
             par_source[sid] = {"issue": "ok", "raison": ""}
         elif ev == "source_echec":
-            par_source[sid] = {"issue": "echec", "raison": str(e.get("raison", "")) or "la source n'a pas répondu"}
+            par_source[sid] = {"issue": "echec", "raison": phrase_raison(str(e.get("raison", "")) or "la source n'a pas répondu")}
         elif ev == "prise_fin":
             st = str(e.get("statut", ""))
             if st == "ok":
                 if par_source.get(sid, {}).get("issue") != "echec":
                     par_source[sid] = {"issue": "ok", "raison": ""}
-            elif st.startswith(("erreur", "quota")):
-                par_source[sid] = {"issue": "echec", "raison": st.partition(" : ")[2] or st}
+            elif st.startswith(("erreur", "quota")) or (st.startswith("arrêté") and re.search(r"HTTP (401|403)", st)):  # une clé refusée arrête la source pour le cycle : c'est un échec, pas un succès
+                par_source[sid] = {"issue": "echec", "raison": phrase_raison(st.partition(" : ")[2] or st)}
     return par_source
 
 

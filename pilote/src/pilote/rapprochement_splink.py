@@ -17,12 +17,22 @@ import unicodedata
 
 PRIOR = 0.008  # probabilité a priori que deux fiches tirées au hasard dans une recherche soient la même entité
 MOTS_VIDES = {"de", "du", "des", "la", "le", "les", "l", "d", "et", "en", "au", "aux", "a"}
+# Mots qui disent SEULEMENT le genre d'organisation (« association sportive », « club », « mairie »…) : ils ne distinguent rien. Deux noms qui ne diffèrent que par les
+# autres mots (« … de Cannes », « … de Monaco ») sont deux entités ; deux noms qui ne se ressemblent que par ces mots ne sont pas des doublons.
+GENERIQUES = {"association", "associations", "sportive", "sportif", "club", "union", "societe", "amicale", "federation", "comite", "ligue", "groupe", "groupement", "fondation",
+              "mairie", "commune", "ville", "centre", "maison", "cercle", "office", "syndicat", "institut", "ecole", "universite", "football", "judo", "rugby", "basket", "tennis", "sa", "sas", "sarl", "inc", "ltd", "gmbh", "oy"}  # fmt: skip
 TOUT_LES_PAIRES_JUSQU_A = 300  # au-delà, des règles de blocage évitent de comparer tout avec tout
 
 
 def _nu(t: str) -> str:
     t = unicodedata.normalize("NFKD", t or "").encode("ascii", "ignore").decode().lower()
     return re.sub(r"[^a-z0-9]+", " ", t).strip()
+
+
+def _numero(v: str) -> str | None:
+    """Les chiffres du numéro officiel. Un SIRET (14 chiffres) et son SIREN (9) concordent (voir le niveau « identique » de la comparaison) ; deux SIRET
+    DIFFÉRENTS sont deux établissements distincts d'une même entreprise : jamais un doublon."""
+    return re.sub(r"\D", "", v or "") or None
 
 
 def _niveau(cond: str, m: float | None = None, u: float | None = None, etiquette: str = "", nul: bool = False) -> dict:
@@ -40,10 +50,25 @@ def reglages(n: int) -> dict:
         {"output_column_name": "nom", "comparison_levels": [
             _niveau("nom_l IS NULL OR nom_r IS NULL", nul=True),
             _niveau("nom_l = nom_r", 0.55, 0.004, "identique"),
-            _niveau(f"{jaccard} >= 0.8", 0.15, 0.002, "très proche"),
+            _niveau("levenshtein(nom_l, nom_r) <= CASE WHEN length(nom_l) >= 15 THEN 2 WHEN length(nom_l) >= 8 THEN 1 ELSE 0 END", 0.12, 0.002, "très proche (fautes de frappe)"),  # une ou deux lettres selon la longueur ; jamais sur un sigle (ASM, ASB sont deux clubs)
+            _niveau(f"{jaccard} >= 0.8", 0.1, 0.002, "très proche"),
             _niveau(f"{jaccard} >= 0.6", 0.15, 0.01, "proche"),
             _niveau(f"{jaccard} >= 0.4", 0.08, 0.05, "un peu proche"),
             _niveau("ELSE", 0.07, 0.934, "différent"),
+        ]},
+        {"output_column_name": "distinctif", "comparison_levels": [
+            _niveau("len(mots_d_l) = 0 OR len(mots_d_r) = 0", nul=True),
+            _niveau("nom_l = nom_r", 0.2, 0.2, "nom identique : déjà compté"),  # sans cela, un même nom comptait deux fois (nom + mots distinctifs) et deux homonymes de villes différentes montaient à 70 %
+            _niveau("list_sort(mots_d_l) = list_sort(mots_d_r)", 0.8, 0.05, "mêmes mots distinctifs"),
+            _niveau("levenshtein(array_to_string(list_sort(mots_d_l), ' '), array_to_string(list_sort(mots_d_r), ' ')) <= CASE WHEN length(array_to_string(mots_d_l, ' ')) >= 12 THEN 2 WHEN length(array_to_string(mots_d_l, ' ')) >= 8 THEN 1 ELSE 0 END", 0.1, 0.01, "mots distinctifs à une faute près"),
+            _niveau("len(list_intersect(mots_d_l, mots_d_r)) * 1.0 / len(list_distinct(list_concat(mots_d_l, mots_d_r))) >= 0.5", 0.15, 0.05, "mots distinctifs en commun"),
+            _niveau("ELSE", 0.05, 0.9, "mots distinctifs différents"),  # « Cannes » contre « Monaco » : deux clubs
+        ]},
+        {"output_column_name": "chiffres", "comparison_levels": [
+            _niveau("chiffres_l IS NULL AND chiffres_r IS NULL", nul=True),
+            _niveau("chiffres_l IS NULL OR chiffres_r IS NULL", 0.4, 0.7, "chiffres d'un seul côté"),  # « Ligue des champions » et « Ligue des champions 2024 » : plutôt deux choses
+            _niveau("chiffres_l = chiffres_r", 0.95, 0.3, "mêmes chiffres"),
+            _niveau("ELSE", 0.005, 0.8, "chiffres différents"),  # « Innovation 3 » et « Innovation 5 » : deux fonds, pas une faute de frappe
         ]},
         {"output_column_name": "ville", "comparison_levels": [
             _niveau("ville_l IS NULL OR ville_r IS NULL", nul=True),
@@ -52,11 +77,11 @@ def reglages(n: int) -> dict:
         ]},
         {"output_column_name": "numero", "comparison_levels": [
             _niveau("numero_l IS NULL OR numero_r IS NULL", nul=True),
-            _niveau("numero_l = numero_r", 0.6, 0.00001, "identique"),
-            _niveau("ELSE", 0.4, 0.99999, "différent"),
+            _niveau("numero_l = numero_r OR (length(numero_l) = 9 AND length(numero_r) = 14 AND substr(numero_r, 1, 9) = numero_l) OR (length(numero_r) = 9 AND length(numero_l) = 14 AND substr(numero_l, 1, 9) = numero_r)", 0.6, 0.00001, "identique"),
+            _niveau("ELSE", 0.003, 0.99999, "différent"),  # deux numéros officiels différents : deux entités distinctes, sauf faute de saisie (rare)
         ]},
     ]  # fmt: skip
-    blocage = ["1 = 1"] if n <= TOUT_LES_PAIRES_JUSQU_A else ["l.ville = r.ville", "l.numero = r.numero", "l.mot1 = r.mot1", "l.mot2 = r.mot2"]
+    blocage = ["1 = 1"] if n <= TOUT_LES_PAIRES_JUSQU_A else ["l.ville = r.ville", "l.numero = r.numero", "l.mot1 = r.mot1", "l.mot2 = r.mot2", "substr(l.nom, 1, 4) = substr(r.nom, 1, 4)", "substr(l.mot1, 1, 3) = substr(r.mot1, 1, 3) AND substr(l.mot2, 1, 3) = substr(r.mot2, 1, 3)"]  # y compris des débuts de mot communs : une faute de frappe ne doit pas suffire à ne jamais comparer deux fiches
     return {"link_type": "dedupe_only", "probability_two_random_records_match": PRIOR, "retain_intermediate_calculation_columns": True, "blocking_rules_to_generate_predictions": blocage, "comparisons": comparaisons}
 
 
@@ -67,10 +92,11 @@ def scorer(fiches: list[dict], seuil: float) -> list[dict]:
 
     lignes = []
     for f in fiches:
-        mots = sorted({w for w in _nu(f["nom"]).split() if w not in MOTS_VIDES})
+        nom = _nu(f["nom"])
+        mots = sorted({w for w in nom.split() if w not in MOTS_VIDES})
         lignes.append({
-            "unique_id": f["id"], "nom": _nu(f["nom"]) or None, "mots": mots or [""], "mot1": mots[0] if mots else None, "mot2": mots[-1] if mots else None,
-            "ville": _nu(f.get("ville", "")) or None, "numero": re.sub(r"\D", "", f.get("numero", "") or "") or None,
+            "unique_id": f["id"], "nom": nom or None, "mots": mots or [""], "mots_d": [w for w in mots if w not in GENERIQUES], "mot1": mots[0] if mots else None, "mot2": mots[-1] if mots else None, "chiffres": "-".join(re.findall(r"\d+", f["nom"])) or None,
+            "ville": _nu(f.get("ville", "")) or None, "numero": _numero(f.get("numero", "")),
         })  # fmt: skip
     if len(lignes) < 2:
         return []
@@ -79,9 +105,9 @@ def scorer(fiches: list[dict], seuil: float) -> list[dict]:
     out = []
     for _, r in res.iterrows():
         pourquoi = {}
-        for champ in ("nom", "ville", "numero"):
+        for champ in ("nom", "distinctif", "chiffres", "ville", "numero"):
             gamma = int(r[f"gamma_{champ}"])
-            niveaux = [n for n in reglages(1)["comparisons"][["nom", "ville", "numero"].index(champ)]["comparison_levels"] if not n.get("is_null_level")]
+            niveaux = [n for n in reglages(1)["comparisons"][["nom", "distinctif", "chiffres", "ville", "numero"].index(champ)]["comparison_levels"] if not n.get("is_null_level")]
             pourquoi[champ] = {"niveau": "absent d'un côté" if gamma < 0 else niveaux[len(niveaux) - 1 - gamma]["label_for_charts"], "poids": round(float(r[f"mw_{champ}"]), 3)}
         a, b = sorted((r["unique_id_l"], r["unique_id_r"]))
         out.append({"a": int(a), "b": int(b), "confiance": round(float(r["match_probability"]), 4), "pourquoi": pourquoi})

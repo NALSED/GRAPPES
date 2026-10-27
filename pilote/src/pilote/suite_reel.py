@@ -36,17 +36,7 @@ CAT_VERS_USAGE = {
     "perso": "personnalise",
 }
 PAYS_AFFICHE = {"GB": "UK", "monde": "Mondial"}
-LANGUE_DU_PAYS = {
-    "FR": "fr",
-    "UK": "en",
-    "US": "en",
-    "AU": "en",
-    "NZ": "en",
-    "FI": "fi",
-    "CH": "de",
-    "UE": "en",
-    "Mondial": "en",
-}
+LANGUE_DU_PAYS = {"FR": "fr", "UK": "en", "US": "en", "AU": "en", "NZ": "en", "FI": "fi", "CH": "de"}  # un pays à langue unique ; « Mondial » et « UE » sont multilingues : langue vide = inconnue, jamais « en » par défaut (le contrôle de langue de l'Aide se tait plutôt que de deviner)
 FIABILITES = "ABCDEF"  # code Admiralty, axe « fiabilité de la source » (spécification 05) ; l'axe 1–6 (crédibilité d'un fait) n'est pas construit
 FIABILITE_DE_LA_CLASSE = {"registre": "B", "encyclo": "C"}  # par défaut : B pour une source officielle, C pour une encyclopédie, D pour le web, la presse, le reste
 
@@ -118,7 +108,7 @@ def vue_source(
     return {
         "id": d.id, "nom": d.nom, "cat": sur.get("cat") if sur.get("cat") in CAT_VERS_USAGE else cats[0], "cats": cats, "role": role,
         "cout": "payant" if d.payant else "gratuit", "fiabilite": sur.get("fiabilite") if sur.get("fiabilite") in tuple(FIABILITES) else fiabilite_par_defaut(d), "fiabilite_choisie": sur.get("fiabilite") in tuple(FIABILITES), "pays": pays[0], "pays_codes": pays,
-        "langue": sur.get("langue") or LANGUE_DU_PAYS.get(pays[0], "en"), "etat": etat, "quota": _quota(d, e, unites), "description": d.description,
+        "langue": sur.get("langue") or LANGUE_DU_PAYS.get(pays[0], ""), "etat": etat, "quota": _quota(d, e, unites), "description": d.description,
         "retiree": bool(sur.get("retiree")), "test_reussi": teste, "tests": tests, "declaree": True, "cle_requise": bool(d.cles),
         "cle": bool(d.cles) and cles.toutes_presentes(cfg, d.cles), "voyant": mot, "domaine": domaine_source(d), "chercher": ch["chercher"], "verifier": ch["verifier"],
         "peut_chercher": "chercher" in d.roles, "verifie_sur": d.verifie_sur if "adaptateur" in d.moteur else "", "avertissement": d.avertissement, "adaptateur_manquant": manquant,

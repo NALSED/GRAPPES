@@ -30,7 +30,8 @@ ROLES_DE_PARCOURS = {
     "ENRICHIR": 2,
 }  # l'ordre d'une branche : chercher, puis vérifier, puis enrichir
 ECRANS = {
-    "tableau-de-bord": None, "tri": None,  # pas conçus : visibles, grisés, inactifs
+    "tableau-de-bord": None,  # pas conçu : visible, grisé, inactif
+    "tri": "tri",  # conçu le 26/10 (spécification 16)
     "recherche": "recherche", "recherche/simple": "recherche/simple", "recherche/avancee": "recherche/avancee",
     "recherche/sauvegardees": "recherche/sauvegardees", "reglages": "reglages", "reglages/sources": "reglages/sources",
     "reglages/outils": "reglages/outils",

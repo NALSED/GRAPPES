@@ -102,7 +102,7 @@ def test_un_filtre_ne_juge_que_la_branche_ou_il_se_trouve():
         "Les deux",
     ]  # « Club Paris » (source a seule) est retiré ; « Les deux » passe par la branche b
     assert (
-        bilan["par_tuile"]["f"]["n"] == 2 and "Club Paris" in bilan["par_tuile"]["f"]["noms"] and bilan["retires"] == 1
+        bilan["par_tuile"]["f"]["n"] == 1 and "Club Paris" in bilan["par_tuile"]["f"]["noms"] and bilan["retires"] == 1
     )
 
 
@@ -312,3 +312,14 @@ def test_une_verification_posee_apres_une_source_ne_juge_que_ses_resultats(monke
         lignes, {"verificateurs": [{**v, "en_amont": None}]}, {}, lambda: False, 60.0, lambda *a, **k: None
     )
     assert len(vus) == 3  # sans source avant elle, elle vérifie tous les résultats
+
+
+def test_le_journal_ne_dit_retire_que_ce_qui_l_est_vraiment():
+    """Partie 2 de test.md (S2) : un nom tombé sur une branche mais gardé par une autre n'est pas « retiré »."""
+    base = [("saisie",), ("grappes",), ("n1", "a"), ("s", "si"), ("x", "fusion"), ("y", "fusion")]
+    liens = [lien("saisie", "n1"), lien("n1", "s"), lien("s", "x", "oui"), lien("s", "y", "non"), lien("x", "grappes"), lien("y", "grappes")]
+    gardes, bilan = appliquer([ligne("Asso", ["a"], genre="association"), ligne("Boîte", ["a"], genre="entreprise")], comp(plan(base, liens)))
+    assert len(gardes) == 2 and bilan["retires"] == 0 and bilan["par_tuile"] == {}  # oui ET non mènent à Grappes : personne n'est retiré
+    seul_oui = [lien("saisie", "n1"), lien("n1", "s"), lien("s", "x", "oui"), lien("x", "grappes")]
+    gardes, bilan = appliquer([ligne("Asso", ["a"], genre="association"), ligne("Boîte", ["a"], genre="entreprise")], comp(plan(base[:5], seul_oui)))
+    assert [g["nom"] for g in gardes] == ["Asso"] and bilan["par_tuile"]["s"]["noms"] == ["Boîte"] and bilan["par_tuile"]["s"]["n"] == 1  # la condition dit « association » : la boîte tombe, et c'est dit

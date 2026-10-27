@@ -71,7 +71,8 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
     auto.pop("profondeur_max", None)
     # Les sources interrogées par adaptateur ou programme passent APRÈS la collecte de grappes : sans réserve, la collecte web mangeait toute la
     # limite d'appels et ces sources n'étaient jamais appelées, en silence. On leur garde un appel chacune.
-    reserve = min(len(mat.adaptateurs) + len(mat.scripts), max(0, lim["appels"] - 1))
+    reserve_verif = min(max(3 * len(mat.verificateurs), lim["appels"] // 4), max(0, lim["appels"] - 1)) if mat.verificateurs else 0  # la vérification passe en dernier : sans part réservée, elle examine 0 nom
+    reserve = min(len(mat.adaptateurs) + len(mat.scripts), max(0, lim["appels"] - 1 - reserve_verif))
     auto.update({
         "requetes_par_cycle": lim["appels"], "pages_par_cycle": c["pages"], "nouvelles_sources_par_cycle": c["nouvelles_sources"],
         "elements_par_cycle": c["observations"], "profondeur": exploration(params), "stop_file": "donnees/STOP", "rapports_dir": "rapports",
@@ -106,12 +107,15 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
         entree["type_lieu"] = [str(t) for t in params["type_lieu"]] if isinstance(params["type_lieu"], list) else [str(params["type_lieu"])]
     if params.get("genre"):
         entree["genre"] = str(params["genre"])
+    for v in mat.verificateurs:  # chaque vérificatrice a sa part de la réserve : la première ne mange pas tout
+        v["parametres"] = {**(v.get("parametres") or {})}
+        v["parametres"].setdefault("max_candidats", max(1, reserve_verif // len(mat.verificateurs)))
     spec = {
         "phrase": phrase, "limites": {"appels": lim["appels"], "temps_s": lim["temps_s"]},
         "mots_a_inclure": list(sujet.get("inclure") or []), "mots_a_exclure": list(sujet.get("exclure") or []),
         "combien": int(sujet.get("combien") or 200), "pays_code": code_pays(cfg, sujet, rg.charger_tolerant(cfg)[0]), "sources": mat.ids, "adaptateurs": mat.adaptateurs, "verificateurs": mat.verificateurs, "scripts": mat.scripts, "jetons": mat.jetons,
         "exclues_budget": mat.exclues_budget, "origines_sources": mat.origines, "mains_sources": mat.mains, "entree": entree,
-        "plafond_atteint": depense >= plafond, "limite_source_s": min(float(lim["temps_s"]), 180.0) if lim.get("temps_s") else 180.0, "en_pause": mat.en_pause, "reserve_sources": reserve,
+        "plafond_atteint": depense >= plafond, "limite_source_s": min(float(lim["temps_s"]), 180.0) if lim.get("temps_s") else 180.0, "en_pause": mat.en_pause, "reserve_sources": reserve, "reserve_verification": reserve_verif,
     }  # fmt: skip
     if params.get("plan"):  # le plan de travail compilé (suite_plan) : les étapes à jouer sur les noms, les requêtes à traduire, les vérifications à restreindre
         plan = dict(params["plan"])
@@ -225,7 +229,7 @@ class ExecuteurGrappes:
         from pilote import rapprochements
 
         try:
-            ctx.noter("rapprochements_proposes", **rapprochements.proposer(self.cfg, ctx._fabrique, ctx.recherche_id))
+            rapprochements.proposer(self.cfg, ctx._fabrique, ctx.recherche_id)  # l'événement « rapprochements_proposes » est écrit par `proposer` lui-même
         except Exception as exc:  # noqa: BLE001 - le tri est un confort de relecture, pas une condition de la recherche
             ctx.noter("rapprochements_indisponibles", raison=str(exc)[:300])
 

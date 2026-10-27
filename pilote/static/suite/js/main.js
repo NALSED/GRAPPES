@@ -14,6 +14,7 @@ const ECRANS = {
   "recherche/simple": () => { app.onglet = "recherche"; app.recherche.ouvert.simple = true; },
   "recherche/avancee": () => { app.onglet = "recherche"; app.recherche.ouvert.adv = true; },
   "recherche/sauvegardees": () => { app.onglet = "recherche"; app.recherche.ouvert.sauvees = true; },
+  tri: () => { app.onglet = "tri"; },
   reglages: () => { app.onglet = "reglages"; },
   "reglages/sources": () => { app.onglet = "reglages"; app.reglages.sous = "sources"; },
   "reglages/outils": () => { app.onglet = "reglages"; app.reglages.sous = "outils"; },

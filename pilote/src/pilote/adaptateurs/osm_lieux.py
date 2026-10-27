@@ -154,6 +154,7 @@ def chercher(entree: dict[str, Any], client: Client, parametres: dict[str, Any])
     mots = mots_de_la_recherche(entree, cat)
     derniere: Exception | None = None
     reponse_vide = False
+    client.tentatives_429 = 1  # Overpass a ses propres essais et son serveur de secours : pas de double attente
     essais, pause = int(parametres.get("essais", ESSAIS)), float(parametres.get("pause_s", PAUSE_S))
     for url in parametres.get("serveurs") or SERVEURS:
         for preambule, cadre, approchee in zones:

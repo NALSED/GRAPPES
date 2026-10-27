@@ -59,7 +59,8 @@ def test_etat_de_depart(c, cfg):
     assert (
         len(e["outils"]) == 10 and outil(c, "ia")["etat"] == "off"
     )  # l'Assistant IA est éteint à la livraison (spécification 10)
-    assert all(s["langue"] for s in e["sources"])  # le champ Langue existe sur toute source (spécification 05)
+    assert all("langue" in s for s in e["sources"])  # le champ Langue existe sur toute source (spécification 05)
+    assert src(c, "registre-associations")["langue"] == "fr" and src(c, "wikipedia")["langue"] == ""  # une source multilingue n'a pas de langue inventée
     assert e["recherches"] == [] and e["plan"]["nodes"] == []  # aucune recherche inventée
     assert (
         src(c, "tavily")["cout"] == "payant"
@@ -508,7 +509,8 @@ def test_lister_sources_definir_ouvrir(c):
     assert c.post("/api/suite/aide/definir", json={"mot": "cluster"}).status_code == 422  # pas dans la liste close
     assert "grappe" in c.get("/api/suite/aide/mots").json()["mots"]
     assert c.post("/api/suite/aide/ouvrir", json={"ecran": "reglages/outils"}).json() == {"ecran": "reglages/outils"}
-    for inactif in ("tri", "tableau-de-bord", "nimporte"):
+    assert c.post("/api/suite/aide/ouvrir", json={"ecran": "tri"}).json() == {"ecran": "tri"}  # l'onglet Tri est conçu depuis le 26/10 (spécification 16)
+    for inactif in ("tableau-de-bord", "nimporte"):
         assert c.post("/api/suite/aide/ouvrir", json={"ecran": inactif}).status_code == 422
     assert c.post("/api/suite/aide/lire_plan").json() == {"tuiles": [], "liens": []}
 
@@ -535,9 +537,9 @@ def test_avec_modele_il_choisit_la_fonction_mais_n_ecrit_rien(c, monkeypatch):
         r["fonction"] == "definir" and "sans rien effacer" in r["resultat"]["definition"]
     )  # le texte vient de la liste close, pas du modèle
     monkeypatch.setattr(
-        suite_modele, "choisir_fonction", lambda url, phrase: {"fonction": "ouvrir", "args": {"ecran": "tri"}}
+        suite_modele, "choisir_fonction", lambda url, phrase: {"fonction": "ouvrir", "args": {"ecran": "tableau-de-bord"}}
     )
-    assert "pas encore conçu" in c.post("/api/suite/aide/phrase", json={"phrase": "ouvre le tri"}).json()["refus"]
+    assert "pas encore conçu" in c.post("/api/suite/aide/phrase", json={"phrase": "ouvre le tableau"}).json()["refus"]
 
 
 def test_le_modele_ne_peut_choisir_qu_une_des_six_fonctions(monkeypatch):

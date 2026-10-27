@@ -15,7 +15,7 @@ import io
 from datetime import date, timedelta
 from typing import Any
 
-from pilote.adaptateurs import Client, ErreurSource, mots_significatifs
+from pilote.adaptateurs import Client, ErreurSource, mots_significatifs, nom_normalise
 from pilote.adaptateurs.mcp_generique import _lire, _liste, remplir
 
 LIT_PARAMETRES = True
@@ -111,10 +111,8 @@ def _exactes(noms: list[dict[str, Any]], parametres: dict[str, Any], entree: dic
     à part). Sans cela, la première réponse approchante serait prise pour une confirmation."""
     if not parametres.get("correspondance_exacte"):
         return noms
-    from pilote.rapprochement import nom_nu
-
-    voulu = nom_nu(str(entree.get("nom") or entree.get("quoi") or ""))
-    return [n for n in noms if voulu and nom_nu(n["nom"]) == voulu]
+    voulu = nom_normalise(str(entree.get("nom") or entree.get("quoi") or ""))  # sans cleanco : ce code tourne aussi dans l'interpréteur de grappes, qui ne l'a pas
+    return [n for n in noms if voulu and nom_normalise(n["nom"]) == voulu]
 
 
 def _fichier(parametres: dict[str, Any], quoi: str, limite: int) -> list[dict[str, Any]]:

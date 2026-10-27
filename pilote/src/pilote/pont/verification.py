@@ -35,7 +35,7 @@ def verifier_candidats(lignes: list[dict], spec: dict, secrets: dict[str, str], 
                 coupee = "arrêt ou limite d'appels atteinte"
                 break
             if plafond and examines >= plafond:
-                coupee = f"plafond de {plafond} noms examinés par recherche (crédits de la source)"
+                coupee = f"plafond de {plafond} noms examinés par recherche pour cette source (sa part des appels, ou ses crédits)"
                 break
             if time.time() - debut > limite_source:
                 coupee = f"limite de temps de la source atteinte ({limite_source:g} s)"

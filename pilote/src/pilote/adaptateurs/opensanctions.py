@@ -15,6 +15,7 @@ URL = "https://api.opensanctions.org/search/default"
 # Accepter seulement « Organization » laissait passer en silence les entreprises sanctionnées. Jamais « Person » ni « LegalEntity » (ambigu).
 TYPES_ORGANISATION = frozenset({"Organization", "Company", "PublicBody"})
 FICHE = "https://www.opensanctions.org/entities/"
+THEMES_GRAVES = ("sanction", "crime", "debarment", "poi", "wanted", "asset.freeze")  # thèmes OpenSanctions qui font une alerte ; les autres (risque d'export, propriété…) sont une information
 
 
 def convertir(rep: Any, nom: str) -> list[dict[str, Any]]:
@@ -30,8 +31,11 @@ def convertir(rep: Any, nom: str) -> list[dict[str, Any]]:
         noms = [str(r.get("caption") or ""), *map(str, (r.get("properties") or {}).get("name") or [])]
         if voulu in {_norme(n) for n in noms if n}:
             listes = ", ".join(map(str, r.get("datasets") or []))
-            out.append({"nom": nom, "numero": FICHE + str(r.get("id", "")), "signal": "alerte",
-                        "origine": "OpenSanctions : ce nom figure sur une liste de sanctions" + (f" ({listes})" if listes else "") + ", à vérifier à la main"})  # fmt: skip
+            themes = [str(x) for x in (r.get("properties") or {}).get("topics") or []]
+            grave = not themes or any(x.startswith(THEMES_GRAVES) for x in themes)  # sanction, crime, exclusion : une alerte ; un registre de risque ou d'exposition n'en est pas une. Thèmes absents : on ne sait pas, donc on alerte
+            texte = ("OpenSanctions : ce nom figure sur une liste de sanctions ou de criminalité" if grave else "OpenSanctions : ce nom figure sur une liste qui n'est pas une sanction")
+            out.append({"nom": nom, "numero": FICHE + str(r.get("id", "")), "signal": "alerte" if grave else "information",
+                        "origine": texte + (f" ({', '.join(themes)})" if themes else "") + (f" [{listes}]" if listes else "") + ", à vérifier à la main"})  # fmt: skip
     return out
 
 

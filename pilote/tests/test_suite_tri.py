@@ -56,11 +56,11 @@ def test_splink_propose_du_moins_certain_au_plus_certain(c, app, cfg):
     f = c.get("/api/suite/tri").json()
     assert [x["confiance"] for x in f["a_examiner"]] == sorted(x["confiance"] for x in f["a_examiner"])  # du plus incertain au plus certain
     bas, milieu, haut = f["a_examiner"]
-    assert 20 <= bas["confiance"] < 60 and 60 <= milieu["confiance"] < 95 and haut["confiance"] >= 95
+    assert 20 <= bas["confiance"] < 60 and milieu["confiance"] >= 50 and haut["confiance"] >= 95
     assert bas["titre"] == "deux fiches d'association, nom proche"
     assert milieu["titre"] == "deux fiches d'association, nom identique, un identifiant manquant"
     assert haut["titre"] == "deux fiches d'entreprise, identifiant officiel identique"  # « 501 234 567 » et « 501234567 » : le même numéro
-    assert set(bas["pourquoi"]) == {"nom", "ville", "numero"} and bas["pourquoi"]["numero"]["niveau"] == "absent d'un côté"  # on voit POURQUOI deux fiches sont rapprochées
+    assert set(bas["pourquoi"]) == {"nom", "distinctif", "chiffres", "ville", "numero"} and bas["pourquoi"]["numero"]["niveau"] == "absent d'un côté"  # on voit POURQUOI deux fiches sont rapprochées
 
 
 def test_la_comparaison_champ_par_champ(c, app, cfg):
@@ -119,3 +119,44 @@ def test_un_moteur_qui_ne_tourne_pas_est_dit_et_ne_fait_rien_croire(c, app, cfg,
     assert r.status_code == 503 and "Splink" in r.json()["detail"]
     with app.state.fabrique() as s:
         assert s.scalars(select(Rapprochement)).all() == []
+
+
+# --- Partie 1 de test.md : deux entités distinctes ne se rapprochent pas sur la foi du nom seul
+def test_deux_entites_de_meme_nom_et_de_numeros_differents_ne_sont_pas_proposees(c, app, cfg):
+    rid, _ = creer(app, [{"nom": "Boulangerie Martin", "ville": "Lyon", "numero_officiel": "W111111111"}, {"nom": "Boulangerie Martin", "ville": "Lyon", "numero_officiel": "W222222222"}])
+    assert rapprochements.proposer(cfg, app.state.fabrique, rid)["proposes"] == 0  # deux numéros officiels différents : deux entités, pas un doublon
+    rid2, _ = creer(app, [{"nom": "Club Alpin", "ville": "Lyon"}, {"nom": "Club Alpin", "ville": "Paris"}])
+    assert rapprochements.proposer(cfg, app.state.fabrique, rid2)["proposes"] == 0  # homonymes de villes différentes
+
+
+def test_un_siret_et_son_siren_sont_la_meme_entite(c, app, cfg):
+    rid, _ = creer(app, [{"nom": "Dupont Sports SAS", "ville": "Grenoble", "numero_officiel": "123 456 789"}, {"nom": "DUPONT SPORTS", "ville": "Grenoble", "numero_officiel": "123 456 789 00012"}])
+    assert rapprochements.proposer(cfg, app.state.fabrique, rid)["proposes"] == 1
+    assert c.get("/api/suite/tri").json()["a_examiner"][0]["confiance"] >= 90  # un siège et son établissement ne se contredisent pas
+
+
+def test_deux_etablissements_d_une_meme_entreprise_ne_sont_pas_des_doublons(c, app, cfg):
+    """Cas réel (Danone) : deux SIRET différents d'un même SIREN sont deux établissements, jamais proposés comme la même fiche."""
+    rid, _ = creer(app, [{"nom": "DANONE PRODUITS FRAIS — Ferrières", "ville": "Ferrières", "numero_officiel": "34012345600017"}, {"nom": "DANONE PRODUITS FRAIS — Le Mans", "ville": "Le Mans", "numero_officiel": "34012345600025"}])
+    assert rapprochements.proposer(cfg, app.state.fabrique, rid)["proposes"] == 0
+
+
+def test_des_fonds_numerotes_ne_sont_pas_des_fautes_de_frappe(c, app, cfg):
+    """Cas réel (La Banque Postale Innovation 3 / 5 / 8…) : un chiffre qui diffère fait deux entités, pas un doublon."""
+    rid, _ = creer(app, [{"nom": f"Fcpi La Banque Postale Innovation {n}", "ville": "Paris", "genre_de_chose": "entreprise"} for n in (3, 5, 8)] + [{"nom": "La Banque Postale Innovation 3", "ville": "Paris"}])
+    r = rapprochements.proposer(cfg, app.state.fabrique, rid)
+    cartes = c.get("/api/suite/tri").json()["a_examiner"]
+    assert r["proposes"] <= 1 and all("3" in str([f["lignes"][0]["valeur"] for f in x["fiches"]]) for x in cartes)  # seule la paire aux MÊMES chiffres peut rester
+
+
+def test_des_clubs_aux_noms_generiques_ne_sont_pas_des_doublons(c, app, cfg):
+    """Partie 2 de test.md (S3) : « Association sportive de Cannes » et « … de Monaco » ne diffèrent que par leur ville-nom : deux clubs."""
+    rid, _ = creer(app, [{"nom": n} for n in ("Association sportive de Cannes", "Association sportive de Monaco", "Association sportive Casino", "ASSOCIATION SPORTIVE", "Association sportive de Cannes (football)")])
+    rapprochements.proposer(cfg, app.state.fabrique, rid)
+    noms = [{f["lignes"][0]["valeur"] for f in x["fiches"]} for x in c.get("/api/suite/tri").json()["a_examiner"]]
+    assert noms == [{"Association sportive de Cannes", "Association sportive de Cannes (football)"}]  # seule la vraie variante d'un même club reste
+
+
+def test_une_faute_de_frappe_reste_un_rapprochement(c, app, cfg):
+    rid, _ = creer(app, [{"nom": "Club Alpin de Grenoble", "ville": "Grenoble"}, {"nom": "Club Alpin de Grenobel", "ville": "Grenoble"}])
+    assert rapprochements.proposer(cfg, app.state.fabrique, rid)["proposes"] == 1

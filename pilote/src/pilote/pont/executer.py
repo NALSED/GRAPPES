@@ -32,7 +32,8 @@ def main(dossier: str) -> int:
     appels_max = int(spec["limites"]["appels"])
     # Appels gardés pour les sources interrogées par adaptateur ou programme, qui passent après la collecte : la collecte s'arrête plus tôt, de
     # sorte qu'une source explicitement choisie ne se fasse jamais manger son appel par la récupération d'une page web.
-    reserve = min(int(spec.get("reserve_sources") or 0), max(0, appels_max - 1))
+    reserve_verif = min(int(spec.get("reserve_verification") or 0), max(0, appels_max - 1))  # appels gardés pour la vérification, qui passe en dernier
+    reserve = min(int(spec.get("reserve_sources") or 0), max(0, appels_max - 1 - reserve_verif))
     temps_max = float(spec["limites"]["temps_s"]) if spec["limites"].get("temps_s") else None
     resultat = {"statut": "erreur", "arret": "", "message": ""}
 
@@ -77,7 +78,11 @@ def main(dossier: str) -> int:
 
     def arret_collecte() -> bool:
         """Arrêt de la COLLECTE de grappes : elle laisse la réserve d'appels aux sources qui passent après elle."""
-        return doit_s_arreter(reserve)
+        return doit_s_arreter(reserve + reserve_verif)
+
+    def arret_sources() -> bool:
+        """Arrêt des sources par adaptateur : elles laissent leur part à la vérification."""
+        return doit_s_arreter(reserve_verif)
 
     try:
         from grappes import vraisemblance as vr
@@ -189,7 +194,7 @@ def main(dossier: str) -> int:
         secrets = cles_de_la_copie()  # seulement les clés des sources utilisées (écrites par pilote dans la copie de configuration)
         executions = [
             (a["source"], lambda a=a: adaptateurs.charger(a["module"]).chercher(
-                entree_de(a["source"]), adaptateurs.Client(a["source"], doit_s_arreter, signaler=avancement.signaler, delai_s=a.get("delai_s", 0.2)),
+                entree_de(a["source"]), adaptateurs.Client(a["source"], arret_sources, signaler=avancement.signaler, delai_s=a.get("delai_s", 0.2)),
                 {**a.get("parametres", {}), **({"_cle": secrets.get(a["cles_noms"][0], ""), "_cles": {n: secrets.get(n, "") for n in a["cles_noms"]}} if a.get("cles_noms") else {})}))
             for a in spec.get("adaptateurs", [])
         ]  # fmt: skip
@@ -211,6 +216,8 @@ def main(dossier: str) -> int:
             debut, pause0 = time.time(), temps_en_pause()
             while t.is_alive():
                 t.join(0.5)
+                if t.is_alive() and arret_fichier.exists():  # l'arrêt demandé n'attend pas une source lente (son processus finit par son propre délai)
+                    return None, "arrêt demandé : source abandonnée"
                 if t.is_alive() and time.time() - debut - (temps_en_pause() - pause0) > limite_source:
                     return None, f"délai dépassé ({limite_source:g} s)"
             if "exc" in sortie:
@@ -235,6 +242,7 @@ def main(dossier: str) -> int:
             except adaptateurs.LimiteAtteinte:
                 doit_s_arreter()
                 noms, statut = [], "arrêté"
+                avancement.signaler("source_echec", prise=source, raison="arrêtée : la part d'appels de la recherche (hors vérification) est épuisée")  # dit, jamais en silence
             except adaptateurs.ErreurSource as exc:
                 noms, statut, raison = [], f"erreur : {exc}", str(exc)
             except Exception as exc:  # noqa: BLE001 - un défaut d'une source ne doit jamais faire échouer la recherche

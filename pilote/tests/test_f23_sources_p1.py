@@ -38,11 +38,14 @@ def test_source_p1_deuxieme_lot(cfg, ident, monkeypatch):
         assert res["noms_exemple"]
 
 
-def test_une_verification_exacte_ne_confirme_que_le_meme_nom():
+def test_une_verification_exacte_ne_confirme_que_le_meme_nom(monkeypatch):
+    import sys
+
+    monkeypatch.setitem(sys.modules, "cleanco", None)  # le pont tourne dans l'interpréteur de grappes, qui n'a pas cleanco : l'import échouerait ici aussi
     from pilote.adaptateurs.api_json import _exactes
 
-    noms = [{"nom": "DUPONT & DUPONT"}, {"nom": "Dupont Sports SAS"}, {"nom": "SAS DUPONT & DUPONT"}]
-    assert [n["nom"] for n in _exactes(noms, {"correspondance_exacte": True}, {"nom": "Dupont & Dupont"})] == ["DUPONT & DUPONT", "SAS DUPONT & DUPONT"]  # forme juridique et casse mises à part
+    noms = [{"nom": "DUPONT & DUPONT"}, {"nom": "Dupont Sports SAS"}, {"nom": "Dupont et Dupont"}]
+    assert [n["nom"] for n in _exactes(noms, {"correspondance_exacte": True}, {"nom": "Dupont & Dupont"})] == ["DUPONT & DUPONT"]  # casse, accents, ponctuation : oui ; un autre mot : non
     assert _exactes(noms, {}, {"nom": "x"}) == noms  # sans l'option, rien n'est filtré
     assert _exactes(noms, {"correspondance_exacte": True}, {"nom": ""}) == []  # sans nom à vérifier, rien n'est confirmé
 
@@ -73,3 +76,79 @@ def test_une_reserve_d_appels_est_gardee_pour_les_sources_par_adaptateur(cfg, tm
     assert spec["reserve_sources"] == 2 == len(spec["adaptateurs"])  # un appel gardé par source interrogée par adaptateur
     auto = json.loads(json.dumps(spec))  # la spécification écrite est bien celle qui part au pont
     assert auto["limites"]["appels"] >= spec["reserve_sources"]
+
+
+# --- Partie 1 de test.md : une source qui demande d'attendre (429) est attendue, pas comptée en échec tout de suite
+def test_un_429_est_attendu_puis_la_requete_reussit(monkeypatch):
+    import io
+    import urllib.error
+    import urllib.request
+
+    from pilote import adaptateurs
+
+    appels = []
+
+    class Rep:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def read(self, n):
+            return b'{"ok": true}'
+
+    def ouvrir(req, timeout=0):
+        appels.append(1)
+        if len(appels) < 3:
+            raise urllib.error.HTTPError(req.full_url, 429, "trop", {"Retry-After": "0"}, io.BytesIO(b""))
+        return Rep()
+
+    monkeypatch.setattr(urllib.request, "urlopen", ouvrir)
+    monkeypatch.setattr(adaptateurs.time, "sleep", lambda s: None)
+    assert adaptateurs.Client("x").get_json("https://exemple.example/a") == {"ok": True} and len(appels) == 3
+    appels.clear()
+    monkeypatch.setattr(urllib.request, "urlopen", lambda req, timeout=0: (_ for _ in ()).throw(urllib.error.HTTPError(req.full_url, 429, "trop", {"Retry-After": "0"}, io.BytesIO(b""))))
+    with pytest.raises(adaptateurs.ErreurSource, match="elle demande d'attendre"):
+        adaptateurs.Client("x").get_json("https://exemple.example/a")  # trois refus de suite : un échec, dit en français
+
+
+def test_les_mots_courts_ne_disparaissent_plus_de_la_requete():
+    from pilote.adaptateurs import mots_significatifs
+
+    assert mots_significatifs("Air France") == ["Air", "France"] and mots_significatifs("WWF France") == ["WWF", "France"]
+    assert mots_significatifs("CEA") == ["CEA"] and mots_significatifs("AS Lyon") == ["AS", "Lyon"]
+    assert mots_significatifs("les amis de the Vercors") == ["amis", "Vercors"]  # les petits mots restent écartés
+
+
+# --- Partie 1 de test.md : une liste de risque n'est pas une sanction (cas réel : Danone, registre de risque d'exportation)
+def test_opensanctions_distingue_une_sanction_d_un_registre_de_risque():
+    from pilote.adaptateurs import opensanctions
+
+    rep = {"results": [
+        {"id": "NK-a", "schema": "Company", "caption": "Danone", "datasets": ["ir_uani_business_registry"], "properties": {"name": ["Danone"], "topics": ["export.risk"]}},
+        {"id": "NK-b", "schema": "Company", "caption": "Rosneft", "datasets": ["us_ofac_sdn"], "properties": {"name": ["Rosneft"], "topics": ["sanction"]}},
+    ]}  # fmt: skip
+    danone = opensanctions.convertir(rep, "Danone")[0]
+    assert danone["signal"] == "information" and "qui n'est pas une sanction" in danone["origine"] and "export.risk" in danone["origine"]
+    rosneft = opensanctions.convertir(rep, "Rosneft")[0]
+    assert rosneft["signal"] == "alerte" and "sanctions ou de criminalité" in rosneft["origine"]
+
+
+# --- Partie 2 de test.md (F3) : une clé refusée est un échec DIT en français, jamais un succès silencieux
+def test_une_cle_refusee_est_un_echec_lisible(tmp_path):
+    import json
+
+    from pilote import disjoncteur
+
+    f = tmp_path / "avancement.jsonl"
+    f.write_text("\n".join(json.dumps(x) for x in [
+        {"evenement": "prise_fin", "prise": "guardian", "statut": "erreur : guardian : HTTP 401"},
+        {"evenement": "prise_fin", "prise": "serper", "statut": "arrêté : serper : HTTP 403, arrêt pour ce cycle"},
+        {"evenement": "prise_fin", "prise": "exa", "statut": "erreur : exa : HTTP 402"},
+        {"evenement": "prise_fin", "prise": "wikipedia", "statut": "ok"},
+    ]) + "\n", encoding="utf-8")  # fmt: skip
+    r = disjoncteur.issues(f, {"guardian": "guardian", "serper": "serper", "exa": "exa", "wikipedia": "wikipedia"})
+    assert r["guardian"]["issue"] == "echec" and "clé d'API est refusée" in r["guardian"]["raison"] and "401" in r["guardian"]["raison"]
+    assert r["serper"]["issue"] == "echec" and "clé d'API est refusée" in r["serper"]["raison"]  # avant : « arrêté », donc compté comme ayant répondu
+    assert "crédits de la source sont épuisés" in r["exa"]["raison"] and r["wikipedia"]["issue"] == "ok"

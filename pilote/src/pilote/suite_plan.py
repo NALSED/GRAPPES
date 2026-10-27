@@ -374,11 +374,11 @@ def appliquer(
     plan_sources = set(consignes.get("sources") or [])
     gardes: set[int] = set()
     retires_par_tuile: dict[str, dict[str, Any]] = {}
+    tombes: dict[int, list[tuple[str, str]]] = {}  # nom -> les étapes où il est tombé SUR UNE BRANCHE ; il n'est « retiré » que si aucune branche ne l'a gardé
     erreurs: list[str] = []
     for ch in consignes.get("chemins", []):
         courant = [k for k, ligne in enumerate(lignes) if ch["source"] in (ligne.get("trouve_par") or [])]
         for etape in ch["etapes"]:
-            avant = len(courant)
             if etape["op"] in ("garder", "ecarter"):
                 passe = [
                     k
@@ -401,15 +401,20 @@ def appliquer(
                 else:
                     gardes_noms = {norme(x.get("nom")) for x in json.loads(res["sortie"]) if isinstance(x, dict)}
                     passe = [k for k in courant if norme(lignes[k]["nom"]) in gardes_noms]
-            t = retires_par_tuile.setdefault(etape["tuile"], {"nom": etape["nom"], "n": 0, "noms": []})
             for k in set(courant) - set(passe):
-                if lignes[k]["nom"] not in t["noms"] and len(t["noms"]) < 30:
-                    t["noms"].append(lignes[k]["nom"])
-            t["n"] += avant - len(passe)
+                tombes.setdefault(k, []).append((etape["tuile"], etape["nom"]))
             courant = passe
         gardes |= set(courant)
     non_attribues = [k for k, ligne in enumerate(lignes) if not (set(ligne.get("trouve_par") or []) & plan_sources)]
     gardes |= set(non_attribues)
+    for k, etapes_tombees in tombes.items():
+        if k in gardes:
+            continue  # tombé sur une branche mais gardé par une autre : pas retiré, et le journal ne le dit pas retiré
+        for tuile, nom in dict.fromkeys(etapes_tombees):
+            t = retires_par_tuile.setdefault(tuile, {"nom": nom, "n": 0, "noms": []})
+            t["n"] += 1
+            if lignes[k]["nom"] not in t["noms"] and len(t["noms"]) < 30:
+                t["noms"].append(lignes[k]["nom"])
     gardees = [ligne for k, ligne in enumerate(lignes) if k in gardes]
     bilan = {
         "gardes": len(gardees),

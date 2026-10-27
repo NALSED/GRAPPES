@@ -27,6 +27,10 @@ MOTS_VIDES = frozenset(
 )  # fmt: skip
 
 
+TENTATIVES_429 = 3  # une demande d'attendre (429, 503) est respectée deux fois avant d'être comptée comme un échec
+ATTENTE_MAX_S = 20.0
+
+
 class LimiteAtteinte(Exception):
     """L'arrêt est demandé, ou la limite de temps ou d'appels est atteinte : l'adaptateur rend ce qu'il a."""
 
@@ -43,6 +47,7 @@ class Client:
                  signaler: Callable[..., None] | None = None, timeout: float = 30.0):  # fmt: skip
         self.source_id, self.doit_s_arreter, self.delai_s, self.signaler, self.timeout = source_id, doit_s_arreter, delai_s, signaler, timeout
         self.appels = 0
+        self.tentatives_429 = TENTATIVES_429  # un client qui a son propre repli (Overpass : serveur suivant) le réduit à 1
         self._dernier = 0.0
 
     def _avant(self) -> None:
@@ -84,13 +89,23 @@ class Client:
             raise ErreurSource("L'adresse de la source doit commencer par http:// ou https://.")
         h = {"User-Agent": UA, "Accept": "application/json" if json_ else "*/*", **({"Content-Type": "application/x-www-form-urlencoded"} if form else {}), **(headers or {})}
         req = urllib.request.Request(url, data=data, headers=h, method=methode)
-        try:
-            with urllib.request.urlopen(req, timeout=self.timeout) as r:
-                corps = r.read(5_000_000)
-        except urllib.error.HTTPError as exc:
-            raise ErreurSource(f"La source a répondu une erreur ({exc.code}).") from exc
-        except (urllib.error.URLError, TimeoutError, OSError) as exc:
-            raise ErreurSource("La source ne répond pas.") from exc
+        for essai in range(self.tentatives_429):
+            try:
+                with urllib.request.urlopen(req, timeout=self.timeout) as r:
+                    corps = r.read(5_000_000)
+                break
+            except urllib.error.HTTPError as exc:
+                if exc.code in (429, 503) and essai < self.tentatives_429 - 1:  # la source demande d'attendre (limite de débit) : on attend ce qu'elle dit, plafonné, au lieu d'échouer
+                    attente = min(ATTENTE_MAX_S, float(exc.headers.get("Retry-After") or 0) if str(exc.headers.get("Retry-After") or "").replace(".", "").isdigit() else 3.0 * (essai + 1))
+                    fin = time.monotonic() + attente
+                    while time.monotonic() < fin:
+                        if self.doit_s_arreter():
+                            raise LimiteAtteinte from exc
+                        time.sleep(0.25)
+                    continue
+                raise ErreurSource(f"La source a répondu une erreur ({exc.code})" + (" : trop d'appels, elle demande d'attendre." if exc.code == 429 else ".")) from exc
+            except (urllib.error.URLError, TimeoutError, OSError) as exc:
+                raise ErreurSource("La source ne répond pas.") from exc
         if not json_:
             return corps.decode("utf-8", "replace")
         try:
@@ -130,7 +145,9 @@ class Client:
 def mots_significatifs(texte: str, maximum: int = 3) -> list[str]:
     """Mots utiles d'une phrase (sans petits mots), pour interroger une base qui cherche dans des NOMS."""
     vus: list[str] = []
-    for m in re.findall(r"[^\W\d_]{4,}(?:-[^\W\d_]+)*", texte, flags=re.UNICODE):
+    # Trois lettres suffisent (« Air France », « WWF », « CEA », « RFI ») : avec quatre, « Air France » devenait « France » et la source rendait tout autre chose.
+    # Un sigle de deux majuscules (« AS Lyon ») compte aussi ; les petits mots (the, les, des, and…) restent dans MOTS_VIDES.
+    for m in re.findall(r"[^\W\d_]{3,}(?:-[^\W\d_]+)*|\b[A-ZÀ-Ý]{2}\b", texte, flags=re.UNICODE):
         if m.lower() not in MOTS_VIDES and m.lower() not in (v.lower() for v in vus):
             vus.append(m)
     return vus[:maximum]
