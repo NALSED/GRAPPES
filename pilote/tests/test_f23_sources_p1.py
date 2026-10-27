@@ -3,8 +3,8 @@
 import pytest
 
 from pilote import reglages as rg
-from pilote.sources import charger_sources
 from pilote import tests_source
+from pilote.sources import charger_sources
 
 IDS = ["propublica-nonprofit", "photon", "radio-browser", "lemmy", "sepiasearch"]
 

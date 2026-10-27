@@ -9,7 +9,7 @@ from fastapi import APIRouter, Body, HTTPException
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session, sessionmaker
 
-from pilote import actions, budget, rapprochements, suite, suite_modele, suite_plan, suite_reel
+from pilote import actions, budget, rapprochements, suite, suite_modele, suite_plan, suite_reel, tri
 from pilote.base import Candidat, Journal, Recherche
 from pilote.config import Config
 from pilote.refus import ConfigRefusee
@@ -54,8 +54,16 @@ def construire(cfg: Config, fabrique: sessionmaker[Session], gestionnaire: Any) 
             for rch in v["recherches"]:
                 if rch.get("recherche_id"):
                     rch["resultat"] = _resultat(s, rch["recherche_id"]) or rch["resultat"]
+                    rch["verification"] = _verification(s, rch["recherche_id"])
         v["modele"] = bool(cfg.suite_modele_url) and suite_modele.disponible(cfg.suite_modele_url)
         return v
+
+    def _verification(s: Session, rid: str) -> str:
+        """« X sur Y noms vérifiés » par source de vérification : une absence de signalement ne veut JAMAIS dire « vérifié » (décision du 27/10 : budget des clés gratuites, limite dite)."""
+        rch = s.get(Recherche, rid)
+        bilans = [b for b in ((rch.avancement if rch else None) or {}).get("verifications") or [] if isinstance(b, dict)]
+        nom_source = tri.noms_de_sources(cfg)
+        return " · ".join(f"{nom_source(str(b.get('source', '')))} : {b.get('examines', 0)} sur {b.get('a_verifier', 0)} noms vérifiés" for b in bilans)
 
     def _resultat(s: Session, rid: str) -> str | None:
         rch = s.get(Recherche, rid)

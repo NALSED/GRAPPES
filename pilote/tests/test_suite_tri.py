@@ -160,3 +160,15 @@ def test_des_clubs_aux_noms_generiques_ne_sont_pas_des_doublons(c, app, cfg):
 def test_une_faute_de_frappe_reste_un_rapprochement(c, app, cfg):
     rid, _ = creer(app, [{"nom": "Club Alpin de Grenoble", "ville": "Grenoble"}, {"nom": "Club Alpin de Grenobel", "ville": "Grenoble"}])
     assert rapprochements.proposer(cfg, app.state.fabrique, rid)["proposes"] == 1
+
+
+# --- Décision du 27/10 (doc 13) : « X sur Y noms vérifiés » visible, jamais une absence de signalement prise pour une vérification
+def test_la_recherche_sauvegardee_dit_combien_de_noms_ont_ete_verifies(c, app):
+    with app.state.fabrique.begin() as s:
+        r = Recherche(qui="test", sujet={"quoi": "x"}, parametres={}, etat="terminee", avancement={"verifications": [{"source": "bodacc", "examines": 4, "a_verifier": 127, "complete": False}]})
+        s.add(r)
+        s.flush()
+        rid = r.id
+    assert c.post("/api/suite/recherches", json={"mode": "Simple", "titre": "banques", "recherche_id": rid}).status_code == 201
+    v = c.get("/api/suite/etat").json()["recherches"][0]["verification"]
+    assert "4 sur 127 noms vérifiés" in v

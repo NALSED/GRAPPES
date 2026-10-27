@@ -113,7 +113,7 @@ Pannes (S5) :
 | A12 | Journal : noms retirés surcomptés ; événement `rapprochements_proposes` en double | Plan avec deux branches | **corrigé** |
 | A13 | Échecs de tests attribués au « réseau » alors que le conteneur Overpass local était dégradé | Test Bristol | **correction de mon affirmation** : `docker restart overpass` l'a réglé. Les échecs Wayback viennent d'archive.org (429). |
 | A14 | Splink : plantage « Illegal instruction » avec DuckDB 2.0 sur le CPU de la VM | Lancer le Tri | contourné : DuckDB `>=1.4,<2` |
-| A15 | Fondation Abbé Pierre : faux « oui » | Chercher la fondation au registre des associations | **ouvert** |
+| A15 | Fondation Abbé Pierre : faux « oui » | Chercher la fondation au registre des associations | **ouvert** — le défaut est dans la requête par nom du registre, pas dans Splink (voir `autocal_rapprochement_fr/`, 27/10) |
 | A16 | Exa HTTP 402 ; Radio-Browser intermittent ; data.gouv MCP muet | Voir section 1 | **ouvert**, hors de notre contrôle |
 | A17 | La marque « IA » n'existe pas dans les données | Voir règle 2 | **ouvert** |
 | A18 | Plusieurs sources P1, Traduction, GLiNER, crédibilité 1–6 : non faits | Voir section 1 | **ouvert** |
