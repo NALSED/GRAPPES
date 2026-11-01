@@ -455,7 +455,9 @@ if veut "$libretranslate" "Installer LibreTranslate et ses modèles ?" "n"; then
   mkdir -p "$lt"
   cp -n "$racine/pilote/outils/libretranslate/installer_modeles.py" "$racine/pilote/outils/libretranslate/lancer.sh" "$lt/" 2>/dev/null || true
   note "emplacement : $lt"
-  if [ ! -x "$lt/venv/bin/python" ]; then
+  # Pas seulement « python existe » : un essai précédent peut avoir créé le venv puis échoué sur le pip install
+  # (disque plein, réseau coupé…) — dans ce cas le python du venv existe bel et bien, mais sans argostranslate.
+  if ! "$lt/venv/bin/python" -c "import argostranslate, libretranslate" >/dev/null 2>&1; then
     python3 -m venv "$lt/venv" >>"$journal" 2>&1 && "$lt/venv/bin/pip" -q install argostranslate libretranslate >>"$journal" 2>&1 \
       || rate "LibreTranslate : son environnement n'a pas pu être créé (voir le journal)"
   fi
