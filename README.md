@@ -9,14 +9,22 @@ Ce dépôt contient deux applications qui marchent ensemble :
 
 ## Installation
 
-Prérequis : Linux ou macOS, Python 3.11 ou plus, git.
+Prérequis : Linux (Debian 13 ou Ubuntu 24.04 conseillés), Python 3.11 ou plus, git.
+
+**Sur une machine ou une VM neuve**, un seul script fait tout — paquets système, environnements Python, bases
+locales, services, lancement — en proposant chaque prérequis sans l'imposer :
 
 ````bash
-git clone https://github.com/NALSED/GRAPPES.git
-cd GRAPPES
-./installer.sh
-./lancer.sh
+git clone https://github.com/NALSED/GRAPPES.git grappes
+cd grappes
+./installer_grappes.sh
 ````
+
+**Taille de la VM, découpage du disque et installation pas à pas : voir [`INSTALLATION.md`](INSTALLATION.md).**
+À retenir : 16 Go de mémoire, 8 processeurs, 120 Go de disque, et sur Proxmox le **type de processeur `host`**
+(avec `kvm64`, DuckDB s'arrête en « instruction illégale »).
+
+Pour n'installer que le code, sans les bases ni les services : `./installer.sh` puis `./lancer.sh`.
 
 Ouvrir ensuite <https://127.0.0.1:8443> (certificat auto-signé : accepter l'avertissement du navigateur une fois).
 

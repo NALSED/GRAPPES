@@ -1,4 +1,9 @@
-"""Mesure de l'ordre des résultats (document 24, point 5) : l'outil tourne dans l'interpréteur de grappes, qui porte `pytrec_eval`."""
+"""Mesure de l'ordre des résultats (document 24, point 5) : l'outil tourne dans l'interpréteur de grappes, qui porte `pytrec_eval`.
+
+`pytrec_eval` vient de l'extra « autocal » de grappes, que `installer.sh` n'installe PAS (il est lourd : numpy, scipy,
+scikit-learn, optuna…). Sans lui ces tests ne peuvent pas passer, et ils échouaient sur une pile d'appels illisible au
+lieu de dire ce qui manque. Ils se sautent maintenant avec la commande à taper — un test sauté qui dit pourquoi vaut
+mieux qu'un test rouge qui ne dit rien, et mieux qu'un test vert qui n'a rien mesuré."""
 
 from __future__ import annotations
 
@@ -6,8 +11,21 @@ import json
 import subprocess
 from pathlib import Path
 
+import pytest
+
 RACINE = Path(__file__).resolve().parents[1]
 OUTIL = RACINE / "outils" / "mesurer_classement.py"
+
+
+@pytest.fixture(autouse=True)
+def _exige_pytrec_eval(cfg):
+    """Saute le test (avec sa raison) quand l'interpréteur de grappes n'a pas l'extra de mesure."""
+    py = Path(str(cfg.python_grappes))
+    if not py.exists():
+        pytest.skip(f"l'interpréteur de grappes est absent ({py}) : lancez ./installer.sh")
+    essai = subprocess.run([str(py), "-c", "import pytrec_eval"], capture_output=True, text=True, timeout=120, check=False)
+    if essai.returncode != 0:
+        pytest.skip("pytrec_eval absent de l'interpréteur de grappes : grappes/.venv/bin/pip install -e grappes[autocal]")
 
 
 def lancer(cfg, *args):

@@ -10,9 +10,11 @@
 #   --systeme / --sans-systeme             paquets système (apt ou dnf ; demande sudo)
 #   --bases "sirene-local rna-local"       seulement ces bases ; --sans-bases pour aucune
 #   --gdelt-jours 90 / --sans-gdelt        fenêtre de presse GDELT (France)
+#   --mesure / --sans-mesure               outils de mesure de la qualité (extra autocal, ≈ 500 Mo)
 #   --searxng / --sans-searxng             méta-moteur de recherche web, auto-hébergé, local
 #   --libretranslate / --sans-libretranslate   traduction hors ligne (≈ 2–3 Go de modèles)
 #   --overpass /point/de/montage           géocodage OpenStreetMap local (exige un disque de 100 Go déjà monté)
+#   --sans-overpass                        ne pas proposer Overpass
 #   --service / --sans-service             démarrage automatique de pilote (service systemd utilisateur)
 #   --lancer / --sans-lancer               lancer l'interface à la fin
 #   --garder                               garde les archives téléchargées (par défaut : effacées après import)
@@ -30,8 +32,8 @@ journal="$racine/installation.log"
 : > "$journal"
 
 # -1 = pas encore décidé (on demandera), 0 = non, 1 = oui
-systeme=-1; gdelt=-1; searxng=-1; libretranslate=-1; service=-1; lancer=-1; bases_choisies=""; sans_bases=-1
-jours=90; garder=""; overpass_dir=""; tout=0; minimal=0
+systeme=-1; gdelt=-1; searxng=-1; libretranslate=-1; service=-1; lancer=-1; bases_choisies=""; sans_bases=-1; mesure=-1
+jours=90; garder=""; overpass_dir=""; overpass=-1; tout=0; minimal=0
 BASES_PAR_DEFAUT="geoboundaries-fr geonames-fr opensanctions-local rna-local wikidata-fr sirene-local"
 
 while [ $# -gt 0 ]; do
@@ -44,8 +46,10 @@ while [ $# -gt 0 ]; do
     --gdelt-jours) jours="${2:?}"; gdelt=1; shift ;;
     --sans-gdelt) gdelt=0 ;;
     --searxng) searxng=1 ;;         --sans-searxng) searxng=0 ;;
+    --mesure) mesure=1 ;;           --sans-mesure) mesure=0 ;;
     --libretranslate) libretranslate=1 ;; --sans-libretranslate) libretranslate=0 ;;
     --overpass) overpass_dir="${2:?}"; shift ;;
+    --sans-overpass) overpass=0 ;;
     --service) service=1 ;;         --sans-service) service=0 ;;
     --lancer) lancer=1 ;;           --sans-lancer) lancer=0 ;;
     --garder) garder="--garder" ;;
@@ -64,7 +68,9 @@ rate() { echecs="$echecs
 # Les questions passent par le terminal, même si l'entrée standard est un tuyau. Sans terminal du tout, on prend la réponse par défaut.
 _tty=""
 [ -t 0 ] && _tty="/dev/stdin"
-[ -z "$_tty" ] && [ -r /dev/tty ] && _tty="/dev/tty"
+# /dev/tty peut exister sans être ouvrable (service, tâche planifiée, conteneur sans terminal) : on essaie vraiment
+# de l'ouvrir, sinon chaque question affichait une erreur avant de prendre la réponse par défaut.
+[ -z "$_tty" ] && { : < /dev/tty; } 2>/dev/null && _tty="/dev/tty"
 
 demander() {  # demander "question" "o" -> 0 si oui ; la réponse par défaut est le 2e argument
   local q="$1" defaut="$2" rep=""
@@ -89,7 +95,7 @@ note "journal : $journal"
 if [ "$minimal" = 1 ]; then
   [ "$sans_bases" = "-1" ] && sans_bases=1
   [ "$gdelt" = "-1" ] && gdelt=0; [ "$searxng" = "-1" ] && searxng=0
-  [ "$libretranslate" = "-1" ] && libretranslate=0; [ "$service" = "-1" ] && service=0
+  [ "$libretranslate" = "-1" ] && libretranslate=0; [ "$service" = "-1" ] && service=0; [ "$mesure" = "-1" ] && mesure=0; overpass=0
 fi
 
 # ---------------------------------------------------------------- 1. paquets système
@@ -131,6 +137,22 @@ else
 fi
 PY="$racine/pilote/.venv/bin/python"
 [ -x "$PY" ] || { echo "L'environnement de pilote est introuvable : voir $journal" >&2; exit 1; }
+
+# ---------------------------------------------------------------- 2 bis. extra de mesure (autocal)
+# `pytrec_eval` et compagnie : ils ne servent QU'À MESURER la qualité du classement et des rapprochements
+# (outils/mesurer_classement.py, outils/mesurer_rapprochement_fr.py, et les tests qui les vérifient). Lourds, et
+# inutiles pour chercher : c'est pour ça qu'ils ne sont pas dans les dépendances de base.
+dire "2 bis/8 — Outils de mesure (facultatif)"
+note "≈ 500 Mo (numpy, scipy, scikit-learn, optuna, pytrec_eval) ; sans eux, les outils de mesure et 3 tests se sautent"
+if veut "$mesure" "Installer les outils de mesure de la qualité ?" "n"; then
+  if "$racine/grappes/.venv/bin/pip" -q install -e "$racine/grappes[autocal]" >>"$journal" 2>&1; then
+    note "installés"
+  else
+    rate "outils de mesure — relancer : grappes/.venv/bin/pip install -e grappes[autocal]"
+  fi
+else
+  note "sauté"
+fi
 
 # ---------------------------------------------------------------- 3. bases locales
 dire "3/8 — Bases locales (copies interrogées sans appel réseau)"
@@ -202,7 +224,11 @@ PYEOF
 }
 
 if [ -n "$BASES" ]; then
-  copies="$racine/pilote/donnees/copies"; mkdir -p "$copies"
+  # Le dossier des copies vient de la CONFIGURATION (`donnees.copies`), pas d'un chemin deviné : s'il est sur une autre
+  # partition — ce qui est le cas recommandé — c'est sur celle-là qu'il faut mesurer la place, pas sur le disque système.
+  copies=$("$PY" -c "import sys; sys.path.insert(0,'$racine/pilote/src'); from pilote.config import charger; print(charger('$racine/pilote/config/pilote.yaml').dossier_copies)" 2>/dev/null || echo "$racine/pilote/donnees/copies")
+  mkdir -p "$copies" 2>/dev/null || { note "impossible de créer $copies (droits ? partition non montée ?)"; copies="$racine/pilote/donnees/copies"; mkdir -p "$copies"; }
+  note "les copies locales iront dans $copies"
   libre_go=$(df -BG --output=avail "$copies" 2>/dev/null | tail -1 | tr -dc '0-9')
   besoin=0; for id in $BASES; do besoin=$((besoin + $(place_de "$id"))); done
   note "${libre_go:-?} Go libres ; ~$besoin Go nécessaires pour les bases demandées"
@@ -263,7 +289,7 @@ fi
 # ---------------------------------------------------------------- 7. Overpass
 dire "7/8 — Overpass (géocodage OpenStreetMap local, France)"
 note "exige Docker et un disque de 100 Go DÉJÀ monté ; sans lui, le géocodage passe par le service public"
-if [ -z "$overpass_dir" ] && [ "$tout" != 1 ] && veut "-1" "Installer Overpass ?" "n"; then
+if [ -z "$overpass_dir" ] && [ "$overpass" != 0 ] && [ "$tout" != 1 ] && veut "-1" "Installer Overpass ?" "n"; then
   if [ -n "$_tty" ]; then printf '   Point de montage du disque de 100 Go : '; read -r overpass_dir < "$_tty" || overpass_dir=""; fi
 fi
 if [ -n "$overpass_dir" ]; then
@@ -307,7 +333,11 @@ else:
     for x in json.loads(reg.read_text(encoding="utf-8")):
         print(f"   {x['base']:<18} {x.get('lignes', 0):>12,} lignes  {x.get('octets', 0)/1e9:>6.2f} Go  importée le {x.get('date')}".replace(",", " "))
 PYEOF
-du -sh "$racine/pilote/donnees" 2>/dev/null | awk '{print "   données sur le disque : "$1}' | tee -a "$journal"
+dossier_donnees=$("$PY" -c "import sys; sys.path.insert(0,'$racine/pilote/src'); from pilote.config import charger; c=charger('$racine/pilote/config/pilote.yaml'); print(c.donnees)" 2>/dev/null || echo "$racine/pilote/donnees")
+dossier_copies=$("$PY" -c "import sys; sys.path.insert(0,'$racine/pilote/src'); from pilote.config import charger; print(charger('$racine/pilote/config/pilote.yaml').dossier_copies)" 2>/dev/null || echo "$dossier_donnees/copies")
+for d in "$dossier_donnees" "$dossier_copies"; do
+  [ -d "$d" ] && du -sh "$d" 2>/dev/null | awk '{print "   "$2" : "$1}' | tee -a "$journal"
+done
 
 port=$("$PY" -c "import sys; sys.path.insert(0,'$racine/pilote/src'); from pilote.config import charger; c=charger('$racine/pilote/config/pilote.yaml'); print(c.service.port)" 2>/dev/null || echo 8443)
 hote=$("$PY" -c "import sys; sys.path.insert(0,'$racine/pilote/src'); from pilote.config import charger; c=charger('$racine/pilote/config/pilote.yaml'); print(c.service.hote)" 2>/dev/null || echo 127.0.0.1)
