@@ -303,8 +303,15 @@ fi
 # importées (ci-dessous) et au bilan final. Calculé une seule fois ici.
 dossier_donnees=$("$PY" -c "import sys; sys.path.insert(0,'$racine/pilote/src'); from pilote.config import charger; print(charger('$racine/pilote/config/pilote.yaml').donnees)" 2>/dev/null || echo "$racine/pilote/donnees")
 # Le cache pip (~/.cache/pip) va sur le disque système par défaut : avec torch, les extras de mesure puis LibreTranslate,
-# il peut suffire à le remplir à lui seul. S'il y a un disque de données, le cache y va aussi.
-[ -n "$donnees_mp" ] && export PIP_CACHE_DIR="$donnees_mp/pip-cache"
+# il peut suffire à le remplir à lui seul. Pire : /tmp est souvent un tmpfs EN RAM, de quelques Go à peine (observé :
+# 2,9 Go) — pip y bufferise ses téléchargements (urllib3/cachecontrol passent par tempfile), ce qui peut faire échouer
+# un gros paquet (ctranslate2, sentencepiece…) même quand les deux disques ont de la place. S'il y a un disque de
+# données, le cache ET le répertoire temporaire y vont tous les deux.
+if [ -n "$donnees_mp" ]; then
+  export PIP_CACHE_DIR="$donnees_mp/pip-cache"
+  export TMPDIR="$donnees_mp/tmp"
+  mkdir -p "$TMPDIR"
+fi
 
 # ---------------------------------------------------------------- 2 bis. extra de mesure (autocal)
 # `pytrec_eval` et compagnie : ils ne servent QU'À MESURER la qualité du classement et des rapprochements
