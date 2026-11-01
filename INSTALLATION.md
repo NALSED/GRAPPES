@@ -1,7 +1,7 @@
 # Installer grappes sur une VM neuve
 
-Pour une VM Proxmox sous Debian 13 (ou Ubuntu 24.04). Tout passe par `./installer_grappes.sh`, qui propose
-chaque prérequis sans l'imposer et qui place lui-même les données sur le second disque.
+Pour une VM Proxmox sous Debian 13 (ou Ubuntu 24.04). Tout passe par `./installer_grappes.sh` : lancé sans
+option, **il installe tout, sans poser une seule question**, et place lui-même les données sur le second disque.
 
 ## 1. La VM
 
@@ -70,37 +70,42 @@ dit. Il prévient aussi si le dossier donné se trouve en réalité sur le même
 ## 3. L'installation, d'un seul coup
 
 ````bash
-sudo apt-get update && sudo apt-get install -y git
+sudo apt-get update && sudo apt-get install -y git tmux
 git clone https://github.com/NALSED/GRAPPES.git grappes
 cd grappes
-./installer_grappes.sh --tout --donnees /srv/grappes --overpass /srv/grappes/overpass
-````
-
-`--tout` installe **chaque** étape sans poser de question : paquets système, environnements Python, outils de
-mesure, les six bases locales, la fenêtre GDELT de 90 jours, SearXNG, LibreTranslate, le service systemd, puis
-le lancement. `--donnees` place tout ce qui pèse sur le disque 2 (il écrit `pilote/config/pilote.yaml` et
-`grappes/config/ner.yaml`, en gardant les versions précédentes en `.yaml.avant`).
-
-Overpass reste à part même avec `--tout`, parce qu'il demande un dossier qui ne se devine pas : sans
-`--overpass`, il est simplement sauté.
-
-**Compte plusieurs heures**, et tu peux fermer ta session SSH en route si tu lances sous `tmux` ou `screen` :
-
-````bash
 tmux new -s grappes
-./installer_grappes.sh --tout --donnees /srv/grappes --overpass /srv/grappes/overpass
-# Ctrl-B puis D pour détacher ; tmux attach -t grappes pour revenir
+./installer_grappes.sh
 ````
+
+C'est tout. Sans aucune option, le script installe **chaque** étape sans rien demander : paquets système
+(Docker compris), environnements Python, outils de mesure, les six bases locales, la fenêtre GDELT de 90 jours,
+SearXNG, LibreTranslate, Overpass, le service systemd, puis le lancement.
+
+**Le disque des données est trouvé tout seul** : un système de fichiers monté, inscriptible, d'au moins 200 Go,
+qui n'est pas celui du dépôt (ext4, xfs, btrfs, zfs — jamais un partage réseau). S'il n'en trouve pas un seul
+évident, il **s'arrête** et donne la recette du § 2 : il ne verse jamais 30 Go de bases sur le disque système
+par défaut. Pour le nommer explicitement : `--donnees /srv/grappes`.
+
+Il écrit `pilote/config/pilote.yaml` et `grappes/config/ner.yaml` pour toi, en gardant les versions
+précédentes en `.yaml.avant`.
+
+**Compte plusieurs heures** (SIRENE et GDELT), d'où le `tmux` : `Ctrl-B` puis `D` pour détacher,
+`tmux attach -t grappes` pour revenir. L'import OpenStreetMap d'Overpass, lui, continue en tâche de fond
+dans son conteneur (`docker logs -f overpass`) : l'installation ne l'attend pas.
+
+Une seule chose ne peut pas être faite sans toi : l'appartenance au groupe `docker` ne prend effet qu'à la
+prochaine connexion. Le script passe par `sudo` pour cette fois et t'ajoute au groupe pour les suivantes.
 
 C'est **reprenable** : une base déjà importée est sautée, un téléchargement coupé reprend où il en était, un
 prérequis qui échoue n'arrête pas les autres. La liste de ce qui reste à faire est donnée à la fin, avec le
 journal (`installation.log`).
 
-### Si tu préfères étaler
+### Si tu préfères choisir ou étaler
 
 ````bash
-./installer_grappes.sh --donnees /srv/grappes                 # pose les questions une par une
-./installer_grappes.sh --minimal --donnees /srv/grappes       # le socle seul : l'interface répond déjà
+./installer_grappes.sh --questions                            # une question par étape, défaut entre crochets
+./installer_grappes.sh --minimal                              # le socle seul : l'interface répond déjà
+./installer_grappes.sh --sans-overpass --sans-libretranslate  # tout sauf les deux plus lourds
 ./installer_grappes.sh --sans-systeme --bases "sirene-local" --sans-gdelt   # la grosse base, le soir
 ````
 

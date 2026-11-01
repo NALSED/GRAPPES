@@ -11,13 +11,13 @@ Ce dépôt contient deux applications qui marchent ensemble :
 
 Prérequis : Linux (Debian 13 ou Ubuntu 24.04 conseillés), Python 3.11 ou plus, git.
 
-**Sur une machine ou une VM neuve**, un seul script fait tout — paquets système, environnements Python, bases
-locales, services, lancement — en proposant chaque prérequis sans l'imposer :
+**Sur une machine ou une VM neuve**, un seul script fait tout sans rien demander — paquets système,
+environnements Python, bases locales, services, lancement :
 
 ````bash
 git clone https://github.com/NALSED/GRAPPES.git grappes
 cd grappes
-./installer_grappes.sh --tout --donnees /srv/grappes
+./installer_grappes.sh
 ````
 
 **Taille de la VM, découpage des disques et installation pas à pas : voir [`INSTALLATION.md`](INSTALLATION.md).**

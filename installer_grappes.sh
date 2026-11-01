@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 # Installation COMPLÈTE de grappes sur une machine neuve, du système jusqu'au lancement.
-# Chaque prérequis est PROPOSÉ, jamais imposé : le script pose la question, avec une réponse par défaut entre crochets.
+# Par défaut, TOUT s'installe sans aucune question. « --questions » rend la main étape par étape.
 #
-#   ./installer_grappes.sh                  pose les questions une par une (c'est le mode normal)
-#   ./installer_grappes.sh --tout           répond oui à tout, sans rien demander
+#   ./installer_grappes.sh                  INSTALLE TOUT, sans poser une seule question (le cas normal)
+#   ./installer_grappes.sh --questions      choisit étape par étape, avec une réponse par défaut entre crochets
 #   ./installer_grappes.sh --minimal        paquets système + environnements Python + lancement, rien d'autre
+#
+# Sans « --donnees », le disque des données est CHERCHÉ : un système de fichiers monté, inscriptible, d'au moins
+# 200 Go, qui n'est pas celui du dépôt. S'il n'y en a pas un seul évident, le script s'arrête et dit quoi faire :
+# il ne remplit jamais le disque système par défaut.
 #
 # Pour ne pas répondre aux questions, chaque étape a son option (utile pour rejouer une installation à l'identique) :
 #   --systeme / --sans-systeme             paquets système (apt ou dnf ; demande sudo)
@@ -35,12 +39,13 @@ journal="$racine/installation.log"
 
 # -1 = pas encore décidé (on demandera), 0 = non, 1 = oui
 systeme=-1; gdelt=-1; searxng=-1; libretranslate=-1; service=-1; lancer=-1; bases_choisies=""; sans_bases=-1; mesure=-1
-jours=90; garder=""; overpass_dir=""; overpass=-1; tout=0; minimal=0; donnees_mp=""; donnees_demande=-1
+jours=90; garder=""; overpass_dir=""; overpass=-1; tout=0; minimal=0; questions=0; donnees_mp=""; donnees_demande=-1
 BASES_PAR_DEFAUT="geoboundaries-fr geonames-fr opensanctions-local rna-local wikidata-fr sirene-local"
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --tout) tout=1 ;;
+    --questions) questions=1 ;;
     --minimal) minimal=1 ;;
     --systeme) systeme=1 ;;         --sans-systeme) systeme=0 ;;
     --bases) bases_choisies="${2:?}"; sans_bases=0; shift ;;
@@ -96,6 +101,12 @@ veut() {  # veut <variable> "question" "defaut" : respecte l'option si elle a é
 
 dire "grappes — installation, $(date '+%d/%m/%Y %H:%M')"
 note "journal : $journal"
+# Lancer le script SANS rien préciser installe TOUT, sans poser une seule question : c'est le cas normal.
+# `--questions` repasse en mode question par question, `--minimal` ne pose que le socle.
+if [ "$tout" = 0 ] && [ "$minimal" = 0 ] && [ "$questions" = 0 ]; then
+  tout=1
+  note "mode par défaut : tout est installé, aucune question posée (« --questions » pour choisir étape par étape)"
+fi
 if [ "$minimal" = 1 ]; then
   [ "$sans_bases" = "-1" ] && sans_bases=1
   [ "$gdelt" = "-1" ] && gdelt=0; [ "$searxng" = "-1" ] && searxng=0
@@ -114,13 +125,15 @@ if [ "$tout" = 1 ]; then
   [ "$libretranslate" = "-1" ] && libretranslate=1
   [ "$service" = "-1" ] && service=1
   [ "$lancer" = "-1" ] && lancer=1
-  note "mode « tout » : chaque étape est installée. Overpass reste hors du lot (il demande un disque monté : --overpass /point/de/montage)."
+  [ "$overpass" = "-1" ] && overpass=1   # Overpass compris : son dossier se déduit du disque des données
 fi
 
 # ---------------------------------------------------------------- 1. paquets système
 # libicu-dev + pkg-config : sans eux, `pip install -e grappes` échoue sur pyicu (dépendance de followthemoney) avec un
 # message illisible. C'est le premier mur d'une machine neuve, et la seule étape qui demande sudo.
 PAQ_APT="python3 python3-venv python3-dev build-essential pkg-config libicu-dev openssl unzip curl ca-certificates git"
+PAQ_DNF_SUP=""
+[ "$overpass" != 0 ] && { PAQ_APT="$PAQ_APT docker.io"; PAQ_DNF_SUP="docker"; }  # Overpass tourne dans un conteneur
 PAQ_DNF="python3 python3-devel gcc gcc-c++ make pkgconf-pkg-config libicu-devel openssl unzip curl ca-certificates git"
 dire "1/8 — Paquets système"
 note "nécessaires pour compiler les dépendances de grappes (pyicu) et pour le certificat du service"
@@ -128,7 +141,7 @@ if veut "$systeme" "Installer les paquets système maintenant (demande sudo) ?" 
   if command -v apt-get >/dev/null; then
     (sudo apt-get update -qq && sudo apt-get install -y -qq $PAQ_APT) >>"$journal" 2>&1 && note "installés" || rate "paquets système (voir le journal ; sans eux l'étape 2 échouera)"
   elif command -v dnf >/dev/null; then
-    sudo dnf install -y -q $PAQ_DNF >>"$journal" 2>&1 && note "installés" || rate "paquets système (voir le journal)"
+    sudo dnf install -y -q $PAQ_DNF $PAQ_DNF_SUP >>"$journal" 2>&1 && note "installés" || rate "paquets système (voir le journal)"
   else
     note "ni apt-get ni dnf : installez à la main — $PAQ_APT"
   fi
@@ -166,11 +179,66 @@ PY="$racine/pilote/.venv/bin/python"
 #   <disque>/libretranslate environnement et modèles de traduction (≈ 8 Go, mesuré sur la VM de momo)
 #   <disque>/overpass       base OpenStreetMap, si Overpass est demandé (≈ 100 Go)
 dire "2 ter/8 — Emplacement des données"
+
+# Les candidats : un système de fichiers monté, inscriptible, d'au moins 200 Go, qui n'est NI celui du dépôt NI un
+# pseudo-système. Rien n'est formaté ni monté ici : on choisit parmi ce qui est déjà là.
+disques_candidats() {
+  local dev_depot
+  dev_depot=$(stat -c %d "$racine" 2>/dev/null)
+  df -B1000000000 --output=target,size,fstype 2>/dev/null | tail -n +2 | while read -r cible taille fstype _; do
+    # Liste BLANCHE de systèmes de fichiers : un disque, pas un partage réseau ni un montage de service. Une base
+    # SQLite de 20 Go sur du NFS ou du FUSE serait lente et fragile, et ce n'est pas au script de le découvrir.
+    case "$fstype" in ext2 | ext3 | ext4 | xfs | btrfs | zfs | f2fs) ;; *) continue ;; esac
+    case "$cible" in / | /boot | /boot/* | /proc* | /sys* | /run* | /dev* | /mnt/pve/*) continue ;; esac
+    [ "$(stat -c %d "$cible" 2>/dev/null)" = "$dev_depot" ] && continue
+    [ "${taille:-0}" -ge 200 ] || continue
+    [ -w "$cible" ] || continue
+    printf '%s %s\n' "$cible" "$taille"
+  done
+}
+
 if [ -z "$donnees_mp" ] && [ "$donnees_demande" != 0 ]; then
-  note "grappes tient sur ≈ 8 Go ; les données demandent 250 Go et plus. Elles vont normalement sur un second disque."
-  if veut "-1" "Mettre les données sur un autre disque (déjà formaté et monté) ?" "o" && [ -n "$_tty" ]; then
-    printf '   Point de montage du disque de données : '
-    read -r donnees_mp < "$_tty" || donnees_mp=""
+  note "grappes tient sur ≈ 8 Go ; les données demandent 250 Go et plus, donc un second disque."
+  if [ "$questions" = 1 ] && [ -n "$_tty" ]; then
+    if veut "-1" "Mettre les données sur un autre disque (déjà formaté et monté) ?" "o"; then
+      printf '   Point de montage du disque de données : '
+      read -r donnees_mp < "$_tty" || donnees_mp=""
+    fi
+  else
+    # Mode sans question : on cherche. Un seul candidat évident = on le prend. Zéro ou plusieurs = on s'arrête,
+    # parce que verser 30 Go de bases sur un disque système de 20 Go serait une panne, pas un défaut de confort.
+    candidats=$(disques_candidats)
+    nb=$(printf '%s' "$candidats" | grep -c . || true)
+    if [ "$nb" = 1 ]; then
+      donnees_mp=$(printf '%s' "$candidats" | awk '{print $1}')
+      taille_trouvee=$(printf '%s' "$candidats" | awk '{print $2}')
+      note "disque de données trouvé : $donnees_mp (${taille_trouvee} Go)"
+      # Un point de montage déjà occupé par autre chose : on se met dans un sous-dossier plutôt qu'en vrac.
+      if [ -n "$(ls -A "$donnees_mp" 2>/dev/null | grep -v '^lost+found$' | head -1)" ] \
+         && [ ! -d "$donnees_mp/copies" ] && [ ! -d "$donnees_mp/donnees" ]; then
+        donnees_mp="$donnees_mp/grappes"
+        note "ce disque contient déjà autre chose : les données iront dans $donnees_mp"
+      fi
+    else
+      note ""
+      if [ "$nb" = 0 ]; then
+        note "AUCUN disque de données trouvé (il faut un système de fichiers monté, inscriptible, d'au moins 200 Go)."
+      else
+        note "PLUSIEURS disques possibles — je ne choisis pas à ta place :"
+        printf '%s\n' "$candidats" | awk '{print "      " $1 "  (" $2 " Go)"}' | tee -a "$journal"
+      fi
+      note ""
+      note "Les bases locales pèsent ≈ 30 Go, Overpass ≈ 100 Go : les verser sur le disque système les ferait"
+      note "déborder. Prépare le disque, puis relance en le nommant :"
+      note ""
+      note "   sudo mkfs.ext4 -L grappes /dev/sdb1"
+      note "   echo 'LABEL=grappes /srv/grappes ext4 defaults,noatime 0 2' | sudo tee -a /etc/fstab"
+      note "   sudo mkdir -p /srv/grappes && sudo mount /srv/grappes && sudo chown -R \"\$USER\" /srv/grappes"
+      note "   ./installer_grappes.sh --donnees /srv/grappes"
+      note ""
+      note "Ou, pour tout garder dans le dépôt malgré la place :  ./installer_grappes.sh --sans-autre-disque"
+      exit 2
+    fi
   fi
 fi
 if [ -n "$donnees_mp" ]; then
@@ -403,26 +471,46 @@ fi
 # ---------------------------------------------------------------- 7. Overpass
 dire "7/8 — Overpass (géocodage OpenStreetMap local, France)"
 note "exige Docker et ≈ 100 Go ; sans lui, le géocodage passe par le service public (bridé en débit, pas absent)"
-if [ -z "$overpass_dir" ] && [ "$overpass" != 0 ] && [ "$tout" != 1 ] && veut "-1" "Installer Overpass ?" "n"; then
+if [ -z "$overpass_dir" ] && [ "$overpass" != 0 ]; then
   defaut_over="${donnees_mp:+$donnees_mp/overpass}"
-  if [ -n "$_tty" ]; then
+  if [ "$questions" = 1 ] && [ -n "$_tty" ] && veut "-1" "Installer Overpass ?" "n"; then
     printf '   Dossier pour la base OpenStreetMap%s : ' "${defaut_over:+ [$defaut_over]}"
     read -r overpass_dir < "$_tty" || overpass_dir=""
     overpass_dir="${overpass_dir:-$defaut_over}"
-  else
-    overpass_dir="$defaut_over"
+  elif [ "$questions" != 1 ]; then
+    overpass_dir="$defaut_over"   # mode sans question : sur le disque des données, à côté du reste
+    [ -z "$overpass_dir" ] && note "pas de disque de données : Overpass est sauté (ses 100 Go n'iraient pas sur le disque système)"
   fi
-  [ -n "$overpass_dir" ] && mkdir -p "$overpass_dir" 2>/dev/null
 fi
 if [ -n "$overpass_dir" ]; then
+  mkdir -p "$overpass_dir" 2>/dev/null
+  note "dossier : $overpass_dir"
   if [ ! -d "$overpass_dir" ]; then
-    rate "Overpass : « $overpass_dir » n'est pas un dossier monté"
+    rate "Overpass : « $overpass_dir » n'a pas pu être créé"
   elif ! command -v docker >/dev/null; then
     rate "Overpass : Docker est absent (sudo apt-get install docker.io, puis relancer avec --overpass $overpass_dir)"
-  elif OVERPASS_DIR="$overpass_dir" "$racine/pilote/outils/installer_overpass.sh" >>"$journal" 2>&1; then
-    note "installé (l'import de la France prend plusieurs heures, en tâche de fond)"
   else
-    rate "Overpass (voir le journal)"
+    # Docker demande d'être dans le groupe « docker », et l'appartenance à un groupe ne prend effet qu'à la prochaine
+    # session : on ne peut pas se reconnecter au milieu d'une installation. On passe donc par sudo cette fois-ci, et on
+    # ajoute au groupe pour les suivantes.
+    lanceur=""
+    if ! docker info >/dev/null 2>&1; then
+      if sudo -n true 2>/dev/null || [ -n "$_tty" ]; then
+        lanceur="sudo -E"
+        sudo usermod -aG docker "$(id -un)" >>"$journal" 2>&1 \
+          && note "ajouté au groupe « docker » : actif à ta prochaine connexion (cette fois-ci, on passe par sudo)"
+      else
+        rate "Overpass : Docker n'est pas joignable sans droits (sudo usermod -aG docker $(id -un), puis se reconnecter)"
+      fi
+    fi
+    if [ -n "$lanceur" ] || docker info >/dev/null 2>&1; then
+      if OVERPASS_DIR="$overpass_dir" $lanceur "$racine/pilote/outils/installer_overpass.sh" >>"$journal" 2>&1; then
+        note "lancé : l'import de la France prend plusieurs heures EN TÂCHE DE FOND (docker logs -f overpass)"
+        note "prêt quand http://127.0.0.1:12345/api/status répond ; l'installation continue sans l'attendre"
+      else
+        rate "Overpass (voir le journal)"
+      fi
+    fi
   fi
 else
   note "sauté"
