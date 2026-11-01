@@ -71,6 +71,14 @@ done
 dire() { printf '\n== %s\n' "$*" | tee -a "$journal"; }
 note() { printf '   %s\n' "$*" | tee -a "$journal"; }
 echecs=""
+# Montre la sortie du script Python lu sur l'entrée standard, et SEULEMENT elle. Avant, on relisait les deux dernières
+# lignes du journal, qui contenaient aussi la note écrite juste avant : le message s'affichait deux fois.
+py_dire() {
+  local sortie rc
+  sortie=$("$PY" - "$@" 2>&1); rc=$?
+  [ -n "$sortie" ] && printf '%s\n' "$sortie" | sed 's/^/      /' | tee -a "$journal"
+  return $rc
+}
 rate() { echecs="$echecs
    - $*"; note "ÉCHEC : $*"; }
 
@@ -255,7 +263,7 @@ if [ -n "$donnees_mp" ]; then
       && note "ATTENTION : $donnees_mp est sur LE MÊME système de fichiers que le dépôt — le but d'un second disque est perdu."
     [ "${taille_go:-0}" -lt 250 ] && note "ATTENTION : ce disque fait ${taille_go:-?} Go ; 250 Go est le minimum conseillé (SIRENE indexé ≈ 20 Go, Overpass ≈ 100 Go, LibreTranslate ≈ 8 Go)."
     mkdir -p "$donnees_mp"/{donnees,copies,modeles,libretranslate}
-    if "$PY" - "$racine" "$donnees_mp" >>"$journal" 2>&1 <<'PYEOF'
+    if py_dire "$racine" "$donnees_mp" <<'PYEOF'
 import sys
 from pathlib import Path
 
@@ -281,7 +289,6 @@ if g.exists():
     print(f"ner.yaml : modeles_dir -> {mp}/modeles")
 PYEOF
     then
-      tail -2 "$journal" | sed 's/^/      /'
       note "les anciennes configurations sont gardées en .yaml.avant"
     else
       rate "la configuration n'a pas pu être modifiée : voir le journal"
@@ -291,6 +298,13 @@ PYEOF
 else
   note "les données restent dans le dépôt (pilote/donnees) : à surveiller si le disque système est petit"
 fi
+
+# Chemin réel de « donnees » (celui que pilote utilise, pas un chemin deviné) : sert à la fois à repérer les bases déjà
+# importées (ci-dessous) et au bilan final. Calculé une seule fois ici.
+dossier_donnees=$("$PY" -c "import sys; sys.path.insert(0,'$racine/pilote/src'); from pilote.config import charger; print(charger('$racine/pilote/config/pilote.yaml').donnees)" 2>/dev/null || echo "$racine/pilote/donnees")
+# Le cache pip (~/.cache/pip) va sur le disque système par défaut : avec torch, les extras de mesure puis LibreTranslate,
+# il peut suffire à le remplir à lui seul. S'il y a un disque de données, le cache y va aussi.
+[ -n "$donnees_mp" ] && export PIP_CACHE_DIR="$donnees_mp/pip-cache"
 
 # ---------------------------------------------------------------- 2 bis. extra de mesure (autocal)
 # `pytrec_eval` et compagnie : ils ne servent QU'À MESURER la qualité du classement et des rapprochements
@@ -330,7 +344,7 @@ fi
 # disparaître. On demande l'adresse du jour à l'API de data.gouv.fr. (Le RNA, lui, garde ses anciens fichiers en ligne.)
 if echo " $BASES " | grep -q " sirene-local "; then
   note "vérification de l'adresse de téléchargement de SIRENE…"
-  "$PY" - "$racine" >>"$journal" 2>&1 <<'PYEOF'
+  py_dire "$racine" <<'PYEOF'
 import json, re, sys, urllib.request
 from pathlib import Path
 decl = Path(sys.argv[1]) / "pilote/config/sources/sirene-local.yaml"
@@ -362,16 +376,15 @@ if texte != ancien:
 else:
     print("adresses SIRENE à jour")
 PYEOF
-  tail -2 "$journal" | sed 's/^/      /'
 fi
 
 place_de() { case "$1" in
     sirene-local) echo 30 ;; rna-local|wikidata-fr) echo 4 ;; opensanctions-local) echo 3 ;; *) echo 1 ;;
   esac; }
-deja() { "$PY" - "$racine" "$1" <<'PYEOF'
+deja() { "$PY" - "$dossier_donnees" "$1" <<'PYEOF'
 import json, sys
 from pathlib import Path
-reg = Path(sys.argv[1]) / "pilote/donnees/bases_locales.json"
+reg = Path(sys.argv[1]) / "bases_locales.json"
 liste = json.loads(reg.read_text(encoding="utf-8")) if reg.exists() else []
 sys.exit(0 if any(x.get("source") == sys.argv[2] for x in liste) else 1)
 PYEOF
@@ -399,7 +412,7 @@ if [ -n "$BASES" ]; then
 fi
 for id in $BASES; do
   dire "    base « $id »"
-  if deja "$id"; then note "déjà importée (pour la refaire : la retirer de pilote/donnees/bases_locales.json)"; continue; fi
+  if deja "$id"; then note "déjà importée (pour la refaire : la retirer de $dossier_donnees/bases_locales.json)"; continue; fi
   if (cd "$racine/pilote" && "$PY" outils/importer_base_locale.py "$id" $garder) 2>&1 | tee -a "$journal" | tail -3 | sed 's/^/      /'; then
     note "fait"
   else
@@ -533,17 +546,16 @@ fi
 
 # ---------------------------------------------------------------- bilan
 dire "Bilan"
-(cd "$racine/pilote" && "$PY" - <<'PYEOF') 2>&1 | tee -a "$journal"
-import json
+"$PY" - "$dossier_donnees" <<'PYEOF' 2>&1 | tee -a "$journal"
+import json, sys
 from pathlib import Path
-reg = Path("donnees/bases_locales.json")
+reg = Path(sys.argv[1]) / "bases_locales.json"
 if not reg.exists():
     print("   aucune base locale installée")
 else:
     for x in json.loads(reg.read_text(encoding="utf-8")):
         print(f"   {x['base']:<18} {x.get('lignes', 0):>12,} lignes  {x.get('octets', 0)/1e9:>6.2f} Go  importée le {x.get('date')}".replace(",", " "))
 PYEOF
-dossier_donnees=$("$PY" -c "import sys; sys.path.insert(0,'$racine/pilote/src'); from pilote.config import charger; c=charger('$racine/pilote/config/pilote.yaml'); print(c.donnees)" 2>/dev/null || echo "$racine/pilote/donnees")
 dossier_copies=$("$PY" -c "import sys; sys.path.insert(0,'$racine/pilote/src'); from pilote.config import charger; print(charger('$racine/pilote/config/pilote.yaml').dossier_copies)" 2>/dev/null || echo "$dossier_donnees/copies")
 for d in "$dossier_donnees" "$dossier_copies"; do
   [ -d "$d" ] && du -sh "$d" 2>/dev/null | awk '{print "   "$2" : "$1}' | tee -a "$journal"

@@ -1,12 +1,21 @@
 #!/usr/bin/env bash
 # Serveur Overpass AUTO-HÉBERGÉ, France seule (décision de Sednal du 17/10/2026, REPONSES.md §2) : image Docker éprouvée `wiktorn/overpass-api`,
 # mode `init`, extrait Geofabrik de la France (en .osm.pbf : le .osm.bz2 demandé n'existe plus chez Geofabrik, c'est le même extrait), OVERPASS_META=no (les métadonnées dépasseraient les 100 Go). N'écoute que sur 127.0.0.1.
-# Usage : OVERPASS_DIR=/point/de/montage outils/installer_overpass.sh   (le disque doit être partitionné, formaté et MONTÉ avant : rien n'est
-# formaté ici). Idempotent : si la base existe déjà, le conteneur est seulement (re)démarré.
+# Usage : OVERPASS_DIR=/un/dossier/sur/le/disque/de/100Go outils/installer_overpass.sh   (le disque doit être
+# partitionné, formaté et MONTÉ avant : rien n'est formaté ici ; DIR peut être un sous-dossier de ce disque, pas
+# forcément le point de montage lui-même — c'est ce que fait installer_grappes.sh avec le disque des données).
+# Idempotent : si la base existe déjà, le conteneur est seulement (re)démarré.
 set -euo pipefail
-DIR="${OVERPASS_DIR:?indiquez OVERPASS_DIR, le point de montage du disque de 100 Go}"
+DIR="${OVERPASS_DIR:?indiquez OVERPASS_DIR, un dossier sur le disque de 100 Go}"
 PORT="${OVERPASS_PORT:-12345}"
-mountpoint -q "${OVERPASS_MONTAGE:-$DIR}" || { echo "« $DIR » n'est pas un point de montage : montez d'abord le disque." >&2; exit 1; }
+mkdir -p "$DIR"
+# Pas d'exigence que DIR soit LUI-MÊME un point de montage (il peut être un sous-dossier) : ce qui compte vraiment,
+# c'est qu'il reste assez de place là où il est.
+libre_go=$(df -BG --output=avail "$DIR" 2>/dev/null | tail -1 | tr -dc '0-9')
+if [ "${libre_go:-0}" -lt 90 ]; then
+  echo "« $DIR » n'a que ${libre_go:-?} Go libres (≈ 100 Go nécessaires pour la France) : vérifiez le disque." >&2
+  exit 1
+fi
 mkdir -p "$DIR/db"
 if docker ps -a --format '{{.Names}}' | grep -qx overpass; then docker start overpass >/dev/null; echo "Conteneur overpass démarré."; exit 0; fi
 docker run -d --name overpass --restart unless-stopped \
