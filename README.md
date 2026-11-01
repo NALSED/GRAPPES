@@ -17,12 +17,13 @@ locales, services, lancement — en proposant chaque prérequis sans l'imposer :
 ````bash
 git clone https://github.com/NALSED/GRAPPES.git grappes
 cd grappes
-./installer_grappes.sh
+./installer_grappes.sh --tout --donnees /srv/grappes
 ````
 
-**Taille de la VM, découpage du disque et installation pas à pas : voir [`INSTALLATION.md`](INSTALLATION.md).**
-À retenir : 16 Go de mémoire, 8 processeurs, 120 Go de disque, et sur Proxmox le **type de processeur `host`**
-(avec `kvm64`, DuckDB s'arrête en « instruction illégale »).
+**Taille de la VM, découpage des disques et installation pas à pas : voir [`INSTALLATION.md`](INSTALLATION.md).**
+À retenir : 16 Go de mémoire, 8 processeurs, **un disque de 20 Go pour le système et grappes, un second de
+250 Go pour les données**, et sur Proxmox le **type de processeur `host`** (avec `kvm64`, DuckDB s'arrête en
+« instruction illégale »).
 
 Pour n'installer que le code, sans les bases ni les services : `./installer.sh` puis `./lancer.sh`.
 

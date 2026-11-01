@@ -1,7 +1,7 @@
 # Installer grappes sur une VM neuve
 
 Pour une VM Proxmox sous Debian 13 (ou Ubuntu 24.04). Tout passe par `./installer_grappes.sh`, qui propose
-chaque prérequis sans l'imposer.
+chaque prérequis sans l'imposer et qui place lui-même les données sur le second disque.
 
 ## 1. La VM
 
@@ -9,122 +9,104 @@ chaque prérequis sans l'imposer.
 | :-- | :-- | :-- | :-- |
 | Mémoire | 8 Go | **16 Go** | le modèle de lecture de noms (CamemBERT, ≈ 1,5 Go résident), le moteur de rapprochement (DuckDB, 0,5–2 Go), le pic d'indexation de SIRENE (≈ 1 Go) |
 | Processeurs | 4 | **8** | le modèle de lecture de noms utilise tous les cœurs ; GDELT télécharge sur 6 fils ; `travail.fils: 2` = deux recherches en même temps |
-| Disque | 70 Go | **120 Go** | voir le découpage ci-dessous |
+| Disque système | 20 Go | **20 Go** | Debian, le dépôt, les deux environnements Python |
+| Disque de données | 250 Go | **250 Go et plus** | tout ce qui pèse et qui grossit (voir § 2) |
 
 **Type de processeur : `host`.** C'est le réglage le plus important de la création de la VM. Avec le `kvm64`
 par défaut de Proxmox, les extensions AVX2 sont masquées, et DuckDB s'arrête en « instruction illégale »
-(c'est la raison pour laquelle `duckdb` est épinglé en version 1 dans `pilote/pyproject.toml`). PyTorch est
+(c'est pour cette raison que `duckdb` est épinglé en version 1 dans `pilote/pyproject.toml`). PyTorch est
 sensible de la même façon.
 
-Autres réglages : BIOS OVMF ou SeaBIOS indifférent, disque en VirtIO SCSI avec `discard` activé si le stockage
-est en thin-provisioning, agent QEMU installé (`qemu-guest-agent`).
+Autres réglages : disque en VirtIO SCSI, `discard` activé si le stockage est en thin-provisioning, agent
+QEMU (`qemu-guest-agent`) installé.
 
-## 2. Le découpage du disque
+## 2. Les deux disques
 
-Deux choses très différentes vivent sur ce disque : le **code et les environnements Python**, qui ne bougent
-presque pas, et les **copies locales de bases**, qui pèsent et qui grossissent. Les séparer évite qu'un import
-de SIRENE qui déborde remplisse la partition système.
+Deux choses très différentes : le **code**, qui ne bouge presque pas et tient dans 20 Go, et les **données**,
+qui pèsent et qui grossissent. Les séparer évite qu'un import de SIRENE qui déborde remplisse la partition
+système, et permet d'agrandir les données sans toucher au reste.
 
-### Option simple — un seul disque de 120 Go
+### Disque 1 — 20 Go, le système et grappes
 
-| Partition / volume | Taille | Montage | Contenu |
-| :-- | :-- | :-- | :-- |
-| EFI | 512 Mo | `/boot/efi` | — |
-| `/` | 30 Go | `/` | Debian, le dépôt, les deux environnements Python (≈ 4 Go avec PyTorch processeur), les modèles de lecture de noms (≈ 0,5 Go), LibreTranslate si installé (≈ 3 Go) |
-| swap | 4 Go | — | — |
-| `donnees` | 80 Go | `/srv/grappes` | base SQLite de pilote, dossiers de travail des recherches, **copies locales des bases** |
+| Partition | Taille | Montage |
+| :-- | :-- | :-- |
+| EFI | 512 Mo | `/boot/efi` |
+| swap | 2 Go | — |
+| `/` | le reste (≈ 17 Go) | `/` |
 
-Avec LVM, un seul VG et deux LV (`racine`, `donnees`) : l'intérêt est de pouvoir étendre `donnees` plus tard
-sans toucher au reste.
+Ce qui y vit : Debian (≈ 2,5 Go), le dépôt, l'environnement Python de grappes avec PyTorch processeur
+(≈ 3,5 Go), celui de pilote (≈ 0,7 Go), SearXNG si installé (≈ 0,4 Go). Soit **≈ 8 Go utilisés**, le reste
+en marge pour les mises à jour et le cache d'apt.
 
-### Option propre — deux disques
+### Disque 2 — 250 Go minimum, toutes les données
 
-Disque 1 de 32 Go pour `/` (+ swap), disque 2 de 100 Go pour `/srv/grappes`. C'est la même chose, mais la
-sauvegarde et l'agrandissement du disque de données sont indépendants du système.
+Un seul système de fichiers, monté par exemple sur `/srv/grappes`. Le script y crée cinq dossiers :
 
-### Pourquoi 80 Go de données
+| Dossier | Contenu | Taille |
+| :-- | :-- | :-- |
+| `donnees/` | base SQLite de pilote, dossiers de travail des recherches, certificat | ≈ 2 Go, grossit avec l'usage |
+| `copies/` | copies locales des bases **et** leurs archives pendant l'import | ≈ 30 Go (SIRENE indexé ≈ 20 Go, + 4 Go d'archives pendant son import) |
+| `modeles/` | modèles de lecture de noms (sert de `HF_HOME` à grappes) | ≈ 1 Go |
+| `libretranslate/` | environnement et modèles de traduction hors ligne | ≈ 8 Go |
+| `overpass/` | base OpenStreetMap France, si Overpass est demandé | ≈ 100 Go |
 
-| Poste | Taille |
-| :-- | :-- |
-| SIRENE indexé (27 M unités légales + jointure des sièges) | ≈ 20 Go |
-| Archives SIRENE pendant l'import (0,98 + 2,88 Go, effacées après) | ≈ 4 Go |
-| RNA, OpenSanctions, Wikidata France, GeoNames France, geoBoundaries | ≈ 4 Go |
-| Fenêtre GDELT de 90 jours, filtrée France | 1 à 3 Go, à mesurer |
-| Dossiers de travail des recherches, base de pilote, journaux | ≈ 2 Go |
-| Marge (un import demande de la place pour l'archive **et** la base en même temps) | le reste |
+Total si tu installes tout, Overpass compris : **≈ 140 Go**. Les 250 Go laissent de quoi réimporter sans
+faire de place à la main, allonger la fenêtre GDELT, et ajouter des bases.
 
-Le minimum réel pour tout installer est de **45 Go**. 80 Go laisse de quoi réimporter SIRENE sans faire de
-place à la main, et de quoi grossir.
+Avec LVM, un VG sur le disque 2 et un LV `donnees` : tu pourras l'étendre plus tard sans rien démonter.
 
-### Si tu veux Overpass (géocodage OpenStreetMap local)
-
-**Un disque de plus, 100 Go, formaté et monté avant l'installation.** C'est la seule exigence de
-`outils/installer_overpass.sh`, et rien n'est formaté par les scripts. Sans Overpass, le géocodage passe par
-le service public : c'est fonctionnel, juste bridé en débit.
-
-## 3. Mettre les données sur la partition de données
-
-Par défaut, tout vit dans `pilote/donnees/`, donc sur la partition du dépôt. Deux lignes de
-`pilote/config/pilote.yaml` déplacent ce qui pèse :
-
-````yaml
-donnees:
-  dossier: /srv/grappes/donnees    # base SQLite, travail des recherches, certificat
-  copies: /srv/grappes/copies      # copies locales des bases (les gros fichiers)
-````
-
-À faire **avant** de lancer l'installation des bases : le script lit ces chemins dans la configuration, c'est
-sur eux qu'il vérifie la place disque, et c'est là qu'il versera les bases.
+### Préparer le disque 2
 
 ````bash
-sudo mkdir -p /srv/grappes/{donnees,copies}
+sudo mkfs.ext4 -L grappes /dev/sdb1
+echo 'LABEL=grappes /srv/grappes ext4 defaults,noatime 0 2' | sudo tee -a /etc/fstab
+sudo mkdir -p /srv/grappes && sudo mount /srv/grappes
 sudo chown -R "$USER:$USER" /srv/grappes
 ````
 
-## 4. L'installation
+Le script ne formate rien et ne monte rien : il refuse un dossier absent ou non accessible en écriture, et le
+dit. Il prévient aussi si le dossier donné se trouve en réalité sur le même système de fichiers que le dépôt.
+
+## 3. L'installation, d'un seul coup
 
 ````bash
 sudo apt-get update && sudo apt-get install -y git
 git clone https://github.com/NALSED/GRAPPES.git grappes
 cd grappes
-# déplacer les données maintenant (étape 3) si tu as une partition dédiée
-./installer_grappes.sh
+./installer_grappes.sh --tout --donnees /srv/grappes --overpass /srv/grappes/overpass
 ````
 
-Le script pose huit questions, dans cet ordre, avec une réponse par défaut entre crochets :
+`--tout` installe **chaque** étape sans poser de question : paquets système, environnements Python, outils de
+mesure, les six bases locales, la fenêtre GDELT de 90 jours, SearXNG, LibreTranslate, le service systemd, puis
+le lancement. `--donnees` place tout ce qui pèse sur le disque 2 (il écrit `pilote/config/pilote.yaml` et
+`grappes/config/ner.yaml`, en gardant les versions précédentes en `.yaml.avant`).
 
-| Étape | Défaut | Ce que ça change |
-| :-- | :-- | :-- |
-| 1. Paquets système | oui | la seule étape qui demande `sudo`. Sans `libicu-dev` et `pkg-config`, l'étape 2 échoue sur `pyicu` |
-| 2. Environnements Python | — | obligatoire, quelques minutes (PyTorch en version processeur) |
-| 2 bis. Outils de mesure | non | ≈ 500 Mo, servent seulement à mesurer la qualité du classement |
-| 3. Bases locales | oui | les six, ou une par une si tu réponds non au groupe. **SIRENE prend plusieurs heures** |
-| 4. Fenêtre GDELT | oui | des milliers de fichiers de 15 minutes ; long, et reprenable |
-| 5. SearXNG | oui | recherche web auto-hébergée, évite une API payante |
-| 6. LibreTranslate | non | ≈ 2–3 Go de modèles de traduction hors ligne |
-| 7. Overpass | non | demande le point de montage du disque de 100 Go |
-| 8. Service systemd puis lancement | oui | démarrage automatique, et survit à la déconnexion SSH |
+Overpass reste à part même avec `--tout`, parce qu'il demande un dossier qui ne se devine pas : sans
+`--overpass`, il est simplement sauté.
 
-Pour ne rien demander : `--tout`. Pour le strict nécessaire : `--minimal`. Chaque étape a son option
-(`--sans-gdelt`, `--bases "rna-local geonames-fr"`, `--overpass /mnt/osm`…), ce qui permet de rejouer une
-installation à l'identique. `./installer_grappes.sh --help` les liste.
-
-**C'est reprenable.** Une base déjà importée est sautée, un téléchargement coupé reprend où il en était, et un
-prérequis qui échoue n'arrête pas les autres : la liste de ce qui reste à faire est donnée à la fin, avec le
-journal (`installation.log`).
-
-### Faire l'installation en plusieurs fois
-
-C'est recommandé, parce que SIRENE et GDELT sont longs :
+**Compte plusieurs heures**, et tu peux fermer ta session SSH en route si tu lances sous `tmux` ou `screen` :
 
 ````bash
-./installer_grappes.sh --minimal                 # le socle, puis l'interface répond
-./installer_grappes.sh --sans-systeme --bases "geoboundaries-fr geonames-fr opensanctions-local rna-local wikidata-fr" --sans-gdelt
-./installer_grappes.sh --sans-systeme --bases "sirene-local" --sans-gdelt   # la grosse, à lancer le soir
-./installer_grappes.sh --sans-systeme --sans-bases --gdelt-jours 90
+tmux new -s grappes
+./installer_grappes.sh --tout --donnees /srv/grappes --overpass /srv/grappes/overpass
+# Ctrl-B puis D pour détacher ; tmux attach -t grappes pour revenir
 ````
 
-## 5. Atteindre l'interface depuis ton poste
+C'est **reprenable** : une base déjà importée est sautée, un téléchargement coupé reprend où il en était, un
+prérequis qui échoue n'arrête pas les autres. La liste de ce qui reste à faire est donnée à la fin, avec le
+journal (`installation.log`).
+
+### Si tu préfères étaler
+
+````bash
+./installer_grappes.sh --donnees /srv/grappes                 # pose les questions une par une
+./installer_grappes.sh --minimal --donnees /srv/grappes       # le socle seul : l'interface répond déjà
+./installer_grappes.sh --sans-systeme --bases "sirene-local" --sans-gdelt   # la grosse base, le soir
+````
+
+`./installer_grappes.sh --help` liste toutes les options.
+
+## 4. Atteindre l'interface depuis ton poste
 
 Par défaut le service n'écoute que la VM elle-même. Dans `pilote/config/pilote.yaml` :
 
@@ -134,17 +116,18 @@ service:
   hotes_autorises: [grappes.local]    # le nom par lequel tu y accèdes, en plus de la boucle locale
 ````
 
-Puis `systemctl --user restart pilote.service`. Le certificat est auto-signé et porte le nom de la machine, son
-adresse et les hôtes autorisés : le navigateur prévient à la première visite, c'est normal.
+Puis `systemctl --user restart pilote.service`. Le certificat est auto-signé et porte le nom de la machine,
+son adresse et les hôtes autorisés : le navigateur prévient à la première visite, c'est normal.
 
-## 6. Vérifier que tout est en place
+## 5. Vérifier que tout est en place
 
 ````bash
 curl -sk https://127.0.0.1:8443/api/sante            # {"ok":true,"grappes_present":true}
-cat pilote/donnees/bases_locales.json                 # une ligne par base importée, avec son nombre de lignes
+cat /srv/grappes/donnees/bases_locales.json          # une ligne par base, avec son nombre de lignes
+df -h / /srv/grappes                                 # la place prise de chaque côté
 systemctl --user status pilote.service
 cd pilote && .venv/bin/python -m pytest -q -k "not reseau and not chromium"
 ````
 
-La suite de tests demande que les deux environnements existent ; trois tests de mesure se sautent d'eux-mêmes
-si tu n'as pas installé les outils de mesure (étape 2 bis), en disant la commande qui les activerait.
+La suite de tests demande que les deux environnements existent. Trois tests de mesure se sautent d'eux-mêmes
+si les outils de mesure ne sont pas installés, en disant la commande qui les activerait.

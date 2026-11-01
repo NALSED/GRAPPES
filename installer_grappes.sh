@@ -14,6 +14,8 @@
 #   --searxng / --sans-searxng             méta-moteur de recherche web, auto-hébergé, local
 #   --libretranslate / --sans-libretranslate   traduction hors ligne (≈ 2–3 Go de modèles)
 #   --overpass /point/de/montage           géocodage OpenStreetMap local (exige un disque de 100 Go déjà monté)
+#   --donnees /point/de/montage            disque des données (250 Go et plus) : base, copies, modèles, traduction
+#   --sans-autre-disque                    tout garder dans le dépôt (déconseillé si le disque système est petit)
 #   --sans-overpass                        ne pas proposer Overpass
 #   --service / --sans-service             démarrage automatique de pilote (service systemd utilisateur)
 #   --lancer / --sans-lancer               lancer l'interface à la fin
@@ -33,7 +35,7 @@ journal="$racine/installation.log"
 
 # -1 = pas encore décidé (on demandera), 0 = non, 1 = oui
 systeme=-1; gdelt=-1; searxng=-1; libretranslate=-1; service=-1; lancer=-1; bases_choisies=""; sans_bases=-1; mesure=-1
-jours=90; garder=""; overpass_dir=""; overpass=-1; tout=0; minimal=0
+jours=90; garder=""; overpass_dir=""; overpass=-1; tout=0; minimal=0; donnees_mp=""; donnees_demande=-1
 BASES_PAR_DEFAUT="geoboundaries-fr geonames-fr opensanctions-local rna-local wikidata-fr sirene-local"
 
 while [ $# -gt 0 ]; do
@@ -50,6 +52,8 @@ while [ $# -gt 0 ]; do
     --libretranslate) libretranslate=1 ;; --sans-libretranslate) libretranslate=0 ;;
     --overpass) overpass_dir="${2:?}"; shift ;;
     --sans-overpass) overpass=0 ;;
+    --donnees) donnees_mp="${2:?}"; shift ;;
+    --sans-autre-disque) donnees_demande=0 ;;
     --service) service=1 ;;         --sans-service) service=0 ;;
     --lancer) lancer=1 ;;           --sans-lancer) lancer=0 ;;
     --garder) garder="--garder" ;;
@@ -97,6 +101,21 @@ if [ "$minimal" = 1 ]; then
   [ "$gdelt" = "-1" ] && gdelt=0; [ "$searxng" = "-1" ] && searxng=0
   [ "$libretranslate" = "-1" ] && libretranslate=0; [ "$service" = "-1" ] && service=0; [ "$mesure" = "-1" ] && mesure=0; overpass=0
 fi
+# `--tout` dit OUI à chaque étape, et ne se contente pas de prendre les réponses par défaut : sans ça, LibreTranslate
+# et les outils de mesure (dont la réponse par défaut est non, parce qu'ils sont lourds) étaient sautés en silence,
+# alors que « tout » veut dire tout. Seul Overpass reste à part : il exige un point de montage qui ne se devine pas,
+# donc il faut l'écrire (`--overpass /mnt/osm`) même avec `--tout`.
+if [ "$tout" = 1 ]; then
+  [ "$systeme" = "-1" ] && systeme=1
+  [ "$mesure" = "-1" ] && mesure=1
+  [ "$sans_bases" = "-1" ] && sans_bases=0
+  [ "$gdelt" = "-1" ] && gdelt=1
+  [ "$searxng" = "-1" ] && searxng=1
+  [ "$libretranslate" = "-1" ] && libretranslate=1
+  [ "$service" = "-1" ] && service=1
+  [ "$lancer" = "-1" ] && lancer=1
+  note "mode « tout » : chaque étape est installée. Overpass reste hors du lot (il demande un disque monté : --overpass /point/de/montage)."
+fi
 
 # ---------------------------------------------------------------- 1. paquets système
 # libicu-dev + pkg-config : sans eux, `pip install -e grappes` échoue sur pyicu (dépendance de followthemoney) avec un
@@ -137,6 +156,73 @@ else
 fi
 PY="$racine/pilote/.venv/bin/python"
 [ -x "$PY" ] || { echo "L'environnement de pilote est introuvable : voir $journal" >&2; exit 1; }
+
+# ---------------------------------------------------------------- 2 ter. placer les données sur l'autre disque
+# Deux disques, deux rôles : un petit pour grappes (le dépôt et les deux environnements Python, ≈ 8 Go), un grand pour
+# TOUT ce qui pèse et qui grossit. Le script place lui-même les quatre postes lourds, au lieu de laisser éditer le YAML :
+#   <disque>/donnees        base SQLite de pilote, dossiers de travail des recherches, certificat
+#   <disque>/copies         copies locales des bases (SIRENE à lui seul ≈ 20 Go indexés)
+#   <disque>/modeles        modèles de lecture de noms (HF_HOME de grappes)
+#   <disque>/libretranslate environnement et modèles de traduction (≈ 8 Go, mesuré sur la VM de momo)
+#   <disque>/overpass       base OpenStreetMap, si Overpass est demandé (≈ 100 Go)
+dire "2 ter/8 — Emplacement des données"
+if [ -z "$donnees_mp" ] && [ "$donnees_demande" != 0 ]; then
+  note "grappes tient sur ≈ 8 Go ; les données demandent 250 Go et plus. Elles vont normalement sur un second disque."
+  if veut "-1" "Mettre les données sur un autre disque (déjà formaté et monté) ?" "o" && [ -n "$_tty" ]; then
+    printf '   Point de montage du disque de données : '
+    read -r donnees_mp < "$_tty" || donnees_mp=""
+  fi
+fi
+if [ -n "$donnees_mp" ]; then
+  if [ ! -d "$donnees_mp" ]; then
+    rate "« $donnees_mp » n'est pas un dossier : montez le disque d'abord (rien n'est formaté ici). Les données restent dans le dépôt."
+    donnees_mp=""
+  elif ! ( : > "$donnees_mp/.essai_grappes" ) 2>/dev/null; then
+    rate "« $donnees_mp » n'est pas accessible en écriture (sudo chown -R \"\$USER\" $donnees_mp). Les données restent dans le dépôt."
+    donnees_mp=""
+  else
+    rm -f "$donnees_mp/.essai_grappes"
+    taille_go=$(df -B1000000000 --output=size "$donnees_mp" 2>/dev/null | tail -1 | tr -dc '0-9')
+    [ "$(stat -c %d "$donnees_mp" 2>/dev/null)" = "$(stat -c %d "$racine" 2>/dev/null)" ] \
+      && note "ATTENTION : $donnees_mp est sur LE MÊME système de fichiers que le dépôt — le but d'un second disque est perdu."
+    [ "${taille_go:-0}" -lt 250 ] && note "ATTENTION : ce disque fait ${taille_go:-?} Go ; 250 Go est le minimum conseillé (SIRENE indexé ≈ 20 Go, Overpass ≈ 100 Go, LibreTranslate ≈ 8 Go)."
+    mkdir -p "$donnees_mp"/{donnees,copies,modeles,libretranslate}
+    if "$PY" - "$racine" "$donnees_mp" >>"$journal" 2>&1 <<'PYEOF'
+import sys
+from pathlib import Path
+
+import yaml
+
+racine, mp = Path(sys.argv[1]), Path(sys.argv[2])
+# pilote : où vont la base, le travail des recherches et les copies
+f = racine / "pilote/config/pilote.yaml"
+y = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+y.setdefault("donnees", {})
+y["donnees"]["dossier"] = str(mp / "donnees")
+y["donnees"]["copies"] = str(mp / "copies")
+f.with_suffix(".yaml.avant").write_text(f.read_text(encoding="utf-8"), encoding="utf-8")
+f.write_text(yaml.safe_dump(y, allow_unicode=True, sort_keys=False), encoding="utf-8")
+print(f"pilote.yaml : donnees -> {mp}/donnees, copies -> {mp}/copies")
+# grappes : où vont les modèles de lecture de noms (ils servent de HF_HOME)
+g = racine / "grappes/config/ner.yaml"
+if g.exists():
+    yg = yaml.safe_load(g.read_text(encoding="utf-8")) or {}
+    yg["modeles_dir"] = str(mp / "modeles")
+    g.with_suffix(".yaml.avant").write_text(g.read_text(encoding="utf-8"), encoding="utf-8")
+    g.write_text(yaml.safe_dump(yg, allow_unicode=True, sort_keys=False), encoding="utf-8")
+    print(f"ner.yaml : modeles_dir -> {mp}/modeles")
+PYEOF
+    then
+      tail -2 "$journal" | sed 's/^/      /'
+      note "les anciennes configurations sont gardées en .yaml.avant"
+    else
+      rate "la configuration n'a pas pu être modifiée : voir le journal"
+      donnees_mp=""
+    fi
+  fi
+else
+  note "les données restent dans le dépôt (pilote/donnees) : à surveiller si le disque système est petit"
+fi
 
 # ---------------------------------------------------------------- 2 bis. extra de mesure (autocal)
 # `pytrec_eval` et compagnie : ils ne servent QU'À MESURER la qualité du classement et des rapprochements
@@ -233,8 +319,14 @@ if [ -n "$BASES" ]; then
   besoin=0; for id in $BASES; do besoin=$((besoin + $(place_de "$id"))); done
   note "${libre_go:-?} Go libres ; ~$besoin Go nécessaires pour les bases demandées"
   if [ "${libre_go:-0}" -lt "$besoin" ]; then
-    note "Place insuffisante. Chaque import vérifie lui-même la place et s'arrête avant de remplir le disque."
-    veut "-1" "Continuer quand même ?" "n" || BASES=""
+    note "ATTENTION : place annoncée insuffisante. Chaque import vérifie lui-même la place et s'arrête avant de remplir le disque."
+    # Sans terminal, ou en mode « tout », on CONTINUE : abandonner toutes les bases en silence serait pire que de
+    # laisser chaque import refuser la sienne, ce qu'il sait faire et dire.
+    if [ -t 0 ] && [ "$tout" != 1 ] && [ -n "$_tty" ]; then
+      demander "Continuer quand même ?" "n" || BASES=""
+    else
+      note "on continue : les imports trop gros s'arrêteront d'eux-mêmes, en le disant."
+    fi
   fi
 fi
 for id in $BASES; do
@@ -271,16 +363,38 @@ fi
 
 # ---------------------------------------------------------------- 6. LibreTranslate
 dire "6/8 — LibreTranslate (traduction hors ligne)"
-note "≈ 2–3 Go de modèles (fr, en, es, de, it, ar, ru, zh) ; sans lui, la tuile Traduction reste éteinte"
+note "≈ 8 Go avec son environnement et ses modèles (fr, es, de, it, ar, ru, zh vers et depuis l'anglais)"
+note "sans lui, la tuile Traduction reste éteinte et le plan de travail le dit"
 if veut "$libretranslate" "Installer LibreTranslate et ses modèles ?" "n"; then
-  if [ -x "$racine/pilote/outils/libretranslate/installer_modeles.py" ] || [ -f "$racine/pilote/outils/libretranslate/installer_modeles.py" ]; then
-    if "$PY" "$racine/pilote/outils/libretranslate/installer_modeles.py" >>"$journal" 2>&1; then
-      note "installé — voir outils/libretranslate/LISEZMOI.md pour le service"
-    else
-      rate "LibreTranslate (voir le journal et outils/libretranslate/LISEZMOI.md)"
-    fi
+  # La recette est celle de outils/libretranslate/LISEZMOI.md : un environnement à part (ses dépendances ne sont pas
+  # celles de pilote), et XDG_DATA_HOME / XDG_CACHE_HOME pour que les modèles aillent dans CE dossier et pas dans le
+  # dossier personnel — c'est ce qui permet de les poser sur le disque des données.
+  lt="${donnees_mp:+$donnees_mp/libretranslate}"
+  lt="${lt:-$racine/pilote/outils/libretranslate}"
+  mkdir -p "$lt"
+  cp -n "$racine/pilote/outils/libretranslate/installer_modeles.py" "$racine/pilote/outils/libretranslate/lancer.sh" "$lt/" 2>/dev/null || true
+  note "emplacement : $lt"
+  if [ ! -x "$lt/venv/bin/python" ]; then
+    python3 -m venv "$lt/venv" >>"$journal" 2>&1 && "$lt/venv/bin/pip" -q install argostranslate libretranslate >>"$journal" 2>&1 \
+      || rate "LibreTranslate : son environnement n'a pas pu être créé (voir le journal)"
+  fi
+  if [ -x "$lt/venv/bin/python" ] && XDG_DATA_HOME="$lt/donnees" XDG_CACHE_HOME="$lt/cache" "$lt/venv/bin/python" "$lt/installer_modeles.py" >>"$journal" 2>&1; then
+    # La tuile Traduction ne s'allume que si l'adresse du service est dans la configuration (LISEZMOI).
+    "$PY" - "$racine" >>"$journal" 2>&1 <<'PYEOF'
+import sys
+from pathlib import Path
+
+import yaml
+
+f = Path(sys.argv[1]) / "pilote/config/pilote.yaml"
+y = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+y.setdefault("suite", {})["traduction_url"] = "http://127.0.0.1:5000"
+f.write_text(yaml.safe_dump(y, allow_unicode=True, sort_keys=False), encoding="utf-8")
+print("pilote.yaml : suite.traduction_url -> http://127.0.0.1:5000")
+PYEOF
+    note "installé ; lancer le service : $lt/lancer.sh  (démarrage automatique : voir outils/libretranslate/LISEZMOI.md)"
   else
-    rate "LibreTranslate : outils/libretranslate/installer_modeles.py est introuvable"
+    rate "LibreTranslate : les modèles ne sont pas installés (voir le journal et outils/libretranslate/LISEZMOI.md)"
   fi
 else
   note "sauté"
@@ -288,9 +402,17 @@ fi
 
 # ---------------------------------------------------------------- 7. Overpass
 dire "7/8 — Overpass (géocodage OpenStreetMap local, France)"
-note "exige Docker et un disque de 100 Go DÉJÀ monté ; sans lui, le géocodage passe par le service public"
+note "exige Docker et ≈ 100 Go ; sans lui, le géocodage passe par le service public (bridé en débit, pas absent)"
 if [ -z "$overpass_dir" ] && [ "$overpass" != 0 ] && [ "$tout" != 1 ] && veut "-1" "Installer Overpass ?" "n"; then
-  if [ -n "$_tty" ]; then printf '   Point de montage du disque de 100 Go : '; read -r overpass_dir < "$_tty" || overpass_dir=""; fi
+  defaut_over="${donnees_mp:+$donnees_mp/overpass}"
+  if [ -n "$_tty" ]; then
+    printf '   Dossier pour la base OpenStreetMap%s : ' "${defaut_over:+ [$defaut_over]}"
+    read -r overpass_dir < "$_tty" || overpass_dir=""
+    overpass_dir="${overpass_dir:-$defaut_over}"
+  else
+    overpass_dir="$defaut_over"
+  fi
+  [ -n "$overpass_dir" ] && mkdir -p "$overpass_dir" 2>/dev/null
 fi
 if [ -n "$overpass_dir" ]; then
   if [ ! -d "$overpass_dir" ]; then
