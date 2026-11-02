@@ -87,6 +87,48 @@ def test_preparer_copie_la_config_et_ne_touche_pas_la_vraie(tmp_path):
     assert "autre" in (g / "config" / "sujets.yaml").read_text()
 
 
+# --- Interrupteur global de la règle n° 8 (02/11/2026, demande de Sednal, informé du risque légal avant de le demander quand même) :
+# change seulement le DÉFAUT du lever 3 pour une recherche qui ne règle pas elle-même sa case ; une case explicite garde toujours la main.
+def test_interrupteur_global_regle8_ne_change_que_le_defaut_du_lever_de_recherche(tmp_path):
+    from conftest import copier_config
+
+    import yaml
+
+    from pilote import reglages as rg
+
+    cfg = charger(copier_config(tmp_path / "pilote"))
+    g = tmp_path / "g"
+    (g / "config" / "recherche").mkdir(parents=True)
+    (g / "config" / "autonomie.yaml").write_text("autonome: true\nquotas: {requetes_par_cycle: 20}\ninterdits: []\n", encoding="utf-8")
+    (g / "config" / "classement.yaml").write_text("actif: true\n", encoding="utf-8")
+    (g / "config" / "recherche.yaml").write_text("actifs: [wikipedia]\n", encoding="utf-8")
+    (g / "config" / "recherche" / "wikipedia.yaml").write_text("id: wikipedia\ntype: http\n", encoding="utf-8")
+    (g / "config" / "sujets.yaml").write_text("sujets: []\n", encoding="utf-8")
+    from dataclasses import replace
+
+    c2 = replace(cfg, grappes_racine=g)
+    import threading
+
+    def preparer_avec(parametres):
+        d = tmp_path / "travail" / str(id(parametres))
+        d.mkdir(parents=True)
+        ctx = ContexteRecherche("abc", {"quoi": "clubs", "pays": "France"}, {"profondeur": "strict", "sources": ["wikipedia"], **parametres}, d, "sednal", threading.Event(), None)
+        return preparer(c2, ctx)
+
+    # interrupteur global coupé (par défaut) : une recherche qui ne règle pas sa propre case reste au comportement normal
+    assert preparer_avec({})["regle8_afficher_comptes"] is False
+    # la case d'UNE recherche garde toujours la main, interrupteur global coupé ou pas
+    assert preparer_avec({"regle8_afficher_comptes": True})["regle8_afficher_comptes"] is True
+
+    rg.appliquer(cfg, {}, set(), {"regle8": {"global_actif": True}})
+    assert yaml.safe_load(cfg.fichier_reglages.read_text())["regle8"]["global_actif"] is True
+
+    # interrupteur global activé : le DÉFAUT d'une recherche qui ne règle pas sa case suit maintenant l'interrupteur
+    assert preparer_avec({})["regle8_afficher_comptes"] is True
+    # mais une case explicitement réglée à vrai sur une recherche continue de l'emporter (rien ne change pour elle)
+    assert preparer_avec({"regle8_afficher_comptes": True})["regle8_afficher_comptes"] is True
+
+
 def test_suivi_compte_exactement_les_appels(tmp_path):
     f = tmp_path / "av.jsonl"
     lignes = [

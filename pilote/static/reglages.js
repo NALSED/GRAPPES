@@ -282,6 +282,10 @@
         .then(function(){el("sortie-msg").textContent="Enregistré.";erreur("")}).catch(function(e){el("sortie-msg").textContent="";erreur(e.message)})})};
     el("verif-sw").checked=D.verification.active;
     el("verif-txt").innerHTML=D.verification.active?TXT_ACTIF:TXT_COUPEE;
+    el("regle8-sw").checked=(D.regle8||{}).global_actif===true;
+    el("regle8-txt").innerHTML=(D.regle8||{}).global_actif
+      ? "Activée — les nouvelles recherches affichent par défaut les comptes qu'écarterait la règle n° 8."
+      : "Coupée — la règle n° 8 s'applique par défaut, comme d'habitude.";
     /* Mode « plus » : appeler aussi les sources qui ne savent QUE vérifier (une capture d'archive, une liste de sanctions). */
     var seules=D.verification.verificatrices_seules||[];
     el("verif-mode-zone").style.display=D.verification.active&&seules.length?"flex":"none";
@@ -302,6 +306,11 @@
     var sw=this, mode=sw.checked?"plus":"memes", actif=D.verification.active;  /* lus au clic, pas dans la file */
     file(function(){return envoyer("/api/reglages/verification","PUT",{active:actif,mode:mode})
       .then(function(){erreur("");return charger()}).catch(function(e){sw.checked=mode!=="plus";erreur(e.message)})});
+  };
+  el("regle8-sw").onchange=function(){
+    var sw=this, cible=sw.checked;  /* lu au clic, pas dans la file */
+    file(function(){return envoyer("/api/reglages/regle8","PUT",{global_actif:cible})
+      .then(function(){erreur("");return charger()}).catch(function(e){sw.checked=!cible;erreur(e.message)})});
   };
   el("cat-voir").onclick=rendreCatalogue;
   el("budget-ok").onclick=function(){

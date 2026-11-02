@@ -61,6 +61,11 @@ class CorpsVerification(BaseModel):
     qui: str | None = None
 
 
+class CorpsRegle8(BaseModel):
+    global_actif: bool
+    qui: str | None = None
+
+
 class CorpsPays(BaseModel):
     pays: str
     qui: str | None = None
@@ -306,6 +311,7 @@ def construire(cfg: Config, fabrique: sessionmaker[Session]) -> APIRouter:
             "presets": presets.cartes(cfg, decls), "presets_coches": reg["presets_coches"], "budget": budget.vue(cfg, fabrique),
             "verification": {"active": reg["verification"]["active"] is True, "mode": str(reg["verification"].get("mode") or "memes"),
                              "verificatrices_seules": sorted(d.nom for d in decls.values() if "verifier" in d.roles and "chercher" not in d.roles and d.verifie_sur in ("site", "nom"))}, "sortie": {"dossier": so.get("dossier", ""), "webhook_url": so.get("webhook_url", "")}, "pays": reg["pays"],
+            "regle8": {"global_actif": bool((reg.get("regle8") or {}).get("global_actif"))},
             "modeles_ia": list(reg.get("modeles_ia") or []),
             "assistant": {"termine": bool(reg["assistant"].get("termine")), "premiere_installation": not rg.existe(cfg)},
             "catalogue_nb_pays": len(catalogue_pays.charger(cfg)[0]),
@@ -356,6 +362,14 @@ def construire(cfg: Config, fabrique: sessionmaker[Session]) -> APIRouter:
             patch["mode"] = corps.mode
         res = appliquer({"verification": patch}, corps.qui, "verification_activee" if corps.active else "verification_coupee", corps.mode or "")
         return {"active": corps.active, "mode": res["verification"].get("mode", "memes")}
+
+    @r.put("/reglages/regle8")
+    def regle8_global(corps: CorpsRegle8) -> dict[str, Any]:
+        """Interrupteur GLOBAL (document 27, revu le 02/11/2026 à la demande de Sednal, informé du risque légal CNIL/RGPD avant de le
+        demander quand même). Ne change que le DÉFAUT du lever 3 pour les recherches à venir (executeur_grappes.preparer) : ni le genre
+        constaté (faits.regle8_personne, jamais réécrit) ni la sortie FollowTheMoney (ouverte seulement fiche par fiche) n'en dépendent."""
+        appliquer({"regle8": {"global_actif": corps.global_actif}}, corps.qui, "regle8_global_active" if corps.global_actif else "regle8_global_coupe", "")
+        return lire()
 
     @r.put("/reglages/pays")
     def pays(corps: CorpsPays) -> dict[str, Any]:

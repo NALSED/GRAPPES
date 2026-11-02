@@ -24,6 +24,12 @@ DEFAUT: dict[str, Any] = {
     "avertissements_vus": [],  # sources dont l'avertissement a déjà été montré et accepté (il n'est montré qu'une fois)
     # Place réservée (fiche 15, rien n'est branché) : la liste des modèles d'IA que l'utilisateur ajoutera un jour (nom, adresse, clé).
     "modeles_ia": [],
+    # Interrupteur GLOBAL sur la règle n° 8 (document 27, revu le 02/11/2026 à la demande de Sednal, qui a été informé du risque légal
+    # CNIL/RGPD avant de le demander quand même — voir `27-leviers-regle8-a-faire-par-sednal.md`). À vrai : chaque NOUVELLE recherche qui
+    # ne règle pas elle-même le lever 3 (`regle8_afficher_comptes`) part avec lui activé par défaut (executeur_grappes.preparer). Les deux
+    # garde-fous qu'aucun levier n'a le droit d'ouvrir restent intacts : le genre constaté n'est jamais réécrit (faits.regle8_personne suit
+    # toujours la fiche), et la sortie FollowTheMoney n'est rouverte que fiche par fiche (regle8_leve), jamais par cet interrupteur.
+    "regle8": {"global_actif": False},
 }
 ENTETE = "# Choix de l'utilisateur (écrit par pilote, lisible à la main). Les déclarations des sources sont dans sources/.\n"
 
@@ -142,6 +148,8 @@ def verifier(r: dict[str, Any], decls: dict[str, Declaration], presets_connus: s
     _nombre(b.get("plafond_mensuel_usd"), "Le plafond de dépense mensuel", 0.0, 100000.0)
     if not isinstance((r.get("verification") or {}).get("active"), bool):
         raise ConfigRefusee("La vérification doit être activée ou désactivée (oui ou non).")
+    if not isinstance((r.get("regle8") or {}).get("global_actif", False), bool):
+        raise ConfigRefusee("L'interrupteur global de la règle n° 8 doit être activé ou désactivé (oui ou non).")
     if (r.get("verification") or {}).get("mode", "memes") not in ("memes", "plus"):
         raise ConfigRefusee("Le mode de vérification doit être « memes » (les sources de recherche) ou « plus » (avec des sources de vérification en plus).")
     so = r.get("sortie") or {}

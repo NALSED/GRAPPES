@@ -127,7 +127,10 @@ def preparer(cfg: Config, ctx: ContexteRecherche) -> dict[str, Any]:
         "exclues_budget": mat.exclues_budget, "origines_sources": mat.origines, "mains_sources": mat.mains, "entree": entree,
         "emoji": {"saisie": contient(" ".join([phrase, str(sujet.get("lieu", "")), *map(str, sujet.get("inclure") or [])])), "ok": mat.emoji_ok, "moteur_recoit": emoji_seul},
         "plafond_atteint": depense >= plafond, "limite_source_s": min(float(lim["temps_s"]), 180.0) if lim.get("temps_s") else 180.0, "en_pause": mat.en_pause, "reserve_sources": reserve, "reserve_verification": reserve_verif,
-        "regle8_afficher_comptes": bool(params.get("regle8_afficher_comptes", False)),  # lever 3 (27-leviers-regle8-a-faire-par-sednal.md) : scopé à cette recherche, validé dans lancement.valider_options
+        # Lever 3 (27-leviers-regle8-a-faire-par-sednal.md), validé dans lancement.valider_options. Son défaut, quand cette recherche ne le
+        # règle pas elle-même (case absente du formulaire, jamais envoyée à faux), suit l'interrupteur GLOBAL (réglages.regle8.global_actif,
+        # revu le 02/11/2026 à la demande de Sednal) : à faux (par défaut du défaut), la règle n° 8 s'applique comme avant.
+        "regle8_afficher_comptes": bool(params.get("regle8_afficher_comptes", rg.charger_tolerant(cfg)[0].get("regle8", {}).get("global_actif", False))),
     }  # fmt: skip
     if params.get("plan"):  # le plan de travail compilé (suite_plan) : les étapes à jouer sur les noms, les requêtes à traduire, les vérifications à restreindre
         plan = dict(params["plan"])
