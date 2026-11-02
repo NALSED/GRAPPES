@@ -201,9 +201,13 @@ def _surcouche(cfg: Config, ident: str, champs: dict[str, Any]) -> None:
 
 
 def modifier_source(cfg: Config, ident: str, d: dict[str, Any]) -> dict[str, Any]:
-    """MODIFIER : seul ce que la suite ajoute change (langue, rôle d'affichage, catégorie, fiabilité A–F). Le nom, le coût, le pays, le quota sont ceux de
-    la déclaration : ils ne se changent pas depuis ici, et un envoi qui les contient est simplement ignoré."""
+    """MODIFIER : ce que la suite ajoute (langue, rôle d'affichage, catégorie, fiabilité A–F) va dans sa surcouche. Le nom, le coût, le pays,
+    le quota sont ceux de la déclaration : ils ne se changent pas depuis ici, et un envoi qui les contient est simplement ignoré.
+    `parametres` (réglages non-secrets propres à une source, ex. portail CKAN) n'est PAS de la surcouche : c'est un champ de la déclaration
+    partagée avec l'ancienne page, donc il est écrit par `suite_reel.definir_parametres`, pas ignoré."""
     _surcouche(cfg, ident, {k: d[k] for k in ("langue", "role", "cat", "fiabilite") if k in d})
+    if d.get("parametres"):
+        suite_reel.definir_parametres(cfg, ident, dict(d["parametres"]))
     return {"id": ident}
 
 

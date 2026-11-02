@@ -110,6 +110,15 @@ export function ficheSource(id) {
     exemple: champ({ libelle: "Exemple de réponse", lignes: 5, code: true, obligatoire: true, aide: "Une vraie réponse du service. Le test la lit ; il n'appelle jamais la source." }),
     tarif: champ({ libelle: "Prix par appel (dollars)", placeholder: "0.005" }),
   };
+  // réglages non-secrets propres à la source (ex. adresse du portail CKAN) : ni une clé ni un coût, mais sans eux la
+  // source reste « à vérifier » ; absents des deux interfaces jusqu'au 02/11/2026 (retour de Sednal : « je mets ça où ? »)
+  const attendus = s.parametres_attendus || {};
+  const fParams = {};
+  Object.keys(attendus).forEach((nom) => {
+    const spec = attendus[nom] || {};
+    fParams[nom] = champ({ libelle: spec.libelle || nom, valeur: (s.parametres || {})[nom] || "", type: spec.type === "url" ? "url" : "text", obligatoire: !!spec.requis, placeholder: spec.exemple || "" });
+  });
+  const champsParametres = Object.keys(fParams).map((nom) => fParams[nom].el);
   const zones = { cat: h("div", { class: "champ" }), role: h("div", { class: "champ" }), cout: h("div", { class: "champ" }), fiab: h("div", { class: "champ" }), auth: h("div", { class: "champ" }) };
   const manque = h("div", { class: "mot-manque", role: "status" });
   const principal = bouton({ libelle: edition ? VERBES.enregistrer : `${VERBES.ajouter} la source`, variante: "principal", onclick: valider });
@@ -139,8 +148,9 @@ export function ficheSource(id) {
   }
 
   async function valider() {
+    const parametresValeurs = Object.fromEntries(Object.keys(fParams).map((nom) => [nom, fParams[nom].valeur()]));
     const corps = edition
-      ? { cat: val.cat, role: val.role, langue: f.langue.valeur(), fiabilite: fiabiliteVoulue() }
+      ? { cat: val.cat, role: val.role, langue: f.langue.valeur(), fiabilite: fiabiliteVoulue(), ...(champsParametres.length ? { parametres: parametresValeurs } : {}) }
       : { nom: f.nom.valeur(), cat: val.cat, role: val.role, cout: val.cout, fiabilite: fiabiliteVoulue(), pays: f.pays.valeur(), langue: f.langue.valeur(), description: f.desc.valeur(),
           url: f.url.valeur(), parametre_requete: f.requete.valeur(), champ_nom: f.champNom.valeur(), liste: f.liste.valeur(), exemple: f.exemple.valeur(), tarif: f.tarif.valeur(),
           cle_valeur: f.cle.valeur(), auth: val.auth };
@@ -186,6 +196,7 @@ export function ficheSource(id) {
       s.copie && lecture("Mise à jour", s.copie.installee ? s.copie.date : "copie non installée sur cette machine"),
       h("p", { class: "legende" }, "Le nom, le coût, le pays et le quota viennent de la déclaration de la source : ils ne se changent pas d'ici."),
       !s.copie && s.acces !== "base_exterieure" && s.cle_requise && f.cle.el, !s.copie && s.acces !== "base_exterieure" && s.cle_requise && s.cle && h("span", { class: "legende" }, "clé enregistrée"),
+      champsParametres.length > 0 && champsParametres,
       h("div", { class: "champ" }, h("span", { class: "titre-champ" }, "État"), h("div", { class: "pied-boutons" }, pastilleEtat(s.etat, ETATS_SOURCE), interrupteur)),
       tests,
     ]

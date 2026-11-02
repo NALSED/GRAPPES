@@ -132,6 +132,7 @@ def vue_source(
         "cout": "payant" if d.payant else "gratuit", "fiabilite": sur.get("fiabilite") if sur.get("fiabilite") in tuple(FIABILITES) else fiabilite_par_defaut(d), "fiabilite_choisie": sur.get("fiabilite") in tuple(FIABILITES), "pays": pays[0], "pays_codes": pays,
         "langue": sur.get("langue") or LANGUE_DU_PAYS.get(pays[0], ""), "etat": etat, "quota": _quota(d, e, unites), "description": d.description,
         "retiree": bool(sur.get("retiree")), "test_reussi": teste, "tests": tests, "declaree": True, "cle_requise": bool(d.cles),
+        "parametres_attendus": d.parametres, "parametres": rg.parametres_donnes(reg, d.id),
         "cle": bool(d.cles) and cles.toutes_presentes(cfg, d.cles), "voyant": mot, "domaine": domaine_source(d), "chercher": ch["chercher"], "verifier": ch["verifier"],
         "emoji": "emoji" in d.consomme, "acces": acces, "machine": machine, "copie": copie, "peut_chercher": "chercher" in d.roles, "verifie_sur": d.verifie_sur if "adaptateur" in d.moteur else "", "avertissement": d.avertissement, "adaptateur_manquant": manquant,
     }  # fmt: skip
@@ -210,6 +211,17 @@ def ecrire_cle(cfg: Config, ident: str, valeur: str) -> None:
     if not d.cle:
         raise ConfigRefusee(f"« {d.nom} » n'a pas de clé d'API.")
     cles.ecrire(cfg, d.cle, valeur)
+
+
+def definir_parametres(cfg: Config, ident: str, parametres: dict[str, Any]) -> None:
+    """Les réglages non-secrets propres à une source (ex. adresse du portail CKAN) : même mécanisme que `allumer`, sur
+    le même patch « source » de Réglages — la suite n'a pas sa propre copie de ces valeurs, elle écrit la déclaration
+    partagée avec l'ancienne page (02/11/2026, même champ manquant des deux côtés : retour de Sednal)."""
+    from pilote import presets
+
+    d = declaration(cfg, ident)
+    decls, _ = charger_sources(cfg)
+    rg.appliquer(cfg, decls, presets.ids_connus(cfg), {"source": {"id": ident, "parametres": parametres}})
 
 
 def ajouter_api(cfg: Config, d: dict[str, Any]) -> str:
