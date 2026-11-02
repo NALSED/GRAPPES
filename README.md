@@ -1,4 +1,19 @@
-# GRAPPES
+# GRAPPES — les specs
+
+> ## Qui travaille où (02/11/2026)
+>
+> | Dépôt | Rôle | Qui y écrit |
+> | :-- | :-- | :-- |
+> | **NALSED/GRAPPES** (ici) | **les specs** | Sednal et Claude |
+> | **NALSED/GAPPES-FINAL** | **le code** | momo |
+>
+> **momo : tu ne codes pas ici.** Les specs à implémenter sont dans [`specs/`](specs/), une par
+> point, avec leur état dans [`specs/000-INDEX.md`](specs/000-INDEX.md). Une spec ne part au code que
+> lorsque Sednal l'a validée.
+>
+> Le code présent dans `grappes/` et `pilote/` ci-dessous **reste provisoirement** : la VM de test
+> (.115) tourne encore sur ce dépôt, et GAPPES-FINAL n'a pas encore son outillage d'installation. Il
+> part dès que ce déménagement est fait.
 
 Entités (organisations, groupes, sites) rangées en **grappes** par proximité sémantique et validation par recoupement de sources.
 
