@@ -58,6 +58,12 @@ Sednal les a écrites dix fois, une par outil. Elles sont spécifiées une seule
 | « Rôles ET Effet => dans le Tableau de bord pas clair du tout » | traité dans `1.1-tableau-de-bord.md` §5 et §6 | dépend de 1.1 |
 | « Clé d'API => Pertinent ??? » | `T4-cle-api-des-outils.md` | à traiter |
 
+## Hors du pavé — infrastructure
+
+| Sujet | Document | État |
+| :-- | :-- | :-- |
+| Déménager l'outillage d'installation vers GAPPES-FINAL, pour que .115 tourne depuis le dépôt de momo | `900-demenagement-du-code.md` | à valider — doit se faire **avant** que GRAPPES soit vidé de `grappes/` et `pilote/` |
+
 ## Après le pavé
 
 | Sujet | État |
