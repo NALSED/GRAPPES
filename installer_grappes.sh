@@ -264,28 +264,45 @@ if [ -n "$donnees_mp" ]; then
     [ "${taille_go:-0}" -lt 250 ] && note "ATTENTION : ce disque fait ${taille_go:-?} Go ; 250 Go est le minimum conseillé (SIRENE indexé ≈ 20 Go, Overpass ≈ 100 Go, LibreTranslate ≈ 8 Go)."
     mkdir -p "$donnees_mp"/{donnees,copies,modeles,libretranslate}
     if py_dire "$racine" "$donnees_mp" <<'PYEOF'
+import re
 import sys
 from pathlib import Path
 
-import yaml
+
+def remplacer_valeur(texte, motif_cle, valeur, n=1):
+    """Remplace la valeur d'une clé YAML scalaire simple en préservant le commentaire en fin de
+    ligne, sans dépendre d'une valeur déjà présente (cas « copies: » vide) ni de sa largeur.
+    Jamais un aller-retour yaml.safe_load/safe_dump : ça efface tous les commentaires du fichier
+    et, pire, fait passer une clé à deux lettres (ex. "NO" pour la Norvège, dans pays_proposes)
+    par le résolveur booléen de PyYAML — bug trouvé le 02/11/2026 sur .115."""
+    motif = re.compile(rf"(?m)^({motif_cle})(.*)$")
+
+    def sub(m):
+        prefixe, reste = m.group(1), m.group(2)
+        if "#" in reste:
+            _avant, commentaire = reste.split("#", 1)
+            return f"{prefixe} {valeur}  #{commentaire}"
+        return f"{prefixe} {valeur}"
+
+    return motif.sub(sub, texte, count=n)
+
 
 racine, mp = Path(sys.argv[1]), Path(sys.argv[2])
 # pilote : où vont la base, le travail des recherches et les copies
 f = racine / "pilote/config/pilote.yaml"
-y = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
-y.setdefault("donnees", {})
-y["donnees"]["dossier"] = str(mp / "donnees")
-y["donnees"]["copies"] = str(mp / "copies")
-f.with_suffix(".yaml.avant").write_text(f.read_text(encoding="utf-8"), encoding="utf-8")
-f.write_text(yaml.safe_dump(y, allow_unicode=True, sort_keys=False), encoding="utf-8")
+texte = f.read_text(encoding="utf-8")
+f.with_suffix(".yaml.avant").write_text(texte, encoding="utf-8")
+texte = remplacer_valeur(texte, r"\s*dossier:", mp / "donnees")
+texte = remplacer_valeur(texte, r"\s*copies:", mp / "copies")
+f.write_text(texte, encoding="utf-8")
 print(f"pilote.yaml : donnees -> {mp}/donnees, copies -> {mp}/copies")
 # grappes : où vont les modèles de lecture de noms (ils servent de HF_HOME)
 g = racine / "grappes/config/ner.yaml"
 if g.exists():
-    yg = yaml.safe_load(g.read_text(encoding="utf-8")) or {}
-    yg["modeles_dir"] = str(mp / "modeles")
-    g.with_suffix(".yaml.avant").write_text(g.read_text(encoding="utf-8"), encoding="utf-8")
-    g.write_text(yaml.safe_dump(yg, allow_unicode=True, sort_keys=False), encoding="utf-8")
+    texte_g = g.read_text(encoding="utf-8")
+    g.with_suffix(".yaml.avant").write_text(texte_g, encoding="utf-8")
+    texte_g = remplacer_valeur(texte_g, r"modeles_dir:", mp / "modeles")
+    g.write_text(texte_g, encoding="utf-8")
     print(f"ner.yaml : modeles_dir -> {mp}/modeles")
 PYEOF
     then
@@ -471,15 +488,37 @@ if veut "$libretranslate" "Installer LibreTranslate et ses modèles ?" "n"; then
   if [ -x "$lt/venv/bin/python" ] && XDG_DATA_HOME="$lt/donnees" XDG_CACHE_HOME="$lt/cache" "$lt/venv/bin/python" "$lt/installer_modeles.py" >>"$journal" 2>&1; then
     # La tuile Traduction ne s'allume que si l'adresse du service est dans la configuration (LISEZMOI).
     "$PY" - "$racine" >>"$journal" 2>&1 <<'PYEOF'
+import re
 import sys
 from pathlib import Path
 
-import yaml
+
+def remplacer_valeur(texte, motif_cle, valeur, n=1):
+    """Voir la même fonction plus haut dans ce script : remplacement ciblé qui préserve le
+    commentaire de fin de ligne, jamais d'aller-retour yaml.safe_load/dump."""
+    motif = re.compile(rf"(?m)^({motif_cle})(.*)$")
+
+    def sub(m):
+        prefixe, reste = m.group(1), m.group(2)
+        if "#" in reste:
+            _avant, commentaire = reste.split("#", 1)
+            return f"{prefixe} {valeur}  #{commentaire}"
+        return f"{prefixe} {valeur}"
+
+    return motif.sub(sub, texte, count=n)
+
 
 f = Path(sys.argv[1]) / "pilote/config/pilote.yaml"
-y = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
-y.setdefault("suite", {})["traduction_url"] = "http://127.0.0.1:5000"
-f.write_text(yaml.safe_dump(y, allow_unicode=True, sort_keys=False), encoding="utf-8")
+texte = f.read_text(encoding="utf-8")
+if re.search(r"(?m)^  traduction_url:", texte):
+    texte = remplacer_valeur(texte, r"  traduction_url:", "http://127.0.0.1:5000")
+elif re.search(r"(?m)^suite:\s*$", texte):
+    texte = re.sub(r"(?m)^(suite:\s*)$", r"\1\n  traduction_url: http://127.0.0.1:5000", texte, count=1)
+else:
+    if not texte.endswith("\n"):
+        texte += "\n"
+    texte += "suite:\n  traduction_url: http://127.0.0.1:5000\n"
+f.write_text(texte, encoding="utf-8")
 print("pilote.yaml : suite.traduction_url -> http://127.0.0.1:5000")
 PYEOF
     note "installé ; lancer le service : $lt/lancer.sh  (démarrage automatique : voir outils/libretranslate/LISEZMOI.md)"
