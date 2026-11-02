@@ -18,8 +18,8 @@ l'identique sur les dix outils : elles sont spécifiées **une fois**, pas dix.
 
 | Point | Sujet | Document | État |
 | :-- | :-- | :-- | :-- |
-| **1.1** | Pourquoi le Tableau de bord n'est pas construit | `1.1-tableau-de-bord.md` | décisions prises, spec à valider |
-| **1.2** | Réglages doit passer avant Recherche | `1.2-ordre-des-onglets.md` | à traiter |
+| **1.1** | Pourquoi le Tableau de bord n'est pas construit | `1.1-tableau-de-bord.md` | **validée** par Sednal, prête pour momo |
+| **1.2** | Réglages doit passer avant Recherche | `1.2-ordre-des-onglets.md` | décision prise, spec à valider |
 | **1.3** | Page Info : tout ce qui est paramétrable, en clair | `1.3-page-info.md` | à traiter |
 | **2.1** | Page Recherche | — | **vide dans le pavé**, Sednal n'a rien écrit |
 | **3.1** | Plus de sources qu'avant ? | `3.1-nombre-de-sources.md` | à traiter |
