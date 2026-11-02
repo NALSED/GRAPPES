@@ -70,6 +70,9 @@
     el("as-presets").querySelectorAll("button[data-perso]").forEach(function(b){b.onclick=function(){
       var nom=window.prompt("Nom de ta copie modifiable de ce preset :");if(!nom)return;
       envoyer("/api/presets/personnaliser","POST",{depuis:b.dataset.perso,nom:nom}).then(function(){return recharger()}).then(function(){S.e1.coches.add(slugueur(nom));montrer()}).catch(function(e){erreur(e.message)})}});
+    el("as-tout-selectionner").onclick=function(){
+      D.presets.forEach(function(p){S.e1.coches.add(p.id);p.sources.forEach(function(x){S.e1.chercher.add(x.id)})});etape1()};
+    el("as-tout-deselectionner").onclick=function(){S.e1.coches.clear();S.e1.chercher.clear();etape1()};
     // clés des sources choisies
     var besoin=ids(S.e1.chercher).map(parId).filter(function(s){return s&&s.cle_requise});
     el("as-cles").innerHTML=besoin.length?"<h3>Clés d’API</h3>"+besoin.map(function(s){

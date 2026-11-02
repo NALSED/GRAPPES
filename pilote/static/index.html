@@ -464,6 +464,10 @@
         <div><label class="fl" for="as-pays">Ton pays</label><select class="inp" id="as-pays"></select></div>
         <div id="as-pays-autre-w" style="display:none"><label class="fl" for="as-pays-autre">Code du pays (deux lettres)</label><input class="inp" id="as-pays-autre" maxlength="2" placeholder="par exemple : SE"></div>
       </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <button class="btn" id="as-tout-selectionner">Tout sélectionner</button>
+        <button class="btn" id="as-tout-deselectionner">Tout désélectionner</button>
+      </div>
       <div id="as-presets"></div>
       <div id="as-cles" style="margin-top:12px"></div>
       <div id="as-plafond-w" style="margin-top:12px;display:none"><label class="fl" for="as-plafond">Plafond de dépense par mois (en dollars) — tu as activé du payant</label><input class="inp" id="as-plafond" type="number" min="0" step="0.5" style="width:150px"></div>
