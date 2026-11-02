@@ -28,3 +28,8 @@ MIT (fichier `LICENSE`). Les bibliothèques copiées dans `static/vendor/` (Tabu
 ## Nouvelle interface (`/suite`)
 
 En plus des pages ci-dessus, l'interface décrite par la spécification `suite/pilote` est servie sur `/suite` : Réglages (sources et outils), Recherche (simple, plan de travail libre appliqué par le moteur, recherches sauvegardées), Tri (rapprochements proposés par Splink, à confirmer ou séparer) et l'Aide. Les sources y sont les déclarations de `config/sources`. Voir `docs/inspirations_aleph_maltego.md` pour l'export FollowTheMoney (`.ftm`).
+
+Sur une configuration neuve (sans `config/reglages.yaml`), `/suite` affiche son propre assistant de première
+installation (sources, vérification, sortie, récapitulatif), construit avec les composants et jetons de la charte —
+même déroulé que l'assistant de `/`, mêmes routes `/api/*`, juste un autre dessin. `/` reste la page servie par
+défaut (`GET /`) ; `/suite` n'est pas encore la norme à l'installation.
