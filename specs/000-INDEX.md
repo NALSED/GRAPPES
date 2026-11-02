@@ -41,7 +41,7 @@ l'identique sur les dix outils : elles sont spécifiées **une fois**, pas dix.
 | 3 — Condition « si » | `3.8.03-condition-si.md` | spec écrite, à valider |
 | 4 — Boucle | `3.8.04-boucle.md` | spec écrite, à valider |
 | 5 — Fusion / doublons | `3.8.05-fusion-doublons.md` | spec écrite, à valider |
-| 6 — Filtre | `3.8.06-filtre.md` | à traiter |
+| 6 — Filtre | `3.8.06-filtre.md` | spec écrite, à valider |
 | 7 — Attente (quota) | `3.8.07-attente-quota.md` | à traiter |
 | 8 — Compteur budget | `3.8.08-compteur-budget.md` | à traiter |
 | 9 — Assistant IA | `3.8.09-assistant-ia.md` | à traiter |
