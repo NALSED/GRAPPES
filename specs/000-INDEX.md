@@ -40,7 +40,7 @@ l'identique sur les dix outils : elles sont spécifiées **une fois**, pas dix.
 | 2 — Traduction | `3.8.02-traduction.md` | à traiter |
 | 3 — Condition « si » | `3.8.03-condition-si.md` | à traiter |
 | 4 — Boucle | `3.8.04-boucle.md` | à traiter |
-| 5 — Fusion / doublons | `3.8.05-fusion-doublons.md` | à traiter |
+| 5 — Fusion / doublons | `3.8.05-fusion-doublons.md` | spec écrite, à valider |
 | 6 — Filtre | `3.8.06-filtre.md` | à traiter |
 | 7 — Attente (quota) | `3.8.07-attente-quota.md` | à traiter |
 | 8 — Compteur budget | `3.8.08-compteur-budget.md` | à traiter |
