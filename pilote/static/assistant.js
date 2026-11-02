@@ -81,6 +81,21 @@
     el("as-cles").querySelectorAll("button[data-cle]").forEach(function(b){b.onclick=function(){
       var champ=el("as-cles").querySelector('input[data-cle-champ="'+b.dataset.cle+'"]');
       envoyer("/api/cles/"+encodeURIComponent(b.dataset.cle),"PUT",{valeur:champ.value}).then(function(){champ.value="";return recharger()}).then(montrer).catch(function(e){erreur(e.message)})}});
+    // réglages requis des sources choisies (ex. adresse du portail CKAN) : ni une clé ni un coût, mais sans eux la
+    // source reste rouge ; avant cet ajout, rien dans l'assistant ne permettait de les donner (02/11/2026)
+    var besoinReglages=ids(S.e1.chercher).map(parId).filter(function(s){return s&&s.parametres_attendus&&Object.keys(s.parametres_attendus).length});
+    el("as-reglages").innerHTML=besoinReglages.length?"<h3>Réglages requis</h3>"+besoinReglages.map(function(s){
+      var attendus=s.parametres_attendus||{};
+      return '<div class="maprow" style="flex-wrap:wrap"><span class="lbl" style="width:170px">'+esc(s.nom)+"</span>"
+        +Object.keys(attendus).map(function(nom_p){
+          var spec=attendus[nom_p]||{}, val=(s.parametres||{})[nom_p]||"";
+          return '<span style="display:flex;align-items:center;gap:4px;margin-right:10px">'+esc(spec.libelle||nom_p)+(spec.requis?" *":"")
+            +' <input class="inp" type="'+(spec.type==="url"?"url":"text")+'" data-reglage-champ="'+esc(nom_p)+'" data-reglage-id="'+esc(s.id)+'" value="'+esc(val)+'" style="max-width:220px"></span>'}).join("")
+        +'<button class="btn" data-reglage-enreg="'+esc(s.id)+'">Enregistrer</button></div>'}).join(""):"";
+    el("as-reglages").querySelectorAll("button[data-reglage-enreg]").forEach(function(b){b.onclick=function(){
+      var id=b.dataset.reglageEnreg, champs=el("as-reglages").querySelectorAll('input[data-reglage-id="'+id+'"]'), parametres={};
+      [].slice.call(champs).forEach(function(i){parametres[i.dataset.reglageChamp]=i.value});
+      envoyer("/api/reglages/source/"+encodeURIComponent(id),"PUT",{parametres:parametres}).then(function(){return recharger()}).then(montrer).catch(function(e){erreur(e.message)})}});
     var payant=ids(S.e1.chercher).map(parId).some(function(s){return s&&s.payant});
     el("as-plafond-w").style.display=payant?"block":"none";el("as-plafond").value=S.e1.plafond;el("as-plafond").oninput=function(){S.e1.plafond=parseFloat(this.value)};
   }

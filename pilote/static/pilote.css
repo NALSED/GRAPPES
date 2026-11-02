@@ -95,7 +95,7 @@ details.part:not([open])>summary.part-h{border-bottom:none}
 /* voyant : vert = disponible et utilisable, orange = il manque quelque chose (clé, pause), rouge = inutilisable (test échoué, adaptateur à écrire) ;
    la forme reste différente (plein / anneau / barré) pour qui ne distingue pas les couleurs */
 .dot.ok{background:var(--oui)} .dot.off{background:none;border:1.5px solid var(--faint)} .dot.warn{background:none;border:2px solid var(--attn)}
-.dot.err{background:none;border:2px solid var(--non);position:relative} .dot.err::after{content:'';position:absolute;left:-2px;right:-2px;top:50%;border-top:2px solid var(--non);transform:rotate(-45deg)}
+.dot.err{background:var(--non);border:2px solid var(--non);position:relative} .dot.err::after{content:'';position:absolute;left:-2px;right:-2px;top:50%;border-top:2px solid #fff;transform:rotate(-45deg)}
 .sname{font:600 12.5px var(--mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .smeta{font-size:11.5px;color:var(--faint);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sgrow{flex:1;min-width:0}

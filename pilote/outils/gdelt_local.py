@@ -10,6 +10,7 @@ même que pour les autres copies (`fichier_local`), source `gdelt-local`."""
 from __future__ import annotations
 
 import io
+import json
 import sqlite3
 import sys
 import time
@@ -146,6 +147,17 @@ def main(argv: list[str]) -> int:
     con.execute("INSERT INTO meta VALUES ('lignes', ?), ('importe_le', ?), ('fenetre_jours', ?), ('fichier', 'GDELT GKG filtré France')", (str(total), time.strftime("%Y-%m-%d"), str(jours)))
     con.commit()
     con.close()
+    # ce script a son propre suivi (table `meta`, ci-dessus), mais le test de la source (tests_source.py,
+    # _niveau2_fichier_local) lit le registre commun `bases_locales.json` qu'écrit importer_base_locale.py — jamais
+    # ce script. Sans cette écriture, la source restait « non importée » même après un import réussi (02/11/2026,
+    # retour de Sednal : la source reste rouge).
+    registre = cfg.donnees / "bases_locales.json"
+    liste = json.loads(registre.read_text(encoding="utf-8")) if registre.exists() else []
+    liste = [x for x in liste if x.get("base") != BASE] + [
+        {"base": BASE, "source": "gdelt_local.py", "date": time.strftime("%Y-%m-%d"), "lignes": total, "fenetre_jours": jours}
+    ]
+    registre.parent.mkdir(parents=True, exist_ok=True)
+    registre.write_text(json.dumps(liste, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"fait : {total} lignes dans la fenêtre, {int(time.time() - t0)} s")
     return 0
 
