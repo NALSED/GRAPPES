@@ -110,17 +110,20 @@
   }
 
   /* ---------------- étape 4 : récapitulatif ---------------- */
+  function dotCible(id){return el("as-dot-"+id)}
   function testerUne(id){
-    var cible=el("as-etat-"+id);cible.textContent="Test en cours…";
+    var cible=el("as-etat-"+id), dot=dotCible(id);dot.className="dot warn";cible.textContent="Test en cours…";
     return envoyer("/api/sources/"+encodeURIComponent(id)+"/tester","POST",{}).then(function(r){
-      cible.textContent=(r.statut==="ok"?"✓ ":"✕ ")+(r.statut==="ok"?"":r.raison+" — ")+r.etat_phrase;return r.statut==="ok"
-    }).catch(function(e){cible.textContent="✕ "+e.message;return false});
+      cible.textContent=(r.statut==="ok"?"✓ ":"✕ ")+(r.statut==="ok"?"":r.raison+" — ")+r.etat_phrase;
+      dot.className="dot "+(r.statut==="ok"?"ok":"err");return r.statut==="ok"
+    }).catch(function(e){cible.textContent="✕ "+e.message;dot.className="dot err";return false});
   }
   function etape4(){
     var chois=sources().filter(function(s){return S.e1.chercher.has(s.id)||(S.e2.active&&S.e2.verifier.has(s.id))});
     el("as-recap").innerHTML=chois.length?chois.map(function(s){
       var roles=[S.e1.chercher.has(s.id)?"cherche":"",S.e2.active&&S.e2.verifier.has(s.id)?"vérifie":""].filter(Boolean).join(" et ");
-      return '<div class="srow" style="align-items:flex-start"><span class="sgrow"><span class="sname">'+esc(s.nom)+'</span><span class="smeta" style="white-space:normal">'+roles+" — "+esc(s.main_phrase)
+      var dc=(s.voyant&&s.voyant[0])||"off";
+      return '<div class="srow" style="align-items:flex-start"><span class="dot '+esc(dc)+'" id="as-dot-'+esc(s.id)+'" title="'+esc((s.voyant&&s.voyant[1])||"")+'" style="margin-top:4px"></span><span class="sgrow"><span class="sname">'+esc(s.nom)+'</span><span class="smeta" style="white-space:normal">'+roles+" — "+esc(s.main_phrase)
         +(s.cle_requise?" — clé "+(s.cle==="presente"?"présente":"absente"):"")+'</span><span class="smeta" style="white-space:normal" id="as-etat-'+esc(s.id)+'">'+esc(s.etat_phrase)+"</span></span>"
         +'<button class="btn" data-tester="'+esc(s.id)+'">Tester</button></div>'}).join(""):'<div class="empty">Aucune source choisie : retourne à l\'étape 1.</div>';
     el("as-recap").querySelectorAll("button[data-tester]").forEach(function(b){b.onclick=function(){
