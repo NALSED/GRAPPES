@@ -125,8 +125,15 @@
         +'<button class="btn" data-tester="'+esc(s.id)+'">Tester</button></div>'}).join(""):'<div class="empty">Aucune source choisie : retourne à l\'étape 1.</div>';
     el("as-recap").querySelectorAll("button[data-tester]").forEach(function(b){b.onclick=function(){
       b.disabled=true;testerUne(b.dataset.tester).then(function(){b.disabled=false})}});
-    var btnTout=el("as-tester-tout"), etatTout=el("as-tester-tout-etat");
+    var btnTout=el("as-tester-tout"), etatTout=el("as-tester-tout-etat"), btnSansCle=el("as-decocher-sans-cle");
+    var sansCle=chois.filter(function(s){return s.cle_requise&&s.cle!=="presente"});
     btnTout.style.display=chois.length?"inline-block":"none";
+    btnSansCle.style.display=sansCle.length?"inline-block":"none";
+    btnSansCle.textContent="Décocher les sources sans clé ("+sansCle.length+")";
+    btnSansCle.onclick=function(){
+      sansCle.forEach(function(s){S.e1.chercher.delete(s.id);S.e2.verifier.delete(s.id)});
+      etape4();
+    };
     btnTout.onclick=function(){
       btnTout.disabled=true;el("as-recap").querySelectorAll("button[data-tester]").forEach(function(b){b.disabled=true});
       var i=0, ok=0;
