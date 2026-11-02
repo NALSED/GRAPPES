@@ -45,14 +45,23 @@
     /* où la source écrit (F17-4a) : connu seulement pour une source « api » ou « mcp » déclarée ; une source du catalogue l'a dans du code revu */
     var domaine=s.domaine?'<span class="smeta" style="display:block">Domaine : <b>'+esc(s.domaine)+"</b></span>":"";
     var avert=s.avertissement?'<span class="smeta" style="display:block"><b>Attention :</b> '+esc(s.avertissement)+"</span>":"";
+    /* réglages propres à la source (ex. adresse du portail CKAN de ton pays) : ni une clé ni un coût, mais sans eux la source reste
+       rouge. Avant cet ajout, rien dans l'interface ne permettait de les donner (02/11/2026, retour de Sednal : « je mets ça où ? »). */
+    var attendus=s.parametres_attendus||{};
+    var champsReglages=Object.keys(attendus).map(function(nom_p){
+      var spec=attendus[nom_p]||{}, val=(s.parametres||{})[nom_p]||"";
+      return '<div><label class="fl">'+esc(spec.libelle||nom_p)+(spec.requis?" (obligatoire pour activer)":"")+'</label>'
+        +'<input class="inp" type="'+(spec.type==="url"?"url":"text")+'" data-reglage="'+esc(nom_p)+'" data-id="'+esc(s.id)+'" value="'+esc(val)+'"></div>'}).join("");
     /* la ligne ne garde que le nom et gratuite / payante ; tout le reste (ce que la source trouve, son état, son coût, ses tests) est dans « Détails » */
-    var det='<details style="margin-top:4px"><summary class="smeta" style="cursor:pointer">Détails, coût, tests</summary>'
+    var reglageManquant=Object.keys(attendus).some(function(n){return attendus[n].requis&&!(s.parametres||{})[n]});
+    var det='<details style="margin-top:4px"'+(reglageManquant?" open":"")+'><summary class="smeta" style="cursor:pointer">Détails, coût, tests</summary>'
       +'<span class="smeta" style="white-space:normal;display:block;margin-top:4px">'+esc(s.trouve)+" — "+esc(s.pays.join(", "))+" — "+esc(s.main_phrase)+" — "+esc(s.cout_phrase)+"</span>"
       +'<span class="smeta" style="white-space:normal;display:block">'+esc(s.etat_phrase)+"</span>"+cle+domaine+avert
       +'<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center"><button class="btn" data-tester="'+esc(s.id)+'" '+BTN+'>Tester (gratuit, sans appel)</button>'
       +'<button class="btn" data-reel="'+esc(s.id)+'" '+BTN+'>Test réel…</button>'
       +(/En pause/.test(s.etat_phrase)?'<button class="btn" data-reprendre="'+esc(s.id)+'" '+BTN+'>Remettre en service</button>':"")
       +'<span class="smeta" data-msg="'+esc(s.id)+'" style="white-space:normal"></span></div><div class="form" style="margin-top:6px">'
+      +champsReglages
       +'<div><label class="fl">Unité du coût</label><input class="inp" data-k="unite" data-id="'+esc(s.id)+'" value="'+esc(s.cout_effectif.unite)+'"></div>'
       +'<div><label class="fl">Valeur d’une unité en dollars</label><input class="inp" type="number" min="0" step="any" data-k="vers_dollar" data-id="'+esc(s.id)+'" value="'+s.cout_effectif.vers_dollar+'"></div>'
       +'<div><label class="fl">Unités par appel</label><input class="inp" type="number" min="0" step="any" data-k="par_appel" data-id="'+esc(s.id)+'" value="'+s.cout_effectif.par_appel+'"></div>'
@@ -249,6 +258,8 @@
         [].slice.call(champs).forEach(function(i){
           if(i.dataset.k==="confiance")corps.confiance=parseFloat(i.value);
           else corps.cout[i.dataset.k]=i.dataset.k==="unite"?i.value:parseFloat(i.value)});
+        var reglages=el("list"+p).querySelectorAll('input[data-id="'+id+'"][data-reglage]');
+        if(reglages.length){corps.parametres={};[].slice.call(reglages).forEach(function(i){corps.parametres[i.dataset.reglage]=i.value})}
         envoyerSource(id,corps)}});
     });
     [1,2].forEach(function(p){
