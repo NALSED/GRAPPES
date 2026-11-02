@@ -39,7 +39,7 @@ l'identique sur les dix outils : elles sont spécifiées **une fois**, pas dix.
 | 1 — Format JSON / CSV | `3.8.01-format-json-csv.md` | spec écrite, à valider |
 | 2 — Traduction | `3.8.02-traduction.md` | spec écrite, à valider |
 | 3 — Condition « si » | `3.8.03-condition-si.md` | spec écrite, à valider |
-| 4 — Boucle | `3.8.04-boucle.md` | à traiter |
+| 4 — Boucle | `3.8.04-boucle.md` | spec écrite, à valider |
 | 5 — Fusion / doublons | `3.8.05-fusion-doublons.md` | spec écrite, à valider |
 | 6 — Filtre | `3.8.06-filtre.md` | à traiter |
 | 7 — Attente (quota) | `3.8.07-attente-quota.md` | à traiter |
