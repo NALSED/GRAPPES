@@ -68,9 +68,16 @@ def test_les_31_pictogrammes_et_le_vocabulaire_ferme():
             assert interdit not in texte, f"{f.name} emploie « {interdit} » (liste close des mots)"
 
 
+def _installee(cfg):
+    """Ces tests visent la suite déjà configurée, pas l'assistant de première installation (static/suite/js/installation.js) :
+    `copier_config` ne livre jamais de reglages.yaml (c'est voulu, test_f02_assistant.py en a besoin), donc on en pose un ici."""
+    cfg.fichier_reglages.write_text("{}\n", encoding="utf-8")
+    return cfg
+
+
 @pytest.fixture
 def page(tmp_path, chromium, serveur_vivant):
-    cfg = charger(copier_config(tmp_path))
+    cfg = _installee(charger(copier_config(tmp_path)))
     app = creer_app(cfg)
     url = serveur_vivant(app)
     p = chromium.new_page(viewport={"width": 1360, "height": 1000})
@@ -255,7 +262,7 @@ def test_les_sorties_d_une_condition_se_nomment_oui_ou_non(page):
 def test_onglet_tri_confirmer_et_separer(tmp_path, chromium, serveur_vivant):
     from test_suite_tri import TROIS, creer
 
-    cfg = charger(copier_config(tmp_path))
+    cfg = _installee(charger(copier_config(tmp_path)))
     app = creer_app(cfg)
     url = serveur_vivant(app)
     p = chromium.new_page(viewport={"width": 1360, "height": 1000})

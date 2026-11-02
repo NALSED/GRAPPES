@@ -7,10 +7,10 @@ export class Refus extends Error {
   }
 }
 
-async function appel(methode, chemin, corps) {
+async function requete(methode, chemin, corps) {
   let rep;
   try {
-    rep = await fetch(`/api/suite${chemin}`, {
+    rep = await fetch(chemin, {
       method: methode,
       headers: corps === undefined ? {} : { "Content-Type": "application/json" },
       body: corps === undefined ? undefined : JSON.stringify(corps),
@@ -31,6 +31,10 @@ async function appel(methode, chemin, corps) {
   return json;
 }
 
+function appel(methode, chemin, corps) {
+  return requete(methode, `/api/suite${chemin}`, corps);
+}
+
 export const api = {
   etat: () => appel("GET", "/etat"),
   tri: () => appel("GET", "/tri"),
@@ -39,4 +43,15 @@ export const api = {
   supprimer: (chemin) => appel("DELETE", chemin),
   aide: (fonction, corps = {}) => appel("POST", `/aide/${fonction}`, corps),
   aideGet: (chemin) => appel("GET", `/aide/${chemin}`),
+};
+
+/** Les routes de l'assistant de première installation : les mêmes que la page classique (`/`), sous `/api/` et non `/api/suite/`
+ *  (D-assistant-suite : on réutilise les routes éprouvées ce matin plutôt que d'en recréer sous `/api/suite`). */
+export const apiAssistant = {
+  reglages: () => requete("GET", "/api/reglages"),
+  presetsPersonnaliser: (corps) => requete("POST", "/api/presets/personnaliser", corps),
+  definirCle: (nom, corps) => requete("PUT", `/api/cles/${nom}`, corps),
+  modifierSource: (id, corps) => requete("PUT", `/api/reglages/source/${id}`, corps),
+  testerSource: (id) => requete("POST", `/api/sources/${id}/tester`, {}),
+  terminer: (corps) => requete("POST", "/api/assistant/terminer", corps),
 };

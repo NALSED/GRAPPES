@@ -10,6 +10,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session, sessionmaker
 
 from pilote import actions, budget, emoji_texte, rapprochements, suite, suite_modele, suite_plan, suite_reel, tri
+from pilote import reglages as rg
 from pilote.base import Candidat, Journal, Recherche
 from pilote.config import Config
 from pilote.refus import ConfigRefusee
@@ -58,6 +59,7 @@ def construire(cfg: Config, fabrique: sessionmaker[Session], gestionnaire: Any) 
                     rch["ecartes"] = _ecartes(s, rch["recherche_id"])
                     rch["emoji"] = _emoji(s, rch["recherche_id"])
         v["modele"] = bool(cfg.suite_modele_url) and suite_modele.disponible(cfg.suite_modele_url)
+        v["premiere_installation"] = not rg.existe(cfg)  # même source de vérité que /api/reglages (D-assistant-suite)
         return v
 
     def _ecartes(s: Session, rid: str) -> dict[str, Any] | None:

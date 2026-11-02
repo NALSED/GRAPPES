@@ -3,6 +3,7 @@ import { api } from "./api.js";
 import { monterAide, redessinerAide } from "./aide.js";
 import { h, icone } from "./dom.js";
 import { app, recharger } from "./etat.js";
+import { demarrerInstallation } from "./installation.js";
 import { ONGLETS, PLUS_TARD, VERBES, aPluriel } from "./mots.js";
 import { pageRecherche } from "./recherche.js";
 import { pageTri } from "./tri.js";
@@ -94,6 +95,10 @@ window.addEventListener("hashchange", () => { depuisHash(); if (app.onglet === "
     app.data = await api.etat();
   } catch (e) {
     document.getElementById("app").replaceChildren(h("p", { class: "message-refus" }, e.message));
+    return;
+  }
+  if (app.data.premiere_installation) {
+    await demarrerInstallation();
     return;
   }
   if (app.onglet === "tri") await chargerTri();
