@@ -44,7 +44,7 @@ l'identique sur les dix outils : elles sont spécifiées **une fois**, pas dix.
 | 6 — Filtre | `3.8.06-filtre.md` | spec écrite, à valider |
 | 7 — Attente (quota) | `3.8.07-attente-quota.md` | spec écrite, à valider |
 | 8 — Compteur budget | `3.8.08-compteur-budget.md` | spec écrite, à valider |
-| 9 — Assistant IA | `3.8.09-assistant-ia.md` | à traiter |
+| 9 — Assistant IA | `3.8.09-assistant-ia.md` | spec écrite, à valider |
 | 10 — RSSHub | `3.8.10-rsshub.md` | à traiter |
 
 ### Les quatre remarques transverses aux dix outils
