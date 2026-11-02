@@ -25,6 +25,20 @@ def domaine_de(site: str) -> str:
     return s if DOMAINE.match(s) else ""
 
 
+def convertir(rep: Any, domaine: str | None = None, nom: str | None = None) -> list[dict[str, Any]]:
+    """Lit la réponse du SECOND appel (`/intelligent/search/result`, celle qui porte les relevés) : forme vérifiable hors ligne
+    sur un exemple enregistré. Le premier appel (lancement de la recherche, qui ne rend qu'un identifiant) n'a rien à convertir."""
+    if not isinstance(rep, dict) or not isinstance(rep.get("records"), list):
+        raise ErreurSource("La réponse d'Intelligence X n'a pas la forme attendue.")
+    anciens = sorted({str(r.get("date", ""))[:10] for r in rep["records"] if isinstance(r, dict) and str(r.get("bucket", "")).lower() == "whois" and r.get("date")})
+    if not anciens:
+        return []
+    domaine = domaine or "exemple.example"  # test hors ligne sur l'exemple : pas de vraie fiche, juste la forme de sortie
+    return [{"nom": nom or domaine, "site": domaine,
+             "origine": f"Intelligence X (WHOIS de {domaine}, {len(anciens)} relevé{'s' if len(anciens) > 1 else ''} du {anciens[0]} au {anciens[-1]})",
+             "detail": f"WHOIS {anciens[0]} → {anciens[-1]}"}]  # fmt: skip
+
+
 def chercher(entree: dict[str, Any], client: Client, parametres: dict[str, Any]) -> list[dict[str, Any]]:
     domaine = domaine_de(str(entree.get("site") or ""))
     if not domaine:
@@ -38,12 +52,4 @@ def chercher(entree: dict[str, Any], client: Client, parametres: dict[str, Any])
     if not ident:
         raise ErreurSource("La réponse d'Intelligence X n'a pas la forme attendue.")
     rep = client.get_json(RESULTATS, {"id": ident, "limit": 10}, headers=en_tete)
-    records = rep.get("records") if isinstance(rep, dict) else None
-    if not isinstance(records, list):
-        raise ErreurSource("La réponse d'Intelligence X n'a pas la forme attendue.")
-    anciens = sorted({str(r.get("date", ""))[:10] for r in records if isinstance(r, dict) and str(r.get("bucket", "")).lower() == "whois" and r.get("date")})
-    if not anciens:
-        return []
-    return [{"nom": str(entree.get("nom") or domaine), "site": domaine,
-             "origine": f"Intelligence X (WHOIS de {domaine}, {len(anciens)} relevé{'s' if len(anciens) > 1 else ''} du {anciens[0]} au {anciens[-1]})",
-             "detail": f"WHOIS {anciens[0]} → {anciens[-1]}"}]  # fmt: skip
+    return convertir(rep, domaine, str(entree.get("nom") or domaine))
