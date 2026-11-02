@@ -31,7 +31,10 @@
     var noms=["① Sources","② Vérification","③ Sortie","④ Récapitulatif"];
     el("as-etapes").innerHTML=noms.map(function(n,i){
       if(S.mode!=="premiere"&&i+1!==S.etape)return "";
-      return '<span class="as-chip e'+(i+1)+(i+1===S.etape?" on":"")+'">'+n+"</span>"}).join("");
+      // navette page 1 ↔ 4 (retour de Sednal, 02/11/2026) : en première installation, chaque étape reste cliquable pour y
+      // aller directement plutôt que de cliquer plusieurs fois sur « Précédent »
+      return '<span class="as-chip e'+(i+1)+(i+1===S.etape?" on":"")+'" data-aller="'+(i+1)+'" style="'+(S.mode==="premiere"?"cursor:pointer":"")+'">'+n+"</span>"}).join("");
+    if(S.mode==="premiere")el("as-etapes").querySelectorAll("[data-aller]").forEach(function(c){c.onclick=function(){S.etape=+c.dataset.aller;montrer()}});
   }
   function montrer(){
     [1,2,3,4].forEach(function(n){el("as-e"+n).style.display=n===S.etape?"block":"none"});
@@ -148,10 +151,12 @@
     btnTout.style.display=chois.length?"inline-block":"none";
     btnSansCle.style.display=sansCle.length?"inline-block":"none";
     btnSansCle.textContent="Décocher les sources sans clé ("+sansCle.length+")";
+    el("as-retour-sources").style.display=S.mode==="premiere"?"inline-block":"none";
     btnSansCle.onclick=function(){
       sansCle.forEach(function(s){S.e1.chercher.delete(s.id);S.e2.verifier.delete(s.id)});
       etape4();
     };
+    el("as-retour-sources").onclick=function(){S.etape=1;montrer()};
     btnTout.onclick=function(){
       btnTout.disabled=true;el("as-recap").querySelectorAll("button[data-tester]").forEach(function(b){b.disabled=true});
       var i=0, ok=0;
