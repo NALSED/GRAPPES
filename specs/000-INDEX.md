@@ -36,7 +36,7 @@ l'identique sur les dix outils : elles sont spécifiées **une fois**, pas dix.
 
 | Outil | Document | État |
 | :-- | :-- | :-- |
-| 1 — Format JSON / CSV | `3.8.01-format-json-csv.md` | à traiter |
+| 1 — Format JSON / CSV | `3.8.01-format-json-csv.md` | spec écrite, à valider |
 | 2 — Traduction | `3.8.02-traduction.md` | à traiter |
 | 3 — Condition « si » | `3.8.03-condition-si.md` | à traiter |
 | 4 — Boucle | `3.8.04-boucle.md` | à traiter |
