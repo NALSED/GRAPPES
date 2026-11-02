@@ -348,7 +348,21 @@ def test_des_retraits_simultanes_ne_se_perdent_pas(cfg):
         assert {s for s, x in lignes(c).items() if x["masquee"]["recherche"]} == set(ids)
 
 
-# --- [ ] Navigateur, en profondeur : téléphone, clavier, mode sombre, tous les onglets sans erreur.
+# --- [ ] Aucune source livrée ne peut faire tomber « tester » sur une erreur interne non attrapée (fiche 11, retour Sednal du
+# 02/11/2026 : « aucun des test ne fonctionne vraiment »). Un échec métier (clé absente, panne du fournisseur, réglage manquant...)
+# doit toujours rendre un statut « echec » propre ; seule une vraie panne de code aurait le droit de faire tomber la route, et
+# celle-ci est maintenant attrapée (voir api_reglages.tester). On couvre TOUTES les sources livrées, pas seulement celles qu'on
+# a pensé à tester un jour : c'est tout l'intérêt de ce test, qui aurait détecté courtlistener/opensanctions/wayback avant Sednal.
+def test_aucune_source_livree_ne_fait_tomber_son_test(cfg):
+    with TestClient(creer_app(cfg), raise_server_exceptions=False) as c:
+        ids = sorted(lignes(c))
+        assert len(ids) > 30  # garde-fou : s'assurer qu'on a bien chargé toutes les sources livrées, pas une poignée
+        echecs = {}
+        for sid in ids:
+            r = c.post(f"/api/sources/{sid}/tester")
+            if r.status_code != 200:
+                echecs[sid] = r.status_code
+        assert not echecs, echecs
 def test_sur_telephone_aucun_defilement_horizontal(chromium, serveur_vivant, cfg):
     with TestClient(creer_app(cfg)) as c:
         premiere_installation(c)

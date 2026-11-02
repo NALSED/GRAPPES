@@ -17,12 +17,14 @@ def _date(horodatage: str) -> str:
     return f"{m[3]}/{m[2]}/{m[1]}" if m else horodatage
 
 
-def convertir(rep: dict[str, Any], adresse: str, nom: str) -> list[dict[str, Any]]:
+def convertir(rep: dict[str, Any], adresse: str | None = None, nom: str | None = None) -> list[dict[str, Any]]:
     if not isinstance(rep, dict) or "archived_snapshots" not in rep:
         raise ErreurSource("La réponse de la Wayback Machine n'a pas la forme attendue.")
     capture = (rep.get("archived_snapshots") or {}).get("closest") or {}
     if not capture.get("available") or str(capture.get("status", "")).startswith(("4", "5")):
         return []
+    adresse = adresse or str(rep.get("url") or "")  # test hors ligne sur l'exemple : l'adresse interrogée y est aussi
+    nom = nom or adresse or "capture"
     return [{"nom": nom, "site": adresse, "numero": str(capture.get("url", "")), "origine": f"Wayback Machine (capture du {_date(str(capture.get('timestamp', '')))})"}]
 
 

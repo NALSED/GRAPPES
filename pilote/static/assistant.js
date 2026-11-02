@@ -107,6 +107,12 @@
   }
 
   /* ---------------- étape 4 : récapitulatif ---------------- */
+  function testerUne(id){
+    var cible=el("as-etat-"+id);cible.textContent="Test en cours…";
+    return envoyer("/api/sources/"+encodeURIComponent(id)+"/tester","POST",{}).then(function(r){
+      cible.textContent=(r.statut==="ok"?"✓ ":"✕ ")+(r.statut==="ok"?"":r.raison+" — ")+r.etat_phrase;return r.statut==="ok"
+    }).catch(function(e){cible.textContent="✕ "+e.message;return false});
+  }
   function etape4(){
     var chois=sources().filter(function(s){return S.e1.chercher.has(s.id)||(S.e2.active&&S.e2.verifier.has(s.id))});
     el("as-recap").innerHTML=chois.length?chois.map(function(s){
@@ -115,9 +121,23 @@
         +(s.cle_requise?" — clé "+(s.cle==="presente"?"présente":"absente"):"")+'</span><span class="smeta" style="white-space:normal" id="as-etat-'+esc(s.id)+'">'+esc(s.etat_phrase)+"</span></span>"
         +'<button class="btn" data-tester="'+esc(s.id)+'">Tester</button></div>'}).join(""):'<div class="empty">Aucune source choisie : retourne à l\'étape 1.</div>';
     el("as-recap").querySelectorAll("button[data-tester]").forEach(function(b){b.onclick=function(){
-      b.disabled=true;var id=b.dataset.tester, cible=el("as-etat-"+id);cible.textContent="Test en cours…";
-      envoyer("/api/sources/"+encodeURIComponent(id)+"/tester","POST",{}).then(function(r){
-        cible.textContent=(r.statut==="ok"?"✓ ":"✕ ")+(r.statut==="ok"?"":r.raison+" — ")+r.etat_phrase}).catch(function(e){cible.textContent=e.message}).then(function(){b.disabled=false})}});
+      b.disabled=true;testerUne(b.dataset.tester).then(function(){b.disabled=false})}});
+    var btnTout=el("as-tester-tout"), etatTout=el("as-tester-tout-etat");
+    btnTout.style.display=chois.length?"inline-block":"none";
+    btnTout.onclick=function(){
+      btnTout.disabled=true;el("as-recap").querySelectorAll("button[data-tester]").forEach(function(b){b.disabled=true});
+      var i=0, ok=0;
+      function suivante(){
+        if(i>=chois.length){
+          etatTout.textContent=ok+" / "+chois.length+" vérifiées sans problème.";
+          btnTout.disabled=false;el("as-recap").querySelectorAll("button[data-tester]").forEach(function(b){b.disabled=false});
+          return;
+        }
+        var s=chois[i++];etatTout.textContent="Test "+i+" / "+chois.length+" — "+s.nom+"…";
+        testerUne(s.id).then(function(reussi){if(reussi)ok++;suivante()});
+      }
+      suivante();
+    };
   }
 
   /* ---------------- envoi ---------------- */

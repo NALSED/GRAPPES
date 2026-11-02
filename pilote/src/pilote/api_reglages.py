@@ -529,7 +529,10 @@ def construire(cfg: Config, fabrique: sessionmaker[Session]) -> APIRouter:
         decls, _ = contexte()
         if sid not in decls:
             raise HTTPException(404, "Cette source n'existe pas.")
-        res = tests_source.tester(cfg, decls[sid])
+        try:
+            res = tests_source.tester(cfg, decls[sid])
+        except Exception as exc:  # un adaptateur imprévu ne doit jamais faire planter « tester tout » sur les autres sources
+            raise HTTPException(500, f"Erreur interne pendant le test ({exc.__class__.__name__}) : voir le journal du service.") from exc
         return {**res, "etat_phrase": etat_phrase(lire_etat(cfg).get(sid), decls[sid])}
 
     @r.get("/sources/{sid}/test-reel")

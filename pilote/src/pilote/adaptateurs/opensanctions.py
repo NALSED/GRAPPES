@@ -18,24 +18,27 @@ FICHE = "https://www.opensanctions.org/entities/"
 THEMES_GRAVES = ("sanction", "crime", "debarment", "poi", "wanted", "asset.freeze")  # thèmes OpenSanctions qui font une alerte ; les autres (risque d'export, propriété…) sont une information
 
 
-def convertir(rep: Any, nom: str) -> list[dict[str, Any]]:
+def convertir(rep: Any, nom: str | None = None) -> list[dict[str, Any]]:
     if not isinstance(rep, dict) or not isinstance(rep.get("results"), list):
         raise ErreurSource("La réponse d'OpenSanctions n'a pas la forme attendue.")
-    voulu = _norme(nom)
-    if not voulu:
+    voulu = _norme(nom) if nom is not None else None
+    if nom is not None and not voulu:
         return []
     out = []
     for r in rep["results"]:
         if not isinstance(r, dict) or r.get("schema") not in TYPES_ORGANISATION:
             continue
-        noms = [str(r.get("caption") or ""), *map(str, (r.get("properties") or {}).get("name") or [])]
-        if voulu in {_norme(n) for n in noms if n}:
-            listes = ", ".join(map(str, r.get("datasets") or []))
-            themes = [str(x) for x in (r.get("properties") or {}).get("topics") or []]
-            grave = not themes or any(x.startswith(THEMES_GRAVES) for x in themes)  # sanction, crime, exclusion : une alerte ; un registre de risque ou d'exposition n'en est pas une. Thèmes absents : on ne sait pas, donc on alerte
-            texte = ("OpenSanctions : ce nom figure sur une liste de sanctions ou de criminalité" if grave else "OpenSanctions : ce nom figure sur une liste qui n'est pas une sanction")
-            out.append({"nom": nom, "numero": FICHE + str(r.get("id", "")), "signal": "alerte" if grave else "information",
-                        "origine": texte + (f" ({', '.join(themes)})" if themes else "") + (f" [{listes}]" if listes else "") + ", à vérifier à la main"})  # fmt: skip
+        caption = str(r.get("caption") or "")
+        noms = [caption, *map(str, (r.get("properties") or {}).get("name") or [])]
+        # Sans nom à vérifier (test hors ligne sur l'exemple) : aperçu brut de toutes les entrées, sans filtrage par correspondance.
+        if voulu is not None and voulu not in {_norme(n) for n in noms if n}:
+            continue
+        listes = ", ".join(map(str, r.get("datasets") or []))
+        themes = [str(x) for x in (r.get("properties") or {}).get("topics") or []]
+        grave = not themes or any(x.startswith(THEMES_GRAVES) for x in themes)  # sanction, crime, exclusion : une alerte ; un registre de risque ou d'exposition n'en est pas une. Thèmes absents : on ne sait pas, donc on alerte
+        texte = ("OpenSanctions : ce nom figure sur une liste de sanctions ou de criminalité" if grave else "OpenSanctions : ce nom figure sur une liste qui n'est pas une sanction")
+        out.append({"nom": nom if nom is not None else caption, "numero": FICHE + str(r.get("id", "")), "signal": "alerte" if grave else "information",
+                    "origine": texte + (f" ({', '.join(themes)})" if themes else "") + (f" [{listes}]" if listes else "") + ", à vérifier à la main"})  # fmt: skip
     return out
 
 

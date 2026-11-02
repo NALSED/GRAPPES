@@ -77,6 +77,8 @@ def _niveau1(cfg: Config, d: Declaration, brut: dict[str, Any]) -> dict[str, Any
         if d.moteur["registre_grappes"] not in ("wikidata", "sirene"):
             raise Echec(1, f"Le registre « {d.moteur['registre_grappes']} » n'est pas connu de grappes (wikidata ou sirene).")
         return None
+    if d.moteur.get("flux_rss"):  # une prise par flux ajouté par l'utilisateur (moteur_sources.py) : rien à vérifier ici à l'avance
+        return None
     return _definition_grappes(cfg, d.moteur)
 
 
@@ -114,6 +116,12 @@ CONFIG_COURANTE: list[Config] = []
 
 
 def _niveau2(cfg: Config, d: Declaration, definition: dict[str, Any] | None) -> list[dict[str, str]]:
+    if d.moteur.get("flux_rss"):
+        # Dépend des flux que l'utilisateur a ajoutés (peut-être aucun) et de l'extraction de noms de grappes (NER) :
+        # rien à vérifier hors ligne sur un exemple statique, comme le niveau 3 se saute faute de point d'accès gratuit.
+        return []
+    if str(d.moteur.get("adaptateur") or "") == "fichier_local":
+        return _niveau2_fichier_local(cfg, d)
     if not d.exemple_reponse:
         raise Echec(2, "La source ne fournit pas d'exemple de réponse enregistré : impossible de vérifier sa sortie sans l'appeler.")
     f = cfg.dossier_sources / d.exemple_reponse
@@ -128,6 +136,26 @@ def _niveau2(cfg: Config, d: Declaration, definition: dict[str, Any] | None) -> 
     if not noms:
         raise Echec(2, "La sortie est illisible : aucun nom n'a pu être lu dans l'exemple de réponse.")
     return noms
+
+
+def _niveau2_fichier_local(cfg: Config, d: Declaration) -> list[dict[str, str]]:
+    """Une copie locale n'a pas d'exemple de réponse à lire (ce n'est pas un appel réseau) : ce qui compte, c'est que
+    l'import ait réellement eu lieu et versé des lignes. On le lit dans le registre que écrit importer_base_locale.py,
+    plutôt que d'exiger un exemple statique que personne n'écrirait jamais pour une base de plusieurs millions de lignes."""
+    base = str((d.moteur.get("parametres") or {}).get("base") or d.id)
+    registre = cfg.donnees / "bases_locales.json"
+    if not registre.exists():
+        raise Echec(2, f"La base « {base} » n'a pas encore été importée : lancez l'installation (installer_grappes.sh ou outils/importer_base_locale.py {base}).")
+    try:
+        liste = json.loads(registre.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise Echec(2, "Le registre des bases locales est illisible.") from exc
+    entree = next((x for x in liste if isinstance(x, dict) and x.get("base") == base), None)
+    if entree is None:
+        raise Echec(2, f"La base « {base} » n'a pas encore été importée : lancez l'installation (installer_grappes.sh ou outils/importer_base_locale.py {base}).")
+    if not int(entree.get("lignes") or 0):
+        raise Echec(2, f"La base « {base} » a été importée mais est vide (0 ligne) : relancez son import.")
+    return [{"nom": f"{base} (copie locale)", "ville": ""}]
 
 
 def _lire_par_adaptateur(cfg: Config, d: Declaration, corps: bytes) -> list[dict[str, str]]:
@@ -182,17 +210,23 @@ def _niveau3(cfg: Config, d: Declaration) -> tuple[str, dict[str, Any] | None]:
         req.add_header("Authorization", "Bearer " + cles.valeur(cfg, d.cle))
     try:
         with urllib.request.urlopen(req, timeout=15) as r:
-            donnees = json.loads(r.read(1_000_000) or b"{}")
+            corps = r.read(1_000_000)
     except urllib.error.HTTPError as exc:
         if exc.code in (401, 403):
             raise Echec(3, "La clé est refusée par le fournisseur.") from exc
         raise Echec(3, f"Le fournisseur a répondu une erreur ({exc.code}).") from exc
     except (urllib.error.URLError, TimeoutError, OSError) as exc:
         raise Echec(3, "Le fournisseur ne répond pas.") from exc
-    except ValueError as exc:
-        raise Echec(3, "La réponse du point d'accès de test est illisible.") from exc
-    quota = None
     q = t.get("quota") or {}
+    try:
+        donnees = json.loads(corps or b"{}")
+    except ValueError as exc:
+        # Un simple point d'accès de santé (ex. SearXNG /healthz) répond souvent du texte brut, pas du JSON : une
+        # réponse HTTP reçue suffit déjà à prouver la connexion. Seul le quota, lui, a vraiment besoin de JSON.
+        if q:
+            raise Echec(3, "La réponse du point d'accès de test est illisible.") from exc
+        return "ok", None
+    quota = None
     if q:
         def chemin(path: str) -> Any:
             cur: Any = donnees

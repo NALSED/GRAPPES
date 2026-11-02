@@ -21,9 +21,20 @@ def _parties(nom_affaire: str) -> list[str]:
     return [p.strip() for p in SEPARATEUR.split(nom_affaire) if p.strip()]
 
 
-def convertir(rep: Any, nom: str) -> list[dict[str, Any]]:
+def convertir(rep: Any, nom: str | None = None) -> list[dict[str, Any]]:
     if not isinstance(rep, dict) or not isinstance(rep.get("results"), list):
         raise ErreurSource("La réponse de CourtListener n'a pas la forme attendue.")
+    if nom is None:  # pas de nom à vérifier (test hors ligne sur l'exemple) : aperçu brut, sans filtrage par correspondance
+        out = []
+        for r in rep["results"]:
+            if not isinstance(r, dict):
+                continue
+            parties = _parties(str(r.get("caseName") or ""))
+            if not parties:
+                continue
+            lien = str(r.get("absolute_url") or "")
+            out.append({"nom": parties[0], "numero": SITE + lien if lien.startswith("/") else "", "origine": f"CourtListener : partie dans « {str(r.get('caseName') or '')[:80]} »"})
+        return out
     voulu = nom_normalise(nom)
     if not voulu:
         return []
