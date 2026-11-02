@@ -27,7 +27,7 @@ l'identique sur les dix outils : elles sont spécifiées **une fois**, pas dix.
 | **3.4** | Élargir le panneau de modification en tirant son bord | `3.4-panneau-elargissable.md` | spec écrite, à valider |
 | **3.5** | La page source paraît bien | — | **rien à faire** |
 | **3.6** | Changer la clé d'API ou tout prérequis extérieur d'une source | `3.6-changer-la-cle-d-une-source.md` | spec écrite, à valider |
-| **3.7** | Les onglets de modification des outils ne sont pas intuitifs | `3.7-fiche-outil-navigation.md` | à traiter |
+| **3.7** | Les onglets de modification des outils ne sont pas intuitifs | `3.7-fiche-outil-navigation.md` | spec écrite, à valider |
 | **3.8** | Les choix ne doivent pas être libres — outil par outil | voir les dix documents `3.8-*` ci-dessous | **les dix tuiles spécifiées**, à valider |
 | **3.9** | L'en-tête change dynamiquement au clic sur un modèle | `T1-modele-et-entete.md` | spec écrite, à valider |
 
