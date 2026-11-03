@@ -62,7 +62,8 @@ Sednal les a écrites dix fois, une par outil. Elles sont spécifiées une seule
 | Sujet | Document | État |
 | :-- | :-- | :-- |
 | Déménager l'outillage d'installation vers GAPPES-FINAL, pour que .115 tourne depuis le dépôt de momo | `900-demenagement-du-code.md` | à valider — doit se faire **avant** que GRAPPES soit vidé de `grappes/` et `pilote/` |
-| Réponses aux questions ouvertes du moteur (`QUESTIONS.md` de momo) : Q3, Q10, Q11, Q20, Q21, Q26, Q27 | `901-questions-moteur-2026-11-03.md` | **validée** par Sednal, prête pour momo |
+| Réponses aux questions ouvertes du moteur (`QUESTIONS.md` de momo) : Q3, Q10, Q11, Q20, Q21, Q26, Q27, Q28 | `901-questions-moteur-2026-11-03.md` | **codée et poussée** par momo |
+| Revue complète et test en profondeur (tout le pavé + 901) | `902-revue-complete-2026-11-03.md` | **validée** par Sednal, prête pour momo |
 
 ## Après le pavé
 
