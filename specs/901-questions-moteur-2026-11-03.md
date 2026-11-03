@@ -119,6 +119,15 @@ est déjà installé et connecté (vérifié par le commit `0780fe1`) — ça su
 mécanisme. L'installation sur .115 (la machine de production) reste une tâche de Sednal, mais devient un
 déploiement séparé, plus tard, pas un blocage pour momo aujourd'hui.
 
+**Correction du compteur (03/11/2026, suite à la revue 902/Q33)** : le compteur « n appels IA » devient un
+compteur de **tokens réels**, pas un simple nombre d'appels — l'agent est invoqué par le CLI Claude Code
+(`claude -p ...`), qui renvoie le nombre de tokens de chaque appel via `--output-format json` (champ
+`usage`) ; rien à inventer, le CLI le donne déjà. Ce chiffre est **à titre informatif seulement** : il ne
+reflète pas le quota du forfait Pro/Max (qui n'est lui-même pas exprimé en tokens par Anthropic — fenêtre
+glissante de 5h, dépend de la longueur des messages/fichiers/modèle, voir
+[support.claude.com/en/articles/8324991](https://support.claude.com/en/articles/8324991-about-claude-s-pro-plan-usage)),
+ni la consommation de Sednal hors grappes. Toujours sans plafond sur ce compteur.
+
 ## Consigne d'interface (mode de recherche, fichier « à trancher »)
 
 Lisibilité d'abord, en suivant la charte déjà en place (`pilote/static/suite/charte/` dans GAPPES-FINAL),
