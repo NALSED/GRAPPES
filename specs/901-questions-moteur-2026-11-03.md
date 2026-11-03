@@ -113,10 +113,11 @@ même — est tranché :
   sans plafond : l'abonnement Pro/Max a déjà ses propres limites, pas la peine d'en ajouter un côté
   grappes.
 
-Reste pour Sednal, pas pour momo : **installer l'agent Claude Code sur .115** (la machine réelle
-d'exécution) et le connecter avec l'abonnement Pro/Max — vérifié faisable sur .250 (commit `0780fe1`),
-mais pas vérifiable depuis .250 sur .115 lui-même. Une fois fait, momo peut câbler pour de vrai
-(`NON_APPLIQUES["ia"]` disparaît).
+**Précisé par Sednal (03/11/2026)** : pas la peine d'attendre l'installation sur .115 pour avancer. Momo
+continue et termine le câblage réel (`NON_APPLIQUES["ia"]` disparaît) en testant sur **.250**, où l'agent
+est déjà installé et connecté (vérifié par le commit `0780fe1`) — ça suffit pour développer et valider le
+mécanisme. L'installation sur .115 (la machine de production) reste une tâche de Sednal, mais devient un
+déploiement séparé, plus tard, pas un blocage pour momo aujourd'hui.
 
 ## Consigne d'interface (mode de recherche, fichier « à trancher »)
 
