@@ -103,6 +103,21 @@ réécrit jamais (« les ancres écrites par Sednal ne sont jamais lues en écri
 Ce que momo construit : un petit outil (script ou route) qui lit les décisions marquées dans
 `resultat_a_trancher.csv` et les ajoute à la bonne liste `anchors:` — pas de nouveau système de stockage.
 
+## 3.8.09 — Séparer le coût de l'appel IA des crédits (2026-11-03)
+
+Déjà tranché par la spec 3.8.09 : l'appel à l'agent IA (facturé par l'abonnement Pro/Max, pas par appel)
+**ne compte jamais** dans le compteur crédits (3.8.08). Ce qui restait ouvert — comment le suivre quand
+même — est tranché :
+
+* Un simple **compteur** (« n appels IA ») dans le journal de la recherche, à côté du compteur crédits,
+  sans plafond : l'abonnement Pro/Max a déjà ses propres limites, pas la peine d'en ajouter un côté
+  grappes.
+
+Reste pour Sednal, pas pour momo : **installer l'agent Claude Code sur .115** (la machine réelle
+d'exécution) et le connecter avec l'abonnement Pro/Max — vérifié faisable sur .250 (commit `0780fe1`),
+mais pas vérifiable depuis .250 sur .115 lui-même. Une fois fait, momo peut câbler pour de vrai
+(`NON_APPLIQUES["ia"]` disparaît).
+
 ## Consigne d'interface (mode de recherche, fichier « à trancher »)
 
 Lisibilité d'abord, en suivant la charte déjà en place (`pilote/static/suite/charte/` dans GAPPES-FINAL),
