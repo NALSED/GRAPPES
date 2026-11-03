@@ -84,6 +84,25 @@ L'extraction ne tourne **jamais** en dehors du second mode.
   qui a servi à ajuster) ; à geler juste avant la prochaine tentative, pas avant si aucune n'est encore
   visée.
 
+## Q28 — Mécanisme d'ancrage d'une décision de Sednal sur un cas « à trancher » (soulevée par momo, 2026-11-03)
+
+En implémentant Q21, momo relève que la boucle « décision de Sednal sur un cas à trancher → ancre de
+confiance » n'avait pas de mécanisme d'enregistrement/relecture précisé. Réponse : **réutiliser le
+mécanisme d'ancre déjà existant**, rien de nouveau à construire.
+
+`anchors` (champ du YAML de chaque grappe, lu par `config.py: load_grappe`) est déjà exactement ça — une
+liste de références que `cycle/learn.py` traite comme racines de confiance, et que l'apprentissage ne
+réécrit jamais (« les ancres écrites par Sednal ne sont jamais lues en écriture »).
+
+* **Garder** un cas de `resultat_a_trancher.csv` → sa référence s'ajoute à `anchors:` dans le YAML de la
+  grappe concernée, dédoublonné — exactement comme toute autre ancre posée par Sednal à la main.
+* **Exclure** → rien à écrire ; la ligne reste hors de `resultat.csv`, aucune ancre créée. Si le besoin de
+  ne plus jamais reproposer un cas exclu se confirme plus tard, ce sera mesuré et construit à ce moment-là
+  — pas anticipé maintenant.
+
+Ce que momo construit : un petit outil (script ou route) qui lit les décisions marquées dans
+`resultat_a_trancher.csv` et les ajoute à la bonne liste `anchors:` — pas de nouveau système de stockage.
+
 ## Consigne d'interface (mode de recherche, fichier « à trancher »)
 
 Lisibilité d'abord, en suivant la charte déjà en place (`pilote/static/suite/charte/` dans GAPPES-FINAL),
