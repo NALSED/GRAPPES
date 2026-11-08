@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5.
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1).
 
 ---
 
@@ -344,6 +344,65 @@ servir, ce qu'il ne fait pas. Outil par outil, en suivant les sections 2.1 à 2.
 Aucune aide au survol sur les options d'un outil aujourd'hui. **À faire (momo)** : une courte explication au
 survol de chaque case / pastille des réglages d'un outil, comme il en existe déjà sous « Effet dans le
 Tableau de bord ».
+
+---
+
+## 6 — Outil 2.1 : Format de sortie
+
+Constaté sur `.60` le 08/11/2026, captures à l'appui.
+
+### 6.1 — Les dix outils livrés n'ont aucun test réel (dépasse 2.1)
+
+C'est le fond des remarques 2.1.2, 2.1.5 et du « TOUS les tests doivent être fonctionnels » du point 3.
+
+`suite.tester_outil()` n'exécute quelque chose que pour un outil de nature **script** (`suite_script.executer`
+sur l'exemple d'entrée, comparé à la sortie attendue). Pour un outil de nature **modèle** — c'est-à-dire les
+dix outils livrés — le test ne lance rien : il vérifie seulement que l'exemple d'entrée et la sortie attendue
+**ne sont pas vides**, puis met l'outil à « opérationnel ».
+
+L'interface l'avoue à moitié (« Fiche vérifiée — l'outil ne s'exécute pas encore sur de vraies données »),
+mais la pastille passe quand même au vert, et `suite_graine` livre les dix avec `test_reussi: True` d'office.
+Un test qui réussit ne dit donc rien du fonctionnement de l'outil.
+
+**À faire (momo)** : donner un vrai test aux dix outils livrés — l'outil tourne sur son exemple d'entrée, la
+sortie obtenue est comparée à la sortie attendue, et « opérationnel » ne s'obtient que comme ça. Tant qu'un
+outil n'est pas exécutable, il ne doit pas afficher « opérationnel » mais un état qui dit la vérité.
+
+### 6.2 — Un menu déroulant par format de sortie (2.1.3)
+
+Les réglages propres à chaque format **existent** (cocher CSV fait apparaître « Contenu » et « Séparateur »),
+mais ils sont présentés en une **liste de neuf cases à cocher** suivie de sections empilées dessous.
+
+**Demande de Sednal** : **un menu déroulant par format**, chacun portant ses propres options à l'intérieur —
+sur le modèle des blocs repliables de Réglages / Sources. La liste reste courte quand tout est fermé, et les
+spécificités d'un format se lisent en l'ouvrant, au lieu de s'empiler en bas de la page.
+
+### 6.3 — Le chemin du fichier de sortie n'existe nulle part (2.1.1)
+
+Le moteur sait le gérer — `sortie.py` : « le dossier est choisi par l'utilisateur (Réglages, ou pour cette
+recherche) ; sinon celui de la recherche » — mais **aucun champ ne le propose dans Réglages sur `/suite`**.
+
+**À faire (momo)** : une section où donner la destination des fichiers de sortie, en **chemin absolu**, avec
+**vérification** (le dossier existe, il est accessible en écriture). Linux uniquement, c'est le seul système
+visé.
+
+### 6.4 — « Effet dans le Tableau de bord » pas clair (2.1.4)
+
+Le bloc affiche quatre pastilles et une phrase sous la pastille choisie (« À la fin de son passage, cet outil
+écrit une ligne de bilan dans le journal du Tableau de bord »). Deux raisons au flou :
+
+* le mot « effet » ne dit pas **ce qu'on verra**, ni où ;
+* l'un des quatre choix, `alerte`, **ne produit rien du tout** aujourd'hui (point 2.3).
+
+**À faire (momo)** : dire concrètement ce que chaque effet produit et à quel endroit du Tableau de bord il
+apparaît, plutôt qu'un mot abstrait ; et brancher `alerte` (point 2.3), sans quoi un des quatre choix reste
+un leurre.
+
+### 6.5 — Rappel : la rangée « Modèle » est bien affichée en modification
+
+Confirmé par capture : en modifiant **Format de sortie**, la rangée « Modèle » liste les dix outils et
+« Format de sortie » y est sélectionné. Cliquer « Boucle » écraserait rôle, effet, options, description et
+exemples de test. Correction déjà écrite au point 5.1.
 
 ---
 
