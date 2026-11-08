@@ -6,7 +6,14 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4), 10 (outil 2.5), 11 (outil 2.6), 12 (outil 2.9), 13 (niveaux d'IA), 14 (fusion Aide + IA, inventaire), 15 (outil 2.10). **Reste : Tri**, que Sednal traite en dernier.
+**État : COMPLÈTE le 08/11/2026 — momo peut commencer.** Les quinze points du retour sont traités et
+tranchés. **Seule la section Tri reste à écrire** : Sednal la traite en dernier, « quand tout sera vu et
+fonctionnel », et elle fera l'objet d'une suite à cette spec. Rien de ce qui est écrit ici n'attend Tri,
+sauf la suppression de l'ancienne UI (point 1), qui en dépend par construction.
+
+**Autonomie (Sednal, 08/11/2026)** : momo a **toute autonomie** sur cette spec. Il tranche seul, trace ses
+décisions dans `DECISIONS.md`, et n'appelle Sednal que pour un bug bloquant. Ce qu'il ne peut pas deviner va
+dans `QUESTIONS.md` — sans rien inventer à la place. Sednal n'est pas disponible avant le 09/11.
 
 ---
 
@@ -586,7 +593,10 @@ La règle 8 est appliquée à cet endroit : une fiche de genre « personne » n'
 rapprochement, sauf levée explicite sur cette fiche-là (`faits.regle8_leve`).
 
 **Le nom « Fusion / doublons » laisse croire à une déduplication automatique**, alors que l'outil prépare un
-travail de tri fait à la main. Renommage à confirmer par Sednal (piste : « Rapprochements à confirmer »).
+travail de tri fait à la main. **Décision de Sednal (08/11/2026) : l'outil s'appelle « Fusion ».** Le mot
+« doublons » tombe — c'est lui qui portait la promesse de déduplication. Comme le nom seul ne dit toujours
+pas que l'outil propose sans jamais regrouper de lui-même, **c'est la description de l'outil qui doit le
+dire** (elle est de toute façon à développer, point 5.4).
 
 **Ce que Sednal garde** : le comportement — proposer, ne jamais fusionner seul. La suite du traitement se
 fera **dans Tri**, où il veut « un outil très visuel » ; à reprendre dans la section Tri de cette spec.
@@ -804,6 +814,54 @@ discipline, c'est structurel.
 Ce test aurait attrapé le jour même deux défauts trouvés ce soir : `fusion` et `rsshub` oubliés du registre
 des vocabulaires fermés (point 10.2), et l'option `categories` de « Classer / catégoriser » qu'aucun champ
 ne permet de saisir (point 12.2).
+
+---
+
+## Ordre de travail proposé à momo
+
+Rien n'oblige à suivre cet ordre, mais il est construit pour que chaque étape soit vérifiable seule et ne
+dépende pas de la suivante.
+
+**1. Corrections contenues, vérifiables une par une** — le plus de défauts réparés pour le moins de risque :
+
+* rendus d'options fermés pour `fusion` et `rsshub`, oubliés du registre (10.2, 15) ;
+* masquer « Modèle » et « Comment il travaille » en modification (5.1) ;
+* « Ce qu'il reçoit / renvoie » affiché en entier (3.6) ;
+* une source payante sans palier gratuit n'affiche plus « illimité » (3.4) ;
+* le champ « Catégories » de l'opération « Classer / catégoriser » (12.2) ;
+* retrait du champ « Modèle » de l'Assistant IA (12.3) et libellé de « Traiter au maximum » (12.4) ;
+* plus aucune erreur technique brute à l'écran (7.1) ;
+* plus de chemin en dur dans les fichiers livrés (7.1).
+
+**2. La règle d'affichage 3.10**, partout : conditions en déroulants et une par ligne (8.1), un déroulant par
+format de sortie (6.2), langues en déroulant multiple (7.3), différences de Filtre rendues visibles (11.1).
+
+**3. Le vrai test des dix outils livrés (6.1)** — c'est le point qui débloque la campagne « tester tous les
+outils », et il rend honnête l'état « opérationnel ». À faire avant les gros chantiers.
+
+**4. Chantiers de taille moyenne**, dans n'importe quel ordre :
+
+* exposer le test réel dans `/suite` (3.3) ;
+* destination des fichiers de sortie, chemin absolu vérifié (6.3) ;
+* brancher les deux origines de la Boucle et son aperçu (9.1, 9.3) ;
+* brancher l'effet `alerte` sur le Tableau de bord (2.3) ;
+* Scrapling complet : navigateur furtif, source de secours, tuile ENRICHIR (5.2) ;
+* installeur RSSHub (15) ;
+* mapper les adresses serveur et réclamer celles qui manquent (4.2).
+
+**5. Gros chantiers, à prendre un par un** :
+
+* l'inventaire et son test de complétude (14.3, 14.4) — à faire **avant** la fusion Aide + IA, qui s'appuie
+  dessus ;
+* la fusion Aide + IA en un onglet, avec action par les routes de pilote (14.1, 14.2) ;
+* les quatre niveaux d'implication de l'IA (13).
+
+**6. Enfin, et seulement dans cet ordre** : porter les réglages de Lancement dans `/suite` (point 1), puis
+Tri (spec à venir), puis supprimer l'ancienne UI (905 §3).
+
+**En parallèle, côté Sednal** : vérification des six types d'ajout de source sur `.60` (905 §2), prévue le
+09/11.
+
 
 ## Règle de dépôts (rappel)
 
