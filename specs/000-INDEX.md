@@ -66,6 +66,7 @@ Sednal les a écrites dix fois, une par outil. Elles sont spécifiées une seule
 | Revue complète et test en profondeur (tout le pavé + 901) | `902-revue-complete-2026-11-03.md` | **close** — Q29-Q34 toutes répondues (voir 904), rapport reçu |
 | Cible de recherche (« Ce que je recherche »), mécanisme prioritaire issu de Q26/Q30 | `903-cible-de-recherche.md` | **validée** par Sednal, prête pour momo |
 | Réponses Q29-Q34 (suite de la revue 902) | `904-questions-revue-902-2026-11-03.md` | **validée** par Sednal, prête pour momo |
+| Menus fermés de `ficheOutil()` restés en texte libre, parité `/suite` pour l'ajout de source (5 types manquants), puis suppression de l'ancienne UI | `905-menus-fermes-et-ancienne-ui.md` | prête pour momo — à confirmer par Sednal |
 
 ## Après le pavé
 
