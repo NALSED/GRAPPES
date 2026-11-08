@@ -68,6 +68,7 @@ Sednal les a écrites dix fois, une par outil. Elles sont spécifiées une seule
 | Réponses Q29-Q34 (suite de la revue 902) | `904-questions-revue-902-2026-11-03.md` | **validée** par Sednal, prête pour momo |
 | Menus fermés de `ficheOutil()` restés en texte libre, parité `/suite` pour l'ajout de source (5 types manquants), puis suppression de l'ancienne UI | `905-menus-fermes-et-ancienne-ui.md` | prête pour momo — à confirmer par Sednal |
 | Intégration de Scrapling (scraping auto-hébergé) et api-anything (adaptateur site→MCP) ; bbot écarté | `906-scrapling-et-api-anything.md` | prête pour momo |
+| Trois sources trouvées dans awesome-public-datasets : Company Registry Atlas (catalogue de bases par pays), UN Civil Society Database, Humanitarian Data Exchange | `907-sources-awesome-public-datasets.md` | prête pour momo |
 
 ## Après le pavé
 
