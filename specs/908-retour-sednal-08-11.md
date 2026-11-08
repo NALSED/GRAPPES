@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1 (en attente d'arbitrage).
+**État : en cours de rédaction.** Points traités : 1 (tranché).
 
 ---
 
@@ -29,21 +29,25 @@ remplace pas encore** :
 C'est exactement ce que le lien lui-même annonce : « Ancienne interface (**Lancement, Tri**) ». Supprimer `/`
 aujourd'hui ferait perdre le seul Tri complet qui existe, et la pause/reprise d'une recherche en cours.
 
-### Le conflit à trancher
+### Décision de Sednal (08/11/2026)
 
-Sednal demande la suppression complète de l'ancienne UI, **et** écrit en fin de retour « Tri : quand tout
-sera vu et fonctionnel ». Les deux ne tiennent pas ensemble. Trois sorties ont été posées :
+**La nouvelle UI reprend les fonctionnalités de l'ancienne, et l'ancienne ne disparaît qu'une fois tout
+porté.** Pas de suppression partielle, pas d'attente passive : on porte, puis on supprime.
 
-* **A** — l'ancienne UI reste jusqu'à la toute fin, après le portage de Tri. Rien n'est perdu, le lien reste
-  visible encore un moment.
-* **B** — on supprime tout de suite ce qui est à parité (Réglages, Ajout) et on ne laisse accessible que
-  Lancement + Tri ; le lien est renommé pour dire exactement ce qui reste dessous, et il rétrécit au fur et
-  à mesure.
-* **C** — on porte **Lancement** maintenant (le plus petit : profondeur, limites, pause/reprise), on le
-  retire de l'ancienne UI, et Tri devient le dernier morceau à tomber.
+Ordre de travail qui en découle :
 
-**Décision de Sednal : en attente.** Rien à faire pour momo sur ce point tant qu'elle n'est pas prise ; la
-905 §3 reste donc suspendue (elle attendait déjà la vérification de la 905 §2 sur `.60`).
+1. **Porter les réglages de Lancement dans `/suite`** (page Recherche) : profondeur, limites de temps et
+   d'appels, **pause et reprise** d'une recherche en cours, affichage des sources mises en pause avec leur
+   raison. Reprendre ce qui est déjà écrit dans `static/lancement.js` et les routes `/api/recherches/
+   <id>/pause` et `/reprise` qui existent déjà — ne rien réécrire depuis zéro.
+2. **Tri** : **adapter** l'ancien Tri (`static/tri.js`, 585 lignes) à la charte de `/suite`, pas le
+   réécrire. Les fonctionnalités à garder, à changer ou à abandonner se discutent avec Sednal **avant** que
+   momo commence — ce point sera traité dans la section Tri de cette même spec.
+3. **Alors seulement**, supprimer l'ancienne UI entièrement : route `/`, fichiers statiques devenus
+   inutiles, et le lien « Ancienne interface (Lancement, Tri) » dans `/suite`. C'est la 905 §3, qui reste
+   suspendue jusque-là.
+
+La vérification des 6 types d'ajout de source sur `.60` (905 §2) reste à faire par Sednal, en parallèle.
 
 ---
 
