@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2, partiel).
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2).
 
 ---
 
@@ -456,13 +456,19 @@ mécanismes côte à côte : celui de Traduction montre déjà ce à quoi un vra
 
 ### 7.3 — Plusieurs langues d'entrée (2.2.1) et même rendu pour « Traduire vers » (2.2.2)
 
-**En attente de confirmation de Sednal.** Aujourd'hui « Traduire vers » accepte déjà plusieurs langues,
-« Langue d'entrée » une seule (ou « détecter »).
+Aujourd'hui « Traduire vers » accepte déjà plusieurs langues, « Langue d'entrée » une seule (ou
+« détecter »).
 
 Contrainte du moteur : `suite_traduction.traduire_protege()` traduit **depuis une** langue par appel.
-« Plusieurs langues d'entrée » ne peut donc pas vouloir dire traduire depuis trois langues à la fois ; cela
-veut dire **« détecte, mais seulement parmi ces langues-là »** — utile (évite qu'un texte français soit pris
-pour du portugais), mais ce n'est pas la même chose. À confirmer avant d'écrire la consigne.
+« Plusieurs langues d'entrée » ne peut donc pas vouloir dire traduire depuis trois langues à la fois.
+
+**Validé par Sednal le 08/11/2026 :**
+
+* **« Langue d'entrée » devient multiple, au sens « détecte uniquement parmi ces langues-là »** — la
+  détection reste faite par le moteur, mais restreinte aux langues cochées, ce qui évite qu'un texte
+  français soit pris pour du portugais. Un seul appel de traduction par texte, comme aujourd'hui.
+* **« Traduire vers » reprend le même composant visuel que « Langue d'entrée »** — les deux listes de
+  langues se règlent de la même façon, sans que l'une soit des puces et l'autre un champ.
 
 ---
 
