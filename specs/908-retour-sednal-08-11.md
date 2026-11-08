@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2).
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3).
 
 ---
 
@@ -182,6 +182,29 @@ une fois à jour, il confirme le 08/11/2026 : « menu fermé pour l'instant ». 
 
 Traité **outil par outil** dans les sections 2.1 à 2.10 du retour (accord de Sednal le 08/11/2026), plutôt
 que comme une règle générale : il a déjà détaillé ce qui cloche pour chacun.
+
+### 3.10 — Règle d'affichage d'un choix fermé : au-delà de 4 choix, un menu déroulant
+
+**Validée par Sednal le 08/11/2026**, et elle gouverne tous les outils — elle évite de rediscuter la même
+question à chaque section 2.x.
+
+> Une liste fermée de **plus de 4 choix** s'affiche en **menu déroulant**. De **2 à 4 choix**, elle reste en
+> pastilles.
+
+Le vocabulaire reste fermé dans les deux cas (acquis de la 905 §1, point 3.7) : il ne s'agit que de la
+façon de le présenter. Ce qui la motive : une condition de l'outil « si » affiche aujourd'hui **16
+pastilles** (8 champs + 8 comparateurs) ; avec trois conditions, une cinquantaine de pastilles noient la
+logique qu'on essaie de lire.
+
+Application attendue :
+
+| Réglage | Nb de choix | Rendu |
+|---|---|---|
+| `si` / `filtre` : champ, comparateur | 8 et 8 (10 pour filtre) | déroulant |
+| Format de sortie : les formats | 9 | déroulant (un par format, voir 6.2) |
+| Traduction : les langues | 19 | déroulant à choix multiple |
+| Boucle : origine de la liste, répéter pour chaque | 3 et 3 | pastilles |
+| Attente, Budget, Rôle, Effet | 2 à 4 | pastilles |
 
 ### 3.9 — « Tester tous les outils »
 
@@ -469,6 +492,37 @@ Contrainte du moteur : `suite_traduction.traduire_protege()` traduit **depuis un
   français soit pris pour du portugais. Un seul appel de traduction par texte, comme aujourd'hui.
 * **« Traduire vers » reprend le même composant visuel que « Langue d'entrée »** — les deux listes de
   langues se règlent de la même façon, sans que l'une soit des puces et l'autre un champ.
+
+---
+
+## 8 — Outil 2.3 : Condition « si »
+
+Retour de Sednal : « la piste est bonne mais pas encore assez claire, si on veut vraiment utiliser cette
+fonction se rapprocher des exemples n8n ».
+
+### 8.1 — Une condition par ligne, en déroulants
+
+Aujourd'hui une condition occupe deux rangées de pastilles et un champ : les **8 champs**
+(`nom, ville, pays, genre, origine, site, numéro, fonction`) puis les **8 comparateurs**
+(`est égal à, est différent de, contient, ne contient pas, commence par, finit par, est vide, n'est pas
+vide`), soit **16 pastilles pour une seule condition**. Trois conditions en affichent une cinquantaine : la
+logique devient illisible, alors que c'est précisément ce que l'outil sert à exprimer.
+
+n8n affiche une condition **sur une ligne** : `[champ ▾] [opérateur ▾] [valeur]`.
+
+**À faire (momo)** : une condition = une ligne, champ et comparateur en **menus déroulants** (application
+directe de la règle 3.10), valeur à droite. Garder tel quel ce qui fonctionne déjà : le combinateur
+ET / OU au-dessus quand il y a plus d'une condition, le bouton « Ajouter une condition », et le retrait
+d'une ligne.
+
+### 8.2 — Les deux sorties doivent se voir
+
+L'outil « si » envoie vers **deux branches** (oui / non). C'est la moitié de ce qu'il faut comprendre pour
+s'en servir, et rien ne le montre dans la fiche de réglage. Dans n8n, les deux sorties sont nommées sur le
+nœud lui-même.
+
+**À faire (momo)** : montrer dans la fiche que l'outil produit deux sorties et lesquelles, pour qu'on sache
+ce qu'on branche avant d'aller sur le plan.
 
 ---
 
