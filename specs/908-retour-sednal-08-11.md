@@ -239,10 +239,30 @@ serveur, base extérieure → machine et port, fichier / base SQLite / programme
 qui manque, c'est de le **dire** : en choisissant le type, on doit savoir si une adresse serveur sera
 demandée, et pourquoi.
 
+**Le mécanisme du cas 2 existe déjà — ne pas en inventer un autre.** Une déclaration peut porter un bloc
+`parametres` (rendu comme `parametres_attendus`, posé le 02/11/2026 après le retour « je mets ça où ? ») :
+libellé, `type: url`, `requis: true`, exemple. **CKAN est la seule des 79 sources à s'en servir** — et c'est
+aussi, confirme Sednal le 08/11/2026, la seule adresse qu'il ait eu à saisir jusqu'ici :
+
+````yaml
+parametres:
+  portail:
+    libelle: Adresse du portail de données ouvertes de ton pays
+    type: url
+    requis: true
+    exemple: https://open.canada.ca/data
+note: Éteinte tant que l'adresse du portail n'est pas donnée.
+````
+
+Il manque seulement à ce mécanisme le **message rouge quand un paramètre requis est vide**, et son extension
+aux services auto-hébergés (SearXNG, Overpass, RSSHub, LibreTranslate), dont l'URL est aujourd'hui enfouie
+dans la configuration du moteur au lieu d'être demandée dans la fiche de la source.
+
 **À faire (momo)** : le mappage des adresses depuis les adaptateurs ; l'affichage en lecture seule ou
-modifiable selon le cas 1 / 2 / 3 ; le message rouge pour le cas 2 uniquement ; le marqueur
-tiers / auto-hébergé dans la déclaration ; le libellé du champ, qui doit dire qu'il s'agit du serveur
-contacté (« Adresse » seul n'apprend rien).
+modifiable selon le cas 1 / 2 / 3 ; le message rouge sur un paramètre `requis` vide, en réutilisant
+`parametres_attendus` (modèle : CKAN) et sans créer de second mécanisme ; l'extension de ce bloc
+`parametres` aux services auto-hébergés ; le marqueur tiers / auto-hébergé dans la déclaration ; le libellé
+du champ, qui doit dire qu'il s'agit du serveur contacté (« Adresse » seul n'apprend rien).
 
 ---
 
