@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2.
+**État : en cours de rédaction.** Points traités : 1, 2, 3.
 
 ---
 
@@ -98,6 +98,95 @@ l'action « Prévenir » ne mènent donc nulle part aujourd'hui.
 **À faire (momo)** : brancher l'effet `alerte` d'un outil sur la section Alertes du Tableau de bord, en
 traitant d'abord le Compteur budget, seul outil livré à le déclarer — son seuil et son action « Prévenir »
 doivent produire une vraie ligne d'alerte. Ne pas toucher aux trois autres effets, ils fonctionnent.
+
+---
+
+## 3 — Réglages, partie transverse
+
+Huit remarques de Sednal. Reprises une par une, avec ce qui est vérifié dans le code.
+
+### 3.1 — Le lien vers l'ancienne interface (rien à faire ici)
+
+Point 1.
+
+### 3.2 — « Comment fonctionnent les tests ET pourquoi en local ? » (rien à faire)
+
+C'est la décision du 13/10/2026 : le test d'activation ne doit **rien** consommer, ni crédit ni argent.
+Quatre niveaux, arrêt au premier échec (`src/pilote/tests_source.py`) : configuration valide ; convention de
+sortie vérifiée sur un **exemple de réponse enregistré**, la source n'étant jamais appelée ; connexion et clé
+seulement si le fournisseur offre un point d'accès gratuit pour ça, sinon « non vérifié » ; pour un programme
+local, exécution sur l'exemple dans un processus séparé avec limite de temps. Si tout passe, la source est
+« vérifiée hors ligne ». Comportement voulu, pas un manque.
+
+### 3.3 — « TOUS les tests doivent être fonctionnels » : le test réel existe mais pas dans `/suite`
+
+Le **test réel** demandé existe **et est entièrement codé** : une vraie requête, **le prix dit avant le
+clic**, refusé si le plafond mensuel ne le permet pas (`tests_source.test_reel` + `tests_source.prix_du_test`,
+routes `GET` et `POST /api/sources/{id}/test-reel`).
+
+**Mais ces routes ne sont déclarées que dans `api_reglages.py`, l'API de l'ancienne UI.** `api_suite.py`
+n'expose que le test local (`POST /sources/{ident}/test`). Depuis `/suite`, le test réel est donc
+inatteignable — d'où le constat de Sednal.
+
+**À faire (momo)** : exposer le test réel dans `/suite` — la route de prix et la route d'exécution, avec la
+confirmation du prix avant le clic, exactement comme l'ancienne page. C'est un portage, pas une écriture :
+la logique existe, seule l'exposition manque. Ce point rejoint la liste de portage du point 1 (même nature
+que Tri et Lancement).
+
+### 3.4 — Une source payante ne doit jamais afficher « illimité » (vrai défaut)
+
+Couvre aussi le point 1.1 du retour (« si le coût est payant pourquoi le quota est illimité ? ») : c'est la
+même chose, vue à deux endroits.
+
+`suite_reel._quota()` ne renvoie un quota que dans deux cas : le fournisseur en a rendu un au dernier test,
+ou la déclaration annonce un palier gratuit mensuel (`cout.gratuit_par_mois > 0`). Sinon il renvoie `None`,
+et la fiche affiche **« illimité »**.
+
+Or **14 sources sont réellement payantes** (`cout.vers_dollar > 0`) et **12 d'entre elles n'ont aucun palier
+gratuit** — elles affichent donc « illimité » alors que chaque appel coûte et que rien ne les borne sauf le
+budget mensuel global. Les plus chères : OpenCorporates (0,58 $/appel), NewsAPI.ai (0,045 $), Google Places
+(0,035 $, mais 1 000 gratuits/mois), Pappers (0,01 $).
+
+**À faire (momo)** : pour une source payante sans palier gratuit, ne plus écrire « illimité ». Dire qu'elle
+est payante et bornée par le budget du mois (formulation à poser avec Sednal si besoin), et garder
+« illimité » pour ce qui l'est vraiment — une source gratuite sans quota.
+
+### 3.5 — Plusieurs tuiles du même outil : déjà possible (à rendre visible)
+
+Déjà implémenté. Dans la palette (`static/suite/js/plan.js`), une entrée d'outil est posée avec
+`posee: false` en dur : un outil n'est **jamais** grisé, chaque clic pose une tuile indépendante, avec son
+identifiant propre (`${o.id}:${horodatage}${aléa}`) et **sa propre copie des options**
+(`opts: o.options.map((p) => [...p])`). Trois tuiles « Filtre » avec trois réglages différents fonctionnent
+déjà. Les sources, elles, se grisent une fois posées (`posee: surPlan.has(s.id)`) — volontaire, une source ne
+se pose qu'une fois.
+
+**À faire (momo)** : rien sur le fond. Seulement le rendre lisible dans la palette — Sednal ne savait pas que
+c'était possible, donc la palette ne le dit pas assez.
+
+### 3.6 — « Ce qu'il reçoit » / « Ce qu'il renvoie » : texte tronqué
+
+Ces deux champs portent des phrases longues (ex. Traduction : « Le même contenu, avec sa traduction ajoutée à
+côté — l'original n'est jamais remplacé ») affichées dans deux colonnes étroites, qui les coupent en plein
+milieu — sur la capture de Sednal : « Le texte de la recherche, ou les r… ». Le texte est juste, c'est
+l'affichage qui le rend incompréhensible.
+
+**À faire (momo)** : afficher ces deux phrases en entier (pleine largeur, retour à la ligne, ou tout autre
+rendu qui ne tronque pas), au lieu de les serrer dans deux colonnes.
+
+### 3.7 — « LES CHOIX DOIVENT ÊTRE FIXE » (rien à faire)
+
+C'est ce que la 905 §1 a corrigé. Sednal avait écrit son retour en regardant une version antérieure du code ;
+une fois à jour, il confirme le 08/11/2026 : « menu fermé pour l'instant ». Point clos.
+
+### 3.8 — « Le design doit être propre à chaque outil »
+
+Traité **outil par outil** dans les sections 2.1 à 2.10 du retour (accord de Sednal le 08/11/2026), plutôt
+que comme une règle générale : il a déjà détaillé ce qui cloche pour chacun.
+
+### 3.9 — « Tester tous les outils »
+
+Campagne de test à mener **une fois** les corrections par outil faites (sections 2.1 à 2.10) et le test réel
+exposé dans `/suite` (3.3). À reprendre en fin de spec, pas avant.
 
 ---
 
