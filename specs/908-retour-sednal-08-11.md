@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4), 10 (outil 2.5), 11 (outil 2.6), 12 (outil 2.9), 13 (niveaux d'IA), 14 (onglet IA).
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4), 10 (outil 2.5), 11 (outil 2.6), 12 (outil 2.9), 13 (niveaux d'IA), 14 (fusion Aide + IA, inventaire).
 
 ---
 
@@ -729,34 +729,81 @@ parce qu'il traîne quelque part, et une invention devient un fait. Exiger un re
 
 ---
 
-## 14 — Nouvel onglet « IA », à côté d'« Aide » (décidé le 08/11/2026)
+## 14 — Aide et IA fusionnent en un seul onglet, nourri par un inventaire
 
-**Demande de Sednal** : un onglet **IA** en plus d'**Aide**, avec bascule entre les deux. Les deux ne font
-pas le même métier :
+### 14.1 — Pourquoi fusionner
 
-* **Aide** reste ce qu'elle est (spécification 11) : un outil du programme. Elle **appelle des fonctions** et
-  met en forme ce qu'elles rendent, n'écrit aucun fait, et ses trois entrées toutes faites marchent même
-  sans modèle. **Ne pas y toucher.**
-* **IA** est une conversation libre avec Claude, « comme dans un terminal ou Claude Desktop ».
+Sednal demandait d'abord un onglet **IA** à côté d'**Aide**, puis a relevé lui-même l'objection, le
+08/11/2026 : « si l'IA peut lire et voir la config, Aide ne sert à rien ». C'est juste. **Décision : un seul
+onglet, l'IA absorbe Aide.**
 
-**Niveau retenu par Sednal : l'IA peut aussi agir** (option (c) des trois proposées). Elle lit l'état réel —
-plan, sources, résultats de la recherche en cours — **et** peut changer un réglage, allumer une source,
-lancer une recherche.
+Ce qu'Aide apportait et qu'il ne faut pas perdre :
 
-**Les limites, à construire dès le départ :**
+1. **Elle marche sans modèle.** Ses trois entrées toutes faites (« Comment je fais… », « Pourquoi ça n'a
+   rien donné ? », « Ça veut dire quoi… ») appellent des fonctions. Agent éteint, quota épuisé, réponse
+   lente : elle répond quand même.
+2. **Elle ne peut pas inventer.** « Pourquoi ça n'a rien donné ? » rend la raison **réellement enregistrée**
+   par le moteur. La même question posée à un modèle peut produire une explication plausible et fausse.
 
-1. **Elle agit par les actions de pilote**, les mêmes qu'un humain a dans l'interface (les routes de
+Ces deux qualités ne justifient pas une fenêtre séparée : elles justifient que **les fonctions d'Aide
+deviennent les outils que l'IA appelle**. Quand on demande « pourquoi cette source n'a rien rendu », l'IA
+ne devine pas — elle appelle la fonction qui connaît la réponse et la met en forme.
+
+**Forme retenue** : un onglet unique où l'on peut parler librement ; les trois entrées toutes faites restent
+en boutons et **continuent de marcher sans modèle** (c'est le repli) ; les propositions de plan cliquables
+qu'Aide sait déjà produire (`poserProposition`, `selectionner`) sont conservées.
+
+### 14.2 — Ce que l'IA peut faire : lire, et agir par les actions de pilote
+
+Niveau retenu par Sednal : elle lit l'état réel — plan, sources, résultats de la recherche en cours — **et**
+elle peut agir : changer un réglage, allumer une source, lancer une recherche.
+
+Les limites, à construire dès le départ :
+
+1. **Elle agit par les actions de pilote**, les mêmes qu'un humain a dans l'interface (les routes
    `/api/suite/…`). **Pas de shell sur `.60`**, pas d'exécution de code arbitraire : ce qui borne ce qu'elle
    peut faire, c'est la liste des gestes que l'interface permet déjà.
-2. **Confirmation avant tout geste qui dépense ou qui change l'état** : lancer une recherche coûte des
-   crédits, allumer une source payante change le comportement. Le projet a déjà ce réflexe (le test réel
-   montre son prix avant le clic) — le reprendre ici.
+2. **Confirmation avant tout geste qui dépense ou change l'état** : lancer une recherche coûte des crédits,
+   allumer une source payante change le comportement. Le projet a déjà ce réflexe — le test réel montre son
+   prix avant le clic.
 3. **Tout ce qu'elle fait va au Journal du Tableau de bord**, attribué à l'IA et non à l'utilisateur : le
    modèle de données le permet déjà (`Journal.qui`).
-4. **Jamais** : supprimer des résultats, écraser une décision prise dans Tri, lever la règle 8. Ce sont les
-   gestes irréversibles ou de jugement — ils restent à l'utilisateur.
+4. **Jamais** : supprimer des résultats, écraser une décision prise dans Tri, lever la règle 8. Gestes
+   irréversibles ou de jugement — ils restent à l'utilisateur.
 
----
+### 14.3 — L'inventaire : une fonction parcourt le programme, personne ne met à jour à la main
+
+Question de Sednal : « comment maintenir Aide à jour ? » Réponse retenue : **on ne la maintient pas, on la
+fait découvrir.**
+
+Le principe est déjà écrit en tête du fichier d'Aide — « tous les noms de source, de tuile et d'option
+affichés ici viennent d'un retour de fonction, jamais d'un texte écrit dans ce fichier ni d'un modèle » — et
+le projet le pratique déjà pour les formats (`formats.decouvrir()`, qui va les chercher au lieu d'en tenir
+une liste). Il s'agit de le généraliser.
+
+**À faire (momo)** : une fonction d'**inventaire** qui parcourt le programme et rend sa description
+complète :
+
+* les **sources** et leurs déclarations (ce qu'elles trouvent, consomment, produisent, leur main, leur coût) ;
+* les **outils**, avec `fait`, `reçoit`, `renvoie`, leur genre, leurs options et leurs valeurs acceptées ;
+* les **formats de sortie** (`formats.decouvrir`) et leurs réglages propres ;
+* les **opérations IA** (`operations_ia/*.py`, chacune déclarant `OPERATION`) ;
+* les **vocabulaires fermés** connus (`RENDUS_OPTIONS`) ;
+* les **actions** que l'interface permet, c'est-à-dire ce que l'IA a le droit de faire (14.2).
+
+Aide et l'IA lisent **cet inventaire** et ne contiennent aucune connaissance en propre. Un 11ᵉ outil apparaît
+tout seul ; personne n'a rien à mettre à jour.
+
+### 14.4 — Le test de complétude, pour que ça le reste
+
+Un inventaire ne tient que si rien n'existe en dehors de lui. **À faire (momo)** : un test qui parcourt
+outils, sources, formats et opérations IA, et vérifie que **chacun est atteignable et décrit par
+l'inventaire**. Un ajout non déclaré fait rougir le test avant le commit — ce n'est plus une question de
+discipline, c'est structurel.
+
+Ce test aurait attrapé le jour même deux défauts trouvés ce soir : `fusion` et `rsshub` oubliés du registre
+des vocabulaires fermés (point 10.2), et l'option `categories` de « Classer / catégoriser » qu'aucun champ
+ne permet de saisir (point 12.2).
 
 ## Règle de dépôts (rappel)
 
