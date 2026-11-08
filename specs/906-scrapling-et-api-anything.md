@@ -1,5 +1,10 @@
 # 906 — Deux outils externes à intégrer : Scrapling et api-anything
 
+> **Révisée le 08/11/2026 par la spec 908 (point 5.3).** api-anything est **écarté pour l'instant** :
+> ses contraintes (Node 22+, navigateur, réapprentissage par agent, opérations partagées par défaut) ne
+> sont pas payées par son seul cas d'usage utile, que le navigateur furtif de Scrapling couvre. Le point 2
+> ci-dessous ne s'applique plus. Scrapling, lui, est confirmé et étendu : voir 908 point 5.2.
+
 Hors du pavé. Demande de Sednal le 08/11/2026 : évaluer trois outils trouvés sur GitHub pour grappes
 (`d4vinci/Scrapling`, `blacklanternsecurity/bbot`, `goodnight000/api-anything`). Décision : **bbot écarté**
 (scanner de reconnaissance sécurité — sous-domaines, surface d'attaque, bug bounty — hors sujet pour

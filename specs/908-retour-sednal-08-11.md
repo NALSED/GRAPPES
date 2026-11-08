@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4.
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5.
 
 ---
 
@@ -263,6 +263,87 @@ modifiable selon le cas 1 / 2 / 3 ; le message rouge sur un paramètre `requis` 
 `parametres_attendus` (modèle : CKAN) et sans créer de second mécanisme ; l'extension de ce bloc
 `parametres` aux services auto-hébergés ; le marqueur tiers / auto-hébergé dans la déclaration ; le libellé
 du champ, qui doit dire qu'il s'agit du serveur contacté (« Adresse » seul n'apprend rien).
+
+---
+
+## 5 — Réglages / Outils, partie transverse
+
+### 5.1 — « La section Modèle doit disparaître » : oui, mais seulement en modification
+
+`ficheOutil()` affiche deux blocs identiques à la création et à la modification :
+
+* **« Comment il travaille »** (À partir d'un modèle / Script collé) ;
+* **« Modèle »** : la liste de tous les outils en pastilles.
+
+À la **création**, les deux sont indispensables — choisir un modèle est ce qui débloque le bouton
+(« Choisis un modèle. »). À la **modification**, ils ne servent à rien et sont dangereux : cliquer une autre
+pastille de « Modèle » écrase d'un coup le rôle, l'effet, les options, la description et les exemples de
+test de l'outil qu'on était en train de régler. Sur un outil livré (Traduction, Filtre…), basculer en
+« Script collé » n'a pas davantage de sens.
+
+**À faire (momo)** : masquer « Comment il travaille » **et** « Modèle » en modification ; les garder à la
+création.
+
+### 5.2 — Scrapling : brancher la version complète, en secours et en outil
+
+**Décision de Sednal (08/11/2026) : on branche Scrapling complet, et on l'implémente à deux endroits.**
+
+Aujourd'hui, la 906 n'a câblé que le **client HTTP** de Scrapling (empreinte TLS de navigateur). Son
+**navigateur furtif** (Chromium, pages en JavaScript, protections Cloudflare) n'est pas branché, et une
+seule source l'utilise (`un-civil-society.yaml`).
+
+Rappel de la contrainte, qui façonne les deux usages : l'adaptateur a besoin, **par site**, d'une adresse,
+d'un sélecteur de résultat et de sélecteurs de champs. Scrapling n'est pas un moteur de recherche, c'est un
+**lecteur de pages** : il ne peut pas « prendre le relais » d'une recherche, il n'aurait rien à chercher.
+
+**(a) Brancher le navigateur furtif.** Ajouter au-delà du client HTTP le fetcher navigateur de Scrapling,
+pour les sites dont les résultats n'arrivent qu'en JavaScript, ou protégés. Choix du mode par source
+(HTTP simple par défaut, navigateur si la source le demande) : le navigateur est beaucoup plus lourd, il ne
+doit pas devenir le cas général.
+
+**(b) Recherche simple — une notion de « source de secours ».** Une source marquée *secours* n'est appelée
+que si les sources principales n'ont rien rendu ou ont échoué. Mécanisme **général**, pas réservé à
+Scrapling : les sources Scrapling s'y rangent naturellement. Le précédent existe déjà, mais enfermé dans une
+seule source — `osm-overpass.yaml` essaie le serveur auto-hébergé puis des serveurs publics « en secours ».
+Il s'agit de sortir cette idée de la source et d'en faire un réglage partagé.
+
+**(c) Recherche avancée — une tuile Outil, en rôle ENRICHIR.** Elle prend les candidats déjà trouvés (qui
+portent leur `site`), va lire **leur propre page**, et ramène ce qu'il y a dessus (ville, contact, nom
+exact, description). **Cette fonction n'existe nulle part aujourd'hui** : aucun outil livré ne va chercher
+une page. Elle complète une fiche sans jamais l'écraser, comme tout ENRICHIR (voir `pont/verification.py`,
+`fonction: enrichir`).
+
+### 5.3 — api-anything : écarté pour l'instant (corrige la 906)
+
+Contraintes relevées le 08/11/2026 sur le dépôt : **Node 22.13+** et un **navigateur sans fenêtre** ;
+apprentissage par une commande à trois exemples (déterministe, sans IA) **mais** pages à clics apprises par
+un **agent** avec validation humaine, et **réapprentissage par un agent** quand le site change ; ne marche
+pas sur les sites à protection anti-robot (leur propre exemple : Reddit), pas de résolution de CAPTCHA ; et
+surtout **les opérations apprises sont partagées par défaut** avec les autres installations (mode
+`--local-only` disponible) — pour un outil d'OSINT, publier la liste des sites qu'on a appris à interroger
+revient à publier ce qu'on cherche.
+
+Son seul cas d'usage solide pour grappes — un annuaire dont les résultats arrivent en JavaScript depuis une
+API interne — est **couvert par le navigateur furtif de Scrapling** (point 5.2 a), sans nouvelle dépendance
+ni partage.
+
+**Décision : on ne prend pas api-anything maintenant.** À ressortir seulement si un site concret résiste au
+Scrapling complet ; le besoin sera alors réel et mesurable. **Cette décision remplace ce qu'annonçait la
+906**, qui prévoyait de le brancher comme première source de type « serveur MCP ».
+
+### 5.4 — « Description doit être une vraie description »
+
+Le champ attend littéralement « Une phrase » (placeholder de `f.fait`), et les dix outils livrés n'en ont
+qu'une (Traduction : « Traduit la requête ou les résultats, et garde toujours l'original à côté. »).
+
+**À faire (momo)** : développer la description des dix outils livrés — ce que fait l'outil, quand s'en
+servir, ce qu'il ne fait pas. Outil par outil, en suivant les sections 2.1 à 2.10 du retour.
+
+### 5.5 — Une explication au survol dans « Réglages du modèle »
+
+Aucune aide au survol sur les options d'un outil aujourd'hui. **À faire (momo)** : une courte explication au
+survol de chaque case / pastille des réglages d'un outil, comme il en existe déjà sous « Effet dans le
+Tableau de bord ».
 
 ---
 
