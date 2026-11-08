@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4), 10 (outil 2.5), 11 (outil 2.6).
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4), 10 (outil 2.5), 11 (outil 2.6), 12 (outil 2.9), 13 (niveaux d'IA), 14 (onglet IA).
 
 ---
 
@@ -648,6 +648,113 @@ voient nulle part :
 point 8.1), ce qui dégage l'écran, **et** rendre les trois différences visibles, pour qu'on sache en
 ouvrant la fiche lequel des deux outils on règle : le nombre de sorties en premier, puisque c'est ce qui
 change la façon de s'en servir sur le plan.
+
+---
+
+## 12 — Outil 2.9 : Assistant IA
+
+Quatre remarques de Sednal. Rappel de ce que l'outil fait : il **ne cherche rien**, il prend les résultats
+déjà trouvés et écrit quelque chose à côté de chacun. Trois opérations existent (`src/pilote/operations_ia/`) :
+
+| Opération | Ce qu'elle écrit à côté de chaque fiche |
+|---|---|
+| Résumer | une phrase résumant ce que la fiche porte déjà (`resume_ia`) |
+| Extraire des mots-clés | quelques mots déjà présents dans son texte (`mots_cles_ia`) |
+| Classer / catégoriser | une étiquette prise dans une liste **fournie par l'utilisateur** |
+
+### 12.1 — « Opération : on ne comprend pas quelles actions »
+
+L'écran affiche le nom de l'opération et une phrase de description, mais **ne dit jamais qu'une colonne va
+s'ajouter** à chaque fiche, laquelle, ni où on la verra. C'est ce qui manque pour comprendre l'outil.
+
+**À faire (momo)** : dire, pour l'opération choisie, ce qui sera ajouté à chaque fiche et où cela
+apparaîtra, plutôt qu'une description abstraite.
+
+### 12.2 — « Classer / catégoriser » est inutilisable (vrai défaut)
+
+`operations_ia/classer.py` lit une option **`categories`** — la liste fournie par l'utilisateur — et retombe
+sur `["autre"]` quand elle est vide. Or **`rendreOptionsIa` n'affiche aucun champ pour la saisir** : il rend
+Opération, Modèle, Effort, Traiter au maximum, Marquer les résultats, et rien d'autre. Choisir cette
+opération range donc tout dans « autre ».
+
+**À faire (momo)** : ajouter le champ « Catégories » quand l'opération « Classer / catégoriser » est
+choisie, et refuser de lancer l'opération tant qu'il est vide plutôt que de tout classer « autre ».
+
+### 12.3 — « Modèle » disparaît
+
+**Décision de Sednal (08/11/2026)** : le modèle est l'agent Claude installé sur `.60`, point. Le champ
+« Modèle » est retiré de la fiche ; on verra plus tard s'il doit revenir.
+
+### 12.4 — « Traiter au maximum » n'est pas clair
+
+C'est le **nombre de fiches** que l'IA traitera au plus (vide = toutes). Le libellé ne dit ni qu'il s'agit
+de fiches, ni ce qu'il advient des autres — elles passent sans être touchées.
+
+**À faire (momo)** : dire les deux dans le libellé et son aide. « Effort » reste tel quel : validé par Sednal.
+
+---
+
+## 13 — Quatre niveaux d'implication de l'IA (nouveau, décidé le 08/11/2026)
+
+Constat de Sednal : les trois opérations actuelles sont du post-traitement cosmétique, « c'est un peu
+léger ». Elles reformulent une fiche déjà complète et n'allègent pas le vrai travail — trier des centaines
+de résultats dont une partie est hors sujet.
+
+**Décision : un curseur à quatre niveaux**, chacun activé explicitement, l'avertissement montant avec le
+niveau. La règle de fond ne change à aucun niveau : **ce que l'IA écrit est marqué « IA » et ne vaut jamais
+comme fait vérifié.**
+
+**Niveau 1 — Reformuler** (ce qui existe). Résumer, mots-clés, classer. N'ajoute aucun nom, aucune donnée.
+
+**Niveau 2 — Aider à trier.** Explique pourquoi deux fiches sont peut-être la même entité (là où Splink ne
+voit qu'une ressemblance de texte : « Les Amis du Vieux Lyon » et « AVL » n'ont rien en commun pour lui) ;
+écarte le bruit évident en disant pourquoi ; propose un ordre de lecture. **Ne crée rien, ne supprime
+rien** : prépare le travail, l'utilisateur valide. C'est le niveau qui sert directement le Tri visuel que
+Sednal veut (point 10.1).
+
+**Niveau 3 — Extraire et formuler.** Fabrique les requêtes envoyées aux sources (synonymes, sigles,
+variantes locales) ; extrait des champs depuis les pages **réellement collectées** (l'adresse sur le site de
+l'association, à coupler avec Scrapling, point 5.2). Crée de la donnée, mais chaque valeur reste attachée à
+la page d'où elle sort.
+
+**Niveau 4 — Chercher elle-même.** L'IA propose des noms depuis ce qu'elle sait, sans source. Garde-fou,
+construit sur la mécanique existante plutôt que sur un avertissement cosmétique :
+
+> Un nom venu de l'IA entre comme candidat marqué « IA », avec **zéro point de confirmation**. Il ne rejoint
+> les résultats normaux **que si une source de première main le confirme** (`main: premiere` — un registre),
+> jamais une recherche web. Sinon il reste dans une zone à part, visible mais séparée.
+
+Ce que ce garde-fou empêche précisément : l'IA invente un nom plausible, une recherche web le « retrouve »
+parce qu'il traîne quelque part, et une invention devient un fait. Exiger un registre rend cela impossible.
+
+---
+
+## 14 — Nouvel onglet « IA », à côté d'« Aide » (décidé le 08/11/2026)
+
+**Demande de Sednal** : un onglet **IA** en plus d'**Aide**, avec bascule entre les deux. Les deux ne font
+pas le même métier :
+
+* **Aide** reste ce qu'elle est (spécification 11) : un outil du programme. Elle **appelle des fonctions** et
+  met en forme ce qu'elles rendent, n'écrit aucun fait, et ses trois entrées toutes faites marchent même
+  sans modèle. **Ne pas y toucher.**
+* **IA** est une conversation libre avec Claude, « comme dans un terminal ou Claude Desktop ».
+
+**Niveau retenu par Sednal : l'IA peut aussi agir** (option (c) des trois proposées). Elle lit l'état réel —
+plan, sources, résultats de la recherche en cours — **et** peut changer un réglage, allumer une source,
+lancer une recherche.
+
+**Les limites, à construire dès le départ :**
+
+1. **Elle agit par les actions de pilote**, les mêmes qu'un humain a dans l'interface (les routes de
+   `/api/suite/…`). **Pas de shell sur `.60`**, pas d'exécution de code arbitraire : ce qui borne ce qu'elle
+   peut faire, c'est la liste des gestes que l'interface permet déjà.
+2. **Confirmation avant tout geste qui dépense ou qui change l'état** : lancer une recherche coûte des
+   crédits, allumer une source payante change le comportement. Le projet a déjà ce réflexe (le test réel
+   montre son prix avant le clic) — le reprendre ici.
+3. **Tout ce qu'elle fait va au Journal du Tableau de bord**, attribué à l'IA et non à l'utilisateur : le
+   modèle de données le permet déjà (`Journal.qui`).
+4. **Jamais** : supprimer des résultats, écraser une décision prise dans Tri, lever la règle 8. Ce sont les
+   gestes irréversibles ou de jugement — ils restent à l'utilisateur.
 
 ---
 
