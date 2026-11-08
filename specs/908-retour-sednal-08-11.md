@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4).
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4), 10 (outil 2.5).
 
 ---
 
@@ -565,6 +565,62 @@ exécuté. C'est ce qui manque le plus pour comprendre l'outil d'un coup d'œil.
 **À faire (momo)** : afficher un **aperçu des premières recherches produites** — « 3 éléments → *club
 Lyon*, *club Grenoble*, *club Annecy* » — construit à partir de la liste et du champ remplacé, sans rien
 lancer.
+
+---
+
+## 10 — Outil 2.5 : Fusion / doublons
+
+Retour de Sednal : « Réglages du modèle : PAS CLAIR DU TOUT ».
+
+### 10.1 — Ce que l'outil fait, et que rien n'explique
+
+Mis au clair avec Sednal le 08/11/2026, **et validé par lui tel quel** : cet outil **ne fusionne rien**.
+
+1. **« Même entité si »** fixe le degré de ressemblance à partir duquel une paire de fiches est **proposée**
+   dans l'écran Tri (`rapprochements.proposer`, seuil repris de la tuile). Rien n'est jamais regroupé
+   automatiquement : la tuile met des paires en file, **c'est l'utilisateur qui confirme ou sépare**.
+2. **« En cas de doublon, garder »** n'intervient qu'**après** cette confirmation : laquelle des deux fiches
+   survit à l'export.
+
+La règle 8 est appliquée à cet endroit : une fiche de genre « personne » n'entre jamais dans un
+rapprochement, sauf levée explicite sur cette fiche-là (`faits.regle8_leve`).
+
+**Le nom « Fusion / doublons » laisse croire à une déduplication automatique**, alors que l'outil prépare un
+travail de tri fait à la main. Renommage à confirmer par Sednal (piste : « Rapprochements à confirmer »).
+
+**Ce que Sednal garde** : le comportement — proposer, ne jamais fusionner seul. La suite du traitement se
+fera **dans Tri**, où il veut « un outil très visuel » ; à reprendre dans la section Tri de cette spec.
+
+### 10.2 — Les deux réglages sont en texte libre, avec repli silencieux (vrai défaut)
+
+**`fusion` ne figure pas dans `RENDUS_OPTIONS`** — le registre des vocabulaires fermés de la 905 §1 en
+couvre huit (format, traduction, si, filtre, boucle, attente, budget, ia) et **a oublié `fusion` et
+`rsshub`**. Les deux réglages tombent donc sur le rendu générique : des champs texte libres.
+
+Valeurs réellement attendues par le moteur, qu'aucun écran n'indique :
+
+| Réglage | Valeurs acceptées | Effet |
+|---|---|---|
+| Même entité si | `large` / `normal` / `strict` | seuil 0,10 / 0,20 / 0,40 (`SEUILS_FUSION`) |
+| En cas de doublon, garder | la plus récente / la première trouvée / la plus fiable | fiche gardée à l'export |
+
+Et **le moteur retombe silencieusement** sur `normal` et `fiable` dès qu'il ne reconnaît pas ce qui est
+écrit (`SEUILS_FUSION.get(norme(...), SEUILS_FUSION["normal"])`). Une faute de frappe change le degré de
+regroupement sans que rien ne le dise — inacceptable pour un outil dont on attend d'abord de la fiabilité.
+
+**À faire (momo)** : donner un rendu dédié à `fusion` (trois choix chacun → **pastilles**, règle 3.10) et
+dire ce que chaque niveau fait — *large* regroupe davantage, au risque de confondre deux entités ; *strict*
+ne propose que les quasi-certitudes, au risque de laisser passer de vrais doublons. Même travail pour
+`rsshub`, oublié du même registre (son intervalle de rafraîchissement est aussi une liste fermée).
+
+### 10.3 — Une seule tuile Fusion est jouée par recherche, mais la palette en laisse poser plusieurs
+
+`suite_plan` n'applique **qu'une tuile Fusion par recherche** — « les suivantes sont ignorées » — et c'est
+pareil pour « Quand une source est à court ». La palette, elle, laisse en poser autant qu'on veut (voir
+point 3.5, qui vaut pour Filtre mais **pas** pour ces deux-là).
+
+**À faire (momo)** : empêcher d'en poser une deuxième, ou le dire au moment où on la pose — pas seulement
+après coup dans les tuiles non appliquées.
 
 ---
 
