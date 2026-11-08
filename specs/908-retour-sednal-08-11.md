@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1).
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2, partiel).
 
 ---
 
@@ -403,6 +403,45 @@ un leurre.
 Confirmé par capture : en modifiant **Format de sortie**, la rangée « Modèle » liste les dix outils et
 « Format de sortie » y est sélectionné. Cliquer « Boucle » écraserait rôle, effet, options, description et
 exemples de test. Correction déjà écrite au point 5.1.
+
+---
+
+## 7 — Outil 2.2 : Traduction
+
+### 7.1 — Le test échouait parce que le service n'était pas là (résolu le 08/11/2026)
+
+Message vu par Sednal : `le moteur de traduction ne répond pas (<urlopen error [Errno 111] Connection
+refused>)`. Ce n'était pas un défaut de l'outil : **LibreTranslate ne tournait pas sur `.60`**.
+
+Diagnostic : le fichier `libretranslate-pilote.service` livré dans le dépôt lance
+`/mnt/carte/pilote-copies/libretranslate/lancer.sh` — le chemin de la machine d'avant. Sur `.60`, le disque
+de données (260 Go) est monté sur **`/srv/grappes`**, et LibreTranslate y était déjà installé. Le service
+échouait donc en `203/EXEC` (fichier introuvable), en boucle, sans que rien ne le dise côté interface.
+
+Résolu en corrigeant le chemin du service et en réinstallant les modèles interrompus ; le service répond
+maintenant (anglais, arabe, chinois, allemand, espagnol, français, italien, russe).
+
+**Deux défauts pour momo :**
+
+1. **Chemin en dur dans un fichier livré.** `pilote/outils/libretranslate/libretranslate-pilote.service` et
+   `LISEZMOI.md` écrivent `/mnt/carte/pilote-copies/…`, alors que le README de pilote pose « aucun chemin en
+   dur » et que la machine réelle utilise `/srv/grappes`. À dériver de la configuration, comme le reste.
+   (`lancer.sh`, lui, est déjà correct : il déduit son dossier de sa propre position.)
+2. **Erreur brute affichée à l'utilisateur.** L'interface a montré `<urlopen error [Errno 111] Connection
+   refused>`. Elle doit dire ce qui se passe et quoi faire — « le service de traduction n'est pas démarré
+   sur cette machine », avec le renvoi vers son fichier d'installation — jamais le texte d'exception Python.
+   À traiter comme une règle générale, pas seulement pour la traduction : aucun message d'erreur technique
+   brut ne doit arriver jusqu'à l'écran.
+
+### 7.2 — Plusieurs langues d'entrée (2.2.1) et même rendu pour « Traduire vers » (2.2.2)
+
+**En attente de confirmation de Sednal.** Aujourd'hui « Traduire vers » accepte déjà plusieurs langues,
+« Langue d'entrée » une seule (ou « détecter »).
+
+Contrainte du moteur : `suite_traduction.traduire_protege()` traduit **depuis une** langue par appel.
+« Plusieurs langues d'entrée » ne peut donc pas vouloir dire traduire depuis trois langues à la fois ; cela
+veut dire **« détecte, mais seulement parmi ces langues-là »** — utile (évite qu'un texte français soit pris
+pour du portugais), mais ce n'est pas la même chose. À confirmer avant d'écrire la consigne.
 
 ---
 
