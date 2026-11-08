@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4), 10 (outil 2.5), 11 (outil 2.6), 12 (outil 2.9), 13 (niveaux d'IA), 14 (fusion Aide + IA, inventaire).
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4), 10 (outil 2.5), 11 (outil 2.6), 12 (outil 2.9), 13 (niveaux d'IA), 14 (fusion Aide + IA, inventaire), 15 (outil 2.10). **Reste : Tri**, que Sednal traite en dernier.
 
 ---
 
