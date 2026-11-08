@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3.
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4.
 
 ---
 
@@ -187,6 +187,62 @@ que comme une règle générale : il a déjà détaillé ce qui cloche pour chac
 
 Campagne de test à mener **une fois** les corrections par outil faites (sections 2.1 à 2.10) et le test réel
 exposé dans `/suite` (3.3). À reprendre en fin de spec, pas avant.
+
+---
+
+## 4 — Réglages / Sources
+
+### 4.1 — « Si le coût est payant, pourquoi le quota est illimité ? »
+
+Même défaut que **3.4**, vu à un deuxième endroit. Rien de plus à faire que ce qui y est écrit.
+
+### 4.2 — « À quoi correspond *adresse* ? » : mapper les serveurs, et réclamer ceux qui manquent
+
+Le champ « Adresse » de la fiche d'une source affiche `presets.domaine_source(d)` : le nom de machine du
+serveur contacté, **lu uniquement dans la déclaration** (`moteur.parametres.url` pour une API,
+`moteur.parametres.mcp` pour un MCP). Quand l'adresse est dans le code de l'adaptateur, la fonction rend
+`""` plutôt que de deviner — bon réflexe en soi, mais la fiche affiche alors un « — » muet.
+
+Chiffré sur les 79 sources livrées :
+
+| Ce que la déclaration permet déjà de savoir | Nb | Une adresse a-t-elle un sens ? |
+|---|---|---|
+| Hors ligne (`mode.en_ligne: false`) — copie locale, fichier | 7 | **Non** : aucun serveur contacté |
+| En ligne, adresse écrite dans la déclaration | 22 | **Oui**, déjà lisible aujourd'hui |
+| En ligne, adresse dans le code de l'adaptateur | 50 | **Oui**, mais affichée « — » aujourd'hui |
+| Base extérieure (`adaptateur: base_exterieure`) | 0 livrée | **Non** : déjà affichée comme « Machine » |
+
+**Décision de Sednal (08/11/2026)** : pas de champ générique affiché partout — du cas par cas, décidé par le
+programme à partir de ce qu'il sait déjà. On **mappe** les adresses serveur ; si une adresse existe elle est
+affichée ; si elle manque là où elle est nécessaire, on la réclame par un message **en rouge**
+(« Veuillez entrer une URL serveur »).
+
+Trois cas à distinguer à l'implémentation, sinon la règle se retourne contre son but :
+
+1. **Adresse fixée par l'adaptateur** (Brave Search, CourtListener, Bluesky… — les 50) : à remonter depuis
+   l'adaptateur et à afficher **en lecture seule**. Laisser l'utilisateur en saisir une autre ne changerait
+   rien à ce que la source appelle réellement : l'affichage deviendrait faux.
+2. **Adresse qui appartient à l'utilisateur** (services auto-hébergés : SearXNG, Overpass, RSSHub,
+   LibreTranslate, et toute source dont l'URL est un paramètre) : champ **modifiable**, et **message rouge
+   « Veuillez entrer une URL serveur » quand il est vide** — sans elle la source ne peut pas fonctionner.
+   C'est le seul cas où le message rouge a un sens.
+3. **Source hors ligne** (copie locale, fichier local, programme local) : **aucun champ**, aucun message.
+
+**Manque révélé par ce point** : rien dans les déclarations ne distingue un serveur **tiers** d'un serveur
+**auto-hébergé par Sednal**. SearXNG porte `mode.local: false` alors qu'il tourne sur sa machine. Or c'est
+exactement la distinction qui donne son sens au champ — savoir où partent les mots cherchés, sa propre
+machine n'étant pas une fuite. **À ajouter dans la déclaration** d'une source, et c'est aussi ce qui permet
+de classer automatiquement une source dans le cas 1 ou le cas 2.
+
+**Nouvelle source** : le formulaire d'ajout fait déjà le cas par cas (API → adresse, MCP → adresse du
+serveur, base extérieure → machine et port, fichier / base SQLite / programme → chemin, sans serveur). Ce
+qui manque, c'est de le **dire** : en choisissant le type, on doit savoir si une adresse serveur sera
+demandée, et pourquoi.
+
+**À faire (momo)** : le mappage des adresses depuis les adaptateurs ; l'affichage en lecture seule ou
+modifiable selon le cas 1 / 2 / 3 ; le message rouge pour le cas 2 uniquement ; le marqueur
+tiers / auto-hébergé dans la déclaration ; le libellé du champ, qui doit dire qu'il s'agit du serveur
+contacté (« Adresse » seul n'apprend rien).
 
 ---
 
