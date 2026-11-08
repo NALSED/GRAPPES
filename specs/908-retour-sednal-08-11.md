@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3).
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4).
 
 ---
 
@@ -523,6 +523,48 @@ nœud lui-même.
 
 **À faire (momo)** : montrer dans la fiche que l'outil produit deux sorties et lesquelles, pour qu'on sache
 ce qu'on branche avant d'aller sur le plan.
+
+---
+
+## 9 — Outil 2.4 : Boucle
+
+Retour de Sednal : « Réglages du modèle : PAS CLAIR DU TOUT ». Trois causes distinctes.
+
+### 9.1 — Deux origines de liste sur trois ne font rien (à brancher)
+
+`ORIGINES_BOUCLE` propose « Liste collée », « Fichier importé », « Résultat d'une tuile précédente ».
+Seule la première est branchée ; les deux autres sont cliquables, le réglage se garde, et une note grise
+avoue : « Pas encore branché dans le moteur : la recherche ne se relance pas encore pour chaque élément. »
+
+**Décision de Sednal (08/11/2026) : on branche les deux manquantes.** Conforme à ce qu'il a tranché le
+03/11 — toute valeur proposée doit avoir un vrai mécanisme, pas de choix cosmétique.
+
+* **Fichier importé** : l'utilisateur donne un fichier local (un élément par ligne, ou une colonne d'un
+  CSV) ; chemin absolu et vérification du fichier, même exigence qu'au point 6.3.
+* **Résultat d'une tuile précédente** : la liste vient de ce que la tuile d'avant a produit. Il faut dire
+  **quel champ** alimente la boucle (`nom`, `ville`, `site`…) : reprendre la liste de champs déjà utilisée
+  par les conditions (`CHAMPS_CONDITION`), en déroulant (règle 3.10).
+
+**Garde-fou à vérifier dans les deux cas** : une liste venue d'un fichier ou d'une tuile peut contenir des
+centaines d'éléments, donc des centaines de recherches. Le réglage « Maximum de tours » (50 par défaut)
+existe déjà — il doit être réellement appliqué, et ce qu'il coupe doit être dit, jamais un arrêt silencieux.
+
+### 9.2 — « Répéter pour chaque » ne dit pas qu'il s'agit d'un remplacement
+
+Les valeurs sont « le lieu cherché », « le nom cherché », « un mot-clé ajouté ». Ce réglage dit en réalité
+**quelle partie de la recherche chaque élément de la liste vient remplacer** — le code le nomme d'ailleurs
+`REMPLACE_BOUCLE` en interne, mais le libellé affiché ne parle pas de remplacement. D'où l'incompréhension.
+
+**À faire (momo)** : un libellé qui dit le remplacement, du type « Chaque élément de la liste remplace : … ».
+
+### 9.3 — Rien ne montre ce que la boucle va lancer
+
+On colle trois villes, on choisit « le lieu cherché », et aucun aperçu ne dit ce qui sera réellement
+exécuté. C'est ce qui manque le plus pour comprendre l'outil d'un coup d'œil.
+
+**À faire (momo)** : afficher un **aperçu des premières recherches produites** — « 3 éléments → *club
+Lyon*, *club Grenoble*, *club Annecy* » — construit à partir de la liste et du champ remplacé, sans rien
+lancer.
 
 ---
 
