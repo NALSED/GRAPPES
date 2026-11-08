@@ -6,7 +6,7 @@ fois, il n'est pas complet tant que la dernière section ne le dit pas.
 
 Ordre du retour : Transverse → Tableau de bord → Réglages (Sources, puis Outils 2.1 à 2.10) → Tri.
 
-**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4), 10 (outil 2.5).
+**État : en cours de rédaction.** Points traités : 1, 2, 3, 4, 5, 6 (outil 2.1), 7 (outil 2.2), 8 (outil 2.3), 9 (outil 2.4), 10 (outil 2.5), 11 (outil 2.6).
 
 ---
 
@@ -621,6 +621,33 @@ point 3.5, qui vaut pour Filtre mais **pas** pour ces deux-là).
 
 **À faire (momo)** : empêcher d'en poser une deuxième, ou le dire au moment où on la pose — pas seulement
 après coup dans les tuiles non appliquées.
+
+---
+
+## 11 — Outil 2.6 : Filtre
+
+Retour de Sednal : « n'est pas implémenté, identique à Condition « si » » / « créer l'outil ».
+
+### 11.1 — L'outil existe : c'est son affichage qui le rend indiscernable de « si »
+
+Vérifié dans le code, puis sur capture de `.60` le 08/11/2026. Filtre **est** implémenté, côté moteur
+(`suite_plan` : `_etapes_conditions(..., "garder")`) comme côté interface
+(`RENDUS_OPTIONS.filtre = rendreOptionsConditions(true)`). Il n'y a donc **pas d'outil à créer**.
+
+Mais à l'écran, Filtre affiche **18 pastilles** (10 champs + 8 comparateurs) et Condition « si » en affiche
+16, dans la même disposition : ce sont visuellement des jumeaux. Leurs trois différences réelles ne se
+voient nulle part :
+
+| | Condition « si » | Filtre |
+|---|---|---|
+| Champs | 8 | 10 — en plus **Nombre de sources** et **Fiabilité minimale** |
+| Sorties | **deux** branches (oui / non), à nommer sur la tuile | **une** : ce qui passe |
+| Plafond | — | **« Garder au maximum »** |
+
+**À faire (momo)** : appliquer la règle 3.10 (champ et comparateur en déroulants, une condition par ligne —
+point 8.1), ce qui dégage l'écran, **et** rendre les trois différences visibles, pour qu'on sache en
+ouvrant la fiche lequel des deux outils on règle : le nombre de sorties en premier, puisque c'est ce qui
+change la façon de s'en servir sur le plan.
 
 ---
 
