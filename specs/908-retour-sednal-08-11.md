@@ -433,7 +433,28 @@ maintenant (anglais, arabe, chinois, allemand, espagnol, français, italien, rus
    À traiter comme une règle générale, pas seulement pour la traduction : aucun message d'erreur technique
    brut ne doit arriver jusqu'à l'écran.
 
-### 7.2 — Plusieurs langues d'entrée (2.2.1) et même rendu pour « Traduire vers » (2.2.2)
+### 7.2 — Deux tests aux noms presque identiques sur le même écran, un vrai et un faux
+
+Constaté le 08/11/2026 : LibreTranslate une fois démarré, Sednal relance « le test » de Traduction et
+obtient `Fiche vérifiée (l'outil ne s'exécute pas encore sur de vraies données) : charpentier (fr,
+original) / Zimmermann (de) / carpenter (en)`. Rien n'a été traduit : c'est la **sortie attendue** stockée
+dans la fiche, réaffichée telle quelle. Le même résultat serait sorti avec le service éteint.
+
+La fiche de Traduction porte en effet **deux tests différents**, l'un au-dessus de l'autre :
+
+| Où | Libellé | Ce qu'il fait |
+|---|---|---|
+| Dans « Réglages du modèle » | **« Tester sur un exemple »**, champ « Un texte à traduire » | **Vrai** : appelle `POST /traduction/tester`, donc LibreTranslate |
+| Sous « Vérifier » | **« Test sur un exemple »**, « Exemple d'entrée » / « Sortie attendue », bouton « Lancer le test » | **Faux** : n'exécute rien (voir 6.1), réaffiche la sortie attendue |
+
+Deux comportements opposés, des libellés qui ne diffèrent que par un mot, sur le même écran.
+
+**À faire (momo)** : lever l'ambiguïté. Le test qui n'exécute rien ne doit pas s'appeler « test » comme
+l'autre, ni rendre un résultat qui ressemble à une sortie obtenue. La correction de fond reste celle du
+point 6.1 — donner un vrai test aux dix outils livrés —, après quoi il n'y a plus de raison d'avoir deux
+mécanismes côte à côte : celui de Traduction montre déjà ce à quoi un vrai test ressemble.
+
+### 7.3 — Plusieurs langues d'entrée (2.2.1) et même rendu pour « Traduire vers » (2.2.2)
 
 **En attente de confirmation de Sednal.** Aujourd'hui « Traduire vers » accepte déjà plusieurs langues,
 « Langue d'entrée » une seule (ou « détecter »).
