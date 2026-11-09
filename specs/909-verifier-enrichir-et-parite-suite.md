@@ -104,6 +104,35 @@ informelle, rien ne vérifie rien aujourd'hui. Décidé :
   simplement interroger searxng/brave en vérifier ; à reprendre seulement si (1) et (2) montrent une
   vraie limite.
 
+### 1.3 — Découverte de sources, décidée le 09/11/2026
+
+Transverse à chercher/vérifier/enrichir (pas seulement vérifier), mais rattachée ici parce que la
+discussion en est partie. Constat : il existe des catalogues de sources déjà maintenus par ailleurs,
+par exemple l'**OSINT Framework** ([osintframework.com](https://osintframework.com),
+[`lockfale/OSINT-Framework`](https://github.com/lockfale/OSINT-Framework)) — un arbre thématique de
+sources tenu à jour par la communauté. Trois décisions :
+
+**a) Revue ponctuelle.** Claude explore les branches pertinentes (personnes, entreprises, lieux,
+registres publics — pas les branches de reconnaissance de sécurité, déjà écartées le 19/10) et
+propose des ajouts, même démarche que 907 (`awesome-public-datasets`). Pas un outil, une tâche de
+revue périodique.
+
+**b) Filet honnête plutôt qu'automatisme.** Quand aucune des 79 sources ne couvre le pays ou le
+thème d'un candidat, le programme l'affiche clairement et propose un lien vers la branche
+correspondante de l'OSINT Framework, pour que la personne cherche elle-même. Ne prétend pas
+automatiser ce qui a été jugé trop fragile (le routage dynamique « deviner quelle base interroger »,
+écarté — même famille de risque qu'api-anything, 908 §5.3).
+
+**c) Un agent dédié sur `.60` fait cette découverte, avec sa propre mémoire.** Pas un ré-entraînement
+de modèle (pas réaliste, pas souhaitable) : un rôle spécialisé donné à un agent sur `.60`
+(l'assignation précise du rôle viendra plus tard), qui explore et propose, avec un fichier qui
+accumule ce qu'il a déjà regardé d'une session à l'autre — même principe que `DECISIONS.md` /
+`QUESTIONS.md` que momo tient déjà sur `.250`. Les sources candidates trouvées sont écrites dans un
+nouveau dossier `config/sources_candidates/`, **même format YAML** qu'une vraie déclaration de
+`config/sources/`, avec un champ `statut` (`a_evaluer` / `retenue` / `ecartee` + motif). Sednal et
+Claude revoient ce dossier et promeuvent ce qui est bon vers `config/sources/` — aucun nouvel outil
+de suivi, réutilisation du schéma existant pour une étape de plus avant la déclaration définitive.
+
 ## 2 — Enrichir
 
 *(à traiter après le point 1, voir 908 point 13-14 pour le lien avec les niveaux d'IA et l'inventaire)*
