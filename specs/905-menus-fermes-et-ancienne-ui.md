@@ -49,6 +49,24 @@ page, ne rien réécrire depuis zéro) :
 * Chaque type porté est vérifié par Sednal sur .60 avant de passer au suivant (test réel d'ajout d'une
   source de ce type depuis `/suite`), pour ne rien casser d'un coup sur un système qu'il utilise déjà.
 
+### 2.1 — Défaut trouvé pendant la vérification (09/11/2026) : sources retirées muettes
+
+Pendant le test réel du serveur MCP sur `.60`, Réglages > Sources, section « sources retirées » :
+`pilote/static/suite/js/reglages.js` lignes 96-102, la liste des sources retirées n'affiche que des
+boutons « + » (icône seule) sans aucun texte visible à côté.
+
+```js
+retirees.map((s) => boutonIcone({ icon: "ajouter", etiquette: `${VERBES.ajouter} ${s.nom}`, onclick: ... }))
+```
+
+`boutonIcone()` (`ui.js` ligne 10-12) envoie `etiquette` uniquement en `title`/`aria-label` (infobulle au
+survol) — jamais en texte affiché. Et **aucune info de type** (mcp/api/fichier/base/base extérieure/
+programme local) n'est affichée nulle part dans cette liste. Avec plusieurs sources retirées, impossible
+de distinguer laquelle est laquelle sans survoler chaque bouton un par un.
+
+**À corriger** : afficher le nom de la source et son type en texte visible à côté de chaque bouton
+« + » de la section retirées, pas seulement en tooltip.
+
 ## 3 — Suppression de l'ancienne UI — **revu le 09/11/2026, ne plus suivre tel quel**
 
 > **Décision de Sednal (09/11/2026) : on ne supprime rien.** On adapte l'ancienne UI à la nouvelle
