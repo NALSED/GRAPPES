@@ -186,7 +186,7 @@ Précision de portée : en **recherche simple**, ça marche déjà dès que fait
 l'affichage. En **plan avancé**, une tuile source n'a aujourd'hui aucun moyen de choisir son rôle au
 moment où on la pose — elle reprend toujours le rôle unique affiché par la fiche (le même champ figé
 corrigé au point 1.1.b). Exploiter le double rôle tuile par tuile en avancé attend le mécanisme des
-positions du point 3 (déjà mis en attente) — la déclaration, elle, n'attend pas : utile en simple dès
+positions du point 4.1 (déjà mis en attente) — la déclaration, elle, n'attend pas : utile en simple dès
 maintenant.
 
 **c) Donner à enrichir sa place dans l'assistant d'installation.** `installation.js` étape 2 filtre
