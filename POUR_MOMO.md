@@ -31,6 +31,9 @@ Dans [`specs/`](specs/) : **un document par spec**, numéroté comme le pavé de
   « à valider » ou « à traiter », c'est une note de travail : ne l'implémente pas.
 * Sednal décide, Claude rédige, tu codes. Pour toute question d'orientation : Sednal, pas de décision
   seul.
+* **Instruction transverse, permanente (09/11/2026) :** à la fin de CHAQUE tâche, avant de passer à la
+  suivante, relis `specs/000-INDEX.md` et les specs modifiées depuis ta dernière lecture. De nouvelles
+  instructions peuvent sortir à tout moment — pas seulement groupées en séance de revue avec Sednal.
 
 ## Ce qui reste provisoirement dans GRAPPES
 

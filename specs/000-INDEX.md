@@ -13,6 +13,9 @@ l'identique sur les dix outils : elles sont spécifiées **une fois**, pas dix.
   note de travail : momo n'y touche pas.
 * La recherche avancée (duplication des tuiles avec leur préréglage) n'est traitée **qu'après** la fin
   de ce pavé.
+* **Instruction transverse, permanente (09/11/2026) :** à la fin de CHAQUE tâche, avant de choisir la
+  suivante, momo relit cet index et les specs touchées depuis sa dernière lecture. De nouvelles
+  instructions peuvent arriver à tout moment, pas seulement en séance de revue groupée avec Sednal.
 
 ## État des points
 
@@ -70,6 +73,7 @@ Sednal les a écrites dix fois, une par outil. Elles sont spécifiées une seule
 | Intégration de Scrapling (scraping auto-hébergé) et api-anything (adaptateur site→MCP) ; bbot écarté | `906-scrapling-et-api-anything.md` | prête pour momo |
 | Trois sources trouvées dans awesome-public-datasets : Company Registry Atlas (catalogue de bases par pays), UN Civil Society Database, Humanitarian Data Exchange | `907-sources-awesome-public-datasets.md` | prête pour momo |
 | Retour de Sednal du 08/11 repris point par point (transverse, tableau de bord, réglages sources et outils) | `908-retour-sednal-08-11.md` | **complète et validée** — momo a toute autonomie dessus ; section Tri à venir |
+| Vérifier et enrichir : correctifs de code trouvés en lecture, puis comparaison complète ancienne UI / `/suite` (élargit 905) | `909-verifier-enrichir-et-parite-suite.md` | en cours de rédaction avec Sednal |
 
 ## Après le pavé
 
