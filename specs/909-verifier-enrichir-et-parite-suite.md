@@ -147,6 +147,20 @@ nouveau dossier `config/sources_candidates/`, **même format YAML** qu'une vraie
 Claude revoient ce dossier et promeuvent ce qui est bon vers `config/sources/` — aucun nouvel outil
 de suivi, réutilisation du schéma existant pour une étape de plus avant la déclaration définitive.
 
+**d) Candidats déjà identifiés le 09/11, à mettre dans `config/sources_candidates/` dès que (c)
+existe** (en attendant, à vérifier/déclarer directement si plus simple) :
+- **ICIJ Offshore Leaks Database** (Panama Papers, Pandora Papers…) — gratuite, consultable par nom,
+  signale des structures offshore. Même nature qu'opensanctions : un risque, pas une confirmation —
+  à ranger dans la famille vérification « sanctions/risque », pas confirmation d'identité.
+- **Liste des entreprises exclues par les bailleurs internationaux** (Banque mondiale, BEI…) — fraude/
+  corruption sur marchés publics internationaux. Même famille « risque ».
+- **Open Ownership Register** — bénéficiaires effectifs des entreprises, plusieurs pays — qui possède
+  réellement l'entreprise derrière le nom trouvé.
+- **Les trois sources de 907** (Company Registry Atlas, UN Civil Society Database, Humanitarian Data
+  Exchange) ne sont déclarées que `chercher` aujourd'hui — ce sont des registres, elles devraient
+  aussi porter le rôle `verifier` (et pour Company Registry Atlas, servir de routage dynamique vers
+  le bon registre national par pays, discuté ci-dessus).
+
 ## 2 — Enrichir
 
 Rappel clarifié avec Sednal : vérifier et enrichir ne sont pas redondants — même code, effet
