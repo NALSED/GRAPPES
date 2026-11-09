@@ -73,7 +73,7 @@ Sednal les a écrites dix fois, une par outil. Elles sont spécifiées une seule
 | Intégration de Scrapling (scraping auto-hébergé) et api-anything (adaptateur site→MCP) ; bbot écarté | `906-scrapling-et-api-anything.md` | prête pour momo |
 | Trois sources trouvées dans awesome-public-datasets : Company Registry Atlas (catalogue de bases par pays), UN Civil Society Database, Humanitarian Data Exchange | `907-sources-awesome-public-datasets.md` | prête pour momo |
 | Retour de Sednal du 08/11 repris point par point (transverse, tableau de bord, réglages sources et outils) | `908-retour-sednal-08-11.md` | **complète et validée** — momo a toute autonomie dessus ; section Tri à venir |
-| Vérifier et enrichir : correctifs de code trouvés en lecture, puis comparaison complète ancienne UI / `/suite` (élargit 905) | `909-verifier-enrichir-et-parite-suite.md` | en cours de rédaction avec Sednal |
+| Vérifier et enrichir : correctifs de code trouvés en lecture, nouvel outil Requête avancée, puis comparaison complète ancienne UI / `/suite` (élargit 905) | `909-verifier-enrichir-et-parite-suite.md` | **sections 1, 2, 3 prêtes pour momo** ; volet 2 (comparaison UI) et section 4 (évolutions futures) pas encore actionnables |
 | Tri (adaptation de l'ancien `tri.js` à la charte `/suite`, outil visuel pour les rapprochements Fusion) | — | **pas commencée** — attend la fin de toute la tuyauterie outils/sources (909 et ce qui en découle), décision Sednal 09/11/2026 : les outils et sources influencent comment Tri doit traiter les résultats |
 
 ## Après le pavé

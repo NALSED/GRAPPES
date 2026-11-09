@@ -1,6 +1,10 @@
 # 909 — Vérifier et enrichir : correctifs, puis comparaison ancienne UI / `/suite`
 
-État : en cours de rédaction, point par point avec Sednal (09/11/2026).
+État : **sections 1 (Vérifier) et 2 (Enrichir) prêtes pour momo — momo peut commencer (09/11/2026).**
+Le volet 2 (comparaison ancienne UI / `/suite`) n'est encore que ce paragraphe de cadrage, pas détaillé
+point par point — **pas actionnable**. La section 3 (nouvel outil Requête avancée) est prête. La
+section 4 (évolutions futures du plan avancé) est **explicitement en attente**, à ne pas commencer
+avant que les sections 1, 2 et 3 soient opérationnelles (voir cette section pour la raison).
 
 Hors du pavé du 02/11, suite à une question de Sednal le 09/11/2026 (« est-ce que vérifier et enrichir
 pourraient être améliorées ? »). Deux volets, dans cet ordre :
