@@ -43,7 +43,7 @@ d'exclusion mutuelle).
 
 Rappel du rôle de la fonction (clarifié avec Sednal) : vérifier n'apporte jamais de nouveau nom, elle
 apporte de la **fiabilité** à ce qui a déjà été trouvé, en repassant chaque fiche par une autre source
-de la liste des 79. Les cinq pistes ci-dessous sont retenues.
+de la liste des 79. Les six pistes ci-dessous sont retenues.
 
 **a) Rendre visible le signal « alerte ».** Une alerte (ex. liste de sanctions) n'apparaît aujourd'hui
 que dans la fiche du candidat en Tri. À faire apparaître aussi dans le Tableau de bord (rejoint le
@@ -103,6 +103,20 @@ informelle, rien ne vérifie rien aujourd'hui. Décidé :
   de la recherche plutôt que la liste fixe de l'utilisateur) — gain réel limité par rapport à
   simplement interroger searxng/brave en vérifier ; à reprendre seulement si (1) et (2) montrent une
   vraie limite.
+- **Brique technique pour nettoyer une page avant comparaison** : entre la récupération de la page
+  (Scrapling) et la comparaison de texte, passer la page par un extracteur de texte lisible — même
+  principe que le mode lecture d'un navigateur (bibliothèque Mozilla Readability, ou son équivalent
+  Python `trafilatura`/`readability-lxml`) — pour ne comparer que le texte utile, pas le menu/la pub/
+  les scripts. Outil existant, gratuit, éprouvé — à assembler, pas à construire.
+
+**f) Les prestataires de collecte (famille Scrapling/Apify/Bright Data/ZenRows, 906) devraient
+fonctionner en chaîne de secours, pas chacun seul face à son quota.** Aujourd'hui, un prestataire à
+court de crédits est simplement sauté ou arrête la recherche (tuile Attente, par source). Décidé,
+**pour la recherche simple uniquement** : les traiter comme une chaîne — Scrapling gratuit en
+premier (déjà branché), puis les payants un par un seulement si besoin, plutôt que chacun
+indépendamment à sec. En **recherche avancée**, ce n'est pas la bonne réponse : l'utilisateur doit
+pouvoir poser plusieurs prestataires comme branches parallèles délibérées (voir point 4.2, Switch/
+Jonction) plutôt que de subir une chaîne automatique à sa place.
 
 ### 1.3 — Découverte de sources, décidée le 09/11/2026
 
@@ -199,20 +213,48 @@ cette source (pas d'échec silencieux, pas de requête cassée), jamais inventé
 Nom provisoire « Requête avancée » — pas « dorking » dans l'UI, pour ne pas orienter vers la famille
 (3) qu'on a explicitement écartée.
 
-## 4 — Évolution future identifiée : tuiles câblables sur 4 faces
+## 4 — Évolutions futures identifiées pour le plan avancé
 
-Idée de Sednal (09/11/2026), transverse à vérifier ET enrichir. Aujourd'hui, cibler précisément « qui
-vérifie/enrichit quoi » n'existe qu'en plan avancé, en calculant les ancêtres du graphe (`en_amont`,
-`suite_plan.py`) — pas intuitif. Idée : chaque tuile devient câblable sur **4 faces** — gauche/droite
-pour le flux normal (chercher, comme aujourd'hui), haut pour y accrocher un VÉRIFIER, bas pour y
-accrocher un ENRICHIR, chacun avec ses propres réglages — applicable soit sur une tuile précise, soit
-sur tout le flux.
+Deux idées de Sednal (09/11/2026), transverses à vérifier ET enrichir. Toutes deux sont des
+évolutions du modèle même du plan (comment un chemin est validé, comment les ancêtres sont calculés
+dans `suite_plan.py`), pas des correctifs — même famille que « la recherche avancée n'est traitée
+qu'après la fin du pavé » (règle de `000-INDEX.md`). **Décidé pour les deux : mise en attente, à
+traiter plus tard, une fois que vérifier et enrichir sont opérationnels** (correctifs et
+améliorations des points 1 et 2 ci-dessus livrés) — pas avant.
 
-Identifiée comme une bonne idée, mais c'est une évolution du modèle même du plan (comment un chemin
-est validé, comment les ancêtres sont calculés dans `suite_plan.py`), pas un correctif — même famille
-que « la recherche avancée n'est traitée qu'après la fin du pavé » (règle de `000-INDEX.md`).
-**Décidé : mise en attente, à traiter plus tard, une fois que vérifier et enrichir sont
-opérationnels** (correctifs et améliorations des points 1 et 2 ci-dessus livrés) — pas avant.
+### 4.1 — Fenêtre du plan en 3 zones
+
+Croquis de Sednal : ![croquis du plan en 3 zones](assets/909-canvas-3-zones.png)
+
+Aujourd'hui, cibler précisément « qui vérifie/enrichit quoi » n'existe qu'en calculant les ancêtres
+du graphe (`en_amont`) — pas intuitif. Idée, plus simple que la première formulation (« tuiles sur 4
+faces ») : la fenêtre du plan se divise en **3 zones horizontales**, pas un câblage par tuile.
+
+- **Zone marron** (colonne de gauche, pleine hauteur) : la palette de tuiles disponible, comme
+  aujourd'hui — aucun changement.
+- **Zone verte** (bande du haut) : poser une tuile ici = elle VÉRIFIE.
+- **Zone bleue** (bande du bas) : poser une tuile ici = elle ENRICHIT.
+
+Le rôle d'une tuile vient de **l'endroit où on la pose**, pas d'un câblage à 4 côtés. Deux réglages
+transverses demandés avec cette idée :
+- Chaque tuile posée en zone verte/bleue doit pouvoir être **globale** (s'applique à tout le flux,
+  comme le mode simple aujourd'hui) ou **ciblée** (au cas par cas, sur une tuile précise) — un choix
+  par tuile, pas un seul mode pour toute la fenêtre.
+- Un **zoom + / −** pour toute la fenêtre du plan (devient plus nécessaire avec 3 zones au lieu d'une
+  grille simple).
+
+### 4.2 — Tuiles Switch / Jonction (branches parallèles)
+
+Une tuile **Switch** qui part d'une seule tuile et lance plusieurs recherches en simultané — chaque
+branche avec ses propres réglages (nombre de résultats, entrée, fichier, autres tuiles) — et une
+tuile qui **rejoint** ces branches en un seul flux ensuite. Nom à part de « Fusion » (outil existant,
+dédoublonnage de fiches) pour ne pas confondre : Switch/Jonction rejoint des **branches du plan**,
+Fusion dédoublonne des **fiches** — les deux se complètent, Fusion pouvant intervenir après la
+jonction sur les fiches qui se recoupent entre branches.
+
+Répond aussi au besoin du point 1.2 (vérifier, famille prestataire de collecte) : en recherche
+avancée, poser plusieurs prestataires de collecte comme branches parallèles plutôt qu'une chaîne de
+secours automatique (qui reste le comportement en recherche simple).
 
 ## Règle de dépôts (rappel)
 
