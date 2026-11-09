@@ -168,7 +168,38 @@ dans ce même assistant.
 
 *(voir aussi 908 point 13-14 pour le lien avec les niveaux d'IA et l'inventaire)*
 
-## 3 — Évolution future identifiée : tuiles câblables sur 4 faces
+## 3 — Nouvel outil : Requête avancée (11e outil)
+
+Idée de Sednal (09/11/2026), née de la question « peut-on ajouter le google dorking ? ». L'étendue
+réelle du dorking a été posée avant de trancher : trois familles — (1) recherche de documents/texte
+(`site:`, `filetype:`, `intitle:`, phrase exacte, exclusion), (2) recherche de présence ciblée
+(`site:linkedin.com/in/`, domaines officiels, pages précises d'un site), (3) recherche de failles et
+d'expositions (`inurl:admin`, `filetype:env`, identifiants en clair, cartographie de surface
+d'attaque). **Décidé : familles (1) et (2) seulement.** La famille (3) est de la reconnaissance de
+sécurité — même raison et même limite que l'exclusion de bbot le 08/11, hors sujet pour trouver des
+organisations/personnes.
+
+**Ce que fait l'outil** : contrairement à Filtre (qui agit APRÈS la collecte, sur les candidats
+trouvés), Requête avancée agit AVANT — elle enrichit la requête de recherche elle-même avec des
+qualificatifs, avant qu'elle parte vers les sources `chercher`. Options à vocabulaire fermé (règle
+d'affichage 3.10) :
+- **type de qualificatif** : limiter à un site/domaine, limiter à un type de fichier, mot dans le
+  titre, phrase exacte, exclure un mot — liste fermée, menu si plus de 4 choix ;
+- **valeur** : le texte du qualificatif (domaine, extension, mot) — ici du texte libre, la valeur
+  elle-même n'a pas de vocabulaire fermable.
+
+**Point technique à trancher par momo, pas par cette spec** : tous les moteurs ne comprennent pas ces
+opérateurs de la même façon. `serper` (déjà dans nos 79) interroge les vraies pages de résultats
+Google et les comprend tous ; `searxng`/`brave` n'en comprennent qu'une partie selon le moteur
+derrière. Décidé : chaque source `chercher` qui accepte du texte libre doit déclarer si/quels
+opérateurs elle comprend (même logique que `parametres_attendus` réutilisé pour les adresses, 908
+§4) ; une qualification envoyée à une source qui ne la comprend pas doit être ignorée proprement pour
+cette source (pas d'échec silencieux, pas de requête cassée), jamais inventée comme recours.
+
+Nom provisoire « Requête avancée » — pas « dorking » dans l'UI, pour ne pas orienter vers la famille
+(3) qu'on a explicitement écartée.
+
+## 4 — Évolution future identifiée : tuiles câblables sur 4 faces
 
 Idée de Sednal (09/11/2026), transverse à vérifier ET enrichir. Aujourd'hui, cibler précisément « qui
 vérifie/enrichit quoi » n'existe qu'en plan avancé, en calculant les ancêtres du graphe (`en_amont`,
