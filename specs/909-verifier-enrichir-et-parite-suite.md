@@ -108,6 +108,21 @@ informelle, rien ne vérifie rien aujourd'hui. Décidé :
 
 *(à traiter après le point 1, voir 908 point 13-14 pour le lien avec les niveaux d'IA et l'inventaire)*
 
+## 3 — Évolution future identifiée : tuiles câblables sur 4 faces
+
+Idée de Sednal (09/11/2026), transverse à vérifier ET enrichir. Aujourd'hui, cibler précisément « qui
+vérifie/enrichit quoi » n'existe qu'en plan avancé, en calculant les ancêtres du graphe (`en_amont`,
+`suite_plan.py`) — pas intuitif. Idée : chaque tuile devient câblable sur **4 faces** — gauche/droite
+pour le flux normal (chercher, comme aujourd'hui), haut pour y accrocher un VÉRIFIER, bas pour y
+accrocher un ENRICHIR, chacun avec ses propres réglages — applicable soit sur une tuile précise, soit
+sur tout le flux.
+
+Identifiée comme une bonne idée, mais c'est une évolution du modèle même du plan (comment un chemin
+est validé, comment les ancêtres sont calculés dans `suite_plan.py`), pas un correctif — même famille
+que « la recherche avancée n'est traitée qu'après la fin du pavé » (règle de `000-INDEX.md`).
+**Décidé : mise en attente, à traiter plus tard, une fois que vérifier et enrichir sont
+opérationnels** (correctifs et améliorations des points 1 et 2 ci-dessus livrés) — pas avant.
+
 ## Règle de dépôts (rappel)
 
 `NALSED/GAPPES-FINAL` est réservé au **code** de momo. Cette instruction s'écrit dans `NALSED/GRAPPES`
