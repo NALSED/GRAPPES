@@ -43,7 +43,7 @@ d'exclusion mutuelle).
 
 Rappel du rôle de la fonction (clarifié avec Sednal) : vérifier n'apporte jamais de nouveau nom, elle
 apporte de la **fiabilité** à ce qui a déjà été trouvé, en repassant chaque fiche par une autre source
-de la liste des 79. Les quatre pistes ci-dessous sont retenues.
+de la liste des 79. Les cinq pistes ci-dessous sont retenues.
 
 **a) Rendre visible le signal « alerte ».** Une alerte (ex. liste de sanctions) n'apparaît aujourd'hui
 que dans la fiche du candidat en Tri. À faire apparaître aussi dans le Tableau de bord (rejoint le
@@ -74,6 +74,35 @@ seulement un affichage —
   Détail d'implémentation (calcul exact de la fiabilité effective, seuils) laissé à momo ; ce qui est
   tranché ici, c'est que le résultat de vérifier doit avoir une conséquence automatique, pas seulement
   apparaître dans une fiche.
+
+**e) Nouveau mécanisme de vérification : confirmation par présence de texte sur une page.**
+Les registres fixes (sanctions, registres d'entreprises) ne couvrent que le formel. Pour une entité
+informelle, rien ne vérifie rien aujourd'hui. Décidé :
+
+- **Le mécanisme** : au lieu d'interroger un registre, on prend une page web et on regarde si
+  **plusieurs champs déjà connus de la fiche** (nom ET ville, ou nom ET numéro — pas le nom seul, trop
+  d'homonymes) apparaissent ensemble dans son texte. Trouvés → on extrait l'extrait qui les entoure
+  comme preuve citée. Pas trouvés → on passe, aucun verdict. Généraliser avec Scrapling (déjà décidé
+  le 08/11, 908 §5.2) plutôt que créer un outil à part.
+- **Compter l'indépendance, pas juste « trouvé »** : réutiliser le principe déjà dans le moteur pour
+  compter les sources indépendantes qui trouvent un candidat (même logique que `nb_endroits` et que
+  les seuils de Fusion, `SEUILS_FUSION`) — une seule page qui matche est un signal faible, plusieurs
+  pages de domaines différents sont un signal fort. Le mécanisme rend un nombre de pages confirmantes
+  indépendantes, comparé à un seuil, pas un simple binaire.
+- **Deux façons de lui fournir une page** : (1) les pages déjà trouvées par les sources de recherche
+  pour ce candidat — gratuit, immédiat, aucun appel de plus ; (2) une recherche web dynamique scopée
+  au nom exact, via un moteur déjà dans la liste (searxng — self-hébergé, sans quota — ou
+  brave/tavily/serper en vérifier), pour aller chercher au-delà de ce qu'on a déjà trouvé.
+- **Garde-fou obligatoire, à ne jamais oublier à l'implémentation** : ce signal est **faible**, bien
+  plus faible qu'un hit de registre. Il doit être marqué `seconde main`, fiabilité basse, et ne
+  **jamais** pouvoir servir de source première main pour le garde-fou de l'IA niveau 4 (908 §13 — un
+  nom proposé par l'IA ne sort de sa zone que confirmé par une source première main). Sans ce
+  garde-fou explicite dans le code, ce mécanisme recréerait exactement le risque que 908 avait bloqué.
+- **Mis de côté pour l'instant, pas prioritaire** : générer un flux RSS éphémère à la volée par
+  recherche (réutiliserait `definition_flux`, déjà dans le moteur, avec une URL construite au moment
+  de la recherche plutôt que la liste fixe de l'utilisateur) — gain réel limité par rapport à
+  simplement interroger searxng/brave en vérifier ; à reprendre seulement si (1) et (2) montrent une
+  vraie limite.
 
 ## 2 — Enrichir
 
