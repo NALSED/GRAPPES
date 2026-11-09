@@ -135,7 +135,38 @@ de suivi, réutilisation du schéma existant pour une étape de plus avant la d�
 
 ## 2 — Enrichir
 
-*(à traiter après le point 1, voir 908 point 13-14 pour le lien avec les niveaux d'IA et l'inventaire)*
+Rappel clarifié avec Sednal : vérifier et enrichir ne sont pas redondants — même code, effet
+différent. Vérifier note un signal à côté de la fiche (preuve, alerte) sans toucher ses champs ;
+enrichir ajoute de vrais champs (ville, site, numero, pays, genre, coordonnees, detail) à la fiche
+quand la source les a et qu'ils manquent ou diffèrent (règle 1 : jamais à la place, toujours à côté).
+Ce n'est pas la confiance dans la source qui décide du rôle, c'est ce qu'elle a de plus à donner.
+Mécaniquement opérationnel (même code que vérifier, testé en live avec Scrapling) ; le problème est
+sa portée, quasi nulle (4 sources sur 79, accessible seulement en plan avancé).
+
+### 2.1 — Trois points décidés le 09/11/2026
+
+**a) Rendre enrichir accessible en recherche simple.** Aujourd'hui même rdap (gratuite, sans clé,
+première main) n'apparaît dans aucune case accessible facilement. Décidé : lui donner une case dans
+Réglages transverse de `/suite`, même traitement que vérifier (point 1.1.a).
+
+**b) Déclarer le rôle enrichir EN PLUS, pas à la place, sur les sources première main qui ont des
+champs utiles.** Revue à faire par momo, source par source, sur les sources déjà `verifier` et
+première main (opencorporates, companies-house, ror, gleif…) : ajouter `enrichir` à leur liste de
+rôles partout où c'est pertinent, sans retirer `verifier`.
+Précision de portée : en **recherche simple**, ça marche déjà dès que fait, le moteur
+(`moteur_sources.verificatrices()`) lit la liste complète des rôles d'une source indépendamment de
+l'affichage. En **plan avancé**, une tuile source n'a aujourd'hui aucun moyen de choisir son rôle au
+moment où on la pose — elle reprend toujours le rôle unique affiché par la fiche (le même champ figé
+corrigé au point 1.1.b). Exploiter le double rôle tuile par tuile en avancé attend le mécanisme des
+positions du point 3 (déjà mis en attente) — la déclaration, elle, n'attend pas : utile en simple dès
+maintenant.
+
+**c) Donner à enrichir sa place dans l'assistant d'installation.** `installation.js` étape 2 filtre
+sur `roles.includes("verifier")` — une source uniquement enrichir (intelligencex, rdap) n'y apparaît
+jamais, même après le point (a). Décidé : ajouter une étape ou une case équivalente pour enrichir
+dans ce même assistant.
+
+*(voir aussi 908 point 13-14 pour le lien avec les niveaux d'IA et l'inventaire)*
 
 ## 3 — Évolution future identifiée : tuiles câblables sur 4 faces
 
