@@ -34,6 +34,13 @@ Dans [`specs/`](specs/) : **un document par spec**, numéroté comme le pavé de
 * **Instruction transverse, permanente (09/11/2026) :** à la fin de CHAQUE tâche, avant de passer à la
   suivante, relis `specs/000-INDEX.md` et les specs modifiées depuis ta dernière lecture. De nouvelles
   instructions peuvent sortir à tout moment — pas seulement groupées en séance de revue avec Sednal.
+* **Ordre de travail (09/11/2026) :** l'ordre donné par une spec (ex. 908 « Ordre de travail ») est
+  l'ordre par défaut, pas une obligation rigide — si un ordre différent devient plus logique vu
+  l'ensemble des changements réalisés depuis, ce jugement te revient. Trace le choix dans
+  `DECISIONS.md` comme toujours.
+* **Ancienne UI (`/`) : ne plus supprimer avant la toute fin du projet (revu 09/11/2026).** Elle est
+  adaptée à `/suite` au fur et à mesure (câblage, fonctionnalités), jamais retirée en cours de route —
+  voir 905 §3 et 908, sections révisées.
 
 ## Ce qui reste provisoirement dans GRAPPES
 

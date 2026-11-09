@@ -36,10 +36,14 @@ remplace pas encore** :
 C'est exactement ce que le lien lui-même annonce : « Ancienne interface (**Lancement, Tri**) ». Supprimer `/`
 aujourd'hui ferait perdre le seul Tri complet qui existe, et la pause/reprise d'une recherche en cours.
 
-### Décision de Sednal (08/11/2026)
+### Décision de Sednal (08/11/2026, calendrier revu le 09/11/2026)
 
 **La nouvelle UI reprend les fonctionnalités de l'ancienne, et l'ancienne ne disparaît qu'une fois tout
 porté.** Pas de suppression partielle, pas d'attente passive : on porte, puis on supprime.
+
+> **Revu le 09/11/2026 :** « tout porté » ne veut plus dire « Tri et Lancement portés » mais **le projet
+> entier terminé**. On adapte l'ancienne UI à la nouvelle au fur et à mesure, on ne supprime rien avant
+> la toute fin — voir 905 §3, section révisée.
 
 Ordre de travail qui en découle :
 
@@ -50,9 +54,13 @@ Ordre de travail qui en découle :
 2. **Tri** : **adapter** l'ancien Tri (`static/tri.js`, 585 lignes) à la charte de `/suite`, pas le
    réécrire. Les fonctionnalités à garder, à changer ou à abandonner se discutent avec Sednal **avant** que
    momo commence — ce point sera traité dans la section Tri de cette même spec.
-3. **Alors seulement**, supprimer l'ancienne UI entièrement : route `/`, fichiers statiques devenus
+3. **Alors seulement, et seulement une fois le projet entier terminé** (revu 09/11/2026, pas juste Tri
+   et Lancement portés), supprimer l'ancienne UI entièrement : route `/`, fichiers statiques devenus
    inutiles, et le lien « Ancienne interface (Lancement, Tri) » dans `/suite`. C'est la 905 §3, qui reste
-   suspendue jusque-là.
+   suspendue jusque-là. En attendant, l'ancienne UI est **adaptée** au fur et à mesure, pas figée.
+4. **Tri attend la fin de « toute la tuyauterie »** (décision Sednal, 09/11/2026) : les outils et les
+   sources (909 et ce qui en découlera) influencent comment les résultats doivent être traités en Tri —
+   la spec Tri n'est donc écrite qu'une fois ce travail-là fini, pas avant.
 
 La vérification des 6 types d'ajout de source sur `.60` (905 §2) reste à faire par Sednal, en parallèle.
 
@@ -856,8 +864,14 @@ outils », et il rend honnête l'état « opérationnel ». À faire avant les g
 * la fusion Aide + IA en un onglet, avec action par les routes de pilote (14.1, 14.2) ;
 * les quatre niveaux d'implication de l'IA (13).
 
-**6. Enfin, et seulement dans cet ordre** : porter les réglages de Lancement dans `/suite` (point 1), puis
-Tri (spec à venir), puis supprimer l'ancienne UI (905 §3).
+**6. Enfin** : porter les réglages de Lancement dans `/suite` (point 1 — **fait**, D102) ; puis Tri (spec
+à venir — **attend la fin de toute la tuyauterie outils/sources**, 909 et ce qui en découlera, revu
+09/11/2026) ; la suppression de l'ancienne UI (905 §3) n'est plus au bout de cette liste : elle n'a
+lieu qu'à la toute fin du projet entier (revu 09/11/2026), l'ancienne UI étant adaptée en continu
+d'ici là.
+
+> **Note sur l'ordre, 09/11/2026 :** momo avance dans cet ordre par défaut, sauf si un ordre différent
+> est plus logique vu l'ensemble des changements réalisés depuis — ce jugement lui revient.
 
 **En parallèle, côté Sednal** : vérification des six types d'ajout de source sur `.60` (905 §2), prévue le
 09/11.

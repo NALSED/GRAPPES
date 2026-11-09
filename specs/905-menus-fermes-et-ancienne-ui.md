@@ -49,9 +49,17 @@ page, ne rien réécrire depuis zéro) :
 * Chaque type porté est vérifié par Sednal sur .60 avant de passer au suivant (test réel d'ajout d'une
   source de ce type depuis `/suite`), pour ne rien casser d'un coup sur un système qu'il utilise déjà.
 
-## 3 — Suppression de l'ancienne UI
+## 3 — Suppression de l'ancienne UI — **revu le 09/11/2026, ne plus suivre tel quel**
 
-Une fois le point 2 complet et vérifié (tous les types de source ajoutables depuis `/suite`) :
+> **Décision de Sednal (09/11/2026) : on ne supprime rien.** On adapte l'ancienne UI à la nouvelle
+> (câblage, fonctionnalités) au fur et à mesure, et la suppression n'a lieu **qu'à la toute fin du
+> projet**, pas dès que le point 2 et le portage de Tri/Lancement sont finis comme prévu ici à
+> l'origine. Le texte ci-dessous garde la liste technique de ce qu'il faudra retirer le jour venu,
+> mais sa condition de déclenchement (« une fois le point 2 complet ») ne s'applique plus — voir 908
+> point 1 et `000-INDEX.md` pour l'état à jour de cette décision.
+
+Une fois le point 2 complet et vérifié (tous les types de source ajoutables depuis `/suite`), **et une
+fois le reste du projet terminé** (plus seulement Tri/Lancement portés) :
 
 * Retirer la route `/` (classique) de `pilote/src/pilote/app.py`, et les fichiers statiques qui ne servent
   plus qu'à elle (`pilote.html` racine, `reglages.js`, `ajout.js`, `ajout_types.js`, `lancement.js`,
@@ -63,9 +71,10 @@ Une fois le point 2 complet et vérifié (tous les types de source ajoutables de
 
 ## Ordre
 
-1 (rapide, sans risque) → 2 (par type, vérifié un par un par Sednal) → 3 (seulement une fois 2 terminé).
-Ne pas supprimer l'ancienne UI avant que 2 soit fini et vérifié : elle reste le seul moyen d'ajouter ces
-types de source tant que `/suite` ne les gère pas.
+1 (rapide, sans risque) → 2 (par type, vérifié un par un par Sednal) → **adapter** l'ancienne UI au fur
+et à mesure du reste du projet → 3 (seulement une fois **tout le projet** terminé, pas seulement 2).
+Ne pas supprimer l'ancienne UI avant la fin du projet : elle reste utilisable et à jour en parallèle de
+`/suite`, pas un palier intermédiaire qu'on retire dès que `/suite` rattrape son retard.
 
 ## Règle de dépôts (rappel)
 

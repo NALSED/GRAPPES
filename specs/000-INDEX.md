@@ -69,11 +69,12 @@ Sednal les a écrites dix fois, une par outil. Elles sont spécifiées une seule
 | Revue complète et test en profondeur (tout le pavé + 901) | `902-revue-complete-2026-11-03.md` | **close** — Q29-Q34 toutes répondues (voir 904), rapport reçu |
 | Cible de recherche (« Ce que je recherche »), mécanisme prioritaire issu de Q26/Q30 | `903-cible-de-recherche.md` | **validée** par Sednal, prête pour momo |
 | Réponses Q29-Q34 (suite de la revue 902) | `904-questions-revue-902-2026-11-03.md` | **validée** par Sednal, prête pour momo |
-| Menus fermés de `ficheOutil()` restés en texte libre, parité `/suite` pour l'ajout de source (5 types manquants), puis suppression de l'ancienne UI | `905-menus-fermes-et-ancienne-ui.md` | prête pour momo — à confirmer par Sednal |
+| Menus fermés de `ficheOutil()` restés en texte libre, parité `/suite` pour l'ajout de source (5 types manquants) ; §3 (suppression ancienne UI) **revu 09/11/2026 : adaptation continue, suppression seulement en toute fin de projet, pas un palier intermédiaire** | `905-menus-fermes-et-ancienne-ui.md` | prête pour momo — à confirmer par Sednal |
 | Intégration de Scrapling (scraping auto-hébergé) et api-anything (adaptateur site→MCP) ; bbot écarté | `906-scrapling-et-api-anything.md` | prête pour momo |
 | Trois sources trouvées dans awesome-public-datasets : Company Registry Atlas (catalogue de bases par pays), UN Civil Society Database, Humanitarian Data Exchange | `907-sources-awesome-public-datasets.md` | prête pour momo |
 | Retour de Sednal du 08/11 repris point par point (transverse, tableau de bord, réglages sources et outils) | `908-retour-sednal-08-11.md` | **complète et validée** — momo a toute autonomie dessus ; section Tri à venir |
 | Vérifier et enrichir : correctifs de code trouvés en lecture, puis comparaison complète ancienne UI / `/suite` (élargit 905) | `909-verifier-enrichir-et-parite-suite.md` | en cours de rédaction avec Sednal |
+| Tri (adaptation de l'ancien `tri.js` à la charte `/suite`, outil visuel pour les rapprochements Fusion) | — | **pas commencée** — attend la fin de toute la tuyauterie outils/sources (909 et ce qui en découle), décision Sednal 09/11/2026 : les outils et sources influencent comment Tri doit traiter les résultats |
 
 ## Après le pavé
 
