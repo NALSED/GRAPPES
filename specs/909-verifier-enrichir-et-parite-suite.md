@@ -13,7 +13,67 @@ pourraient être améliorées ? »). Deux volets, dans cet ordre :
 
 ## 1 — Vérifier
 
-*(en cours — discussion avec Sednal)*
+### 1.1 — Trois correctifs décidés le 09/11/2026
+
+**a) Réglage global absent de `/suite`.** « Vérification active » et le mode (« memes » / « plus »,
+`reg["verification"]`) ne se règlent aujourd'hui qu'à l'installation de première fois (assistant,
+`installation.js` étape 2), ou via l'ancienne UI (`PUT /reglages/verification`). Décision : ajouter
+cette case dans Réglages transverse de `/suite`, même traitement que toute autre case fermée (règle
+d'affichage 3.10 de 908 si le choix dépasse 4 options).
+
+**b) La fiche source de `/suite` n'affiche qu'un seul rôle.** 36 sources sur 79 sont déclarées
+`chercher` + `verifier` (ou `chercher` + `enrichir`) à la fois — voir liste en annexe du point 2. Le
+calcul qui affiche le rôle (`suite_reel.py` ligne 125 : `role = sur.get("role") or ("CHERCHER" if
+"chercher" in d.roles else "VERIFIER" if "verifier" in d.roles else "ENRICHIR")`) ne garde que le
+premier trouvé, toujours CHERCHER pour ces sources — leur vérification/enrichissement est active mais
+invisible dans leur fiche. Décision : le champ « Rôle » de la fiche devient **à choix multiples** (une
+case par rôle déclaré : CHERCHER, VERIFIER, ENRICHIR), reflétant la liste réelle de `Declaration.roles`
+au lieu d'un seul choix qui en masque les autres.
+
+**c) Le bouton marche/arrêt casse la vérification des sources à double rôle — bug.**
+`suite_reel.allumer()` pose `"verifier": allumee and "verifier" in d.roles and "chercher" not in
+d.roles` : pour une source `chercher`+`verifier`, ce booléen est toujours faux, quel que soit
+`allumee`. Éteindre puis rallumer wikidata ou ror depuis le bouton marche/arrêt de `/suite` remet donc
+`verifier` à faux et ne le remet **jamais** à vrai — perte silencieuse et permanente de la vérification,
+jusqu'à correction manuelle du fichier de réglages. Décision : corriger `allumer()` pour qu'il pose
+chaque rôle déclaré indépendamment (`chercher` et `verifier` suivent chacun `allumee`, sans condition
+d'exclusion mutuelle).
+
+### 1.2 — Amélioration décidée le 09/11/2026
+
+Rappel du rôle de la fonction (clarifié avec Sednal) : vérifier n'apporte jamais de nouveau nom, elle
+apporte de la **fiabilité** à ce qui a déjà été trouvé, en repassant chaque fiche par une autre source
+de la liste des 79. Les quatre pistes ci-dessous sont retenues.
+
+**a) Rendre visible le signal « alerte ».** Une alerte (ex. liste de sanctions) n'apparaît aujourd'hui
+que dans la fiche du candidat en Tri. À faire apparaître aussi dans le Tableau de bord (rejoint le
+trou d'affichage déjà noté en 908 point 2).
+
+**b) Montrer le coût réel d'une source de vérification payante avant usage.** Le mécanisme « test
+réel, prix annoncé avant clic » (`tests_source.py`) existe mais seulement côté ancienne UI
+(`api_reglages.py`) : à brancher aussi dans `/suite` (`api_suite.py`) pour les sources utilisées en
+vérification.
+
+**c) Permettre de restreindre « qui vérifie quoi » en recherche simple.** `en_amont` (ne vérifier que
+les candidats trouvés par telle source) n'existe aujourd'hui que dans le plan avancé
+(`suite_plan.py`). À exposer aussi en simple, pour économiser des appels coûteux sur une partie
+seulement des résultats.
+
+**d) Faire que la fiabilité apportée par vérifier compte réellement — le point le plus important.**
+Constat en lisant le code : une fois qu'une vérification renvoie confirmation ou alerte
+(`faits.verifications`), **rien ne l'utilise automatiquement**. Le filtre « Fiabilité minimale »
+(`suite_plan.py` ligne 523, commentaire : « la meilleure fiabilité parmi les sources qui ont trouvé
+ce nom ») ne regarde que la fiabilité déclarée des sources de RECHERCHE, jamais un résultat de
+vérification. Aucun tri, aucun classement ne la lit non plus : cette fiabilité n'existe que si une
+personne ouvre la fiche du candidat en Tri. Décidé : la vérification doit avoir un effet réel, pas
+seulement un affichage —
+  - une confirmation par une source première main peut faire remonter la fiabilité effective du
+    candidat au-dessus de celle de sa seule source de recherche ;
+  - une alerte doit faire ressortir le candidat (visuellement, ou en le remontant) sans attendre
+    qu'une personne l'ouvre.
+  Détail d'implémentation (calcul exact de la fiabilité effective, seuils) laissé à momo ; ce qui est
+  tranché ici, c'est que le résultat de vérifier doit avoir une conséquence automatique, pas seulement
+  apparaître dans une fiche.
 
 ## 2 — Enrichir
 
