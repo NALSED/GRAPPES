@@ -75,6 +75,7 @@ Sednal les a écrites dix fois, une par outil. Elles sont spécifiées une seule
 | Retour de Sednal du 08/11 repris point par point (transverse, tableau de bord, réglages sources et outils) | `908-retour-sednal-08-11.md` | **complète et validée** — momo a toute autonomie dessus ; section Tri à venir |
 | Vérifier et enrichir : correctifs de code trouvés en lecture, nouvel outil Requête avancée, puis comparaison complète ancienne UI / `/suite` (élargit 905) | `909-verifier-enrichir-et-parite-suite.md` | **sections 1, 2, 3 prêtes pour momo** ; volet 2 (comparaison UI) et section 4 (évolutions futures) pas encore actionnables |
 | Audit du moteur de confiance et de son calibrage (`indice.py`, `assign.py`, `autocal/`) : défauts confirmés, fragilités, sept décisions à prendre | `910-audit-moteur-de-confiance.md` | **note de travail — rien à coder**, attend les décisions de Sednal (§ 6) |
+| État des lieux complet du programme (moteur, pilote, sources, outils, tests) : cinq points graves, défauts de logique, ordre de traitement proposé | `911-etat-des-lieux-complet.md` | **note de travail — rien à coder**, attend les décisions de Sednal (§ 8) |
 | Tri (adaptation de l'ancien `tri.js` à la charte `/suite`, outil visuel pour les rapprochements Fusion) | — | **pas commencée** — attend la fin de toute la tuyauterie outils/sources (909 et ce qui en découle), décision Sednal 09/11/2026 : les outils et sources influencent comment Tri doit traiter les résultats |
 
 ## Après le pavé

@@ -1,5 +1,10 @@
 # 910 — Audit du moteur de confiance et de son calibrage (14/11/2026)
 
+> **Complément du 14/11/2026 :** cet audit a été fait sur une copie en retard de quelques commits
+> (`8d5c0bd`) ; relu sur `b4ab69e`, aucun de ses constats ne change. L'indice ne sert pas qu'au mode
+> `extraction` : pilote s'en sert à chaque recherche pour choisir et ordonner les noms, et pour lever
+> la règle 8. Voir `911-etat-des-lieux-complet.md`, points G1 et G2.
+
 **État : note de travail, rien à coder.** Audit en lecture seule demandé par Sednal, fait sur
 `NALSED/GAPPES-FINAL` au commit `8d5c0bd`. Aucune ligne de code n'a été modifiée. Chaque point
 « à décider » attend la décision de Sednal avant de devenir une instruction pour momo.
