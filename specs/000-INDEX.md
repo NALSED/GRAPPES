@@ -78,6 +78,7 @@ Sednal les a écrites dix fois, une par outil. Elles sont spécifiées une seule
 | État des lieux complet du programme (moteur, pilote, sources, outils, tests) : cinq points graves, défauts de logique, ordre de traitement proposé | `911-etat-des-lieux-complet.md` | **note de travail — rien à coder**, attend les décisions de Sednal (§ 8) |
 | Plan d'amélioration fiabilité et couverture (plan avant la coupe, confirmation à deux champs, sortie en deux niveaux, référence de mesure indépendante, registres en découverte, pages-annuaires, requêtes déclinées) | `912-plan-fiabilite-et-couverture.md` | **10 points sur 13 codés** (15-16/11/2026, D118 à D136 de GAPPES-FINAL) ; B1 attend la validation de Sednal ; C1, C3, C4 non codés |
 | Bilan état désiré / état réel, cinq défauts nouveaux (dont un site qui se confirme par son propre flux RSS) | `913-bilan-etat-desire-etat-reel.md` | **N1 à N5 corrigés** (D137 à D139) ; G1 non touché ; B1 validé, relevé à faire hors de cette session (D140) |
+| Fiabiliser les sources sans registre officiel (ce que le site déclare de lui-même, pages qui se recopient) | `914-fiabilite-sans-registre.md` | **Proposée** le 23/11/2026, 5 choix à valider par Sednal ; rien de codé |
 | Tri (adaptation de l'ancien `tri.js` à la charte `/suite`, outil visuel pour les rapprochements Fusion) | — | **pas commencée** — attend la fin de toute la tuyauterie outils/sources (909 et ce qui en découle), décision Sednal 09/11/2026 : les outils et sources influencent comment Tri doit traiter les résultats |
 
 ## Après le pavé
