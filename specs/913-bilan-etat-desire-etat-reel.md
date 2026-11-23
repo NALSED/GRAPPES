@@ -1,6 +1,6 @@
 # 913 — Bilan : état désiré, état réel, défauts trouvés (23/11/2026)
 
-**État : note de travail, rien à coder.** Relecture de `NALSED/GAPPES-FINAL` au commit `380f1a4`
+**État : N1 à N5 corrigés le 23/11/2026 sur demande de Sednal (D137 à D139 de GAPPES-FINAL) ; G1 non touché ; B1 validé, relevé bloqué dans cette session (D140).** Relecture de `NALSED/GAPPES-FINAL` au commit `380f1a4`
 (dernier envoi le 16/11/2026, rien de nouveau depuis), des specs de ce dépôt et des fichiers de suivi
 (`FINAL.md`, `ETAT.md`, `QUESTIONS.md`, `DECISIONS.md`, `pilote/QUESTIONS.md`). Aucune ligne de code
 modifiée. Les défauts nouveaux N1 à N3 ont été reproduits par un essai ; N4 et N5 sont établis par lecture du code.
