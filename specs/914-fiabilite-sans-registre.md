@@ -1,6 +1,6 @@
 # 914 — Fiabiliser les sources sans registre officiel
 
-**État : proposée le 23/11/2026, à valider par Sednal. Rien n'est codé.** Suite du bilan 913.
+**État : validée par Sednal le 23/11/2026 (les 5 choix tels que proposés) ; volets A et B codés le même jour (D141, D142 de GAPPES-FINAL) ; choix 5 gardé pour plus tard.** Suite du bilan 913.
 Deux volets, dans cet ordre : A (ce que le site dit de lui-même), B (les pages qui se recopient).
 G1 et la règle 8 ne sont pas touchés.
 
@@ -107,7 +107,22 @@ Chaque point porte ma proposition. Rien n'est codé avant ta réponse.
   différents (deux endroits) ; passage trop court (inchangé) ; registre + copie (registre intact).
 * Non-régression : suites moteur et pilote vertes, hors échecs connus d'environnement.
 
-## 5 — Ordre de travail
+## 5 — Ce qui a été codé (23/11/2026)
+
+* **A** comme décrit. Garde-fous ajoutés : un numéro précédé d'une mention d'hébergeur est écarté (les
+  mentions légales donnent aussi le numéro de l'hébergeur) ; une organisation schema.org d'un autre
+  site est ignorée ; plusieurs numéros différents sur une page ou un site : aucun n'est gardé.
+* **B** comme décrit, avec un calcul exact de la part de suites communes au lieu de l'estimation
+  MinHash : on ne compare que les quelques sites qui citent un nom, l'estimation n'apportait que de
+  l'imprécision. Appliqué au niveau du moteur et au nombre d'endroits du pilote. Une page qui recopie
+  le site de l'acteur ne compte pas. Pas appliqué au recoupement des grappes (il décide quelles
+  sources font partie d'une grappe, pas le niveau d'un nom).
+* **Limites connues.** Les numéros officiels sont surtout dans la page « mentions légales », que la
+  collecte ne va pas chercher exprès : A trouvera peu de numéros tant qu'on n'ajoute pas cette visite
+  (une requête par site, sans crédit). Une copie retouchée en plusieurs endroits dispersés passe sous
+  80 % et compte encore pour deux.
+
+## 6 — Ordre de travail (fait, sauf la mesure)
 
 1. Validation de cette spec par Sednal.
 2. Volet A : relevé (moteur), puis affichage et propositions (pilote). Un commit par étape.
